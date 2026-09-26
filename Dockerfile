@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt \
 
 COPY backend backend
 COPY frontend frontend
+COPY tests/practice/gold.yaml tests/practice/gold.yaml
 
 USER app
 EXPOSE 7860

@@ -113,7 +113,7 @@ def get_card(card_id: str):
 async def no_stale_files(request, call_next):
     """網頁檔案更新後，瀏覽器要重新確認，不要用舊的快取"""
     response = await call_next(request)
-    if request.url.path in ("/", "/patterns", "/about") or request.url.path.startswith("/static/"):
+    if request.url.path in ("/", "/patterns", "/about", "/quiz") or request.url.path.startswith("/static/"):
         response.headers["Cache-Control"] = "no-cache"
     return response
 
@@ -126,6 +126,28 @@ def index():
 @app.get("/patterns")
 def patterns_page():
     return FileResponse(ROOT / "frontend" / "patterns.html")
+
+
+# ---------- 句型小遊戲（F2）：題目來自人工審核過的練習題 ----------
+QUIZ_ITEMS = yaml.safe_load((ROOT / "tests" / "practice" / "gold.yaml").read_text(encoding="utf-8"))
+
+
+@app.get("/api/quiz")
+def quiz():
+    import random
+
+    item = random.choice(QUIZ_ITEMS)
+    return {
+        "sentence": item["sentence"],
+        "pattern": item["pattern"],
+        "passive": item["passive"],
+        "chunks": [{"text": c["text"], "role": c["role"], "function": c.get("function")} for c in item["chunks"]],
+    }
+
+
+@app.get("/quiz")
+def quiz_page():
+    return FileResponse(ROOT / "frontend" / "quiz.html")
 
 
 @app.get("/about")

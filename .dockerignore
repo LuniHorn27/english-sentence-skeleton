@@ -4,7 +4,10 @@
 data
 docs
 spikes
-tests
+tests/*
+!tests/practice
+tests/practice/*
+!tests/practice/gold.yaml
 tools
 __pycache__
 *.pyc
