@@ -1,0 +1,31 @@
+id: unit_of
+title: 單位詞 ＋ of ＋ 名詞
+brief: '{unit} 是單位，真正的東西是 {noun}；動詞單複數看單位。'
+trigger: a glass／cup／piece… ＋ of ＋ 名詞
+blocks:
+- type: formula
+  text: a ＋ 單位 ＋ of ＋ 名詞
+- type: examples
+  examples:
+  - en: a glass of <b>water</b>
+    zh: 一杯水
+    mark: none
+  - en: a piece of <b>paper</b>
+    zh: 一張紙
+    mark: none
+  - en: two cups of <b>coffee</b>
+    zh: 兩杯咖啡
+    mark: none
+- type: tip
+  text: 核心字是 of 後面的名詞，但動詞單複數要看單位：A glass of water <b>is</b>…／Two glasses of water <b>are</b>…
+- type: warn
+  text: 不可數名詞不能直接加 s，要用單位詞來數。
+  examples:
+  - en: two waters
+    zh: ''
+    mark: 'no'
+  - en: two glasses of water
+    zh: ''
+    mark: ok
+see_also:
+- quantifier_of

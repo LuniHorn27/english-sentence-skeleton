@@ -1,0 +1,30 @@
+id: there_be
+title: There is／There are 句型
+brief: 表示「某處有某物」。真正的主詞在動詞後面。
+trigger: 句首 There ＋ be 動詞
+blocks:
+- type: formula
+  text: There ＋ be ＋ 主詞 ＋ 地點
+- type: heading
+  text: 重點
+- type: list
+  items:
+  - There 只是引導詞（也叫虛主詞），不是「那裡」的意思。
+  - 真正的主詞在動詞後面，還原成一般語序就是 A cat is under the table.，屬於倒裝。
+  - 單複數看後面的名詞：There <b>is</b> a cat. ／ There <b>are</b> two cats.
+  - 後面有好幾樣東西時，看最靠近的那一個：There <b>is</b> a pen and two books.
+- type: tip
+  text: be 動詞後面通常接「不特定」的東西：There is <b>a</b> cat. ✓　There is <b>the</b> cat. ✗
+- type: info
+  text: 另一種看法：There 在文法上佔了主詞的位置，附加問句要說 There is a cat, isn't <b>there</b>?。所以有些教材不歸入五大句型，而是另外當成「存在句」來教。
+- type: warn
+  text: 中文「桌上有一本書」不能直接翻成 have／has。
+  examples:
+  - en: There has a book on the table.
+    zh: ''
+    mark: 'no'
+  - en: There is a book on the table.
+    zh: ''
+    mark: ok
+see_also:
+- dummy_it

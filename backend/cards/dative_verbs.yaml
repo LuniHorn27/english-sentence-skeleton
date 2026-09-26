@@ -1,0 +1,30 @@
+id: dative_verbs
+title: 授與動詞
+brief: 後面可以接兩個受詞：給「誰」（IO）、給「什麼」（DO）。
+trigger: 句型四 S + Vt + IO + DO
+blocks:
+- type: formula
+  text: 授與動詞 ＋ 人（IO）＋ 物（DO）
+- type: heading
+  text: 常見的授與動詞
+- type: list
+  items:
+  - give、show、send、tell、pass、lend、bring、buy、make、cook
+- type: heading
+  text: 可以改寫成「物 ＋ to／for ＋ 人」
+- type: list
+  items:
+  - 用 <b>to</b>（東西送到對方手上）：give me a book → give a book <b>to</b> me
+  - 用 <b>for</b>（替對方做）：buy me a bike → buy a bike <b>for</b> me
+- type: tip
+  text: 判斷方法：能這樣改寫的，就是間接受詞 ＋ 直接受詞。
+- type: warn
+  text: 改寫後，介系詞不能省略。
+  examples:
+  - en: He gave a book me.
+    zh: ''
+    mark: 'no'
+  - en: He gave a book to me.
+    zh: ''
+    mark: ok
+see_also: []

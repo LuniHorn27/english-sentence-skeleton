@@ -1,0 +1,29 @@
+id: linking_verbs
+title: 連綴動詞
+brief: 後面接形容詞或名詞，說明主詞的狀態或身分，而不是動作的對象。
+trigger: 動詞後面接主詞補語（句型三），而且不是 be 動詞
+blocks:
+- type: formula
+  text: 主詞 ＋ 連綴動詞 ＋ 補語　→　主詞 ＝ 補語
+- type: heading
+  text: 常見的連綴動詞
+- type: list
+  items:
+  - be 動詞：am、is、are
+  - 感官：look、sound、smell、taste、feel
+  - 變化：become、get、turn、grow
+  - 保持：stay、keep、remain
+  - 看起來：seem、appear
+- type: tip
+  text: 等號測試：The tree stayed green → tree = green 說得通，green 就是補語。
+- type: warn
+  text: 感官動詞後面接形容詞，不接副詞。
+  examples:
+  - en: The soup smells good.
+    zh: ''
+    mark: ok
+  - en: The soup smells well.
+    zh: ''
+    mark: 'no'
+see_also:
+- verb_multiple_patterns

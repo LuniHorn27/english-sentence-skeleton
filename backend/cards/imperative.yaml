@@ -1,0 +1,27 @@
+id: imperative
+title: 祈使句
+brief: 主詞 You 被省略，用來命令、請求或提醒。
+trigger: 沒有主詞，而且動詞用原形
+blocks:
+- type: formula
+  text: (You) ＋ 原形動詞 …
+- type: heading
+  text: 重點
+- type: list
+  items:
+  - 用途：命令、請求、提醒、建議。
+  - 主詞是「你」或「你們」，說話對象很明確，所以省略。
+  - 動詞用原形：<b>Keep</b>…、<b>Be</b> quiet!
+  - 否定用 Don't：<b>Don't</b> open the door.
+  - 強調時可以說出 You：<b>You</b> be quiet!
+  - Let's 表示「我們一起」：<b>Let's</b> go.
+  - 加上 please 語氣比較客氣：<b>Please</b> sit down.
+- type: tip
+  text: 怎麼證明主詞是 you？加上附加問句：Keep the door open, will <b>you</b>?
+- type: warn
+  text: 叫對方的名字不是主詞。
+  examples:
+  - en: Tom, keep the door open.
+    zh: Tom 只是稱呼，主詞仍然是 (You)
+    mark: none
+see_also: []

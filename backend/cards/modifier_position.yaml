@@ -1,0 +1,24 @@
+id: modifier_position
+title: 修飾語放在名詞後面
+brief: 中文的修飾語放在名詞前面，英文的片語、子句修飾語常常放在名詞後面。
+trigger: 形容詞功能的片語或子句，放在被修飾的名詞後面
+blocks:
+- type: heading
+  text: 中英文順序相反
+- type: examples
+  examples:
+  - en: the boy <b>in the blue shirt</b>
+    zh: 穿藍色襯衫的男孩
+    mark: none
+  - en: the book <b>on the desk</b>
+    zh: 桌上的書
+    mark: none
+  - en: a friend <b>who lives in Tainan</b>
+    zh: 住在台南的朋友
+    mark: none
+- type: tip
+  text: 讀長句的方法：先找到名詞（boy），再往後看是什麼在說明它（in the blue shirt），翻成中文時把說明搬到前面。
+- type: info
+  text: 單一個形容詞通常放在前面（a <b>blue</b> shirt）；片語、子句才放在後面。
+see_also:
+- relative_pronoun

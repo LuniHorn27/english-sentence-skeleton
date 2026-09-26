@@ -1,0 +1,50 @@
+id: passive
+title: 被動語態
+brief: 主詞是「被」做動作的一方，重點放在動作的承受者。
+trigger: be 動詞 ＋ 過去分詞（p.p.），主詞是動作的承受者
+blocks:
+- type: formula
+  text: 主詞 ＋ be ＋ p.p.（＋ by ＋ 執行者）
+- type: heading
+  text: 主動 → 被動
+- type: examples
+  examples:
+  - en: The manager approved the proposal.
+    zh: 主動：經理批准了提案
+    mark: none
+  - en: The proposal <b>was approved</b> by the manager.
+    zh: 被動：提案被經理批准了
+    mark: none
+- type: heading
+  text: 什麼時候用被動？
+- type: list
+  items:
+  - 不知道是誰做的：My bike <b>was stolen</b>.
+  - 是誰做的不重要：English <b>is spoken</b> in many countries.
+  - 想強調被影響的人事物
+- type: heading
+  text: 哪些句型能改被動？
+- type: list
+  items:
+  - 句型二 S + Vt + O：受詞變主詞
+  - 句型四 S + Vt + IO + DO：兩個受詞都可以當主詞（Tom <b>was given</b> a bag.）
+  - 句型五 S + Vt + O + OC：補語留在後面（He <b>was elected</b> class leader.）
+  - 句型一、句型三沒有受詞，不能改被動
+- type: heading
+  text: 不同時態的被動
+- type: list
+  items:
+  - 現在：is／are ＋ p.p.
+  - 過去：was／were ＋ p.p.
+  - 完成：has been ＋ p.p.
+  - 未來：will be ＋ p.p.
+- type: warn
+  text: 不及物動詞（happen、arrive…）不能改被動。
+  examples:
+  - en: The accident was happened last night.
+    zh: ''
+    mark: 'no'
+  - en: The accident happened last night.
+    zh: ''
+    mark: ok
+see_also: []

@@ -1,0 +1,22 @@
+id: gerund_subject
+title: 動名詞當主詞
+brief: 動詞加 -ing 變成名詞，就可以當主詞，意思是「做這件事」。
+trigger: 主詞是 V-ing（動名詞）
+blocks:
+- type: formula
+  text: V-ing（…） ＋ 單數動詞 …
+- type: examples
+  examples:
+  - en: <b>Swimming</b> is fun.
+    zh: 游泳很好玩
+    mark: none
+  - en: <b>Reading books</b> makes me happy.
+    zh: 讀書讓我開心
+    mark: none
+- type: tip
+  text: 動名詞主詞一律當單數：Reading books <b>is</b>…，不是 are（books 只是 reading 的受詞）。
+- type: info
+  text: 也可以用不定詞當主詞（To swim is fun.），但比較正式，口語通常用動名詞，或改成 It is fun to swim.
+see_also:
+- dummy_it
+- to_v_or_ving_object

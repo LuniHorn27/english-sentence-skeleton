@@ -1,0 +1,177 @@
+"""一次產生第一批文法重點卡的 YAML 檔（1-7）。之後直接改 backend/cards/*.yaml 即可。"""
+from pathlib import Path
+
+import yaml
+
+F = lambda t: {"type": "formula", "text": t}
+TIP = lambda t: {"type": "tip", "text": t}
+INFO = lambda t: {"type": "info", "text": t}
+H = lambda t: {"type": "heading", "text": t}
+UL = lambda *items: {"type": "list", "items": list(items)}
+
+
+def EX(*rows):
+    return {"type": "examples", "examples": [ex(*r) for r in rows]}
+
+
+def ex(en, zh="", mark="none"):
+    return {"en": en, "zh": zh, "mark": mark}
+
+
+def WARN(text, *rows):
+    return {"type": "warn", "text": text, "examples": [ex(*r) for r in rows]}
+
+
+CARDS = [
+    dict(id="present_perfect", title="現在完成式", brief="表示「已經」做完、「曾經」做過，或從過去「一直」持續到現在。",
+         trigger="助動詞是 have／has，而且主要動詞是過去分詞（p.p.）",
+         blocks=[F("have／has ＋ p.p.（過去分詞）"), H("三種用法"),
+                 EX(("She has <b>already</b> finished the book.", "已經完成"),
+                    ("I have <b>been</b> to Japan <b>twice</b>.", "曾經的經驗"),
+                    ("He has lived here <b>for ten years</b>.", "從過去持續到現在")),
+                 H("常一起出現的字"), UL("already、yet、just、ever、never", "for ＋ 一段時間（for ten years）", "since ＋ 起點（since 2020）"),
+                 H("句子變化"), UL("否定：She has <b>not</b> finished yet.", "疑問：<b>Has</b> she finished yet?"),
+                 WARN("有明確的過去時間（yesterday、last year）時，用過去式，不用完成式。",
+                      ("I have finished it yesterday.", "", "no"), ("I finished it yesterday.", "", "ok"))],
+         see_also=["present_progressive"]),
+    dict(id="passive", title="被動語態", brief="主詞是「被」做動作的一方，重點放在動作的承受者。",
+         trigger="be 動詞 ＋ 過去分詞（p.p.），主詞是動作的承受者",
+         blocks=[F("主詞 ＋ be ＋ p.p.（＋ by ＋ 執行者）"), H("主動 → 被動"),
+                 EX(("The manager approved the proposal.", "主動：經理批准了提案"),
+                    ("The proposal <b>was approved</b> by the manager.", "被動：提案被經理批准了")),
+                 H("什麼時候用被動？"), UL("不知道是誰做的：My bike <b>was stolen</b>.", "是誰做的不重要：English <b>is spoken</b> in many countries.", "想強調被影響的人事物"),
+                 H("哪些句型能改被動？"),
+                 UL("句型二 S + Vt + O：受詞變主詞", "句型四 S + Vt + IO + DO：兩個受詞都可以當主詞（Tom <b>was given</b> a bag.）", "句型五 S + Vt + O + OC：補語留在後面（He <b>was elected</b> class leader.）", "句型一、句型三沒有受詞，不能改被動"),
+                 H("不同時態的被動"), UL("現在：is／are ＋ p.p.", "過去：was／were ＋ p.p.", "完成：has been ＋ p.p.", "未來：will be ＋ p.p."),
+                 WARN("不及物動詞（happen、arrive…）不能改被動。", ("The accident was happened last night.", "", "no"), ("The accident happened last night.", "", "ok"))]),
+    dict(id="there_be", title="There is／There are 句型", brief="表示「某處有某物」。真正的主詞在動詞後面。",
+         trigger="句首 There ＋ be 動詞",
+         blocks=[F("There ＋ be ＋ 主詞 ＋ 地點"), H("重點"),
+                 UL("There 只是引導詞（也叫虛主詞），不是「那裡」的意思。",
+                    "真正的主詞在動詞後面，還原成一般語序就是 A cat is under the table.，屬於倒裝。",
+                    "單複數看後面的名詞：There <b>is</b> a cat. ／ There <b>are</b> two cats.",
+                    "後面有好幾樣東西時，看最靠近的那一個：There <b>is</b> a pen and two books."),
+                 TIP("be 動詞後面通常接「不特定」的東西：There is <b>a</b> cat. ✓　There is <b>the</b> cat. ✗"),
+                 INFO("另一種看法：There 在文法上佔了主詞的位置，附加問句要說 There is a cat, isn't <b>there</b>?。所以有些教材不歸入五大句型，而是另外當成「存在句」來教。"),
+                 WARN("中文「桌上有一本書」不能直接翻成 have／has。", ("There has a book on the table.", "", "no"), ("There is a book on the table.", "", "ok"))],
+         see_also=["dummy_it"]),
+    dict(id="imperative", title="祈使句", brief="主詞 You 被省略，用來命令、請求或提醒。",
+         trigger="沒有主詞，而且動詞用原形",
+         blocks=[F("(You) ＋ 原形動詞 …"), H("重點"),
+                 UL("用途：命令、請求、提醒、建議。", "主詞是「你」或「你們」，說話對象很明確，所以省略。",
+                    "動詞用原形：<b>Keep</b>…、<b>Be</b> quiet!", "否定用 Don't：<b>Don't</b> open the door.",
+                    "強調時可以說出 You：<b>You</b> be quiet!", "Let's 表示「我們一起」：<b>Let's</b> go.",
+                    "加上 please 語氣比較客氣：<b>Please</b> sit down."),
+                 TIP("怎麼證明主詞是 you？加上附加問句：Keep the door open, will <b>you</b>?"),
+                 WARN("叫對方的名字不是主詞。", ("Tom, keep the door open.", "Tom 只是稱呼，主詞仍然是 (You)"))]),
+    dict(id="yes_no_question", title="是非疑問句", brief="把助動詞或 be 動詞移到主詞前面，就變成用 Yes／No 回答的疑問句。",
+         trigger="助動詞或 be 動詞在主詞前面",
+         blocks=[F("助動詞 ＋ 主詞 ＋ 原形動詞 …?"), EX(("You can swim.", "直述句"), ("<b>Can</b> you swim?", "疑問句")),
+                 F("be 動詞 ＋ 主詞 ＋ …?"), EX(("Your sister is a nurse.", "直述句"), ("<b>Is</b> your sister a nurse?", "疑問句：這裡的 Is 是主要動詞，標 V")),
+                 H("沒有助動詞時，加上 do／does／did"),
+                 EX(("You like it. → <b>Do</b> you like it?", ""), ("She plays tennis. → <b>Does</b> she <b>play</b> tennis?", "動詞變回原形"), ("You finished it. → <b>Did</b> you <b>finish</b> it?", "")),
+                 TIP("Can you…? 可以用來客氣地請人幫忙，Could you…? 更客氣。"),
+                 WARN("用了 does／did 之後，動詞要變回原形。", ("Does she plays tennis?", "", "no"), ("Does she play tennis?", "", "ok"))]),
+    dict(id="dummy_it", title="虛主詞 It", brief="It 只是佔位子，真正的主詞在句子後面。",
+         trigger="It ＋ be ＋ 形容詞 ＋ to V／that 子句",
+         blocks=[F("It ＋ be ＋ 形容詞 ＋ to V …"), H("還原測試"),
+                 EX(("<b>It</b> is hard <b>to learn English</b>.", "常見說法"), ("<b>To learn English</b> is hard.", "還原後：S + V + SC")),
+                 TIP("主詞太長時，英文習慣先用 It 佔位，把長的主詞放到句尾，讀起來比較輕鬆。"),
+                 INFO("和 There is 的差別：There is 的 There 是引導詞，真正的主詞標 S；It 句型的 It 標 S，真正的主詞標「真主詞」。"),
+                 WARN("很多人看到後面的 to learn，就以為是 S + V + O。", ("It is hard to learn English.", "句型三（S + V + SC），hard 才是補語"))],
+         see_also=["there_be"]),
+    dict(id="gerund_subject", title="動名詞當主詞", brief="動詞加 -ing 變成名詞，就可以當主詞，意思是「做這件事」。",
+         trigger="主詞是 V-ing（動名詞）",
+         blocks=[F("V-ing（…） ＋ 單數動詞 …"),
+                 EX(("<b>Swimming</b> is fun.", "游泳很好玩"), ("<b>Reading books</b> makes me happy.", "讀書讓我開心")),
+                 TIP("動名詞主詞一律當單數：Reading books <b>is</b>…，不是 are（books 只是 reading 的受詞）。"),
+                 INFO("也可以用不定詞當主詞（To swim is fun.），但比較正式，口語通常用動名詞，或改成 It is fun to swim.")],
+         see_also=["dummy_it", "to_v_or_ving_object"]),
+    dict(id="linking_verbs", title="連綴動詞", brief="後面接形容詞或名詞，說明主詞的狀態或身分，而不是動作的對象。",
+         trigger="動詞後面接主詞補語（句型三），而且不是 be 動詞",
+         blocks=[F("主詞 ＋ 連綴動詞 ＋ 補語　→　主詞 ＝ 補語"), H("常見的連綴動詞"),
+                 UL("be 動詞：am、is、are", "感官：look、sound、smell、taste、feel", "變化：become、get、turn、grow", "保持：stay、keep、remain", "看起來：seem、appear"),
+                 TIP("等號測試：The tree stayed green → tree = green 說得通，green 就是補語。"),
+                 WARN("感官動詞後面接形容詞，不接副詞。", ("The soup smells good.", "", "ok"), ("The soup smells well.", "", "no"))],
+         see_also=["verb_multiple_patterns"]),
+    dict(id="dative_verbs", title="授與動詞", brief="後面可以接兩個受詞：給「誰」（IO）、給「什麼」（DO）。",
+         trigger="句型四 S + Vt + IO + DO",
+         blocks=[F("授與動詞 ＋ 人（IO）＋ 物（DO）"), H("常見的授與動詞"), UL("give、show、send、tell、pass、lend、bring、buy、make、cook"),
+                 H("可以改寫成「物 ＋ to／for ＋ 人」"),
+                 UL("用 <b>to</b>（東西送到對方手上）：give me a book → give a book <b>to</b> me",
+                    "用 <b>for</b>（替對方做）：buy me a bike → buy a bike <b>for</b> me"),
+                 TIP("判斷方法：能這樣改寫的，就是間接受詞 ＋ 直接受詞。"),
+                 WARN("改寫後，介系詞不能省略。", ("He gave a book me.", "", "no"), ("He gave a book to me.", "", "ok"))]),
+    dict(id="causative_perception", title="使役動詞／感官動詞", brief="後面接「受詞 ＋ 原形動詞」，說明讓某人做、或看到某人做某事。",
+         trigger="make／let／have／see／hear／watch ＋ 受詞 ＋ 原形動詞",
+         blocks=[F("使役／感官動詞 ＋ O ＋ 原形動詞"), H("使役動詞：讓、叫某人做"),
+                 EX(("The teacher <b>made</b> us <b>clean</b> the classroom.", "老師叫我們打掃教室"), ("My mom <b>let</b> me <b>go</b> out.", "媽媽讓我出去")),
+                 H("感官動詞：看到、聽到某人做"),
+                 EX(("I <b>saw</b> him <b>cross</b> the street.", "看到整個過程"), ("I <b>heard</b> her <b>sing</b>.", "")),
+                 TIP("感官動詞也可以接 V-ing，表示「正在做」：I saw him <b>crossing</b> the street.（看到他正在過馬路）"),
+                 WARN("使役動詞後面不能加 to。", ("The teacher made us to clean the room.", "", "no"), ("The teacher made us clean the room.", "", "ok"))]),
+    dict(id="to_v_or_ving_object", title="不定詞、動名詞當受詞", brief="受詞可以是一個動作：to V 或 V-ing，要看前面的動詞決定。",
+         trigger="受詞是 to V 或 V-ing",
+         blocks=[H("後面接 to V 的動詞"), UL("want、hope、decide、plan、need、learn、agree", "例：He <b>wants to go</b> home."),
+                 H("後面接 V-ing 的動詞"), UL("enjoy、finish、mind、practice、keep、avoid、quit", "例：They <b>enjoy playing</b> basketball."),
+                 H("兩種都可以"), UL("like、love、start、begin", "例：I like <b>to swim</b>. ＝ I like <b>swimming</b>."),
+                 TIP("記法：to V 多半指「還沒做、想要去做」；V-ing 多半指「正在做、已經在做」。"),
+                 WARN("enjoy、finish 後面只能接 V-ing。", ("I enjoy to play basketball.", "", "no"), ("I enjoy playing basketball.", "", "ok"))]),
+    dict(id="verb_multiple_patterns", title="同一個動詞，不同句型", brief="{verb} 可以用在好幾種句型，要看後面接什麼。",
+         trigger="動詞在「多句型動詞」字表裡（find、run、turn、make、get、keep…）",
+         blocks=[H("常見例子"),
+                 UL("find：He found the book. 找到（句型二）／He found the book <b>easy</b>. 覺得（句型五）／She found us a seat. 替…找到（句型四）",
+                    "run：He runs fast. 跑（句型一）／She runs a shop. 經營（句型二）",
+                    "turn：The leaves turn red. 變成（句型三）／The snow turned the town white. 使…變成（句型五）",
+                    "make：She made a cake. 做（句型二）／She made us a cake. 替…做（句型四）／The news made her sad. 使（句型五）",
+                    "keep：Keep quiet. 保持（句型三）／Keep the door open. 使…保持（句型五）"),
+                 TIP("判斷方法：先看動詞後面有幾個成分，再用「等號測試」和「改寫測試」確認是補語還是受詞。")]),
+    dict(id="unit_of", title="單位詞 ＋ of ＋ 名詞", brief="{unit} 是單位，真正的東西是 {noun}；動詞單複數看單位。",
+         trigger="a glass／cup／piece… ＋ of ＋ 名詞",
+         blocks=[F("a ＋ 單位 ＋ of ＋ 名詞"),
+                 EX(("a glass of <b>water</b>", "一杯水"), ("a piece of <b>paper</b>", "一張紙"), ("two cups of <b>coffee</b>", "兩杯咖啡")),
+                 TIP("核心字是 of 後面的名詞，但動詞單複數要看單位：A glass of water <b>is</b>…／Two glasses of water <b>are</b>…"),
+                 WARN("不可數名詞不能直接加 s，要用單位詞來數。", ("two waters", "", "no"), ("two glasses of water", "", "ok"))],
+         see_also=["quantifier_of"]),
+    dict(id="relative_pronoun", title="關係代名詞（who／which／that）", brief="用一段話補充說明前面的名詞，像一個比較長的形容詞。",
+         trigger="名詞後面接形容詞子句",
+         blocks=[F("名詞 ＋ who／which／that ＋ 動詞 …"), H("把兩句合成一句"),
+                 UL("My big sister likes to cook.", "My big sister made a cake.", "→ My big sister, <b>who likes to cook</b>, made a cake."),
+                 H("怎麼選"), UL("人：who（或 that）", "東西、動物：which（或 that）"),
+                 TIP("有逗號＝只是補充（我只有一個姊姊）；沒逗號＝指定是哪一個（My sister who lives in Taipei，暗示還有別的姊姊）。"),
+                 INFO("關係代名詞當受詞時可以省略：The book (that) I bought is interesting.")],
+         see_also=["modifier_position"]),
+    dict(id="coordinating_conj", title="對等連接詞", brief="連接兩個地位相等、都能獨立成句的句子。",
+         trigger="兩個完整句子用 and、but、or、so… 連接",
+         blocks=[F("完整句子 ＋ , ＋ 對等連接詞 ＋ 完整句子"), H("七個對等連接詞：FANBOYS"),
+                 UL("<b>F</b>or 因為（較正式）", "<b>A</b>nd 而且", "<b>N</b>or 也不", "<b>B</b>ut 但是", "<b>O</b>r 或者", "<b>Y</b>et 然而", "<b>S</b>o 所以"),
+                 TIP("拆開測試：把連接詞拿掉，前後兩句都能獨立存在，就是對等句。"),
+                 INFO("連接兩個完整句子時，對等連接詞前面通常加逗號；只連接兩個字（tea and coffee）時不用。")],
+         see_also=["subordinating_conj"]),
+    dict(id="subordinating_conj", title="從屬連接詞與副詞子句", brief="這種連接詞帶出的子句不能單獨存在，只是用來說明主要句子。",
+         trigger="句子裡有副詞子句（because、when、if、although…）",
+         blocks=[F("從屬連接詞 ＋ S ＋ V …（副詞子句）"), H("常見的從屬連接詞"),
+                 UL("表時間：when、while、before、after、until、since、as soon as", "表原因：because、since、as", "表條件：if、unless", "表讓步：although、though、even though", "表目的：so that"),
+                 H("逗號怎麼加"),
+                 EX(("<b>Because it was raining,</b> we stayed at home.", "副詞子句在前 → 加逗號"), ("We stayed at home <b>because it was raining.</b>", "副詞子句在後 → 通常不加")),
+                 TIP("和對等句的差別：because 子句拿出來單獨寫（Because it was raining.），意思不完整，所以是「從屬」。"),
+                 WARN("中文說「因為…所以…」「雖然…但是…」，英文只能選一個。",
+                      ("Because it was raining, so we stayed at home.", "", "no"), ("Because it was raining, we stayed at home.", "", "ok"),
+                      ("Although he was tired, but he kept working.", "", "no"), ("Although he was tired, he kept working.", "", "ok"))],
+         see_also=["coordinating_conj"]),
+    dict(id="modifier_position", title="修飾語放在名詞後面", brief="中文的修飾語放在名詞前面，英文的片語、子句修飾語常常放在名詞後面。",
+         trigger="形容詞功能的片語或子句，放在被修飾的名詞後面",
+         blocks=[H("中英文順序相反"),
+                 EX(("the boy <b>in the blue shirt</b>", "穿藍色襯衫的男孩"), ("the book <b>on the desk</b>", "桌上的書"), ("a friend <b>who lives in Tainan</b>", "住在台南的朋友")),
+                 TIP("讀長句的方法：先找到名詞（boy），再往後看是什麼在說明它（in the blue shirt），翻成中文時把說明搬到前面。"),
+                 INFO("單一個形容詞通常放在前面（a <b>blue</b> shirt）；片語、子句才放在後面。")],
+         see_also=["relative_pronoun"]),
+]
+
+if __name__ == "__main__":
+    out = Path("backend/cards")
+    for card in CARDS:
+        card.setdefault("see_also", [])
+        path = out / f"{card['id']}.yaml"
+        path.write_text(yaml.safe_dump(card, allow_unicode=True, sort_keys=False, width=200), encoding="utf-8")
+    print(f"寫入 {len(CARDS)} 張卡片")

@@ -1,0 +1,24 @@
+id: coordinating_conj
+title: 對等連接詞
+brief: 連接兩個地位相等、都能獨立成句的句子。
+trigger: 兩個完整句子用 and、but、or、so… 連接
+blocks:
+- type: formula
+  text: 完整句子 ＋ , ＋ 對等連接詞 ＋ 完整句子
+- type: heading
+  text: 七個對等連接詞：FANBOYS
+- type: list
+  items:
+  - <b>F</b>or 因為（較正式）
+  - <b>A</b>nd 而且
+  - <b>N</b>or 也不
+  - <b>B</b>ut 但是
+  - <b>O</b>r 或者
+  - <b>Y</b>et 然而
+  - <b>S</b>o 所以
+- type: tip
+  text: 拆開測試：把連接詞拿掉，前後兩句都能獨立存在，就是對等句。
+- type: info
+  text: 連接兩個完整句子時，對等連接詞前面通常加逗號；只連接兩個字（tea and coffee）時不用。
+see_also:
+- subordinating_conj

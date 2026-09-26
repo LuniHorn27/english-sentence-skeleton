@@ -1,0 +1,39 @@
+id: causative_perception
+title: 使役動詞／感官動詞
+brief: 後面接「受詞 ＋ 原形動詞」，說明讓某人做、或看到某人做某事。
+trigger: make／let／have／see／hear／watch ＋ 受詞 ＋ 原形動詞
+blocks:
+- type: formula
+  text: 使役／感官動詞 ＋ O ＋ 原形動詞
+- type: heading
+  text: 使役動詞：讓、叫某人做
+- type: examples
+  examples:
+  - en: The teacher <b>made</b> us <b>clean</b> the classroom.
+    zh: 老師叫我們打掃教室
+    mark: none
+  - en: My mom <b>let</b> me <b>go</b> out.
+    zh: 媽媽讓我出去
+    mark: none
+- type: heading
+  text: 感官動詞：看到、聽到某人做
+- type: examples
+  examples:
+  - en: I <b>saw</b> him <b>cross</b> the street.
+    zh: 看到整個過程
+    mark: none
+  - en: I <b>heard</b> her <b>sing</b>.
+    zh: ''
+    mark: none
+- type: tip
+  text: 感官動詞也可以接 V-ing，表示「正在做」：I saw him <b>crossing</b> the street.（看到他正在過馬路）
+- type: warn
+  text: 使役動詞後面不能加 to。
+  examples:
+  - en: The teacher made us to clean the room.
+    zh: ''
+    mark: 'no'
+  - en: The teacher made us clean the room.
+    zh: ''
+    mark: ok
+see_also: []

@@ -1,0 +1,44 @@
+id: present_perfect
+title: 現在完成式
+brief: 表示「已經」做完、「曾經」做過，或從過去「一直」持續到現在。
+trigger: 助動詞是 have／has，而且主要動詞是過去分詞（p.p.）
+blocks:
+- type: formula
+  text: have／has ＋ p.p.（過去分詞）
+- type: heading
+  text: 三種用法
+- type: examples
+  examples:
+  - en: She has <b>already</b> finished the book.
+    zh: 已經完成
+    mark: none
+  - en: I have <b>been</b> to Japan <b>twice</b>.
+    zh: 曾經的經驗
+    mark: none
+  - en: He has lived here <b>for ten years</b>.
+    zh: 從過去持續到現在
+    mark: none
+- type: heading
+  text: 常一起出現的字
+- type: list
+  items:
+  - already、yet、just、ever、never
+  - for ＋ 一段時間（for ten years）
+  - since ＋ 起點（since 2020）
+- type: heading
+  text: 句子變化
+- type: list
+  items:
+  - 否定：She has <b>not</b> finished yet.
+  - 疑問：<b>Has</b> she finished yet?
+- type: warn
+  text: 有明確的過去時間（yesterday、last year）時，用過去式，不用完成式。
+  examples:
+  - en: I have finished it yesterday.
+    zh: ''
+    mark: 'no'
+  - en: I finished it yesterday.
+    zh: ''
+    mark: ok
+see_also:
+- present_progressive

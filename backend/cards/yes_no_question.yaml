@@ -1,0 +1,50 @@
+id: yes_no_question
+title: 是非疑問句
+brief: 把助動詞或 be 動詞移到主詞前面，就變成用 Yes／No 回答的疑問句。
+trigger: 助動詞或 be 動詞在主詞前面
+blocks:
+- type: formula
+  text: 助動詞 ＋ 主詞 ＋ 原形動詞 …?
+- type: examples
+  examples:
+  - en: You can swim.
+    zh: 直述句
+    mark: none
+  - en: <b>Can</b> you swim?
+    zh: 疑問句
+    mark: none
+- type: formula
+  text: be 動詞 ＋ 主詞 ＋ …?
+- type: examples
+  examples:
+  - en: Your sister is a nurse.
+    zh: 直述句
+    mark: none
+  - en: <b>Is</b> your sister a nurse?
+    zh: 疑問句：這裡的 Is 是主要動詞，標 V
+    mark: none
+- type: heading
+  text: 沒有助動詞時，加上 do／does／did
+- type: examples
+  examples:
+  - en: You like it. → <b>Do</b> you like it?
+    zh: ''
+    mark: none
+  - en: She plays tennis. → <b>Does</b> she <b>play</b> tennis?
+    zh: 動詞變回原形
+    mark: none
+  - en: You finished it. → <b>Did</b> you <b>finish</b> it?
+    zh: ''
+    mark: none
+- type: tip
+  text: Can you…? 可以用來客氣地請人幫忙，Could you…? 更客氣。
+- type: warn
+  text: 用了 does／did 之後，動詞要變回原形。
+  examples:
+  - en: Does she plays tennis?
+    zh: ''
+    mark: 'no'
+  - en: Does she play tennis?
+    zh: ''
+    mark: ok
+see_also: []

@@ -1,0 +1,45 @@
+id: subordinating_conj
+title: 從屬連接詞與副詞子句
+brief: 這種連接詞帶出的子句不能單獨存在，只是用來說明主要句子。
+trigger: 句子裡有副詞子句（because、when、if、although…）
+blocks:
+- type: formula
+  text: 從屬連接詞 ＋ S ＋ V …（副詞子句）
+- type: heading
+  text: 常見的從屬連接詞
+- type: list
+  items:
+  - 表時間：when、while、before、after、until、since、as soon as
+  - 表原因：because、since、as
+  - 表條件：if、unless
+  - 表讓步：although、though、even though
+  - 表目的：so that
+- type: heading
+  text: 逗號怎麼加
+- type: examples
+  examples:
+  - en: <b>Because it was raining,</b> we stayed at home.
+    zh: 副詞子句在前 → 加逗號
+    mark: none
+  - en: We stayed at home <b>because it was raining.</b>
+    zh: 副詞子句在後 → 通常不加
+    mark: none
+- type: tip
+  text: 和對等句的差別：because 子句拿出來單獨寫（Because it was raining.），意思不完整，所以是「從屬」。
+- type: warn
+  text: 中文說「因為…所以…」「雖然…但是…」，英文只能選一個。
+  examples:
+  - en: Because it was raining, so we stayed at home.
+    zh: ''
+    mark: 'no'
+  - en: Because it was raining, we stayed at home.
+    zh: ''
+    mark: ok
+  - en: Although he was tired, but he kept working.
+    zh: ''
+    mark: 'no'
+  - en: Although he was tired, he kept working.
+    zh: ''
+    mark: ok
+see_also:
+- coordinating_conj

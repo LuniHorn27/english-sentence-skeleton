@@ -1,0 +1,26 @@
+id: relative_pronoun
+title: 關係代名詞（who／which／that）
+brief: 用一段話補充說明前面的名詞，像一個比較長的形容詞。
+trigger: 名詞後面接形容詞子句
+blocks:
+- type: formula
+  text: 名詞 ＋ who／which／that ＋ 動詞 …
+- type: heading
+  text: 把兩句合成一句
+- type: list
+  items:
+  - My big sister likes to cook.
+  - My big sister made a cake.
+  - → My big sister, <b>who likes to cook</b>, made a cake.
+- type: heading
+  text: 怎麼選
+- type: list
+  items:
+  - 人：who（或 that）
+  - 東西、動物：which（或 that）
+- type: tip
+  text: 有逗號＝只是補充（我只有一個姊姊）；沒逗號＝指定是哪一個（My sister who lives in Taipei，暗示還有別的姊姊）。
+- type: info
+  text: 關係代名詞當受詞時可以省略：The book (that) I bought is interesting.
+see_also:
+- modifier_position

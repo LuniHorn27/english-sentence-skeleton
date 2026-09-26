@@ -1,0 +1,35 @@
+id: to_v_or_ving_object
+title: 不定詞、動名詞當受詞
+brief: 受詞可以是一個動作：to V 或 V-ing，要看前面的動詞決定。
+trigger: 受詞是 to V 或 V-ing
+blocks:
+- type: heading
+  text: 後面接 to V 的動詞
+- type: list
+  items:
+  - want、hope、decide、plan、need、learn、agree
+  - 例：He <b>wants to go</b> home.
+- type: heading
+  text: 後面接 V-ing 的動詞
+- type: list
+  items:
+  - enjoy、finish、mind、practice、keep、avoid、quit
+  - 例：They <b>enjoy playing</b> basketball.
+- type: heading
+  text: 兩種都可以
+- type: list
+  items:
+  - like、love、start、begin
+  - 例：I like <b>to swim</b>. ＝ I like <b>swimming</b>.
+- type: tip
+  text: 記法：to V 多半指「還沒做、想要去做」；V-ing 多半指「正在做、已經在做」。
+- type: warn
+  text: enjoy、finish 後面只能接 V-ing。
+  examples:
+  - en: I enjoy to play basketball.
+    zh: ''
+    mark: 'no'
+  - en: I enjoy playing basketball.
+    zh: ''
+    mark: ok
+see_also: []
