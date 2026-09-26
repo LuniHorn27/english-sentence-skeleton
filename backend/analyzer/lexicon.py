@@ -89,7 +89,7 @@ PERSON_NOUNS = {
 QUANTIFIERS = {
     "most", "some", "all", "half", "each", "one", "many", "much", "few", "both",
     "any", "none", "several", "neither", "either", "lots", "plenty", "part",
-    "rest", "majority", "two", "three", "four", "five", "every",
+    "rest", "majority", "two", "three", "four", "five", "every", "lot", "number", "couple",
 }
 
 # 單位詞：a glass of water（核心字是 of 後面的名詞）
@@ -118,4 +118,14 @@ PLACE_NOUNS = {
     "bedroom", "bathroom", "hall", "hallway", "gym", "zoo", "museum", "backyard",
     "country", "village", "world", "air", "water", "sky", "sea", "river", "lake",
     "mountain", "hill", "forest", "farm", "camp", "class", "church", "temple",
+}
+
+# 動詞 ＋ 介系詞的固定搭配：介系詞後面是動作的對象，不是地點（look at the photo）
+VERB_PREP_OBJECT = {
+    ("look", "at"), ("look", "for"), ("look", "after"), ("listen", "to"), ("wait", "for"),
+    ("laugh", "at"), ("talk", "to"), ("talk", "about"), ("think", "about"), ("think", "of"),
+    ("care", "about"), ("belong", "to"), ("depend", "on"), ("bark", "at"), ("shout", "at"),
+    ("smile", "at"), ("point", "at"), ("stare", "at"), ("agree", "with"), ("worry", "about"),
+    ("dream", "of"), ("dream", "about"), ("hear", "of"), ("hear", "about"), ("speak", "to"),
+    ("reply", "to"), ("ask", "for"), ("pay", "for"), ("search", "for"), ("apply", "for"),
 }

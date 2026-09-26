@@ -72,12 +72,16 @@ def adverb_function(tok) -> str:
     if dep in ("prep",):
         obj = next((c for c in tok.children if c.dep_ == "pobj"), None)
         olemma = obj.lemma_.lower() if obj is not None else ""
+        if lemma in ("at", "to") and obj is not None and (obj.pos_ == "PRON" or olemma in L.PERSON_NOUNS or obj.ent_type_ == "PERSON"):
+            return "副詞・表對象"  # shout at me、talk to the teacher
         if any(c.dep_ == "npadvmod" and c.lemma_ == "way" for c in tok.children):
             return "副詞・表路程"  # all the way to school
         if lemma in L.TIME_PREPS:
             return "副詞・表時間"
         if obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME")):
             return "副詞・表時間"
+        if (tok.head.lemma_.lower(), lemma) in L.VERB_PREP_OBJECT:
+            return "副詞・表對象"  # look at the photo：介系詞後面是動作的對象
         if olemma in L.CONDITION_NOUNS:
             return "副詞・表狀況"
         if lemma == "for":
@@ -349,6 +353,8 @@ def expand_noun_modifiers(roots, tokens, owner_of):
                     obj = next((x for x in g.children if x.dep_ == "pobj"), None)
                     olemma = obj.lemma_.lower() if obj is not None else ""
                     is_time = obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME"))
+                    if is_time and (tok.pos_ == "NUM" or tok.lemma_.lower() in L.TIME_NOUNS):
+                        continue  # at eight in the morning：整段都是時間，不拆開
                     if is_time and tok.lemma_.lower() not in L.TIME_NOUNS and spec.role in NOMINAL:
                         # on a busy day 掛在受詞上 → 其實是說明動作的時間
                         roots[g.i] = Spec("M", function="副詞・表時間", clause=spec.clause, kind="reattached")
