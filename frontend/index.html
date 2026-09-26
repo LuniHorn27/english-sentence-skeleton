@@ -27,6 +27,11 @@
       </div>
       <p id="error" class="error" role="alert" hidden></p>
     </form>
+    <div id="history" class="history" hidden>
+      <span class="history-title">最近分析：</span>
+      <span id="history-list" class="history-list"></span>
+      <button type="button" id="history-clear" class="link-btn">清除</button>
+    </div>
 
     <section id="toolbar" class="toolbar" hidden>
       <div class="modes" role="group" aria-label="顯示模式">
@@ -35,6 +40,7 @@
       </div>
       <button type="button" id="speed" class="speed" hidden>朗讀速度：正常</button>
       <button type="button" id="share-result" class="speed">分享這個分析</button>
+      <button type="button" id="print" class="speed">列印講義</button>
       <ul class="legend" aria-label="圖例">
         <li><span class="swatch solid"></span>算進公式</li>
         <li><span class="swatch dashed"></span>不算進公式</li>

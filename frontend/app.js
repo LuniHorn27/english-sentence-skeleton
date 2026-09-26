@@ -526,7 +526,53 @@ function loadFromHash() {
 }
 window.addEventListener("hashchange", loadFromHash);
 
+// ---------- 列印講義 ----------
+// 列印時用詳細模式（修飾語標籤也印出來），印完再切回原本的模式
+let modeBeforePrint = null;
+window.addEventListener("beforeprint", () => {
+  modeBeforePrint = result.classList.contains("detail") ? "detail" : "skeleton";
+  result.classList.add("detail");
+});
+window.addEventListener("afterprint", () => {
+  if (modeBeforePrint) setMode(modeBeforePrint);
+});
+$("print").addEventListener("click", () => window.print());
+
+// ---------- 最近分析（只存在這台裝置的瀏覽器裡） ----------
+const HISTORY_MAX = 10;
+function loadHistory() {
+  try { return JSON.parse(storageGet("history") || "[]").filter((x) => typeof x === "string"); } catch { return []; }
+}
+function renderHistory() {
+  const items = loadHistory();
+  const wrap = $("history");
+  const list = $("history-list");
+  list.replaceChildren();
+  wrap.hidden = items.length === 0;
+  for (const text of items) {
+    const chip = el("button", "history-chip", text.length > 40 ? `${text.slice(0, 40)}…` : text);
+    chip.type = "button";
+    chip.title = text;
+    chip.addEventListener("click", () => {
+      input.value = text;
+      updateCounter();
+      form.requestSubmit();
+    });
+    list.append(chip);
+  }
+}
+function addHistory(text) {
+  const items = [text, ...loadHistory().filter((x) => x !== text)].slice(0, HISTORY_MAX);
+  storageSet("history", JSON.stringify(items));
+  renderHistory();
+}
+$("history-clear").addEventListener("click", () => {
+  storageSet("history", "[]");
+  renderHistory();
+});
+
 updateCounter();
+renderHistory();
 loadFromHash();
   errorBox.hidden = true;
 });
@@ -561,6 +607,7 @@ form.addEventListener("submit", async (event) => {
       return;
     }
     render(await response.json());
+    addHistory(text);
   } catch {
     result.replaceChildren();
     showError("連不上伺服器，請確認伺服器已啟動");
@@ -618,5 +665,51 @@ function loadFromHash() {
 }
 window.addEventListener("hashchange", loadFromHash);
 
+// ---------- 列印講義 ----------
+// 列印時用詳細模式（修飾語標籤也印出來），印完再切回原本的模式
+let modeBeforePrint = null;
+window.addEventListener("beforeprint", () => {
+  modeBeforePrint = result.classList.contains("detail") ? "detail" : "skeleton";
+  result.classList.add("detail");
+});
+window.addEventListener("afterprint", () => {
+  if (modeBeforePrint) setMode(modeBeforePrint);
+});
+$("print").addEventListener("click", () => window.print());
+
+// ---------- 最近分析（只存在這台裝置的瀏覽器裡） ----------
+const HISTORY_MAX = 10;
+function loadHistory() {
+  try { return JSON.parse(storageGet("history") || "[]").filter((x) => typeof x === "string"); } catch { return []; }
+}
+function renderHistory() {
+  const items = loadHistory();
+  const wrap = $("history");
+  const list = $("history-list");
+  list.replaceChildren();
+  wrap.hidden = items.length === 0;
+  for (const text of items) {
+    const chip = el("button", "history-chip", text.length > 40 ? `${text.slice(0, 40)}…` : text);
+    chip.type = "button";
+    chip.title = text;
+    chip.addEventListener("click", () => {
+      input.value = text;
+      updateCounter();
+      form.requestSubmit();
+    });
+    list.append(chip);
+  }
+}
+function addHistory(text) {
+  const items = [text, ...loadHistory().filter((x) => x !== text)].slice(0, HISTORY_MAX);
+  storageSet("history", JSON.stringify(items));
+  renderHistory();
+}
+$("history-clear").addEventListener("click", () => {
+  storageSet("history", "[]");
+  renderHistory();
+});
+
 updateCounter();
+renderHistory();
 loadFromHash();
