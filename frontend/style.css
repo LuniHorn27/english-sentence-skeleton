@@ -104,6 +104,8 @@ textarea {
 .sentence { border-top: 1px solid var(--border); padding: 18px 0 12px; }
 .sentence:first-child { border-top: 0; }
 .s-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.s-num { font-size: 13px; color: var(--muted); min-width: 1.2em; }
+.failed-text { color: var(--text-2); margin: 8px 0 0; }
 .pattern { font-size: 14px; background: var(--accent-bg); color: var(--accent-text); padding: 3px 10px; border-radius: 8px; }
 .tag { font-size: 12px; color: var(--text-2); border: 1px solid var(--border-strong); padding: 1px 8px; border-radius: 6px; }
 .banner { font-size: 14px; background: var(--tip-bg); color: var(--tip); border-radius: 8px; padding: 8px 12px; margin-top: 10px; }

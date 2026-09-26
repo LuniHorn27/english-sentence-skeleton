@@ -1,7 +1,7 @@
 // 英文句子骨架分析：前端畫面
 // 資安：句子、說明等文字一律用 textContent 顯示；只有我們自己寫的文法重點卡允許 <b> 粗體。
 
-const MAX_CHARS = 300;
+const MAX_CHARS = 2000;
 const GROUP = { S: "S", RS: "S", Vt: "V", Vi: "V", V: "V", aux: "V", O: "O", IO: "O", DO: "O", SC: "C", OC: "C" };
 const LABEL = { aux: "aux.", RS: "真主詞", conj: "conj.", unknown: "未分析" };
 const ROLE_NAME = {
@@ -284,10 +284,12 @@ function renderSentence(sIdx) {
   box.replaceChildren();
 
   const head = el("div", "s-head");
+  if (sentences.length > 1) head.append(el("span", "s-num", String(sIdx + 1)));
   if (sentence.kind === "compound") head.append(el("span", "tag", "對等句"));
   if (sentence.clauses.length) head.append(el("span", "pattern", sentence.header));
   box.append(head);
 
+  if (sentence.status === "failed" && sentences.length > 1) box.append(el("p", "failed-text", sentence.text));
   if (sentence.status !== "ok" && sentence.message) {
     box.append(el("div", `banner${sentence.status === "failed" ? " fail" : ""}`, sentence.message));
   }
@@ -356,7 +358,7 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   errorBox.hidden = true;
   const text = input.value.trim();
-  if (!text) return showError("請輸入一個英文句子");
+  if (!text) return showError("請輸入英文句子或一段英文文章");
   if (text.length > MAX_CHARS) return showError(`句子太長了，請控制在 ${MAX_CHARS} 個字元以內`);
 
   submit.disabled = true;

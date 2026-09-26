@@ -12,11 +12,11 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from backend.analyzer.engine import analyze_sentence, get_nlp
+from backend.analyzer.engine import analyze_text, get_nlp
 from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
 
 ROOT = Path(__file__).resolve().parent.parent
-MAX_CHARS = 300
+MAX_CHARS = 2000
 log = logging.getLogger("uvicorn.error")
 
 
@@ -38,16 +38,16 @@ class AnalyzeRequest(BaseModel):
 def analyze(req: AnalyzeRequest):
     text = req.text.strip()
     if not text:
-        raise HTTPException(400, "請輸入一個英文句子")
+        raise HTTPException(400, "請輸入英文句子或一段英文文章")
     if len(text) > MAX_CHARS:
         raise HTTPException(400, f"句子太長了，請控制在 {MAX_CHARS} 個字元以內")
     try:
-        sentence = analyze_sentence(text)
+        sentences = analyze_text(text)
     except Exception:  # 分析引擎出錯時，不讓網頁當掉，回報「無法分析」
         log.exception("分析失敗：%r", text)
-        sentence = SentenceResult(text=text, status="failed", clauses=[], chunks=[],
-                                  message="這句目前沒辦法分析，請換個說法再試一次。")
-    return AnalysisResult(input=text, sentences=[sentence])
+        sentences = [SentenceResult(text=text, status="failed", clauses=[], chunks=[],
+                                    message="這段文字目前沒辦法分析，請換個說法再試一次。")]
+    return AnalysisResult(input=text, sentences=sentences)
 
 
 @app.get("/api/cards/{card_id}", response_model=Card)

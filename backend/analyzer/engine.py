@@ -716,6 +716,16 @@ def analyze_sentence(text: str) -> SentenceResult:
         merged.append(c)
     raw = merged
 
+    # 對等句：以連接詞為界，前面屬於子句一、後面屬於子句二（分析程式有時把修飾語掛錯子句）
+    if kind == "compound":
+        seen = 0
+        for c in raw:
+            if c["role"] == "conj":
+                c["clause"] = seen
+                seen += 1
+            else:
+                c["clause"] = min(seen, len(infos) - 1)
+
     chunks = []
     for i, c in enumerate(raw):
         c["id"] = i
@@ -730,6 +740,28 @@ def analyze_sentence(text: str) -> SentenceResult:
     ]
     cards = [CardRef(id=f, vars=vars_.get(f, {})) for f in CARD_ORDER if f in flags][:MAX_CARDS]
     return SentenceResult(text=stext, status=status, message=message, kind=kind, clauses=clauses, chunks=chunks, cards=cards)
+
+
+MAX_SENTENCES = 30
+
+
+def split_sentences(text: str) -> list[str]:
+    """整段文章切成句子（用 spaCy 的斷句，縮寫如 Mr. 不會被誤切）"""
+    doc = get_nlp()(text.strip())
+    return [s.text.strip() for s in doc.sents if s.text.strip()]
+
+
+def analyze_text(text: str) -> list[SentenceResult]:
+    """整段文章：逐句分析；超過上限的句子不分析"""
+    if not re.search(r"[A-Za-z]{2,}", text) or re.search(r"[\u3400-\u9fff]", text):
+        return [analyze_sentence(text)]
+    parts = split_sentences(text)
+    results = [analyze_sentence(p) for p in parts[:MAX_SENTENCES]]
+    if len(parts) > MAX_SENTENCES:
+        rest = " ".join(parts[MAX_SENTENCES:])
+        results.append(SentenceResult(text=rest, status="failed", clauses=[], chunks=[],
+                                      message=f"文章太長了，只分析前 {MAX_SENTENCES} 句，後面的 {len(parts) - MAX_SENTENCES} 句沒有分析。"))
+    return results
 
 
 FORMULA = {1: "S + Vi", 2: "S + Vt + O", 3: "S + V + SC", 4: "S + Vt + IO + DO", 5: "S + Vt + O + OC"}

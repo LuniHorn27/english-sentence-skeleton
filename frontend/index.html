@@ -10,14 +10,14 @@
   <main>
     <header class="top">
       <h1>英文句子骨架分析</h1>
-      <p class="hint">輸入一個英文句子，看看它的主詞、動詞、受詞，以及屬於哪一種句型。</p>
+      <p class="hint">輸入英文句子或一段文章，看看每一句的主詞、動詞、受詞，以及屬於哪一種句型。</p>
     </header>
 
     <form id="form" class="ask" novalidate>
       <label for="input" class="sr-only">英文句子</label>
-      <textarea id="input" rows="2" maxlength="300" placeholder="The teacher showed us a picture." autocomplete="off" spellcheck="false"></textarea>
+      <textarea id="input" rows="3" maxlength="2000" placeholder="The teacher showed us a picture." autocomplete="off" spellcheck="false"></textarea>
       <div class="ask-bar">
-        <span id="counter" class="counter">0 / 300</span>
+        <span id="counter" class="counter">0 / 2000</span>
         <button id="submit" type="submit" class="primary">分析</button>
       </div>
       <p id="error" class="error" role="alert" hidden></p>
