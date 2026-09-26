@@ -8,14 +8,39 @@
 </head>
 <body>
   <main>
-    <h1>英文句子骨架分析</h1>
-    <p class="hint">1-1 空殼版：分析結果目前是示範用的假資料。</p>
-    <form id="form">
-      <input id="input" type="text" maxlength="300" placeholder="The teacher showed us a picture." autocomplete="off">
-      <button type="submit">分析</button>
+    <header class="top">
+      <h1>英文句子骨架分析</h1>
+      <p class="hint">輸入一個英文句子，看看它的主詞、動詞、受詞，以及屬於哪一種句型。</p>
+    </header>
+
+    <form id="form" class="ask" novalidate>
+      <label for="input" class="sr-only">英文句子</label>
+      <textarea id="input" rows="2" maxlength="300" placeholder="The teacher showed us a picture." autocomplete="off" spellcheck="false"></textarea>
+      <div class="ask-bar">
+        <span id="counter" class="counter">0 / 300</span>
+        <button id="submit" type="submit" class="primary">分析</button>
+      </div>
+      <p id="error" class="error" role="alert" hidden></p>
     </form>
-    <p id="error" class="error" hidden></p>
-    <section id="result"></section>
+
+    <section id="toolbar" class="toolbar" hidden>
+      <div class="modes" role="group" aria-label="顯示模式">
+        <button type="button" data-mode="skeleton" aria-pressed="true">骨架模式</button>
+        <button type="button" data-mode="detail" aria-pressed="false">詳細模式</button>
+      </div>
+      <ul class="legend" aria-label="圖例">
+        <li><span class="swatch solid"></span>算進公式</li>
+        <li><span class="swatch dashed"></span>不算進公式</li>
+        <li>( )　被省略的字</li>
+        <li><b>粗體</b>　核心字</li>
+      </ul>
+    </section>
+
+    <section id="result" aria-live="polite"></section>
+
+    <footer class="foot">
+      分析結果由程式自動產生，僅供學習參考，可能會有錯誤。
+    </footer>
   </main>
   <script src="/static/app.js"></script>
 </body>
