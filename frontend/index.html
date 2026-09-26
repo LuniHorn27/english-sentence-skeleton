@@ -41,7 +41,17 @@
     <section id="result" aria-live="polite"></section>
 
     <footer class="foot">
-      分析結果由程式自動產生，僅供學習參考，可能會有錯誤。
+      <p>分析結果由程式自動產生，僅供學習參考，可能會有錯誤。發現錯誤時，請按句子旁的「回報錯誤」。</p>
+      <details class="suggest">
+        <summary>提供建議</summary>
+        <form id="suggest-form" class="feedback">
+          <label for="suggest-text" class="sr-only">你的建議</label>
+          <textarea id="suggest-text" rows="3" maxlength="1000" placeholder="希望增加什麼功能？哪裡不好用？"></textarea>
+          <p class="fb-note">請不要填寫姓名、電話等個人資料。</p>
+          <button type="submit" class="primary">送出</button>
+          <p id="suggest-status" class="fb-status" role="status"></p>
+        </form>
+      </details>
     </footer>
   </main>
   <script src="/static/speech.js"></script>

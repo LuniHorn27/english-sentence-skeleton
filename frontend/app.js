@@ -302,6 +302,90 @@ function cardNode(sIdx, ref, card) {
   return node;
 }
 
+// ---------- 回報錯誤（2-5） ----------
+async function sendFeedback(payload) {
+  const response = await fetch("/api/feedback", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
+    throw new Error(typeof body.detail === "string" ? body.detail : "送出失敗，請稍後再試");
+  }
+}
+
+function feedbackForm(sIdx) {
+  const sentence = sentences[sIdx];
+  const view = views[sIdx];
+  const form = el("form", "feedback");
+  form.append(el("p", "fb-title", "哪裡分析錯了？"));
+
+  const select = el("select");
+  select.setAttribute("aria-label", "選擇有問題的部分");
+  const options = [["句型", sentence.header || "（無）"]];
+  for (const c of sentence.chunks) {
+    options.push([`「${c.text}」`, c.role === "M" ? labelText(c) : `${ROLE_NAME[c.role]}（${LABEL[c.role] || c.role}）`]);
+  }
+  options.push(["文法重點卡", ""], ["中文翻譯", sentence.translation || ""], ["其他", ""]);
+  for (const [part, current] of options) {
+    const opt = el("option", null, current ? `${part}：${current}` : part);
+    opt.value = JSON.stringify([part, current]);
+    select.append(opt);
+  }
+
+  const text = el("textarea");
+  text.rows = 2;
+  text.maxLength = 1000;
+  text.placeholder = "你認為正確的是什麼？例如：in the garden 應該是副詞・表地點";
+  text.setAttribute("aria-label", "你認為正確的答案");
+  const note = el("p", "fb-note", "請不要填寫姓名、電話等個人資料。");
+  const status = el("p", "fb-status");
+  const send = el("button", "primary", "送出");
+  send.type = "submit";
+  form.append(select, text, note, send, status);
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!text.value.trim()) {
+      status.textContent = "請先寫下你認為正確的答案";
+      return;
+    }
+    const [part, current] = JSON.parse(select.value);
+    send.disabled = true;
+    try {
+      await sendFeedback({ kind: "error", sentence: sentence.text, part, current, message: text.value.trim(), analysis: sentence });
+      view.feedback = "sent";
+      renderSentence(sIdx);
+    } catch (err) {
+      status.textContent = err.message;
+      send.disabled = false;
+    }
+  });
+  return form;
+}
+
+// ---------- 提供建議（頁尾） ----------
+const suggestForm = $("suggest-form");
+if (suggestForm) {
+  suggestForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const box = $("suggest-text");
+    const status = $("suggest-status");
+    if (!box.value.trim()) {
+      status.textContent = "請先寫下你的建議";
+      return;
+    }
+    try {
+      await sendFeedback({ kind: "suggestion", message: box.value.trim() });
+      box.value = "";
+      status.textContent = "收到了，謝謝你的建議！";
+    } catch (err) {
+      status.textContent = err.message;
+    }
+  });
+}
+
 // ---------- 一整句 ----------
 function renderSentence(sIdx) {
   const sentence = sentences[sIdx];
@@ -321,9 +405,19 @@ function renderSentence(sIdx) {
     link.title = "看這個句型的說明";
     head.append(link);
   }
+  const tools = el("span", "s-tools");
   if (window.Speech?.available && sentence.status !== "failed") {
-    head.append(speakButton(sentence.text, "朗讀"));
+    tools.append(speakButton(sentence.text, "朗讀"));
   }
+  const report = el("button", "speak", view.feedback === "sent" ? "已回報，謝謝" : "回報錯誤");
+  report.type = "button";
+  report.disabled = view.feedback === "sent";
+  report.addEventListener("click", () => {
+    view.feedback = view.feedback === "open" ? null : "open";
+    renderSentence(sIdx);
+  });
+  tools.append(report);
+  head.append(tools);
   box.append(head);
 
   if (sentence.status === "failed" && sentences.length > 1) box.append(el("p", "failed-text", sentence.text));
@@ -345,6 +439,8 @@ function renderSentence(sIdx) {
   const explain = explainBox(sentence, view);
   if (explain) box.append(explain);
 
+  if (view.feedback === "open") box.append(feedbackForm(sIdx));
+
   const cardsWrap = el("div", "cards");
   box.append(cardsWrap);
   for (const ref of sentence.cards || []) {
@@ -363,7 +459,7 @@ function render(data) {
   views = sentences.map(() => {
     const node = el("article", "sentence");
     result.append(node);
-    return { node, selected: null, expanded: new Set(), openCards: new Set() };
+    return { node, selected: null, expanded: new Set(), openCards: new Set(), feedback: null };
   });
   sentences.forEach((_, i) => renderSentence(i));
   toolbar.hidden = false;

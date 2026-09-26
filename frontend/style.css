@@ -222,3 +222,18 @@ a { color: var(--accent-line); }
 a.pattern { text-decoration: none; }
 a.pattern:hover { text-decoration: underline; }
 .top-links { font-size: 14px; margin: -8px 0 16px; }
+
+/* ---------- 回饋 ---------- */
+.s-tools { margin-left: auto; display: inline-flex; gap: 6px; }
+.s-tools .speak { margin-left: 0; }
+.feedback { display: grid; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-top: 10px; text-align: left; }
+.feedback select, .feedback textarea {
+  font: inherit; font-size: 14px; color: var(--text); background: var(--bg);
+  border: 1px solid var(--border-strong); border-radius: 6px; padding: 6px 8px; width: 100%;
+}
+.feedback button { justify-self: start; }
+.fb-title { margin: 0; font-weight: 600; font-size: 14px; }
+.fb-note { margin: 0; font-size: 12px; color: var(--muted); }
+.fb-status { margin: 0; font-size: 13px; color: var(--text-2); min-height: 1em; }
+.suggest { margin-top: 12px; text-align: left; max-width: 520px; margin-left: auto; margin-right: auto; }
+.suggest summary { cursor: pointer; text-align: center; color: var(--text-2); }

@@ -2,15 +2,21 @@
 
 啟動：.venv/bin/uvicorn backend.app:app --port 8765
 """
+import json
 import logging
+import threading
+import time
+from collections import defaultdict, deque
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from pathlib import Path
+from typing import Literal, Optional
 
 import yaml
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from backend.analyzer.engine import analyze_text, get_nlp
 from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
@@ -48,6 +54,41 @@ def analyze(req: AnalyzeRequest):
         sentences = [SentenceResult(text=text, status="failed", clauses=[], chunks=[],
                                     message="這段文字目前沒辦法分析，請換個說法再試一次。")]
     return AnalysisResult(input=text, sentences=sentences)
+
+
+# ---------- 使用者回饋（2-5） ----------
+FEEDBACK_FILE = ROOT / "data" / "feedback.jsonl"
+FEEDBACK_LIMIT = 20  # 同一個來源每小時最多幾則，防止洗版
+_feedback_lock = threading.Lock()
+_feedback_times: dict[str, deque] = defaultdict(deque)
+
+
+class Feedback(BaseModel):
+    kind: Literal["error", "suggestion"]
+    sentence: str = Field("", max_length=2000)
+    part: str = Field("", max_length=300, description="使用者選的片段或項目")
+    current: str = Field("", max_length=300, description="目前的分析結果")
+    message: str = Field(min_length=1, max_length=1000)
+    analysis: Optional[dict] = None
+
+
+@app.post("/api/feedback")
+def feedback(item: Feedback, request: Request):
+    # 只用來源位址做次數限制，不會存下來
+    key = request.client.host if request.client else "unknown"
+    now = time.time()
+    with _feedback_lock:
+        times = _feedback_times[key]
+        while times and now - times[0] > 3600:
+            times.popleft()
+        if len(times) >= FEEDBACK_LIMIT:
+            raise HTTPException(429, "回饋次數太多了，請稍後再試")
+        times.append(now)
+        FEEDBACK_FILE.parent.mkdir(exist_ok=True)
+        record = {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), **item.model_dump()}
+        with FEEDBACK_FILE.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    return {"ok": True}
 
 
 @app.get("/api/cards/{card_id}", response_model=Card)
