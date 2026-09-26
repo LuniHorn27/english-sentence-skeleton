@@ -62,7 +62,7 @@ def get_card(card_id: str):
 async def no_stale_files(request, call_next):
     """網頁檔案更新後，瀏覽器要重新確認，不要用舊的快取"""
     response = await call_next(request)
-    if request.url.path == "/" or request.url.path.startswith("/static/"):
+    if request.url.path in ("/", "/patterns") or request.url.path.startswith("/static/"):
         response.headers["Cache-Control"] = "no-cache"
     return response
 
@@ -70,6 +70,11 @@ async def no_stale_files(request, call_next):
 @app.get("/")
 def index():
     return FileResponse(ROOT / "frontend" / "index.html")
+
+
+@app.get("/patterns")
+def patterns_page():
+    return FileResponse(ROOT / "frontend" / "patterns.html")
 
 
 app.mount("/static", StaticFiles(directory=ROOT / "frontend"), name="static")

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>五大句型</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="detail-page">
+  <main>
+    <p class="back"><a href="/">← 回到句子分析</a></p>
+    <header class="top">
+      <h1>五大句型</h1>
+      <p class="hint">英文句子不管多長，骨架都逃不出這五種。先認識骨架，再看分析結果就會清楚很多。</p>
+    </header>
+
+    <section class="intro">
+      <h2>怎麼找出句子的骨架？</h2>
+      <ol class="steps">
+        <li><b>找動詞</b>：找出句子最核心的動作或狀態（會跟著主詞、時態變化的那個字）。</li>
+        <li><b>問「誰」</b>：是誰在做這個動作？答案就是<b>主詞 S</b>。</li>
+        <li><b>看動詞後面需要什麼</b>：不需要東西、需要受詞、需要補語，還是需要兩個成分？這決定了是哪一種句型。</li>
+        <li><b>其他都是修飾語</b>：時間、地點、方式、形容名詞的片語……拿掉之後，骨架仍然完整。</li>
+      </ol>
+      <div class="callout c-info"><span class="icon">ℹ</span><div><span class="c-name">關於句型編號</span><span class="c-text">不同教科書的句型編號不太一樣（有的把 S + V + C 叫句型二）。這個工具一律同時寫出編號和公式，看公式就不會搞混。</span></div></div>
+    </section>
+
+    <section class="intro">
+      <h2>標籤對照</h2>
+      <div class="label-table" id="labels"></div>
+    </section>
+
+    <div id="patterns"></div>
+
+    <section class="intro" id="compare">
+      <h2>最容易搞混：句型四 vs 句型五</h2>
+      <p>兩種句型的動詞後面都有兩個成分，差別在於：<b>第二個成分和第一個成分是不是「同一個東西」</b>。</p>
+      <div id="compare-examples"></div>
+      <div class="callout c-tip"><span class="icon">💡</span><div><span class="c-name">小技巧</span><span class="c-text">等號測試：him = a cake？不對，所以是句型四（IO + DO）。him = happy？說得通，所以是句型五（O + OC）。</span></div></div>
+    </section>
+
+    <footer class="foot">內容為本工具自行撰寫的學習說明，參考了常見的文法教學架構。</footer>
+  </main>
+  <script src="/static/patterns.js"></script>
+</body>
+</html>

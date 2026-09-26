@@ -312,7 +312,15 @@ function renderSentence(sIdx) {
   const head = el("div", "s-head");
   if (sentences.length > 1) head.append(el("span", "s-num", String(sIdx + 1)));
   if (sentence.kind === "compound") head.append(el("span", "tag", "對等句"));
-  if (sentence.clauses.length) head.append(el("span", "pattern", sentence.header));
+  if (sentence.clauses.length) {
+    // 句型標籤可以點，打開五大句型介紹的對應段落
+    const link = el("a", "pattern", sentence.header);
+    link.href = `/patterns#p${sentence.clauses[0].pattern}`;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.title = "看這個句型的說明";
+    head.append(link);
+  }
   if (window.Speech?.available && sentence.status !== "failed") {
     head.append(speakButton(sentence.text, "朗讀"));
   }
