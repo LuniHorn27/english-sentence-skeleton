@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>英文句子骨架分析</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <h1>英文句子骨架分析</h1>
+    <p class="hint">1-1 空殼版：分析結果目前是示範用的假資料。</p>
+    <form id="form">
+      <input id="input" type="text" maxlength="300" placeholder="The teacher showed us a picture." autocomplete="off">
+      <button type="submit">分析</button>
+    </form>
+    <p id="error" class="error" hidden></p>
+    <section id="result"></section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

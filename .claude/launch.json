@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "english-tool",
+      "runtimeExecutable": ".venv/bin/uvicorn",
+      "runtimeArgs": ["backend.app:app", "--port", "8765", "--reload", "--reload-dir", "backend", "--reload-dir", "frontend"],
+      "port": 8765
+    }
+  ]
+}
