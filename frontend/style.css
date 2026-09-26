@@ -107,6 +107,9 @@ textarea {
 .s-num { font-size: 13px; color: var(--muted); min-width: 1.2em; }
 .failed-text { color: var(--text-2); margin: 8px 0 0; }
 .pattern { font-size: 14px; background: var(--accent-bg); color: var(--accent-text); padding: 3px 10px; border-radius: 8px; }
+.speak { font-size: 12px; padding: 2px 10px; margin-left: auto; }
+.speak-mini { margin-left: 10px; padding: 0 8px; }
+.speed { font-size: 12px; padding: 4px 10px; }
 .tag { font-size: 12px; color: var(--text-2); border: 1px solid var(--border-strong); padding: 1px 8px; border-radius: 6px; }
 .banner { font-size: 14px; background: var(--tip-bg); color: var(--tip); border-radius: 8px; padding: 8px 12px; margin-top: 10px; }
 .banner.fail { background: var(--danger-bg); color: var(--danger); }

@@ -182,6 +182,29 @@ function chunkRow(sIdx) {
   return row;
 }
 
+// ---------- 朗讀 ----------
+function speakButton(text, label, extra = "") {
+  const btn = el("button", `speak ${extra}`, `🔊 ${label}`);
+  btn.type = "button";
+  btn.setAttribute("aria-label", `${label}：${text}`);
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    window.Speech.speak(text);
+  });
+  return btn;
+}
+
+const speedBtn = $("speed");
+if (window.Speech?.available) {
+  const syncSpeed = () => { speedBtn.textContent = `朗讀速度：${window.Speech.slow ? "慢速" : "正常"}`; };
+  speedBtn.hidden = false;
+  syncSpeed();
+  speedBtn.addEventListener("click", () => {
+    window.Speech.slow = !window.Speech.slow;
+    syncSpeed();
+  });
+}
+
 // ---------- 說明 ----------
 function explainBox(sentence, view) {
   const chunk = sentence.chunks.find((c) => c.id === view.selected);
@@ -191,6 +214,9 @@ function explainBox(sentence, view) {
   const kind = chunk.role === "M" ? labelText(chunk) : `${ROLE_NAME[chunk.role]}（${LABEL[chunk.role] || chunk.role}）`;
   box.append(document.createTextNode(`　${kind}`));
   if (chunk.structure) box.append(el("span", "struct", `　結構：${chunk.structure}`));
+  if (window.Speech?.available && !chunk.implicit) {
+    box.append(speakButton(chunk.text, "唸這一段", "speak-mini"));
+  }
   if (chunk.note) {
     box.append(el("br"));
     box.append(document.createTextNode(chunk.note));
@@ -287,6 +313,9 @@ function renderSentence(sIdx) {
   if (sentences.length > 1) head.append(el("span", "s-num", String(sIdx + 1)));
   if (sentence.kind === "compound") head.append(el("span", "tag", "對等句"));
   if (sentence.clauses.length) head.append(el("span", "pattern", sentence.header));
+  if (window.Speech?.available && sentence.status !== "failed") {
+    head.append(speakButton(sentence.text, "朗讀"));
+  }
   box.append(head);
 
   if (sentence.status === "failed" && sentences.length > 1) box.append(el("p", "failed-text", sentence.text));
@@ -300,6 +329,8 @@ function renderSentence(sIdx) {
   if (sentence.translation) {
     zh.textContent = sentence.translation;
     zh.append(el("span", "mt", "機器翻譯"));
+  } else if (sentence.translationStatus) {
+    zh.append(el("span", "zh-status", sentence.translationStatus));
   }
   box.append(zh);
 

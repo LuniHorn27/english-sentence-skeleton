@@ -21,7 +21,8 @@
     })().catch(() => null);
   }
 
-  function setLine(node, text, isTranslation) {
+  function setLine(node, text, isTranslation, sentence) {
+    if (sentence && !isTranslation) sentence.translationStatus = text; // 重新畫這一句時保留提示
     node.replaceChildren();
     if (isTranslation) {
       node.append(text);
@@ -45,15 +46,15 @@
       const node = document.querySelector(`[data-translation="${i}"]`);
       if (!node || sentence.status === "failed" || sentence.translation) continue;
       if (!("Translator" in self)) {
-        setLine(node, UNSUPPORTED, false);
+        setLine(node, UNSUPPORTED, false, sentence);
         continue;
       }
-      setLine(node, "翻譯中…", false);
+      setLine(node, "翻譯中…", false, sentence);
       prepare();
       const translator = await translatorPromise;
       if (!translator) {
         translatorPromise = null; // 下次按分析時再試一次
-        setLine(node, UNSUPPORTED, false);
+        setLine(node, UNSUPPORTED, false, sentence);
         continue;
       }
       try {
@@ -61,7 +62,7 @@
         sentence.translation = zh; // 重新畫這一句時（例如點片段）不用再翻一次
         setLine(node, zh, true);
       } catch {
-        setLine(node, "翻譯失敗，請稍後再試。", false);
+        setLine(node, "翻譯失敗，請稍後再試。", false, sentence);
       }
     }
   });
