@@ -40,8 +40,27 @@ class AnalyzeRequest(BaseModel):
     text: str
 
 
+# ---------- 次數限制（防止有人大量送出，拖垮伺服器） ----------
+_rate_lock = threading.Lock()
+_rate_times: dict[tuple[str, str], deque] = defaultdict(deque)
+
+
+def check_rate(request: Request, bucket: str, limit: int, window: int, message: str):
+    """同一個來源在 window 秒內最多 limit 次；來源位址只放在記憶體裡計數，不存檔"""
+    key = (bucket, request.client.host if request.client else "unknown")
+    now = time.time()
+    with _rate_lock:
+        times = _rate_times[key]
+        while times and now - times[0] > window:
+            times.popleft()
+        if len(times) >= limit:
+            raise HTTPException(429, message)
+        times.append(now)
+
+
 @app.post("/api/analyze", response_model=AnalysisResult)
-def analyze(req: AnalyzeRequest):
+def analyze(req: AnalyzeRequest, request: Request):
+    check_rate(request, "analyze", 30, 60, "分析次數太多了，請等一分鐘後再試")
     text = req.text.strip()
     if not text:
         raise HTTPException(400, "請輸入英文句子或一段英文文章")
@@ -60,7 +79,6 @@ def analyze(req: AnalyzeRequest):
 FEEDBACK_FILE = ROOT / "data" / "feedback.jsonl"
 FEEDBACK_LIMIT = 20  # 同一個來源每小時最多幾則，防止洗版
 _feedback_lock = threading.Lock()
-_feedback_times: dict[str, deque] = defaultdict(deque)
 
 
 class Feedback(BaseModel):
@@ -74,16 +92,8 @@ class Feedback(BaseModel):
 
 @app.post("/api/feedback")
 def feedback(item: Feedback, request: Request):
-    # 只用來源位址做次數限制，不會存下來
-    key = request.client.host if request.client else "unknown"
-    now = time.time()
+    check_rate(request, "feedback", FEEDBACK_LIMIT, 3600, "回饋次數太多了，請稍後再試")
     with _feedback_lock:
-        times = _feedback_times[key]
-        while times and now - times[0] > 3600:
-            times.popleft()
-        if len(times) >= FEEDBACK_LIMIT:
-            raise HTTPException(429, "回饋次數太多了，請稍後再試")
-        times.append(now)
         FEEDBACK_FILE.parent.mkdir(exist_ok=True)
         record = {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), **item.model_dump()}
         with FEEDBACK_FILE.open("a", encoding="utf-8") as f:

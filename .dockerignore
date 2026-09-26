@@ -1,0 +1,10 @@
+.venv
+.git
+.claude
+data
+docs
+spikes
+tests
+tools
+__pycache__
+*.pyc
