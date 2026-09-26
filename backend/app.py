@@ -1,9 +1,9 @@
 """網頁伺服器。
 
 啟動：.venv/bin/uvicorn backend.app:app --port 8765
-1-1 階段：分析功能先回傳 backend/samples/ 的示範假資料，還沒有接上分析引擎。
 """
-import json
+import logging
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 import yaml
@@ -12,13 +12,22 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from backend.analyzer.schema import AnalysisResult, Card
+from backend.analyzer.engine import analyze_sentence, get_nlp
+from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
 
 ROOT = Path(__file__).resolve().parent.parent
-SAMPLES = sorted((ROOT / "backend" / "samples").glob("*.json"))
 MAX_CHARS = 300
+log = logging.getLogger("uvicorn.error")
 
-app = FastAPI(title="英文句子骨架分析")
+
+@asynccontextmanager
+async def lifespan(_app):
+    get_nlp()  # 啟動時先載入分析程式，第一次分析才不會等很久
+    log.info("分析程式載入完成")
+    yield
+
+
+app = FastAPI(title="英文句子骨架分析", lifespan=lifespan)
 
 
 class AnalyzeRequest(BaseModel):
@@ -32,9 +41,13 @@ def analyze(req: AnalyzeRequest):
         raise HTTPException(400, "請輸入一個英文句子")
     if len(text) > MAX_CHARS:
         raise HTTPException(400, f"句子太長了，請控制在 {MAX_CHARS} 個字元以內")
-    # 假資料：依照輸入的長度輪流回傳示範結果，方便測試不同畫面
-    sample = SAMPLES[len(text) % len(SAMPLES)]
-    return AnalysisResult(**json.loads(sample.read_text(encoding="utf-8")))
+    try:
+        sentence = analyze_sentence(text)
+    except Exception:  # 分析引擎出錯時，不讓網頁當掉，回報「無法分析」
+        log.exception("分析失敗：%r", text)
+        sentence = SentenceResult(text=text, status="failed", clauses=[], chunks=[],
+                                  message="這句目前沒辦法分析，請換個說法再試一次。")
+    return AnalysisResult(input=text, sentences=[sentence])
 
 
 @app.get("/api/cards/{card_id}", response_model=Card)

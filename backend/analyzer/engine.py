@@ -1,0 +1,736 @@
+"""分析引擎：英文句子 → 分析結果（符合 schema.py 的格式）。
+
+流程
+1. spaCy（大型模型）分析句子，得到每個字的詞性和「依附關係」。
+2. 找出每個子句的主要動詞，替動詞底下的成分分配角色（S、O、SC…、修飾語）。
+3. 名詞後面的介系詞片語、形容詞子句另外切成「形容詞・修飾 X」。
+4. 每個字歸給離它最近、有角色的祖先 → 組成片段。
+5. 推出句型、核心字、文法重點卡、說明文字。
+
+規則依據：docs/標籤規則.md。沒有把握的部分標成 unknown（未分析）。
+"""
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass, field
+from typing import Optional
+
+from . import lexicon as L
+from .notes import chunk_note
+from .schema import CardRef, Chunk, Clause, SentenceResult, Span
+
+NOMINAL = {"S", "O", "IO", "DO", "SC", "OC", "RS"}
+VERB_ROLE = "VERB"  # 動詞種類（Vt／Vi／V）等句型決定後再填
+
+_nlp = None
+
+
+def get_nlp():
+    global _nlp
+    if _nlp is None:
+        import warnings
+
+        import spacy
+
+        warnings.filterwarnings("ignore")
+        _nlp = spacy.load("en_core_web_trf")
+    return _nlp
+
+
+@dataclass
+class Spec:
+    """一個片段的根（片段由這個字和它底下的字組成）"""
+
+    role: str
+    function: Optional[str] = None
+    modifies: object = None  # spaCy Token
+    clause: int = 0
+    kind: str = ""  # 補充分類：npadv（名詞片語當副詞）、relcl、advcl…
+    inner_verb: object = None  # 可展開的子句的動詞
+
+
+@dataclass
+class ClauseInfo:
+    verb: object
+    index: int
+    passive: bool = False
+    existential: bool = False
+    imperative: bool = False
+    question: bool = False
+    pattern: int = 0
+    flags: set = field(default_factory=set)
+    verb_token: object = None  # 真正要標 Vt／Vi／V 的字
+
+
+# ---------- 修飾語功能 ----------
+def adverb_function(tok) -> str:
+    """動詞底下的修飾語 → 副詞・表…"""
+    lemma = tok.lemma_.lower()
+    dep = tok.dep_
+    if dep == "agent":
+        return "副詞・表執行者"
+    if dep in ("prep",):
+        obj = next((c for c in tok.children if c.dep_ == "pobj"), None)
+        olemma = obj.lemma_.lower() if obj is not None else ""
+        if any(c.dep_ == "npadvmod" and c.lemma_ == "way" for c in tok.children):
+            return "副詞・表路程"  # all the way to school
+        if lemma in L.TIME_PREPS:
+            return "副詞・表時間"
+        if obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME")):
+            return "副詞・表時間"
+        if olemma in L.CONDITION_NOUNS:
+            return "副詞・表狀況"
+        if lemma == "for":
+            return "副詞・表目的"
+        if lemma == "with":
+            if obj is not None and (obj.pos_ == "PRON" or olemma in L.PERSON_NOUNS or obj.ent_type_ == "PERSON"):
+                return "副詞・表伴隨"
+            return "副詞・表方式"
+        if lemma in ("by", "like"):
+            return "副詞・表方式"
+        if lemma in L.PLACE_PREPS:
+            return "副詞・表地點"
+        return "副詞・表方式"
+    if dep == "npadvmod":
+        if lemma == "way":
+            return "副詞・表路程"
+        if lemma in L.TIME_NOUNS or tok.ent_type_ in ("DATE", "TIME"):
+            return "副詞・表時間"
+        return "副詞・表方式"
+    # advmod、intj 等
+    if lemma in L.TONE_ADVERBS or lemma == "please":
+        return "副詞・表語氣"
+    if lemma in L.TIME_ADVERBS:
+        return "副詞・表時間"
+    if lemma in L.PLACE_ADVERBS:
+        return "副詞・表地點"
+    return "副詞・表方式"
+
+
+def advcl_function(tok) -> Optional[str]:
+    mark = next((c for c in tok.children if c.dep_ == "mark"), None)
+    if mark is not None:
+        f = L.SUBORDINATORS.get(mark.lower_)
+        if mark.lower_ == "so":  # so that
+            f = "表目的"
+        return f"副詞子句・{f}" if f else None
+    if any(c.dep_ == "aux" and c.lower_ == "to" for c in tok.children):
+        return "副詞・表目的"  # 不定詞表目的：to buy milk
+    return None
+
+
+# ---------- 子句 ----------
+NOT_GERUNDS = {"morning", "evening", "thing", "nothing", "something", "anything", "everything",
+               "king", "ring", "spring", "building", "ceiling", "wedding", "string", "wing", "sibling", "pudding"}
+
+
+def is_gerund(tok):
+    """Swimming is fun：分析程式有時把動名詞標成名詞"""
+    if tok.tag_ == "VBG":
+        return True
+    return (tok.pos_ == "NOUN" and tok.lower_.endswith("ing") and len(tok.text) > 5
+            and tok.lower_ not in NOT_GERUNDS and not any(c.dep_ in ("det", "poss") for c in tok.children))
+
+
+def is_real_aux(tok):
+    return tok.lemma_.lower() in L.AUX_LEMMAS or tok.lower_ in ("n't", "not", "'s", "'re", "'m", "'ve", "'ll", "'d", "ca", "wo")
+
+
+def assign_clause(v, roots: dict, index: int, sent) -> ClauseInfo:
+    info = ClauseInfo(verb=v, index=index, verb_token=v)
+    children = [c for c in v.children]
+    deps = {c.dep_ for c in children}
+    info.passive = bool(deps & {"nsubjpass", "auxpass", "csubjpass"})
+    info.existential = "expl" in deps and v.lemma_ == "be"
+
+    # 分析程式把 enjoy 之類的主要動詞誤判成助動詞：enjoy 才是動詞，後面的 playing 是受詞
+    fake = [c for c in children if c.dep_ == "aux" and not is_real_aux(c) and c.pos_ in ("VERB", "AUX")]
+    if fake:
+        main = fake[0]
+        roots[main.i] = Spec(VERB_ROLE, clause=index)
+        roots[v.i] = Spec("O", clause=index)
+        info.verb_token = main
+        for c in children:
+            if c.dep_ in ("nsubj", "nsubjpass"):
+                roots[c.i] = Spec("S", clause=index)
+            elif c.dep_ in ("aux", "auxpass", "neg") and c is not main:
+                roots[c.i] = Spec("aux", clause=index)
+        info.pattern = 2
+        return info
+
+    roots[v.i] = Spec(VERB_ROLE, clause=index)
+    subjects = [c for c in children if c.dep_ in ("nsubj", "nsubjpass", "csubj", "csubjpass")]
+    auxes = [c for c in children if c.dep_ in ("aux", "auxpass")]
+    info.question = bool(subjects) and (
+        any(a.i < subjects[0].i for a in auxes) or (v.i < subjects[0].i and v.lemma_ == "be" and not info.existential)
+    )
+    info.imperative = not subjects and v.tag_ == "VB" and not info.existential and not any(
+        a.lower_ in ("to",) for a in auxes
+    )
+
+    # 受詞候選（依位置排序），處理雙受詞
+    objects = [c for c in children if c.dep_ in ("dobj", "dative")]
+    nominal_after = sorted(
+        [c for c in children if c.i > v.i and c.dep_ in ("dobj", "dative", "npadvmod", "attr", "oprd")
+         and c.pos_ in ("NOUN", "PROPN", "PRON", "NUM")],
+        key=lambda t: t.i,
+    )
+    dative_fix = None
+    if (
+        v.lemma_.lower() in L.DATIVE_VERBS
+        and len(nominal_after) >= 2
+        and not any(c.dep_ == "dative" for c in children)
+        and nominal_after[0].dep_ in ("dobj", "npadvmod")
+        and nominal_after[1].dep_ in ("dobj", "npadvmod", "attr", "oprd")
+        and nominal_after[1].lemma_.lower() not in L.TIME_NOUNS
+    ):
+        dative_fix = (nominal_after[0], nominal_after[1])
+
+    if dative_fix is None and v.lemma_.lower() in L.DATIVE_VERBS:
+        # 分析程式有時把 IO 看成 DO 的主詞：made [our whole family] [a cake]
+        for c in children:
+            g = next((x for x in c.children if x.dep_ == "nsubj"), None) if c.dep_ == "dobj" else None
+            if g is not None and c.pos_ == "NOUN" and g.pos_ in ("NOUN", "PRON", "PROPN") and g.i < c.i:
+                dative_fix = (g, c)
+
+    has_dative = any(c.dep_ == "dative" and c.pos_ != "ADP" for c in children) or dative_fix is not None
+    has_obj = bool(objects) or dative_fix is not None
+
+    for c in children:
+        d = c.dep_
+        if dative_fix and c is dative_fix[0]:
+            roots[c.i] = Spec("IO", clause=index)
+        elif dative_fix and c is dative_fix[1]:
+            roots[c.i] = Spec("DO", clause=index)
+        elif d in ("nsubj", "nsubjpass", "csubj", "csubjpass"):
+            roots[c.i] = Spec("S", clause=index)
+            if is_gerund(c):
+                info.flags.add("gerund_subject")
+        elif d == "expl":
+            roots[c.i] = Spec("M", function="引導詞", clause=index)
+        elif d in ("aux", "auxpass"):
+            roots[c.i] = Spec("aux", clause=index)
+        elif d == "neg":
+            prev = sent.doc[c.i - 1] if c.i > 0 else None
+            if prev is not None and prev.i in roots and roots[prev.i].role == "aux":
+                roots[c.i] = Spec("aux", clause=index, kind="neg")
+            else:
+                roots[c.i] = Spec("M", function="副詞・表語氣", clause=index)
+        elif d == "dative":
+            if c.pos_ == "ADP":  # to me、for me：介系詞片語
+                roots[c.i] = Spec("M", function=adverb_function_prep_like(c), clause=index)
+            else:
+                roots[c.i] = Spec("IO", clause=index)
+        elif d == "dobj":
+            roots[c.i] = Spec("DO" if (has_dative or info.passive) else "O", clause=index)
+        elif d == "attr":
+            if info.existential:
+                roots[c.i] = Spec("S", clause=index, kind="real_subject")
+            else:
+                roots[c.i] = Spec("OC" if info.passive else "SC", clause=index)
+        elif d == "acomp":
+            roots[c.i] = Spec("OC" if (info.passive or has_obj) else "SC", clause=index)
+        elif d == "oprd":
+            roots[c.i] = Spec("OC", clause=index)
+        elif d in ("xcomp", "ccomp"):
+            assign_complement(c, v, roots, index, info, has_obj)
+        elif d in ("prep", "agent", "advmod", "npadvmod", "intj"):
+            roots[c.i] = Spec("M", function=adverb_function(c), clause=index,
+                              kind="npadv" if d == "npadvmod" else "")
+        elif d == "advcl":
+            f = advcl_function(c)
+            if f:
+                roots[c.i] = Spec("M", function=f, clause=index, kind="advcl", inner_verb=c if f.startswith("副詞子句") else None)
+                if f.startswith("副詞子句"):
+                    info.flags.add("subordinating_conj")
+            else:
+                roots[c.i] = Spec("unknown", clause=index)
+        elif d in ("punct", "prt", "cc", "conj", "mark"):
+            continue  # 標點不分配；片語動詞的介副詞留在動詞裡；對等連接由外層處理
+        else:
+            roots[c.i] = Spec("unknown", clause=index)
+
+    if dative_fix:
+        roots[dative_fix[0].i] = Spec("IO", clause=index)
+        roots[dative_fix[1].i] = Spec("DO", clause=index)
+
+    # 虛主詞 It：It is hard to learn English → to learn English 是真主詞
+    subj = subjects[0] if subjects else None
+    if subj is not None and subj.lower_ == "it":
+        for r in [v] + [c for c in children if c.i in roots and roots[c.i].role == "SC"]:
+            for g in r.children:
+                if g.dep_ in ("xcomp", "ccomp") and (g.i not in roots or roots[g.i].role in ("O", "unknown")):
+                    if any(x.lower_ == "to" or x.dep_ == "mark" for x in g.children):
+                        roots[g.i] = Spec("RS", clause=index)
+                        info.flags.add("dummy_it")
+                        info.flags.discard("to_v_or_ving_object")
+
+    # There is 句型：掛在真正主詞底下的介系詞片語，當成表地點的副詞
+    if info.existential:
+        for c in children:
+            if c.i in roots and roots[c.i].kind == "real_subject":
+                for g in c.children:
+                    if g.dep_ == "prep":
+                        roots[g.i] = Spec("M", function=adverb_function(g), clause=index)
+
+    info.pattern = clause_pattern(roots, index, info)
+    return info
+
+
+def adverb_function_prep_like(tok):
+    tmp = tok
+    return adverb_function(tmp) if tmp.dep_ == "prep" else ("副詞・表地點" if tok.lemma_ == "to" else "副詞・表目的")
+
+
+def assign_complement(c, v, roots, index, info, has_obj):
+    small_subj = [g for g in c.children if g.dep_ == "nsubj"]
+    has_mark = any(g.dep_ == "mark" for g in c.children)
+    has_to = any(g.dep_ == "aux" and g.lower_ == "to" for g in c.children)
+    if small_subj and not has_mark and not has_to and c.tag_ in ("VB", "JJ", "NN", "NNS", "NNP", "VBN", "VBG", "RB"):
+        # 小子句：made [us] [clean the classroom]、found [the game] [very fun]
+        roots[small_subj[0].i] = Spec("O", clause=index)
+        roots[c.i] = Spec("OC", clause=index)
+        if c.tag_ == "VB" and v.lemma_.lower() in L.CAUSATIVE_PERCEPTION:
+            info.flags.add("causative_perception")
+    elif c.dep_ == "xcomp" and c.pos_ in ("ADJ", "NOUN", "PROPN", "NUM"):
+        roots[c.i] = Spec("OC" if (has_obj or info.passive) else "SC", clause=index)
+    elif c.dep_ == "xcomp" and has_obj and c.tag_ == "VB" and not has_to:
+        roots[c.i] = Spec("OC", clause=index)
+        if v.lemma_.lower() in L.CAUSATIVE_PERCEPTION:
+            info.flags.add("causative_perception")
+    else:
+        roots[c.i] = Spec("O", clause=index)
+        if c.tag_ == "VBG" or has_to:
+            info.flags.add("to_v_or_ving_object")
+
+
+def clause_pattern(roots, index, info) -> int:
+    found = {s.role for s in roots.values() if s.clause == index}
+    if "OC" in found:
+        return 5
+    if "IO" in found or ("DO" in found and info.passive):
+        return 4
+    if info.passive:
+        return 2
+    if "SC" in found:
+        return 3
+    if "O" in found or "DO" in found:
+        return 2
+    return 1
+
+
+# ---------- 名詞後面的修飾語 ----------
+def expand_noun_modifiers(roots, tokens, owner_of):
+    """名詞後面的介系詞片語、形容詞子句、分詞片語 → 形容詞・修飾 X（可以一層層往下找）"""
+    changed = True
+    while changed:
+        changed = False
+        for tok in tokens:
+            if tok.pos_ not in ("NOUN", "PROPN", "PRON", "NUM"):
+                continue
+            own = owner_of(tok)
+            if own is None:
+                continue
+            spec = roots[own.i]
+            if spec.role not in NOMINAL | {"M"}:
+                continue
+            if spec.role == "M" and spec.function and not spec.function.startswith(("副詞・表", "形容詞")):
+                continue
+            for g in tok.children:
+                if g.i in roots or g.i < tok.i:
+                    continue
+                if spec.kind == "npadv":
+                    # Every morning before school：名詞片語當副詞時，後面的時間介系詞片語另外切開
+                    if g.dep_ == "prep" and g.lemma_.lower() in L.TIME_PREPS:
+                        roots[g.i] = Spec("M", function="副詞・表時間", clause=spec.clause)
+                        changed = True
+                    continue
+                if g.dep_ == "prep" and g.lower_ != "of":
+                    obj = next((x for x in g.children if x.dep_ == "pobj"), None)
+                    olemma = obj.lemma_.lower() if obj is not None else ""
+                    is_time = obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME"))
+                    if is_time and tok.lemma_.lower() not in L.TIME_NOUNS and spec.role in NOMINAL:
+                        # on a busy day 掛在受詞上 → 其實是說明動作的時間
+                        roots[g.i] = Spec("M", function="副詞・表時間", clause=spec.clause, kind="reattached")
+                    elif (tok.dep_ == "dobj" and g.lemma_.lower() in ("in", "at", "on")
+                          and olemma in L.PLACE_NOUNS and g.i == max(t.i for t in tok.subtree if not t.is_punct) - len(list(g.subtree)) + 1):
+                        # water the flowers in the garden：句尾的「在某個場所」→ 表地點（說明裡會補充另一種理解）
+                        roots[g.i] = Spec("M", function="副詞・表地點", clause=spec.clause, kind="reattached", modifies=None)
+                        roots[g.i].kind = "ambiguous_place"
+                    else:
+                        roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause)
+                    changed = True
+                elif g.dep_ == "relcl":
+                    roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause, kind="relcl", inner_verb=g)
+                    changed = True
+                elif g.dep_ == "acl":
+                    roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause, kind="acl")
+                    changed = True
+
+
+def make_owner_fn(roots, stop_at=None):
+    def owner_of(tok):
+        t = tok
+        while True:
+            if t.i in roots:
+                return t
+            if t.head.i == t.i or (stop_at is not None and t.i == stop_at.i):
+                return None
+            t = t.head
+    return owner_of
+
+
+# ---------- 片段 ----------
+def build_chunks(sent, roots, tokens, text, offset=0):
+    """把字分給片段，回傳 [(root_token, [tokens])]，依位置排序"""
+    owner_of = make_owner_fn(roots)
+    groups: dict[int, list] = {}
+    for tok in tokens:
+        own = owner_of(tok)
+        if own is None:
+            continue
+        if tok.is_punct and tok.head.i == own.i and roots[own.i].role in (VERB_ROLE, "aux"):
+            continue  # 句尾標點
+        groups.setdefault(own.i, []).append(tok)
+    return groups
+
+
+def span_of(toks, text, base):
+    """片段的字元範圍，去掉頭尾標點"""
+    toks = sorted(toks, key=lambda t: t.i)
+    while toks and toks[-1].is_punct:
+        toks.pop()
+    while toks and toks[0].is_punct:
+        toks.pop(0)
+    if not toks:
+        return None
+    start = toks[0].idx - base
+    end = toks[-1].idx + len(toks[-1].text) - base
+    return start, end
+
+
+def contiguous_runs(toks):
+    toks = sorted(toks, key=lambda t: t.i)
+    runs, cur = [], [toks[0]]
+    for t in toks[1:]:
+        if t.i == cur[-1].i + 1:
+            cur.append(t)
+        else:
+            runs.append(cur)
+            cur = [t]
+    runs.append(cur)
+    return runs
+
+
+def heads_for(root, spec, toks, flags, vars_):
+    if spec.role not in NOMINAL or len([t for t in toks if not t.is_punct]) < 2:
+        return []
+    lemma = root.lemma_.lower()
+    of = next((c for c in root.children if c.dep_ == "prep" and c.lower_ == "of"), None)
+    pobj = next((c for c in of.children if c.dep_ == "pobj"), None) if of is not None else None
+    if of is not None and pobj is not None and lemma in L.QUANTIFIERS:
+        flags.add("quantifier_of")
+        vars_.setdefault("quantifier_of", {"noun": pobj.text})
+        return []
+    if of is not None and pobj is not None and lemma in L.UNIT_NOUNS:
+        flags.add("unit_of")
+        vars_.setdefault("unit_of", {"unit": root.text, "noun": pobj.text})
+        return [pobj] + [c for c in pobj.children if c.dep_ == "conj"]
+    if root.pos_ in ("NOUN",):
+        return [root] + [c for c in root.children if c.dep_ == "conj" and c.pos_ == "NOUN"]
+    if root.pos_ == "ADJ":
+        return [root]
+    return []
+
+
+def structure_of(root, spec, toks):
+    n = len([t for t in toks if not t.is_punct])
+    d = root.dep_
+    if spec.kind == "relcl":
+        return "形容詞子句"
+    if spec.kind == "advcl" and spec.function and spec.function.startswith("副詞子句"):
+        return "副詞子句"
+    if d in ("prep", "agent") or root.pos_ == "ADP":
+        return "介系詞片語"
+    if spec.kind == "acl":
+        return "分詞片語"
+    if any(c.dep_ == "mark" and c.lower_ in ("that", "whether", "if") for c in root.children) and root.pos_ in ("VERB", "AUX"):
+        return "名詞子句"
+    if root.pos_ in ("VERB", "AUX") and spec.role not in (VERB_ROLE, "aux"):
+        if any(c.dep_ == "aux" and c.lower_ == "to" for c in root.children):
+            return "不定詞片語"
+        if root.tag_ == "VBG":
+            return "動名詞片語" if n > 1 else "動名詞"
+        return "原形動詞片語" if n > 1 else None
+    if root.pos_ in ("NOUN", "PROPN"):
+        return "名詞片語" if n > 1 else "名詞"
+    if root.pos_ == "PRON":
+        return "代名詞"
+    if root.pos_ == "ADJ":
+        return "形容詞片語" if n > 1 else "形容詞"
+    if root.pos_ == "ADV":
+        return "副詞片語" if n > 1 else "副詞"
+    return None
+
+
+VERB_LABEL = {1: "Vi", 2: "Vt", 3: "V", 4: "Vt", 5: "Vt"}
+
+
+def to_chunks(sent, roots, clause_infos, text, base, flags, vars_, tokens=None, with_inner=True):
+    """把片段根轉成 Chunk 物件"""
+    tokens = tokens if tokens is not None else list(sent)
+    groups = build_chunks(sent, roots, tokens, text)
+    items = []
+    for ri, toks in groups.items():
+        root = sent.doc[ri]
+        spec = roots[ri]
+        role = spec.role
+        info = clause_infos.get(spec.clause)
+        if role == VERB_ROLE:
+            role = "Vt" if info and info.passive else VERB_LABEL.get(info.pattern if info else 1, "Vi")
+            if info and info.existential:
+                role = "Vi"
+        for run in contiguous_runs(toks):
+            sp = span_of(run, text, base)
+            if sp is None:
+                continue
+            items.append((sp, root, spec, role, run))
+    items.sort(key=lambda x: x[0][0])
+
+    chunks = []
+    for cid, (sp, root, spec, role, toks) in enumerate(items):
+        heads = heads_for(root, spec, toks, flags, vars_) if role in NOMINAL else []
+        heads = [h for h in heads if sp[0] <= h.idx - base < sp[1]]
+        inner = []
+        if with_inner and spec.inner_verb is not None:
+            inner = inner_chunks(sent, spec.inner_verb, text, base)
+        modifies = None
+        if spec.modifies is not None:
+            m = spec.modifies
+            modifies = Span(start=m.idx - base, end=m.idx - base + len(m.text), text=m.text)
+        chunks.append(
+            dict(
+                id=cid, text=text[sp[0]:sp[1]], start=sp[0], end=sp[1], role=role,
+                function=spec.function if role == "M" else None, modifies=modifies,
+                heads=[Span(start=h.idx - base, end=h.idx - base + len(h.text), text=h.text) for h in heads],
+                structure=structure_of(root, spec, toks), clause=spec.clause, inner=inner,
+                _root=root, _spec=spec,
+            )
+        )
+    return chunks
+
+
+def inner_chunks(sent, verb, text, base):
+    """可以展開的子句（形容詞子句、副詞子句）內部的拆解"""
+    roots = {}
+    info = assign_clause(verb, roots, 0, sent)
+    for c in verb.children:
+        if c.dep_ == "mark":
+            roots[c.i] = Spec("conj")
+    roots = {i: s for i, s in roots.items() if sent.doc[i] in set(verb.subtree)}
+    sub = list(verb.subtree)
+    out = to_chunks(sent, roots, {0: info}, text, base, set(), {}, tokens=sub, with_inner=False)
+    result = []
+    for c in out:
+        c.pop("_root"), c.pop("_spec")
+        c["heads"], c["inner"], c["clause"] = [], [], 0
+        if c["role"] == "M" and not c["function"]:
+            c["function"] = "副詞・表方式"
+        result.append(Chunk(**c))
+    return result
+
+
+# ---------- 文法重點卡 ----------
+CARD_ORDER = [
+    "passive", "present_perfect", "present_progressive", "there_be", "imperative",
+    "yes_no_question", "dummy_it", "gerund_subject", "coordinating_conj",
+    "subordinating_conj", "relative_pronoun", "causative_perception", "dative_verbs",
+    "linking_verbs", "to_v_or_ving_object", "quantifier_of", "unit_of",
+    "verb_multiple_patterns", "modifier_position",
+]
+MAX_CARDS = 3
+
+
+def tense_flags(info, roots, doc, flags):
+    v = info.verb_token
+    auxes = [doc[i] for i, s in roots.items() if s.role == "aux" and s.clause == info.index and s.kind != "neg"]
+    lemmas = [a.lemma_.lower() for a in auxes]
+    if info.passive:
+        flags.add("passive")
+    elif v.tag_ == "VBG" and "be" in lemmas:
+        if any(a.lower_ in ("am", "is", "are", "'m", "'s", "'re") for a in auxes):
+            flags.add("present_progressive")
+    elif v.tag_ == "VBN" and any(a.lower_ in ("have", "has", "'ve") for a in auxes):
+        flags.add("present_perfect")
+
+
+# ---------- 主程式 ----------
+def analyze_sentence(text: str) -> SentenceResult:
+    text = text.strip()
+    if not re.search(r"[A-Za-z]{2,}", text) or re.search(r"[\u3400-\u9fff]", text):
+        return SentenceResult(text=text, status="failed", clauses=[], chunks=[],
+                              message="請輸入英文句子（不能包含中文字）。")
+    doc = get_nlp()(text)
+    sents = list(doc.sents)
+    if not sents:
+        return SentenceResult(text=text, status="failed", message="沒有辦法分析這段文字，請輸入一個英文句子。", clauses=[], chunks=[])
+    sent = sents[0]
+    base = sent.start_char
+    stext = sent.text
+    message = None
+    status = "ok"
+    if len(sents) > 1:
+        status = "partial"
+        message = "目前一次只能分析一句，這裡只顯示第一句的分析。"
+
+    root = sent.root
+    if root.pos_ not in ("VERB", "AUX"):
+        return SentenceResult(
+            text=stext, status="failed", clauses=[], chunks=[],
+            message="找不到句子的主要動詞，這可能不是一個完整的句子（例如只有片語），請再確認一次。",
+        )
+
+    roots: dict[int, Spec] = {}
+    flags: set[str] = set()
+    vars_: dict[str, dict] = {}
+    kind = "simple"
+
+    # so 連接的對等句，分析程式有時把前半句當成後半句動詞的 ccomp
+    lead = next((c for c in root.children if c.dep_ == "ccomp" and c.i < root.i
+                 and any(g.dep_ in ("nsubj", "nsubjpass", "expl") for g in c.children)), None)
+    joiner = None
+    if lead is not None:
+        joiner = next((c for c in root.children if lead.i < c.i < root.i and c.lower_ in ("so", "and", "but", "or", "yet")), None)
+    if lead is not None and joiner is not None:
+        infos = {0: assign_clause(lead, roots, 0, sent), 1: assign_clause(root, roots, 1, sent)}
+        roots[root.i] = Spec(VERB_ROLE, clause=1)
+        roots[lead.i] = Spec(VERB_ROLE, clause=0)
+        roots[joiner.i] = Spec("conj", clause=0)
+        kind = "compound"
+        flags.add("coordinating_conj")
+    else:
+        infos = {0: assign_clause(root, roots, 0, sent)}
+
+    # 對等句：主要動詞底下還有另一個有自己主詞的動詞
+    for c in (root.children if kind == "simple" else []):
+        if c.dep_ == "conj" and c.pos_ in ("VERB", "AUX") and any(
+            g.dep_ in ("nsubj", "nsubjpass", "expl") for g in c.children
+        ):
+            idx = len(infos)
+            infos[idx] = assign_clause(c, roots, idx, sent)
+            kind = "compound"
+    if kind == "compound":
+        for c in root.children:
+            if c.dep_ == "cc":
+                roots[c.i] = Spec("conj", clause=0)
+        flags.add("coordinating_conj")
+    elif lead is None or joiner is None:
+        for c in root.children:
+            if c.dep_ in ("conj", "cc"):
+                roots[c.i] = Spec("unknown", clause=0)
+
+    owner_of = make_owner_fn(roots)
+    expand_noun_modifiers(roots, list(sent), owner_of)
+
+    # wh- 疑問句還沒有規則
+    first = sent[0]
+    if stext.endswith("?") and first.tag_ in ("WDT", "WP", "WP$", "WRB"):
+        status, message = "partial", "wh- 疑問句（what、where、how…）目前還沒辦法完整分析，結果僅供參考。"
+        for info in infos.values():
+            info.question = False
+
+    for info in infos.values():
+        tense_flags(info, roots, doc, flags)
+        if info.existential:
+            flags.add("there_be")
+        if info.imperative:
+            flags.add("imperative")
+        if info.question:
+            flags.add("yes_no_question")
+        if info.pattern == 4:
+            flags.add("dative_verbs")
+        if info.pattern == 3 and info.verb_token.lemma_ != "be":
+            flags.add("linking_verbs")
+        if info.verb_token.lemma_.lower() in L.MULTI_PATTERN_VERBS:
+            flags.add("verb_multiple_patterns")
+            vars_.setdefault("verb_multiple_patterns", {"verb": info.verb_token.lemma_.lower()})
+        flags |= info.flags
+
+    raw = to_chunks(sent, roots, infos, stext, base, flags, vars_)
+
+    # 修飾語位置：形容詞修飾語放在名詞後面
+    if any(c["_spec"].modifies is not None and c["_spec"].modifies.i < c["_root"].i for c in raw):
+        flags.add("modifier_position")
+    if any(c["_spec"].kind == "relcl" for c in raw):
+        flags.add("relative_pronoun")
+
+    # 沒有分配到的字 → 未分析
+    covered = set()
+    for c in raw:
+        covered.update(range(c["start"], c["end"]))
+    for tok in sent:
+        s = tok.idx - base
+        if not tok.is_punct and s not in covered and not tok.is_space:
+            raw.append(dict(id=0, text=tok.text, start=s, end=s + len(tok.text), role="unknown",
+                            function=None, modifies=None, heads=[], structure=None, clause=0, inner=[],
+                            _root=tok, _spec=Spec("unknown")))
+    if any(c["role"] == "unknown" for c in raw) and status == "ok":
+        status = "partial"
+        message = "這句比較複雜，灰色虛線的部分目前還沒辦法分析。"
+
+    # 祈使句：補上省略的 (You)
+    for info in infos.values():
+        if info.imperative:
+            vt = info.verb_token
+            before = [c for c in raw if c["role"] == "aux" and c["clause"] == info.index and c["start"] < vt.idx - base]
+            pos = min([c["start"] for c in before] + [vt.idx - base])
+            raw.append(dict(id=0, text="(You)", start=pos, end=pos, role="S", implicit=True,
+                            function=None, modifies=None, heads=[], structure=None, clause=info.index,
+                            inner=[], _root=None, _spec=Spec("S", kind="implicit")))
+
+    # 否定：Do ＋ n't、is ＋ not 合成一個 aux 片段
+    raw.sort(key=lambda c: (c["start"], 0 if c.get("implicit") else 1))
+    joined = []
+    for c in raw:
+        if joined and joined[-1]["role"] == "aux" and c["role"] == "aux" and c["text"].lower() in ("n't", "not") \
+                and stext[joined[-1]["end"]:c["start"]].strip() == "":
+            prev = joined.pop()
+            c = dict(prev, end=c["end"], text=stext[prev["start"]:c["end"]])
+        joined.append(c)
+    raw = joined
+
+    # 把緊貼在介系詞片語前面、單獨的 even／only／just 併進去（Even in the heavy rain）
+    raw.sort(key=lambda c: (c["start"], 0 if c.get("implicit") else 1))
+    merged = []
+    for c in raw:
+        if merged and merged[-1]["role"] == "M" and c["role"] == "M" and merged[-1]["text"].lower() in ("even", "only", "just", "right") \
+                and stext[merged[-1]["end"]:c["start"]].strip() == "":
+            prev = merged.pop()
+            c = dict(c, start=prev["start"], text=stext[prev["start"]:c["end"]])
+        merged.append(c)
+    raw = merged
+
+    chunks = []
+    for i, c in enumerate(raw):
+        c["id"] = i
+        c["note"] = chunk_note(c, infos, stext)
+        c.pop("_root", None)
+        c.pop("_spec", None)
+        chunks.append(Chunk(**c))
+
+    clauses = [
+        Clause(index=i, pattern=info.pattern, passive=info.passive, formula=formula(info, chunks))
+        for i, info in infos.items()
+    ]
+    cards = [CardRef(id=f, vars=vars_.get(f, {})) for f in CARD_ORDER if f in flags][:MAX_CARDS]
+    return SentenceResult(text=stext, status=status, message=message, kind=kind, clauses=clauses, chunks=chunks, cards=cards)
+
+
+FORMULA = {1: "S + Vi", 2: "S + Vt + O", 3: "S + V + SC", 4: "S + Vt + IO + DO", 5: "S + Vt + O + OC"}
+
+
+def formula(info, chunks):
+    if not info.passive:
+        return FORMULA[info.pattern]
+    rest = {4: " + DO", 5: " + OC"}.get(info.pattern, "")
+    return f"S + be + p.p.{rest}"
