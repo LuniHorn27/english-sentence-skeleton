@@ -11,7 +11,11 @@
     <header class="top">
       <h1>英文句子骨架分析</h1>
       <p class="hint">輸入英文句子或一段文章，看看每一句的主詞、動詞、受詞，以及屬於哪一種句型。</p>
-      <p class="top-links"><a href="/patterns" target="_blank" rel="noopener">五大句型是什麼？</a></p>
+      <p class="top-links">
+        <a href="/patterns" target="_blank" rel="noopener">五大句型是什麼？</a>
+        <a href="/about">關於這個工具</a>
+        <button type="button" id="share-site" class="link-btn">分享給朋友</button>
+      </p>
     </header>
 
     <form id="form" class="ask" novalidate>
@@ -30,6 +34,7 @@
         <button type="button" data-mode="detail" aria-pressed="false">詳細模式</button>
       </div>
       <button type="button" id="speed" class="speed" hidden>朗讀速度：正常</button>
+      <button type="button" id="share-result" class="speed">分享這個分析</button>
       <ul class="legend" aria-label="圖例">
         <li><span class="swatch solid"></span>算進公式</li>
         <li><span class="swatch dashed"></span>不算進公式</li>
@@ -38,6 +43,7 @@
       </ul>
     </section>
 
+    <p id="toast" class="toast" role="status" hidden></p>
     <section id="result" aria-live="polite"></section>
 
     <footer class="foot">

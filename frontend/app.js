@@ -478,7 +478,56 @@ function updateCounter() {
   counter.classList.toggle("over", n > MAX_CHARS);
 }
 input.addEventListener("input", () => {
+  // ---------- 分享（F6） ----------
+// 分享某一句的分析時，句子放在網址的 # 後面：這部分不會送到伺服器
+const toast = $("toast");
+function showToast(message) {
+  toast.textContent = message;
+  toast.hidden = false;
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => { toast.hidden = true; }, 2500);
+}
+
+async function share(url, title) {
+  if (navigator.share) {
+    try {
+      await navigator.share({ title, url });
+      return;
+    } catch (err) {
+      if (err.name === "AbortError") return; // 使用者自己取消
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    showToast("已複製連結，可以貼給朋友了");
+  } catch {
+    window.prompt("請複製這個連結：", url);
+  }
+}
+
+$("share-site").addEventListener("click", () => share(location.origin + "/", "英文句子骨架分析"));
+$("share-result").addEventListener("click", () => {
+  const text = input.value.trim();
+  if (!text) return;
+  share(`${location.origin}/#q=${encodeURIComponent(text)}`, "英文句子骨架分析");
+});
+
+// 從分享連結打開：自動填入句子並分析
+function loadFromHash() {
+  const m = location.hash.match(/^#q=(.+)$/);
+  if (!m) return;
+  try {
+    input.value = decodeURIComponent(m[1]).slice(0, MAX_CHARS);
+  } catch {
+    return;
+  }
   updateCounter();
+  form.requestSubmit();
+}
+window.addEventListener("hashchange", loadFromHash);
+
+updateCounter();
+loadFromHash();
   errorBox.hidden = true;
 });
 input.addEventListener("keydown", (e) => {
@@ -521,4 +570,53 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
+// ---------- 分享（F6） ----------
+// 分享某一句的分析時，句子放在網址的 # 後面：這部分不會送到伺服器
+const toast = $("toast");
+function showToast(message) {
+  toast.textContent = message;
+  toast.hidden = false;
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => { toast.hidden = true; }, 2500);
+}
+
+async function share(url, title) {
+  if (navigator.share) {
+    try {
+      await navigator.share({ title, url });
+      return;
+    } catch (err) {
+      if (err.name === "AbortError") return; // 使用者自己取消
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    showToast("已複製連結，可以貼給朋友了");
+  } catch {
+    window.prompt("請複製這個連結：", url);
+  }
+}
+
+$("share-site").addEventListener("click", () => share(location.origin + "/", "英文句子骨架分析"));
+$("share-result").addEventListener("click", () => {
+  const text = input.value.trim();
+  if (!text) return;
+  share(`${location.origin}/#q=${encodeURIComponent(text)}`, "英文句子骨架分析");
+});
+
+// 從分享連結打開：自動填入句子並分析
+function loadFromHash() {
+  const m = location.hash.match(/^#q=(.+)$/);
+  if (!m) return;
+  try {
+    input.value = decodeURIComponent(m[1]).slice(0, MAX_CHARS);
+  } catch {
+    return;
+  }
+  updateCounter();
+  form.requestSubmit();
+}
+window.addEventListener("hashchange", loadFromHash);
+
 updateCounter();
+loadFromHash();

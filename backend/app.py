@@ -69,7 +69,7 @@ def analyze(req: AnalyzeRequest, request: Request):
     try:
         sentences = analyze_text(text)
     except Exception:  # 分析引擎出錯時，不讓網頁當掉，回報「無法分析」
-        log.exception("分析失敗：%r", text)
+        log.exception("分析失敗（輸入長度 %d 字元；為了隱私不記錄內容）", len(text))
         sentences = [SentenceResult(text=text, status="failed", clauses=[], chunks=[],
                                     message="這段文字目前沒辦法分析，請換個說法再試一次。")]
     return AnalysisResult(input=text, sentences=sentences)
@@ -113,7 +113,7 @@ def get_card(card_id: str):
 async def no_stale_files(request, call_next):
     """網頁檔案更新後，瀏覽器要重新確認，不要用舊的快取"""
     response = await call_next(request)
-    if request.url.path in ("/", "/patterns") or request.url.path.startswith("/static/"):
+    if request.url.path in ("/", "/patterns", "/about") or request.url.path.startswith("/static/"):
         response.headers["Cache-Control"] = "no-cache"
     return response
 
@@ -126,6 +126,11 @@ def index():
 @app.get("/patterns")
 def patterns_page():
     return FileResponse(ROOT / "frontend" / "patterns.html")
+
+
+@app.get("/about")
+def about_page():
+    return FileResponse(ROOT / "frontend" / "about.html")
 
 
 app.mount("/static", StaticFiles(directory=ROOT / "frontend"), name="static")

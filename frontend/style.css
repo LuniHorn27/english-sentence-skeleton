@@ -237,3 +237,10 @@ a.pattern:hover { text-decoration: underline; }
 .fb-status { margin: 0; font-size: 13px; color: var(--text-2); min-height: 1em; }
 .suggest { margin-top: 12px; text-align: left; max-width: 520px; margin-left: auto; margin-right: auto; }
 .suggest summary { cursor: pointer; text-align: center; color: var(--text-2); }
+
+/* ---------- 分享 ---------- */
+.top-links { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+.link-btn { border: 0; padding: 0; background: none; color: var(--accent-line); font-size: 14px; text-decoration: underline; }
+.link-btn:hover { background: none; }
+.toast { position: sticky; top: 8px; z-index: 5; margin: 8px auto; width: fit-content; max-width: 90%;
+  background: var(--text); color: var(--bg); padding: 6px 14px; border-radius: 8px; font-size: 14px; }
