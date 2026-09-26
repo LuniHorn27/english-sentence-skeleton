@@ -1,0 +1,18 @@
+# 網頁伺服器
+fastapi==0.141.1
+uvicorn[standard]==0.54.0
+pyyaml==6.0.3
+
+# 文法分析程式（第 0 階段比較用，0-4 選定後會移除沒用到的）
+spacy==3.8.16
+stanza==1.14.0
+benepar==0.2.0
+torch==2.14.0
+# benepar 與 transformers 5.x 不相容，必須固定在 4.x
+transformers==4.57.6
+
+# 模型（另外下載）：
+#   python -m spacy download en_core_web_sm
+#   python -m spacy download en_core_web_trf
+#   python -c "import benepar; benepar.download('benepar_en3')"
+#   python -c "import stanza; stanza.download('en', processors='tokenize,pos,lemma,depparse,constituency')"
