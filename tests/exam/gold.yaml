@@ -1,0 +1,593 @@
+- id: E1
+  sentence: The little dog barked loudly all night.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: The little dog
+    head:
+    - dog
+  - role: Vi
+    text: barked
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: loudly
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: all night
+- id: E2
+  sentence: My grandparents live in a small village near the sea.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: My grandparents
+    head:
+    - grandparents
+  - role: Vi
+    text: live
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in a small village
+  - role: M
+    function: 形容詞・修飾
+    modifies: village
+    text: near the sea
+- id: E3
+  sentence: The students are waiting outside the classroom.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: The students
+  - role: aux
+    text: are
+  - role: Vi
+    text: waiting
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: outside the classroom
+- id: E4
+  sentence: There are three apples in the basket.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 引導詞
+    modifies: null
+    text: There
+  - role: Vi
+    text: are
+  - role: S
+    text: three apples
+    head:
+    - apples
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the basket
+- id: E5
+  sentence: The train from Taipei arrived ten minutes late.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: The train
+    head:
+    - train
+  - role: M
+    function: 形容詞・修飾
+    modifies: train
+    text: from Taipei
+  - role: Vi
+    text: arrived
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: ten minutes late
+- id: E6
+  sentence: Don't run in the hallway.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: (You)
+  - role: aux
+    text: Don't
+  - role: Vi
+    text: run
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the hallway
+- id: E7
+  sentence: My brother is playing video games in his room.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: My brother
+    head:
+    - brother
+  - role: aux
+    text: is
+  - role: Vt
+    text: playing
+  - role: O
+    text: video games
+    head:
+    - games
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in his room
+- id: E8
+  sentence: We had a great time at the beach yesterday.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: had
+  - role: O
+    text: a great time
+    head:
+    - time
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at the beach
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: yesterday
+- id: E9
+  sentence: Did you finish your homework last night?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: aux
+    text: Did
+  - role: S
+    text: you
+  - role: Vt
+    text: finish
+  - role: O
+    text: your homework
+    head:
+    - homework
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: last night
+- id: E10
+  sentence: The boy with the red cap kicked the ball over the wall.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The boy
+    head:
+    - boy
+  - role: M
+    function: 形容詞・修飾
+    modifies: boy
+    text: with the red cap
+  - role: Vt
+    text: kicked
+  - role: O
+    text: the ball
+    head:
+    - ball
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: over the wall
+- id: E11
+  sentence: Some of my classmates like spicy food.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Some of my classmates
+  - role: Vt
+    text: like
+  - role: O
+    text: spicy food
+    head:
+    - food
+- id: E12
+  sentence: She has already finished the book.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: has
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: already
+  - role: Vt
+    text: finished
+  - role: O
+    text: the book
+    head:
+    - book
+- id: E13
+  sentence: The milk in the fridge tastes sour.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The milk
+    head:
+    - milk
+  - role: M
+    function: 形容詞・修飾
+    modifies: milk
+    text: in the fridge
+  - role: V
+    text: tastes
+  - role: SC
+    text: sour
+- id: E14
+  sentence: My uncle is a pilot for a big airline.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: My uncle
+    head:
+    - uncle
+  - role: V
+    text: is
+  - role: SC
+    text: a pilot
+    head:
+    - pilot
+  - role: M
+    function: 形容詞・修飾
+    modifies: pilot
+    text: for a big airline
+- id: E15
+  sentence: The sky suddenly became dark.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The sky
+    head:
+    - sky
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: suddenly
+  - role: V
+    text: became
+  - role: SC
+    text: dark
+- id: E16
+  sentence: Everyone felt tired after the long hike.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Everyone
+  - role: V
+    text: felt
+  - role: SC
+    text: tired
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: after the long hike
+- id: E17
+  sentence: The kids look very excited today.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The kids
+    head:
+    - kids
+  - role: V
+    text: look
+  - role: SC
+    text: very excited
+    head:
+    - excited
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: today
+- id: E18
+  sentence: Is your sister a nurse?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: V
+    text: Is
+  - role: S
+    text: your sister
+    head:
+    - sister
+  - role: SC
+    text: a nurse
+    head:
+    - nurse
+- id: E19
+  sentence: The girl who sits next to me lent me her eraser.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: The girl
+    head:
+    - girl
+  - role: M
+    function: 形容詞・修飾
+    modifies: girl
+    text: who sits next to me
+  - role: Vt
+    text: lent
+  - role: IO
+    text: me
+  - role: DO
+    text: her eraser
+    head:
+    - eraser
+- id: E20
+  sentence: Could you lend me your pencil?
+  pattern: 4
+  passive: false
+  chunks:
+  - role: aux
+    text: Could
+  - role: S
+    text: you
+  - role: Vt
+    text: lend
+  - role: IO
+    text: me
+  - role: DO
+    text: your pencil
+    head:
+    - pencil
+- id: E21
+  sentence: Dad is cooking us a special dinner tonight.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: Dad
+  - role: aux
+    text: is
+  - role: Vt
+    text: cooking
+  - role: IO
+    text: us
+  - role: DO
+    text: a special dinner
+    head:
+    - dinner
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: tonight
+- id: E22
+  sentence: The coach gave each player a new jersey.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: The coach
+    head:
+    - coach
+  - role: Vt
+    text: gave
+  - role: IO
+    text: each player
+    head:
+    - player
+  - role: DO
+    text: a new jersey
+    head:
+    - jersey
+- id: E23
+  sentence: Please bring me a glass of water.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Please
+  - role: S
+    text: (You)
+  - role: Vt
+    text: bring
+  - role: IO
+    text: me
+  - role: DO
+    text: a glass of water
+    head:
+    - water
+- id: E24
+  sentence: Grandma told the children a story about a brave cat.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: Grandma
+  - role: Vt
+    text: told
+  - role: IO
+    text: the children
+    head:
+    - children
+  - role: DO
+    text: a story
+    head:
+    - story
+  - role: M
+    function: 形容詞・修飾
+    modifies: story
+    text: about a brave cat
+- id: E25
+  sentence: The loud music kept me awake all night.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The loud music
+    head:
+    - music
+  - role: Vt
+    text: kept
+  - role: O
+    text: me
+  - role: OC
+    text: awake
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: all night
+- id: E26
+  sentence: My friends call me Pudding.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: My friends
+    head:
+    - friends
+  - role: Vt
+    text: call
+  - role: O
+    text: me
+  - role: OC
+    text: Pudding
+- id: E27
+  sentence: The teacher made us clean the classroom.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The teacher
+    head:
+    - teacher
+  - role: Vt
+    text: made
+  - role: O
+    text: us
+  - role: OC
+    text: clean the classroom
+- id: E28
+  sentence: Most people consider him a hero.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Most people
+    head:
+    - people
+  - role: Vt
+    text: consider
+  - role: O
+    text: him
+  - role: OC
+    text: a hero
+    head:
+    - hero
+- id: E29
+  sentence: Leave the window open, please.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: (You)
+  - role: Vt
+    text: Leave
+  - role: O
+    text: the window
+    head:
+    - window
+  - role: OC
+    text: open
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: please
+- id: E30
+  sentence: The heavy snow turned the whole town white.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The heavy snow
+    head:
+    - snow
+  - role: Vt
+    text: turned
+  - role: O
+    text: the whole town
+    head:
+    - town
+  - role: OC
+    text: white
+- id: E31
+  sentence: The window was broken by a baseball.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: S
+    text: The window
+    head:
+    - window
+  - role: aux
+    text: was
+  - role: Vt
+    text: broken
+  - role: M
+    function: 副詞・表執行者
+    modifies: null
+    text: by a baseball
+- id: E32
+  sentence: The students were given a short test.
+  pattern: 4
+  passive: true
+  chunks:
+  - role: S
+    text: The students
+    head:
+    - students
+  - role: aux
+    text: were
+  - role: Vt
+    text: given
+  - role: DO
+    text: a short test
+    head:
+    - test
+- id: E33
+  sentence: The old house was painted white.
+  pattern: 5
+  passive: true
+  chunks:
+  - role: S
+    text: The old house
+    head:
+    - house
+  - role: aux
+    text: was
+  - role: Vt
+    text: painted
+  - role: OC
+    text: white

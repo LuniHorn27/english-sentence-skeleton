@@ -1,0 +1,173 @@
+{
+  "version": "1",
+  "input": "My big sister, who likes to cook, made our whole family a big chocolate cake for Mom's birthday.",
+  "sentences": [
+    {
+      "text": "My big sister, who likes to cook, made our whole family a big chocolate cake for Mom's birthday.",
+      "status": "ok",
+      "kind": "simple",
+      "clauses": [
+        {
+          "index": 0,
+          "pattern": 4,
+          "passive": false,
+          "formula": "S + Vt + IO + DO",
+          "label": "句型四：S + Vt + IO + DO"
+        }
+      ],
+      "chunks": [
+        {
+          "id": 0,
+          "text": "My big sister",
+          "start": 0,
+          "end": 13,
+          "role": "S",
+          "implicit": false,
+          "heads": [
+            {
+              "start": 7,
+              "end": 13,
+              "text": "sister"
+            }
+          ],
+          "structure": "名詞片語",
+          "note": "主詞，核心字是 sister；big sister 是「姊姊」。",
+          "clause": 0,
+          "inner": []
+        },
+        {
+          "id": 1,
+          "text": "who likes to cook",
+          "start": 15,
+          "end": 32,
+          "role": "M",
+          "implicit": false,
+          "function": "形容詞・修飾",
+          "modifies": {
+            "start": 7,
+            "end": 13,
+            "text": "sister"
+          },
+          "heads": [],
+          "structure": "形容詞子句",
+          "note": "由 who 帶頭的形容詞子句，補充說明姊姊。前後有逗號，表示只是補充，拿掉也不影響主幹。",
+          "clause": 0,
+          "inner": [
+            {
+              "id": 0,
+              "text": "who",
+              "start": 15,
+              "end": 18,
+              "role": "S",
+              "implicit": false,
+              "heads": [],
+              "note": "",
+              "clause": 0,
+              "inner": []
+            },
+            {
+              "id": 1,
+              "text": "likes",
+              "start": 19,
+              "end": 24,
+              "role": "Vt",
+              "implicit": false,
+              "heads": [],
+              "note": "",
+              "clause": 0,
+              "inner": []
+            },
+            {
+              "id": 2,
+              "text": "to cook",
+              "start": 25,
+              "end": 32,
+              "role": "O",
+              "implicit": false,
+              "heads": [],
+              "structure": "不定詞片語",
+              "note": "",
+              "clause": 0,
+              "inner": []
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "text": "made",
+          "start": 34,
+          "end": 38,
+          "role": "Vt",
+          "implicit": false,
+          "heads": [],
+          "note": "make 在這裡是「為某人做某物」，後面接兩個受詞。",
+          "clause": 0,
+          "inner": []
+        },
+        {
+          "id": 3,
+          "text": "our whole family",
+          "start": 39,
+          "end": 55,
+          "role": "IO",
+          "implicit": false,
+          "heads": [
+            {
+              "start": 49,
+              "end": 55,
+              "text": "family"
+            }
+          ],
+          "structure": "名詞片語",
+          "note": "間接受詞：替「誰」做？",
+          "clause": 0,
+          "inner": []
+        },
+        {
+          "id": 4,
+          "text": "a big chocolate cake",
+          "start": 56,
+          "end": 76,
+          "role": "DO",
+          "implicit": false,
+          "heads": [
+            {
+              "start": 72,
+              "end": 76,
+              "text": "cake"
+            }
+          ],
+          "structure": "名詞片語",
+          "note": "直接受詞：做了「什麼」？",
+          "clause": 0,
+          "inner": []
+        },
+        {
+          "id": 5,
+          "text": "for Mom's birthday",
+          "start": 77,
+          "end": 95,
+          "role": "M",
+          "implicit": false,
+          "function": "副詞・表目的",
+          "heads": [],
+          "structure": "介系詞片語",
+          "note": "說明為什麼做蛋糕。",
+          "clause": 0,
+          "inner": []
+        }
+      ],
+      "cards": [
+        {
+          "id": "relative_pronoun",
+          "vars": {}
+        },
+        {
+          "id": "dative_verbs",
+          "vars": {}
+        }
+      ],
+      "header": "句型四：S + Vt + IO + DO"
+    }
+  ]
+}

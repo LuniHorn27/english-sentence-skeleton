@@ -1,0 +1,40 @@
+id: present_progressive
+title: 現在進行式
+brief: 表示「正在」進行的動作。
+trigger: 助動詞是 am／is／are，而且主要動詞是 V-ing（被動進行式除外）
+blocks:
+  - type: formula
+    text: am／is／are ＋ V-ing
+  - type: heading
+    text: 三種用法
+  - type: examples
+    examples:
+      - en: The baby is sleeping now.
+        zh: 說話的當下正在做
+      - en: I am learning English this year.
+        zh: 這段期間持續在做
+      - en: We are leaving tomorrow.
+        zh: 已經安排好的近期計畫
+  - type: heading
+    text: 句子變化
+  - type: list
+    items:
+      - 否定：The baby is <b>not</b> sleeping.
+      - 疑問：<b>Is</b> the baby sleeping?（is 移到主詞前面，所以標成 aux.）
+  - type: heading
+    text: V-ing 拼法
+  - type: list
+    items:
+      - 一般：sleep → sleeping
+      - 字尾 e 去掉：make → making
+      - 短母音＋子音，重複字尾：run → running
+  - type: tip
+    text: 看到 now、right now、at the moment、Look!、Listen!，通常就用進行式。
+  - type: warn
+    text: 表示狀態的動詞（know、like、want）通常不用進行式。
+    examples:
+      - en: I am knowing him.
+        mark: "no"
+      - en: I know him.
+        mark: ok
+see_also: [present_perfect]

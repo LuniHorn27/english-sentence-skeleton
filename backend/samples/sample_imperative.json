@@ -1,0 +1,99 @@
+{
+  "version": "1",
+  "input": "Please keep the door open.",
+  "sentences": [
+    {
+      "text": "Please keep the door open.",
+      "status": "ok",
+      "kind": "simple",
+      "clauses": [
+        {
+          "index": 0,
+          "pattern": 5,
+          "passive": false,
+          "formula": "S + Vt + O + OC",
+          "label": "句型五：S + Vt + O + OC"
+        }
+      ],
+      "chunks": [
+        {
+          "id": 0,
+          "text": "Please",
+          "start": 0,
+          "end": 6,
+          "role": "M",
+          "implicit": false,
+          "function": "副詞・表語氣",
+          "heads": [],
+          "structure": "副詞",
+          "note": "加上 please 語氣比較客氣。",
+          "clause": 0,
+          "inner": []
+        },
+        {
+          "id": 1,
+          "text": "(You)",
+          "start": 6,
+          "end": 6,
+          "role": "S",
+          "implicit": true,
+          "heads": [],
+          "note": "省略的主詞，括號表示句子裡看不到，但文法上存在。",
+          "clause": 0,
+          "inner": []
+        },
+        {
+          "id": 2,
+          "text": "keep",
+          "start": 7,
+          "end": 11,
+          "role": "Vt",
+          "implicit": false,
+          "heads": [],
+          "note": "keep 在這裡是「讓…保持某種狀態」。祈使句的動詞用原形。",
+          "clause": 0,
+          "inner": []
+        },
+        {
+          "id": 3,
+          "text": "the door",
+          "start": 12,
+          "end": 20,
+          "role": "O",
+          "implicit": false,
+          "heads": [
+            {
+              "start": 16,
+              "end": 20,
+              "text": "door"
+            }
+          ],
+          "structure": "名詞片語",
+          "note": "受詞，核心字是 door。",
+          "clause": 0,
+          "inner": []
+        },
+        {
+          "id": 4,
+          "text": "open",
+          "start": 21,
+          "end": 25,
+          "role": "OC",
+          "implicit": false,
+          "heads": [],
+          "structure": "形容詞",
+          "note": "受詞補語：門要保持什麼狀態。the door = open。",
+          "clause": 0,
+          "inner": []
+        }
+      ],
+      "cards": [
+        {
+          "id": "imperative",
+          "vars": {}
+        }
+      ],
+      "header": "句型五：S + Vt + O + OC"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+id: quantifier_of
+title: 數量詞 ＋ of ＋ 名詞
+brief: 動詞單複數要看 of 後面的 {noun}。
+trigger: 主詞是 most／some／all／half／a lot／each／one／neither ＋ of ＋ 名詞
+blocks:
+  - type: formula
+    text: most／some／all ＋ of ＋ 名詞 → 動詞看名詞
+  - type: examples
+    examples:
+      - en: Most of the kids <b>are</b> happy.
+        zh: kids 是複數
+      - en: Most of the cake <b>is</b> gone.
+        zh: cake 不可數
+  - type: formula
+    text: each／one ＋ of ＋ 複數名詞 → 動詞用單數
+  - type: examples
+    examples:
+      - en: Each of us <b>has</b> a book.
+      - en: One of my friends <b>is</b> a nurse.
+  - type: tip
+    text: 先問自己：講的是「一個一個」，還是「一群」？
+see_also: [unit_of]
