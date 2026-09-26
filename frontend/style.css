@@ -152,6 +152,7 @@ textarea {
 .inner-wrap > .punct { border: 0 !important; padding-left: 0; }
 
 .zh { font-size: 16px; color: var(--text-2); margin: 4px 0 0; }
+.zh-status { font-size: 13px; color: var(--muted); }
 .zh .mt { font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 0 5px; margin-left: 6px; vertical-align: 1px; }
 .explain { font-size: 14px; color: var(--text-2); background: var(--surface-2); border-radius: 8px; padding: 8px 12px; margin-top: 10px; line-height: 1.7; }
 .explain strong { color: var(--text); font-weight: 600; }
