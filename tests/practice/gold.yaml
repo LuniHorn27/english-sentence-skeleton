@@ -1,0 +1,714 @@
+- id: '1'
+  sentence: Birds fly.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: Birds
+  - role: Vi
+    text: fly
+- id: '2'
+  sentence: The baby is sleeping in her room.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: The baby
+    head:
+    - baby
+  - role: aux
+    text: is
+  - role: Vi
+    text: sleeping
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in her room
+- id: '3'
+  sentence: The sun rises in the east.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: The sun
+  - role: Vi
+    text: rises
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the east
+- id: '4'
+  sentence: My father works at a bank.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: My father
+  - role: Vi
+    text: works
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at a bank
+- id: '5'
+  sentence: There is a cat under the table.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 引導詞
+    modifies: null
+    text: There
+  - role: Vi
+    text: is
+  - role: S
+    text: a cat
+    head:
+    - cat
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: under the table
+- id: '6'
+  sentence: He runs fast.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: runs
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: fast
+- id: '7'
+  sentence: I like you.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: like
+  - role: O
+    text: you
+- id: '8'
+  sentence: She reads a book every night.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: reads
+  - role: O
+    text: a book
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every night
+- id: '9'
+  sentence: We visited our grandparents last Sunday.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: visited
+  - role: O
+    text: our grandparents
+    head:
+    - grandparents
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: last Sunday
+- id: '10'
+  sentence: He wants to go home.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: wants
+  - role: O
+    text: to go home
+- id: '11'
+  sentence: They enjoy playing basketball.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: Vt
+    text: enjoy
+  - role: O
+    text: playing basketball
+- id: '12'
+  sentence: She runs a small shop.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: runs
+  - role: O
+    text: a small shop
+    head:
+    - shop
+- id: '13'
+  sentence: I think that he is right.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: think
+  - role: O
+    text: that he is right
+- id: '14'
+  sentence: He found the book easily.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: found
+  - role: O
+    text: the book
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: easily
+- id: '15'
+  sentence: She is a nurse.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: is
+  - role: SC
+    text: a nurse
+    head:
+    - nurse
+- id: '16'
+  sentence: The soup smells good.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The soup
+  - role: V
+    text: smells
+  - role: SC
+    text: good
+- id: '17'
+  sentence: He became a doctor.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: V
+    text: became
+  - role: SC
+    text: a doctor
+- id: '18'
+  sentence: The weather got cold.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The weather
+  - role: V
+    text: got
+  - role: SC
+    text: cold
+- id: '19'
+  sentence: You look tired today.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: V
+    text: look
+  - role: SC
+    text: tired
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: today
+- id: '20'
+  sentence: The story sounds interesting.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The story
+  - role: V
+    text: sounds
+  - role: SC
+    text: interesting
+- id: '21'
+  sentence: The teacher showed us a picture.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: The teacher
+  - role: Vt
+    text: showed
+  - role: IO
+    text: us
+  - role: DO
+    text: a picture
+- id: '22'
+  sentence: My mom bought me a new bike.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: My mom
+  - role: Vt
+    text: bought
+  - role: IO
+    text: me
+  - role: DO
+    text: a new bike
+    head:
+    - bike
+- id: '23'
+  sentence: He told us a funny story.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: told
+  - role: IO
+    text: us
+  - role: DO
+    text: a funny story
+    head:
+    - story
+- id: '24'
+  sentence: Grandpa gave each of us a red envelope.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: Grandpa
+  - role: Vt
+    text: gave
+  - role: IO
+    text: each of us
+  - role: DO
+    text: a red envelope
+    head:
+    - envelope
+- id: '25'
+  sentence: Can you pass me the salt?
+  pattern: 4
+  passive: false
+  chunks:
+  - role: aux
+    text: Can
+  - role: S
+    text: you
+  - role: Vt
+    text: pass
+  - role: IO
+    text: me
+  - role: DO
+    text: the salt
+- id: '26'
+  sentence: The news made her sad.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The news
+  - role: Vt
+    text: made
+  - role: O
+    text: her
+  - role: OC
+    text: sad
+- id: '27'
+  sentence: We named our dog Lucky.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: named
+  - role: O
+    text: our dog
+    head:
+    - dog
+  - role: OC
+    text: Lucky
+- id: '28'
+  sentence: Please keep the door open.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Please
+  - role: S
+    text: (You)
+  - role: Vt
+    text: keep
+  - role: O
+    text: the door
+  - role: OC
+    text: open
+- id: '29'
+  sentence: He found the book easy.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: found
+  - role: O
+    text: the book
+  - role: OC
+    text: easy
+- id: '30'
+  sentence: They elected him class leader.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: Vt
+    text: elected
+  - role: O
+    text: him
+  - role: OC
+    text: class leader
+- id: '31'
+  sentence: I saw him cross the street.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: saw
+  - role: O
+    text: him
+  - role: OC
+    text: cross the street
+- id: '32'
+  sentence: The old tree behind our house stayed green all year, even in the cold winter.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The old tree
+    head:
+    - tree
+  - role: M
+    function: 形容詞・修飾
+    modifies: tree
+    text: behind our house
+  - role: V
+    text: stayed
+  - role: SC
+    text: green
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: all year
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: even in the cold winter
+- id: '33'
+  sentence: My big sister, who likes to cook, made our whole family a big chocolate cake for Mom's birthday.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: My big sister
+    head:
+    - sister
+  - role: M
+    function: 形容詞・修飾
+    modifies: sister
+    text: who likes to cook
+  - role: Vt
+    text: made
+  - role: IO
+    text: our whole family
+    head:
+    - family
+  - role: DO
+    text: a big chocolate cake
+    head:
+    - cake
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: for Mom's birthday
+- id: '34'
+  sentence: Everyone in our class calls the funny boy with the big glasses Little Bear.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Everyone
+  - role: M
+    function: 形容詞・修飾
+    modifies: Everyone
+    text: in our class
+  - role: Vt
+    text: calls
+  - role: O
+    text: the funny boy
+    head:
+    - boy
+  - role: M
+    function: 形容詞・修飾
+    modifies: boy
+    text: with the big glasses
+  - role: OC
+    text: Little Bear
+- id: '35'
+  sentence: Every morning before school, the children in Miss Lin's class water the small flowers in the garden.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: Every morning
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: before school
+  - role: S
+    text: the children
+  - role: M
+    function: 形容詞・修飾
+    modifies: children
+    text: in Miss Lin's class
+  - role: Vt
+    text: water
+  - role: O
+    text: the small flowers
+    head:
+    - flowers
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the garden
+- id: '36'
+  sentence: The leaves on the big trees near the river turn red and yellow in the fall.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The leaves
+  - role: M
+    function: 形容詞・修飾
+    modifies: leaves
+    text: on the big trees
+  - role: M
+    function: 形容詞・修飾
+    modifies: trees
+    text: near the river
+  - role: V
+    text: turn
+  - role: SC
+    text: red and yellow
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: in the fall
+- id: '37'
+  sentence: Most of the kids at the party found the new game very fun.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Most of the kids
+  - role: M
+    function: 形容詞・修飾
+    modifies: kids
+    text: at the party
+  - role: Vt
+    text: found
+  - role: O
+    text: the new game
+    head:
+    - game
+  - role: OC
+    text: very fun
+- id: '38'
+  sentence: The nice man at the small store found us a good seat near the window on a busy day.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: The nice man
+    head:
+    - man
+  - role: M
+    function: 形容詞・修飾
+    modifies: man
+    text: at the small store
+  - role: Vt
+    text: found
+  - role: IO
+    text: us
+  - role: DO
+    text: a good seat
+    head:
+    - seat
+  - role: M
+    function: 形容詞・修飾
+    modifies: seat
+    text: near the window
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: on a busy day
+- id: '39'
+  sentence: Even in the heavy rain, the little girl in the yellow coat smiled happily all the way to school.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: Even in the heavy rain
+  - role: S
+    text: the little girl
+    head:
+    - girl
+  - role: M
+    function: 形容詞・修飾
+    modifies: girl
+    text: in the yellow coat
+  - role: Vi
+    text: smiled
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: happily
+  - role: M
+    function: 副詞・表路程
+    modifies: null
+    text: all the way to school
+- id: '40'
+  sentence: The teacher in our English class sent every student a nice card after the school party.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: The teacher
+  - role: M
+    function: 形容詞・修飾
+    modifies: teacher
+    text: in our English class
+  - role: Vt
+    text: sent
+  - role: IO
+    text: every student
+    head:
+    - student
+  - role: DO
+    text: a nice card
+    head:
+    - card
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: after the school party
+- id: '41'
+  sentence: The farmers in this small town grow rice, corn, and many kinds of fruit on the hill.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The farmers
+  - role: M
+    function: 形容詞・修飾
+    modifies: farmers
+    text: in this small town
+  - role: Vt
+    text: grow
+  - role: O
+    text: rice, corn, and many kinds of fruit
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: on the hill
+- id: '42'
+  sentence: The proposal was approved by the manager.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: S
+    text: The proposal
+    head:
+    - proposal
+  - role: aux
+    text: was
+  - role: Vt
+    text: approved
+  - role: M
+    function: 副詞・表執行者
+    modifies: null
+    text: by the manager
+- id: '43'
+  sentence: Tom was given a bag by his dad.
+  pattern: 4
+  passive: true
+  chunks:
+  - role: S
+    text: Tom
+  - role: aux
+    text: was
+  - role: Vt
+    text: given
+  - role: DO
+    text: a bag
+    head:
+    - bag
+  - role: M
+    function: 副詞・表執行者
+    modifies: null
+    text: by his dad
+- id: '44'
+  sentence: He was elected class leader.
+  pattern: 5
+  passive: true
+  chunks:
+  - role: S
+    text: He
+  - role: aux
+    text: was
+  - role: Vt
+    text: elected
+  - role: OC
+    text: class leader
+    head:
+    - leader
