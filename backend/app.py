@@ -137,6 +137,37 @@ class Feedback(BaseModel):
     analysis: Optional[dict] = None
 
 
+# 回饋同時送到 Google 試算表（設定方式見 docs/回饋試算表設定.md）
+#   網址放在環境變數 FEEDBACK_SHEET_URL，或 data/feedback_sheet.json 的 {"url": "..."}（data/ 不會上傳到 GitHub）
+def _sheet_url():
+    url = os.environ.get("FEEDBACK_SHEET_URL")
+    cfg = ROOT / "data" / "feedback_sheet.json"
+    if not url and cfg.exists():
+        try:
+            url = json.loads(cfg.read_text(encoding="utf-8")).get("url")
+        except ValueError:
+            log.warning("data/feedback_sheet.json 格式不對，回饋不會送到試算表")
+    return url if url and url.startswith("https://script.google.com/") else None
+
+
+def _send_to_sheet(record: dict):
+    url = _sheet_url()
+    if not url:
+        return
+
+    def post():
+        import urllib.request
+
+        data = json.dumps({k: record.get(k) for k in ("time", "kind", "sentence", "part", "current", "message")}, ensure_ascii=False)
+        req = urllib.request.Request(url, data=data.encode("utf-8"), headers={"Content-Type": "application/json"})
+        try:
+            urllib.request.urlopen(req, timeout=15).read()
+        except Exception:  # 送不到試算表時，本機檔案裡還有一份
+            log.warning("回饋送到試算表失敗（本機檔案已保存）")
+
+    threading.Thread(target=post, daemon=True).start()
+
+
 def _notify_mac(item: "Feedback"):
     """網站在自己的 Mac 上執行時，有新回饋就跳出系統通知（只在這台 Mac 上，不送到外部服務）"""
     if sys.platform != "darwin" or os.environ.get("FEEDBACK_NOTIFY") == "0":
@@ -158,6 +189,7 @@ def feedback(item: Feedback, request: Request):
         record = {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), **item.model_dump()}
         with FEEDBACK_FILE.open("a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    _send_to_sheet(record)
     _notify_mac(item)
     return {"ok": True}
 
