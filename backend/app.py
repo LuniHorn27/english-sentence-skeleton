@@ -193,17 +193,27 @@ def patterns_page():
 QUIZ_ITEMS = yaml.safe_load((ROOT / "tests" / "practice" / "gold.yaml").read_text(encoding="utf-8"))
 
 
-@app.get("/api/quiz")
-def quiz():
-    import random
+# 小遊戲不出對等句（兩個子句、兩個主詞，找骨架時容易混淆）
+QUIZ_POOL = [x for x in QUIZ_ITEMS if not any(c["role"] == "conj" for c in x["chunks"])]
 
-    item = random.choice(QUIZ_ITEMS)
+
+def _quiz_item(item):
     return {
         "sentence": item["sentence"],
         "pattern": item["pattern"],
         "passive": item["passive"],
-        "chunks": [{"text": c["text"], "role": c["role"], "function": c.get("function")} for c in item["chunks"]],
+        "chunks": [{"text": c["text"], "role": c["role"], "function": c.get("function"),
+                    "implicit": bool(c.get("implicit")) or c["text"].startswith("(")} for c in item["chunks"]],
     }
+
+
+@app.get("/api/quiz")
+def quiz(count: int = 10):
+    """一回合的題目（不重複），最多 20 題"""
+    import random
+
+    picks = random.sample(QUIZ_POOL, min(max(count, 1), 20, len(QUIZ_POOL)))
+    return {"items": [_quiz_item(x) for x in picks]}
 
 
 @app.get("/quiz")
