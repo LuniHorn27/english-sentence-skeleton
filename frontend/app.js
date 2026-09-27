@@ -411,6 +411,15 @@ function feedbackForm(sIdx) {
 }
 
 // ---------- 提供建議（頁尾） ----------
+// 「試試看」範例句：點一下就分析
+for (const chip of document.querySelectorAll(".example-chip")) {
+  chip.addEventListener("click", () => {
+    input.value = chip.textContent;
+    updateCounter();
+    form.requestSubmit();
+  });
+}
+
 const suggestForm = $("suggest-form");
 if (suggestForm) {
   suggestForm.addEventListener("submit", async (e) => {

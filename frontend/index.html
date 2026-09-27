@@ -7,16 +7,20 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  <nav class="site-nav" aria-label="網站選單">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">骨</span>英文句子骨架分析</a>
+    <div class="nav-links">
+      <a href="/patterns" target="_blank" rel="noopener">五大句型</a>
+      <a href="/quiz">句型小遊戲</a>
+      <a href="/about">關於</a>
+      <button type="button" id="share-site" class="nav-share">分享</button>
+    </div>
+  </nav>
   <main>
-    <header class="top">
-      <h1>英文句子骨架分析</h1>
-      <p class="hint tagline"><b>句子落落長看不懂？每個字都認識，合起來卻看攏無？</b><br>把句子貼進來，幫你拆出五大句型的骨架，去蕪存菁，一眼抓住重點！</p>
-      <p class="top-links">
-        <a href="/patterns" target="_blank" rel="noopener">五大句型是什麼？</a>
-        <a href="/quiz">句型小遊戲</a>
-        <a href="/about">關於這個工具</a>
-        <button type="button" id="share-site" class="link-btn">分享給朋友</button>
-      </p>
+    <p class="print-title">英文句子骨架分析講義</p>
+    <header class="hero">
+      <h1 class="hero-title">句子落落長看不懂？</h1>
+      <p class="hero-sub">每個字都認識，合起來卻看攏無？<br>把句子貼進來，幫你拆出五大句型的骨架，去蕪存菁，一眼抓住重點！</p>
     </header>
 
     <form id="form" class="ask" novalidate>
@@ -28,6 +32,12 @@
       </div>
       <p id="error" class="error" role="alert" hidden></p>
     </form>
+    <div class="examples-row" aria-label="範例句子">
+      <span class="examples-title">試試看：</span>
+      <button type="button" class="example-chip">The teacher showed us a picture.</button>
+      <button type="button" class="example-chip">I give you a big hand.</button>
+      <button type="button" class="example-chip">The news made her sad.</button>
+    </div>
     <!-- 最近分析：平常收合成一行，要用時再展開，免得句子一多就擠滿畫面 -->
     <details id="history" class="history" hidden>
       <summary>🕘 最近分析<span id="history-count" class="history-count"></span></summary>
