@@ -125,6 +125,10 @@ def chunk_note(c, infos, text, compound=None) -> str:
                 note += f"也可以理解成說明動作發生的地點（副詞），意思差不多。"
             return note
         base = ADVERB_NOTE.get(f, "")
+        if f == "副詞・表對象" and root is not None and (root.head.pos_ == "ADJ" or root.head.dep_ == "acomp"):
+            adj = root.head.text
+            base = (f"放在形容詞 {adj} 後面，說明 {adj} 的對象或範圍（對什麼、在哪方面）。"
+                    f"形容詞 ＋ 介系詞常常是固定搭配（good at、interested in），整組一起記。")
         if f.startswith("副詞・表") and root is not None and root.dep_ == "advcl" and root.tag_ in ("VBG", "VBN"):
             base = f"由副詞子句縮減而來的副詞片語（省略主詞、動詞改成 V-ing），{base}"
         if f == "副詞・表地點" and root is not None and root.head.lemma_ in ("be", "live", "put", "place", "lay", "set", "stay"):

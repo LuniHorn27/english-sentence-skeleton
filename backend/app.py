@@ -19,6 +19,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from backend.analyzer.engine import analyze_text, get_nlp
+from backend.analyzer.phrases import translation_hints
 from backend import translate, tts
 from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
 
@@ -145,6 +146,7 @@ def speak(req: SpeakRequest, request: Request):
 # ---------- 中文翻譯（Qwen3-4B） ----------
 class TranslateRequest(BaseModel):
     text: str = Field(min_length=1, max_length=translate.MAX_CHARS)
+    phrases: list[str] = Field(default_factory=list, max_length=20, description="分析找到的片語代號（只接受清單裡有的）")
 
 
 @app.post("/api/translate")
@@ -154,7 +156,7 @@ def translate_sentence(req: TranslateRequest, request: Request):
     if not translate.is_available():
         raise HTTPException(503, "翻譯暫時無法使用")
     try:
-        return {"translation": translate.translate(req.text)}
+        return {"translation": translate.translate(req.text, translation_hints(req.phrases))}
     except Exception:
         log.exception("翻譯失敗（輸入長度 %d 字元）", len(req.text))
         raise HTTPException(503, "翻譯暫時無法使用")

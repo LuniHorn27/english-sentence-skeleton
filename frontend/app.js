@@ -302,6 +302,26 @@ function cardNode(sIdx, ref, card) {
   return node;
 }
 
+// ---------- 片語（清單在 backend/analyzer/phrases.yaml） ----------
+function phraseCard(sentence) {
+  const node = el("div", "card phrases");
+  const head = el("div", "card-head");
+  head.append(el("span", "card-tag phrase-tag", "片語"));
+  node.append(head);
+  const list = el("ul", "phrase-list");
+  for (const p of sentence.phrases) {
+    const li = el("li");
+    const line = el("div", "phrase-line");
+    line.append(el("b", "phrase-en", p.phrase), el("span", "phrase-mean", p.meaning), el("span", "phrase-kind", p.kind));
+    li.append(line);
+    if (p.literal) li.append(el("div", "phrase-note", `字面是「${p.literal}」，不能照字面翻。`));
+    if (p.note) li.append(el("div", "phrase-note", p.note));
+    list.append(li);
+  }
+  node.append(list);
+  return node;
+}
+
 // ---------- 回報錯誤（2-5） ----------
 async function sendFeedback(payload) {
   const response = await fetch("/api/feedback", {
@@ -327,6 +347,7 @@ function feedbackForm(sIdx) {
   for (const c of sentence.chunks) {
     options.push([`「${c.text}」`, c.role === "M" ? labelText(c) : `${ROLE_NAME[c.role]}（${LABEL[c.role] || c.role}）`]);
   }
+  for (const p of sentence.phrases || []) options.push([`片語「${p.phrase}」`, p.meaning]);
   options.push(["文法重點卡", ""], ["中文翻譯", sentence.translation || ""], ["其他", ""]);
   for (const [part, current] of options) {
     const opt = el("option", null, current ? `${part}：${current}` : part);
@@ -443,6 +464,7 @@ function renderSentence(sIdx) {
 
   const cardsWrap = el("div", "cards");
   box.append(cardsWrap);
+  if (sentence.phrases?.length) cardsWrap.append(phraseCard(sentence));
   for (const ref of sentence.cards || []) {
     const slot = el("div");
     cardsWrap.append(slot);

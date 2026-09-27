@@ -169,6 +169,15 @@ textarea {
 .card-tag { font-size: 12px; background: var(--pro-bg); color: var(--pro); padding: 1px 8px; border-radius: 6px; }
 .card-title { font-weight: 600; }
 .card-brief { color: var(--text-2); flex: 1 1 200px; }
+.phrase-tag { background: var(--tip-bg); color: var(--tip); }
+.phrase-list { list-style: none; margin: 6px 0 0; padding: 0; }
+.phrase-list li { padding: 4px 0; }
+.phrase-list li + li { border-top: 1px dashed var(--border); }
+.phrase-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.phrase-en { font-weight: 600; }
+.phrase-mean { color: var(--text); flex: 1 1 160px; }
+.phrase-kind { font-size: 12px; color: var(--muted); }
+.phrase-note { font-size: 13px; color: var(--text-2); }
 .card-toggle { font-size: 12px; padding: 2px 10px; }
 .card-body { border-top: 1px solid var(--border); margin-top: 10px; padding-top: 2px; }
 .card-body h4 { font-size: 14px; font-weight: 600; margin: 12px 0 4px; }

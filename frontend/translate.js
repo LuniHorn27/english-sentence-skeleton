@@ -33,14 +33,14 @@
   }
 
   // 回傳翻譯；伺服器說次數太多時丟出訊息；伺服器無法翻譯時改用瀏覽器
-  async function serverTranslate(text) {
+  async function serverTranslate(text, phrases) {
     let response;
     try {
       response = await withTimeout(
         fetch("/api/translate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text }),
+          body: JSON.stringify({ text, phrases }),
         }),
         60000,
       );
@@ -89,7 +89,7 @@
       if (myRun !== run) return;
       const sentence = sentences[i];
       try {
-        const zh = await serverTranslate(sentence.text);
+        const zh = await serverTranslate(sentence.text, (sentence.phrases || []).map((p) => p.id));
         if (myRun !== run) return;
         sentence.translation = zh; // 重新畫這一句時（例如點片段）不用再翻一次
         const node = document.querySelector(`[data-translation="${i}"]`);

@@ -17,6 +17,7 @@ from typing import Optional
 
 from . import lexicon as L
 from .notes import chunk_note
+from .phrases import find_phrases
 from .schema import CardRef, Chunk, Clause, SentenceResult, Span
 
 NOMINAL = {"S", "O", "IO", "DO", "SC", "OC", "RS"}
@@ -928,7 +929,8 @@ def analyze_sentence(text: str) -> SentenceResult:
             for i, info in infos.items()
         ]
     cards = [CardRef(id=f, vars=vars_.get(f, {})) for f in CARD_ORDER if f in flags][:MAX_CARDS]
-    return SentenceResult(text=stext, status=status, message=message, kind=kind, clauses=clauses, chunks=chunks, cards=cards)
+    return SentenceResult(text=stext, status=status, message=message, kind=kind, clauses=clauses, chunks=chunks, cards=cards,
+                          phrases=find_phrases(sent))
 
 
 MAX_SENTENCES = 30

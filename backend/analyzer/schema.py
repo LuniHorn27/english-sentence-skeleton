@@ -83,6 +83,19 @@ class CardRef(BaseModel):
     vars: dict[str, str] = Field(default_factory=dict, description="填進卡片簡短說明的變數，例如 {noun: kids}")
 
 
+class PhraseHit(BaseModel):
+    """這一句出現的片語（清單在 analyzer/phrases.yaml）"""
+
+    id: str
+    phrase: str = Field(description="字典形式，例如 give up、rain cats and dogs")
+    kind: Literal["動詞片語", "形容詞片語", "介系詞片語", "副詞片語", "慣用語"]
+    meaning: str
+    literal: Optional[str] = Field(None, description="慣用語的字面意思")
+    note: Optional[str] = None
+    words: str = Field(description="句子裡實際出現的字，隔開的用「…」連接，例如 gave … up")
+    start: int = Field(description="第一個字在句子中的字元位置")
+
+
 class SentenceResult(BaseModel):
     text: str
     status: Literal["ok", "partial", "failed"]
@@ -91,7 +104,8 @@ class SentenceResult(BaseModel):
     clauses: list[Clause]
     chunks: list[Chunk]
     cards: list[CardRef] = Field(default_factory=list)
-    translation: Optional[str] = Field(None, description="後端不翻譯，留給前端用瀏覽器翻譯")
+    phrases: list[PhraseHit] = Field(default_factory=list)
+    translation: Optional[str] = Field(None, description="分析時不翻譯；網頁另外呼叫 /api/translate 補上")
 
     @computed_field
     @property

@@ -2,6 +2,7 @@
 
 - 選這個模型的原因見 docs/翻譯實測-比較報告.md（26 句實測，品質最好、速度第二快）。
 - 模型輸出偶爾有簡體字，一律經過 OpenCC（s2twp）轉成台灣繁體與台灣用語。
+- 句子裡有慣用語時（例如 give someone a big hand），把真正的意思告訴模型，避免照字面翻。
 - 翻譯裡如果留下英文單字（原句的專有名詞、縮寫除外），加一句提醒再翻一次。
 - 翻過的句子暫存在記憶體（最多 500 句）；不寫進硬碟，伺服器重新啟動就清空（隱私）。
 - 完全在自己的伺服器上執行，不呼叫任何外部服務。
@@ -31,7 +32,7 @@ _llm = None
 _converter = None
 _load_error = None
 _lock = threading.Lock()  # 模型一次只翻一句，避免同時佔用太多記憶體和 CPU
-_cache: "OrderedDict[str, str]" = OrderedDict()
+_cache: "OrderedDict[tuple, str]" = OrderedDict()
 
 
 def is_available() -> bool:
@@ -67,29 +68,45 @@ def leftover_english(zh: str, source: str) -> list[str]:
     return [w for w in re.findall(r"[A-Za-z]{2,}", zh) if w not in keep]
 
 
+# OpenCC 沒有處理到的台灣用字：香菸、抽菸、戒菸用「菸」（煙霧的「煙」不變）
+TAIWAN_FIXES = [
+    (re.compile(r"(抽|吸|戒|點)(了|過|完|根)?煙"), r"\1\2菸"),
+    (re.compile(r"香煙|煙草|煙酒|煙蒂|煙灰缸"), lambda m: m.group().replace("煙", "菸")),
+]
+
+
+def taiwan_fix(zh: str) -> str:
+    for pattern, repl in TAIWAN_FIXES:
+        zh = pattern.sub(repl, zh)
+    return zh
+
+
 def _generate(text: str, extra: str = "") -> str:
     out = _llm.create_chat_completion(
         messages=[{"role": "system", "content": SYSTEM_PROMPT + extra}, {"role": "user", "content": text}],
         temperature=0.0,
         max_tokens=800,
     )
-    return _converter.convert(out["choices"][0]["message"]["content"].strip())
+    return taiwan_fix(_converter.convert(out["choices"][0]["message"]["content"].strip()))
 
 
-def translate(text: str) -> str:
+def translate(text: str, hints: str = "") -> str:
+    """hints：慣用語的真正意思（由 analyzer/phrases.py 的 translation_hints 產生）"""
     text = " ".join(text.split())[:MAX_CHARS]
+    extra = f"這句話裡的慣用語：{hints}" if hints else ""
+    key = (text, extra)
     if _llm is None:
         load()
     with _lock:
-        if text in _cache:
-            _cache.move_to_end(text)
-            return _cache[text]
-        zh = _generate(text)
+        if key in _cache:
+            _cache.move_to_end(key)
+            return _cache[key]
+        zh = _generate(text, extra)
         if leftover_english(zh, text):
-            retry = _generate(text, RETRY_NOTE)
+            retry = _generate(text, extra + RETRY_NOTE)
             if len(leftover_english(retry, text)) < len(leftover_english(zh, text)):
                 zh = retry
-        _cache[text] = zh
+        _cache[key] = zh
         while len(_cache) > CACHE_SIZE:
             _cache.popitem(last=False)
     return zh
