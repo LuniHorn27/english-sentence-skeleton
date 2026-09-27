@@ -421,6 +421,20 @@ for (const chip of document.querySelectorAll(".example-chip")) {
 }
 
 const suggestForm = $("suggest-form");
+// 回饋對話框：首頁下方的「寫下你的想法」和結果下方的「給我回饋」都會打開它
+const feedbackDialog = $("feedback-dialog");
+for (const btn of document.querySelectorAll("[data-open-feedback]")) {
+  btn.addEventListener("click", () => {
+    $("suggest-status").textContent = "";
+    feedbackDialog.showModal();
+    $("suggest-text").focus();
+  });
+}
+feedbackDialog?.querySelector("[data-close-feedback]").addEventListener("click", () => feedbackDialog.close());
+feedbackDialog?.addEventListener("click", (e) => {
+  if (e.target === feedbackDialog) feedbackDialog.close(); // 點對話框外面也可以關掉
+});
+
 if (suggestForm) {
   suggestForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -434,6 +448,7 @@ if (suggestForm) {
       await sendFeedback({ kind: "suggestion", message: box.value.trim() });
       box.value = "";
       status.textContent = "收到了，謝謝你！每一則回饋都會讓這個工具更好 🙌";
+      setTimeout(() => feedbackDialog?.close(), 1800);
     } catch (err) {
       status.textContent = err.message;
     }

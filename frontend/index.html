@@ -61,23 +61,29 @@
       <span class="ra-hint">看完了嗎？</span>
       <button type="button" id="share-result">🔗 分享這個分析</button>
       <button type="button" id="print">🖨️ 列印講義</button>
+      <button type="button" data-open-feedback>💬 給我回饋</button>
     </div>
 
-    <!-- 頁面最下方：回饋＋請喝咖啡（咖啡連結在 site-config.js 設定網址後才會出現） -->
+    <!-- 頁面最下方：回饋入口（畫面上只留分析用的輸入框，回饋在對話框裡寫）＋請喝咖啡 -->
     <section class="support" aria-label="回饋">
-      <form id="suggest-form" class="support-card">
-        <h2>一起讓它更好 💬</h2>
-        <p class="support-lead">覺得哪裡好用、哪裡卡卡的、還想要什麼功能，都歡迎告訴我！</p>
-        <div class="support-row">
-          <label for="suggest-text" class="sr-only">你的回饋</label>
-          <textarea id="suggest-text" rows="2" maxlength="1000" placeholder="寫下你的想法……"></textarea>
-          <button type="submit" class="primary">送出</button>
-        </div>
-        <p class="fb-note">請不要填寫姓名、電話等個人資料。</p>
-        <p id="suggest-status" class="fb-status" role="status"></p>
-      </form>
+      <p class="support-line"><span>💬 <b>一起讓它更好</b>　覺得哪裡好用、哪裡卡卡的、還想要什麼功能？</span><button type="button" class="support-open" data-open-feedback>寫下你的想法</button></p>
       <p class="coffee-card coffee-line" hidden>喜歡這個工具嗎？<a class="coffee-btn" href="#" target="_blank" rel="noopener">☕ 請我喝杯咖啡</a></p>
     </section>
+
+    <dialog id="feedback-dialog" class="fb-dialog" aria-labelledby="fb-dialog-title">
+      <form id="suggest-form">
+        <h2 id="fb-dialog-title">一起讓它更好 💬</h2>
+        <p class="support-lead">覺得哪裡好用、哪裡卡卡的、還想要什麼功能，都歡迎告訴我！每一則我都會認真看。</p>
+        <label for="suggest-text" class="sr-only">你的回饋</label>
+        <textarea id="suggest-text" rows="5" maxlength="1000" placeholder="寫下你的想法……"></textarea>
+        <p class="fb-note">請不要填寫姓名、電話等個人資料。</p>
+        <p id="suggest-status" class="fb-status" role="status"></p>
+        <div class="fb-dialog-bar">
+          <button type="button" data-close-feedback>取消</button>
+          <button type="submit" class="primary">送出</button>
+        </div>
+      </form>
+    </dialog>
 
     <footer class="foot">
       <p>分析結果由程式自動產生，僅供學習參考，可能會有錯誤。發現錯誤時，請按句子旁的「回報錯誤」。</p>
