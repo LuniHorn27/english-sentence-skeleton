@@ -280,6 +280,8 @@ a { color: var(--accent-line); }
 .privacy-item { display: flex; gap: 12px; align-items: flex-start; padding: 16px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
 .privacy-item h3 { margin-top: 0; }
 .about-fine { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+a.privacy-item.res { color: var(--text); text-decoration: none; }
+a.privacy-item.res:hover { border-color: var(--accent-line); }
 .steps { padding-left: 22px; margin: 0 0 10px; }
 .steps li { margin: 6px 0; }
 .label-table { display: grid; gap: 8px; }

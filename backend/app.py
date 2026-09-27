@@ -357,6 +357,14 @@ def quiz_page():
     return FileResponse(ROOT / "frontend" / "quiz.html")
 
 
+@app.get("/resources")
+def resources_page(request: Request):
+    """學習資源（草稿）：使用者確認內容前，只能在執行網站的這台電腦上打開"""
+    if not _is_local(request):
+        raise HTTPException(404, "Not Found")
+    return FileResponse(ROOT / "backend" / "drafts" / "resources.html")  # 不放在 frontend/，免得從 /static/ 被打開
+
+
 @app.get("/about")
 def about_page():
     return FileResponse(ROOT / "frontend" / "about.html")
