@@ -94,11 +94,6 @@ textarea {
 .toolbar { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin: 20px 0 4px; }
 .modes { display: inline-flex; gap: 6px; }
 .modes button[aria-pressed="true"] { border-color: var(--accent-line); background: var(--accent-bg); color: var(--accent-text); }
-.legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--text-2); }
-.legend li { display: inline-flex; align-items: center; gap: 6px; }
-.legend b { color: var(--text); }
-.swatch { display: inline-block; width: 22px; border-bottom: 2px solid var(--text); }
-.swatch.dashed { border-bottom-style: dashed; }
 
 /* ---------- 句子 ---------- */
 .sentence { border-top: 1px solid var(--border); padding: 18px 0 12px; }
@@ -109,7 +104,9 @@ textarea {
 .pattern { font-size: 14px; background: var(--accent-bg); color: var(--accent-text); padding: 3px 10px; border-radius: 8px; }
 .speak { font-size: 12px; padding: 2px 10px; margin-left: auto; }
 .speak-mini { margin-left: 10px; padding: 0 8px; }
-.speed { font-size: 12px; padding: 4px 10px; }
+.result-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin: 20px 0 8px; padding: 14px 12px; border: 1px dashed var(--border-strong); border-radius: 12px; }
+.result-actions .ra-hint { color: var(--text-2); font-size: 14px; }
+.result-actions button { font-size: 15px; padding: 7px 18px; }
 .tag { font-size: 12px; color: var(--text-2); border: 1px solid var(--border-strong); padding: 1px 8px; border-radius: 6px; }
 .banner { font-size: 14px; background: var(--tip-bg); color: var(--tip); border-radius: 8px; padding: 8px 12px; margin-top: 10px; }
 .banner.fail { background: var(--danger-bg); color: var(--danger); }
@@ -206,7 +203,6 @@ textarea {
 @media (max-width: 480px) {
   .tx { font-size: 18px; white-space: normal; }
   .row { gap: 10px; }
-  .legend { font-size: 11px; }
 }
 
 /* ---------- 五大句型介紹頁 ---------- */
@@ -265,7 +261,7 @@ a.pattern:hover { text-decoration: underline; }
   :root { --bg: #fff; --surface: #fff; --text: #000; }
   body { background: #fff; }
   main { max-width: none; padding: 0; }
-  .ask, .toolbar, .history, .foot, .s-tools, .card-toggle, .feedback, .explain, .toast, .top .hint, .top-links { display: none !important; }
+  .ask, .toolbar, .result-actions, .history, .foot, .s-tools, .card-toggle, .feedback, .explain, .toast, .top .hint, .top-links { display: none !important; }
   .top h1::after { content: "　英文句子骨架分析講義"; font-size: 14px; font-weight: 400; }
   .sentence { break-inside: avoid; padding: 10px 0; }
   .lb, .pattern, .card-tag, .callout { -webkit-print-color-adjust: exact; print-color-adjust: exact; }

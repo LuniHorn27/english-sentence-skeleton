@@ -6,7 +6,6 @@ window.Speech = (() => {
   const synth = "speechSynthesis" in window ? window.speechSynthesis : null;
   let slow = false;
   let current = null; // 正在播放的聲音
-  try { slow = localStorage.getItem("slow") === "1"; } catch { /* 忽略 */ }
 
   function stop() {
     if (current) {

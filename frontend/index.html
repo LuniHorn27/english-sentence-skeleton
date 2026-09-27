@@ -39,19 +39,16 @@
         <button type="button" data-mode="skeleton" aria-pressed="true">骨架模式</button>
         <button type="button" data-mode="detail" aria-pressed="false">詳細模式</button>
       </div>
-      <button type="button" id="speed" class="speed" hidden>朗讀速度：正常</button>
-      <button type="button" id="share-result" class="speed">分享這個分析</button>
-      <button type="button" id="print" class="speed">列印講義</button>
-      <ul class="legend" aria-label="圖例">
-        <li><span class="swatch solid"></span>算進公式</li>
-        <li><span class="swatch dashed"></span>不算進公式</li>
-        <li>( )　被省略的字</li>
-        <li><b>粗體</b>　核心字</li>
-      </ul>
     </section>
 
     <p id="toast" class="toast" role="status" hidden></p>
     <section id="result" aria-live="polite"></section>
+    <!-- 分享、列印是「看完分析之後」要做的事，放在結果下方，和上方切換顯示方式的按鈕分開 -->
+    <div id="result-actions" class="result-actions" hidden>
+      <span class="ra-hint">看完了嗎？</span>
+      <button type="button" id="share-result">🔗 分享這個分析</button>
+      <button type="button" id="print">🖨️ 列印講義</button>
+    </div>
 
     <footer class="foot">
       <p>分析結果由程式自動產生，僅供學習參考，可能會有錯誤。發現錯誤時，請按句子旁的「回報錯誤」。</p>
