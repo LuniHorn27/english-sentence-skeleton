@@ -19,7 +19,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from backend.analyzer.engine import analyze_text, get_nlp
-from backend import tts
+from backend import translate, tts
 from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -33,6 +33,7 @@ async def lifespan(_app):
     log.info("分析程式載入完成")
     # 朗讀模型在背景載入，不拖慢網站啟動
     threading.Thread(target=_warm_tts, daemon=True).start()
+    threading.Thread(target=_warm_translate, daemon=True).start()
     yield
 
 
@@ -42,6 +43,17 @@ def _warm_tts():
         log.info("朗讀模型載入完成")
     except Exception:
         log.exception("朗讀模型載入失敗，網頁會改用瀏覽器內建語音")
+
+
+def _warm_translate():
+    if not translate.MODEL_PATH.exists():
+        log.warning("找不到翻譯模型 %s，網頁會改用瀏覽器內建翻譯", translate.MODEL_PATH)
+        return
+    try:
+        translate.load()
+        log.info("翻譯模型載入完成")
+    except Exception:
+        log.exception("翻譯模型載入失敗，網頁會改用瀏覽器內建翻譯")
 
 
 app = FastAPI(title="英文句子骨架分析", lifespan=lifespan)
@@ -128,6 +140,24 @@ def speak(req: SpeakRequest, request: Request):
         log.exception("朗讀失敗（輸入長度 %d 字元）", len(req.text))
         raise HTTPException(503, "朗讀暫時無法使用")
     return Response(content=audio, media_type="audio/wav", headers={"Cache-Control": "private, max-age=86400"})
+
+
+# ---------- 中文翻譯（Qwen3-4B） ----------
+class TranslateRequest(BaseModel):
+    text: str = Field(min_length=1, max_length=translate.MAX_CHARS)
+
+
+@app.post("/api/translate")
+def translate_sentence(req: TranslateRequest, request: Request):
+    # 翻譯最吃電腦資源（一句 1～5 秒、一次只能翻一句），限制次數才不會有人把伺服器佔滿
+    check_rate(request, "translate", 60, 60, "翻譯次數太多了，請等一分鐘後再試")
+    if not translate.is_available():
+        raise HTTPException(503, "翻譯暫時無法使用")
+    try:
+        return {"translation": translate.translate(req.text)}
+    except Exception:
+        log.exception("翻譯失敗（輸入長度 %d 字元）", len(req.text))
+        raise HTTPException(503, "翻譯暫時無法使用")
 
 
 @app.get("/api/cards/{card_id}", response_model=Card)

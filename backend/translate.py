@@ -1,0 +1,95 @@
+"""中文翻譯：用 Qwen3-4B-Instruct（Apache 2.0 開源模型）在伺服器上把英文翻成台灣繁體中文。
+
+- 選這個模型的原因見 docs/翻譯實測-比較報告.md（26 句實測，品質最好、速度第二快）。
+- 模型輸出偶爾有簡體字，一律經過 OpenCC（s2twp）轉成台灣繁體與台灣用語。
+- 翻譯裡如果留下英文單字（原句的專有名詞、縮寫除外），加一句提醒再翻一次。
+- 翻過的句子暫存在記憶體（最多 500 句）；不寫進硬碟，伺服器重新啟動就清空（隱私）。
+- 完全在自己的伺服器上執行，不呼叫任何外部服務。
+"""
+import os
+import re
+import threading
+from collections import OrderedDict
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+MODEL_FILE = "Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
+MODEL_PATH = Path(os.environ.get("TRANSLATE_MODEL", ROOT / "models" / MODEL_FILE))
+THREADS = int(os.environ.get("TRANSLATE_THREADS", min(4, os.cpu_count() or 1)))
+CACHE_SIZE = 500
+MAX_CHARS = 2000  # 和分析的上限一樣；一整句不會被截斷
+
+SYSTEM_PROMPT = (
+    "你是專業的英翻中譯者，服務對象是台灣的英文學習者。"
+    "請把使用者給的英文句子翻譯成自然、通順的台灣繁體中文，使用台灣的慣用詞彙（例如：軟體、影片、資訊、機車、捷運）。"
+    "遇到慣用語或片語，要翻出真正的意思，不要逐字直譯。"
+    "只輸出翻譯結果，不要加任何解釋、引號或英文。"
+)
+RETRY_NOTE = "注意：每個英文單字都要翻成中文（人名、地名、縮寫可以保留）。"
+
+_llm = None
+_converter = None
+_load_error = None
+_lock = threading.Lock()  # 模型一次只翻一句，避免同時佔用太多記憶體和 CPU
+_cache: "OrderedDict[str, str]" = OrderedDict()
+
+
+def is_available() -> bool:
+    return MODEL_PATH.exists() and _load_error is None
+
+
+def load():
+    """載入模型（約 15 秒）；啟動時在背景呼叫，第一次翻譯就不用等"""
+    global _llm, _converter, _load_error
+    with _lock:
+        if _llm is not None:
+            return
+        try:
+            from llama_cpp import Llama
+            from opencc import OpenCC
+
+            _converter = OpenCC("s2twp")
+            _llm = Llama(model_path=str(MODEL_PATH), n_ctx=2048, n_threads=THREADS, n_gpu_layers=0, verbose=False)
+        except Exception as e:
+            _load_error = e
+            raise
+
+
+def leftover_english(zh: str, source: str) -> list[str]:
+    """翻譯裡留下的英文單字；原句中的專有名詞（句中大寫開頭的字，如 Taiwan）和縮寫（如 MRT）不算。
+    句首的字不算專有名詞（例如 Everyone 只是剛好在句首）。"""
+    keep = set()
+    for m in re.finditer(r"[A-Za-z]+", source):
+        w = m.group()
+        at_start = not source[: m.start()].strip() or source[: m.start()].rstrip()[-1] in ".!?\"'“"
+        if (w.isupper() and len(w) > 1) or (w[0].isupper() and not at_start):
+            keep.add(w)
+    return [w for w in re.findall(r"[A-Za-z]{2,}", zh) if w not in keep]
+
+
+def _generate(text: str, extra: str = "") -> str:
+    out = _llm.create_chat_completion(
+        messages=[{"role": "system", "content": SYSTEM_PROMPT + extra}, {"role": "user", "content": text}],
+        temperature=0.0,
+        max_tokens=800,
+    )
+    return _converter.convert(out["choices"][0]["message"]["content"].strip())
+
+
+def translate(text: str) -> str:
+    text = " ".join(text.split())[:MAX_CHARS]
+    if _llm is None:
+        load()
+    with _lock:
+        if text in _cache:
+            _cache.move_to_end(text)
+            return _cache[text]
+        zh = _generate(text)
+        if leftover_english(zh, text):
+            retry = _generate(text, RETRY_NOTE)
+            if len(leftover_english(retry, text)) < len(leftover_english(zh, text)):
+                zh = retry
+        _cache[text] = zh
+        while len(_cache) > CACHE_SIZE:
+            _cache.popitem(last=False)
+    return zh

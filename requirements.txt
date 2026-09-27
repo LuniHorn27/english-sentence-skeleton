@@ -13,6 +13,11 @@ transformers==4.57.6
 kokoro==0.9.4
 soundfile==0.14.0
 
+# 翻譯（Qwen3-4B-Instruct-2507，Apache 2.0；選擇理由見 docs/翻譯實測-比較報告.md）
+# llama-cpp-python 安裝時要在本機編譯（Mac 的 Command Line Tools 有問題時，見 docs/交接筆記.md 的繞過方法）
+llama-cpp-python==0.3.35
+opencc-python-reimplemented==0.1.7
+
 # 第 0 階段比較分析程式時用的（正式網站不需要）：
 #   stanza==1.14.0
 #   benepar==0.2.0
@@ -20,3 +25,4 @@ soundfile==0.14.0
 # 模型（另外下載）：
 #   python -m spacy download en_core_web_trf
 #   Kokoro 模型第一次使用時會自動從 Hugging Face（hexgrad/Kokoro-82M）下載，約 330 MB
+#   翻譯模型（2.5 GB）放在 models/：bash spikes/download_models.sh（只需要其中的 Qwen3-4B）
