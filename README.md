@@ -21,7 +21,7 @@ python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/uvicorn backend.app:app --port 8765
 ```
 
-再用瀏覽器打開 http://127.0.0.1:8765 。翻譯功能需要電腦版 Chrome 或 Edge。
+再用瀏覽器打開 http://127.0.0.1:8765 。翻譯需要先下載翻譯模型（2.5 GB）：`bash spikes/download_models.sh`；沒有模型時會改用瀏覽器內建翻譯（電腦版 Chrome 或 Edge）。
 
 ## 資料夾
 
