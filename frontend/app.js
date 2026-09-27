@@ -269,7 +269,7 @@ function cardBlock(block) {
 function cardNode(sIdx, ref, card) {
   const view = views[sIdx];
   const open = view.openCards.has(ref.id);
-  const node = el("div", "card");
+  const node = el("div", open ? "card open" : "card"); // 展開的卡片在寬螢幕上佔滿整行
   const head = el("div", "card-head");
   head.append(el("span", "card-tag", "文法重點"), el("span", "card-title", card.title));
   const brief = el("span", "card-brief");
@@ -482,8 +482,23 @@ function renderSentence(sIdx) {
 function render(data) {
   sentences = data.sentences;
   result.replaceChildren();
-  views = sentences.map(() => {
+  // 3 句以上：最上方放「句子目錄」，點編號就跳到那一句
+  if (sentences.length > 2) {
+    const nav = el("nav", "s-nav");
+    nav.setAttribute("aria-label", "句子目錄");
+    nav.append(el("span", "s-nav-title", `共 ${sentences.length} 句`));
+    sentences.forEach((s, i) => {
+      const a = el("a", "s-nav-item");
+      a.href = `#s${i + 1}`;
+      a.title = s.text;
+      a.append(el("span", "s-nav-num", String(i + 1)), el("span", "s-nav-text", s.text));
+      nav.append(a);
+    });
+    result.append(nav);
+  }
+  views = sentences.map((_, i) => {
     const node = el("article", "sentence");
+    node.id = `s${i + 1}`;
     result.append(node);
     return { node, selected: null, expanded: new Set(), openCards: new Set(), feedback: null };
   });

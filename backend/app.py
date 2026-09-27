@@ -2,9 +2,12 @@
 
 啟動：.venv/bin/uvicorn backend.app:app --port 8765
 """
+import html
 import json
 import logging
 import os
+import subprocess
+import sys
 import uuid
 import threading
 import time
@@ -134,6 +137,19 @@ class Feedback(BaseModel):
     analysis: Optional[dict] = None
 
 
+def _notify_mac(item: "Feedback"):
+    """網站在自己的 Mac 上執行時，有新回饋就跳出系統通知（只在這台 Mac 上，不送到外部服務）"""
+    if sys.platform != "darwin" or os.environ.get("FEEDBACK_NOTIFY") == "0":
+        return
+    title = "新的回報錯誤" if item.kind == "error" else "新的建議"
+    body = " ".join(item.message.split())[:80]
+    script = 'on run argv\ndisplay notification (item 2 of argv) with title "英文句子骨架分析" subtitle (item 1 of argv) sound name "Glass"\nend run'
+    try:
+        subprocess.Popen(["osascript", "-e", script, title, body], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except OSError:
+        pass
+
+
 @app.post("/api/feedback")
 def feedback(item: Feedback, request: Request):
     check_rate(request, "feedback", FEEDBACK_LIMIT, 3600, "回饋次數太多了，請稍後再試")
@@ -142,7 +158,42 @@ def feedback(item: Feedback, request: Request):
         record = {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), **item.model_dump()}
         with FEEDBACK_FILE.open("a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    _notify_mac(item)
     return {"ok": True}
+
+
+def _is_local(request: Request) -> bool:
+    """只有在這台電腦上直接打開才算（經過通道、代理伺服器進來的一律不算）"""
+    host = request.client.host if request.client else ""
+    forwarded = any(h in request.headers for h in ("x-forwarded-for", "cf-connecting-ip", "forwarded", "x-real-ip"))
+    return host in ("127.0.0.1", "::1") and not forwarded
+
+
+@app.get("/admin/feedback")
+def feedback_list(request: Request):
+    """回饋清單：只能在執行網站的這台電腦上打開"""
+    if not _is_local(request):
+        raise HTTPException(404, "Not Found")
+    files = [ROOT / "data" / "feedback.jsonl", *sorted((ROOT / "data").glob("feedback/*.jsonl"))]
+    records = []
+    for f in files:
+        if f.exists():
+            records += [json.loads(line) for line in f.read_text(encoding="utf-8").splitlines() if line.strip()]
+    records.sort(key=lambda r: r.get("time", ""), reverse=True)
+    esc = html.escape
+    rows = []
+    for r in records:
+        local = datetime.fromisoformat(r["time"]).astimezone().strftime("%Y-%m-%d %H:%M")
+        kind = "🐞 回報錯誤" if r.get("kind") == "error" else "💬 建議"
+        where = f"{esc(r.get('part', ''))}（目前：{esc(r.get('current') or '—')}）" if r.get("part") else ""
+        rows.append(f"<tr><td>{local}</td><td>{kind}</td><td>{esc(r.get('sentence', ''))}</td><td>{where}</td><td>{esc(r.get('message', ''))}</td></tr>")
+    body = "".join(rows) or '<tr><td colspan="5">目前還沒有回饋。</td></tr>'
+    page = f"""<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>回饋清單</title><link rel="stylesheet" href="/static/style.css"></head><body><main>
+<h1>回饋清單（{len(records)} 則）</h1><p class="hint">只有在執行網站的這台電腦上才打得開。最新的在最上面；重新整理頁面可以看到新的回饋。</p>
+<div class="table-wrap"><table class="fb-table"><thead><tr><th>時間</th><th>種類</th><th>句子</th><th>哪裡</th><th>內容</th></tr></thead>
+<tbody>{body}</tbody></table></div></main></body></html>"""
+    return Response(page, media_type="text/html", headers={"Cache-Control": "no-store"})
 
 
 # ---------- 朗讀（Kokoro） ----------
@@ -213,13 +264,35 @@ def patterns_page():
 QUIZ_ITEMS = yaml.safe_load((ROOT / "tests" / "practice" / "gold.yaml").read_text(encoding="utf-8"))
 
 
-# 小遊戲不出對等句（兩個子句、兩個主詞，找骨架時容易混淆）
-QUIZ_POOL = [x for x in QUIZ_ITEMS if not any(c["role"] == "conj" for c in x["chunks"])]
+# 小遊戲只出「答案沒有爭議」的題目。不同文法書說法不同、或容易混淆的都不出：
+#   對等句（兩個主詞）、被動語態、There is、be ＋ 地點（I am at school）、
+#   seem ＋ to V、as／into 當受詞補語、虛主詞 It、還沒分析的句子
+_BE = {"am", "is", "are", "was", "were", "be", "been", "being", "'m", "'s", "'re"}
+
+
+def _quiz_ok(item):
+    chunks = item["chunks"]
+    roles = {c["role"] for c in chunks}
+    return not (
+        roles & {"conj", "RS", "unknown"}
+        or item.get("passive")
+        or any(c.get("function") == "引導詞" for c in chunks)
+        or any(c["role"] == "Vi" and c["text"].lower() in _BE for c in chunks)
+        or any(c["role"] == "SC" and c["text"].lower().startswith("to ") for c in chunks)
+        or any(c["role"] == "OC" and c["text"].lower().startswith(("as ", "into ")) for c in chunks)
+    )
+
+
+QUIZ_POOL = [x for x in QUIZ_ITEMS if _quiz_ok(x)]
+# 題目的中文翻譯（人工檢查過；新題目用 tools/make_quiz_zh.py 產生草稿）
+_zh_file = ROOT / "backend" / "quiz_zh.yaml"
+QUIZ_ZH = yaml.safe_load(_zh_file.read_text(encoding="utf-8")) if _zh_file.exists() else {}
 
 
 def _quiz_item(item):
     return {
         "sentence": item["sentence"],
+        "zh": QUIZ_ZH.get(item["sentence"]),
         "pattern": item["pattern"],
         "passive": item["passive"],
         "chunks": [{"text": c["text"], "role": c["role"], "function": c.get("function"),

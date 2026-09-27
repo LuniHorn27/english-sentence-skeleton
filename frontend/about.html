@@ -6,48 +6,64 @@
   <title>關於這個工具</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
+<body class="about-page">
   <main>
     <p class="back"><a href="/">← 回到句子分析</a></p>
-    <header class="top">
-      <h1>關於這個工具</h1>
+
+    <!-- 主視覺 -->
+    <header class="about-hero">
+      <p class="about-kicker">關於這個工具</p>
+      <h1>每讀懂一個句子，<br>就多打開一扇門。</h1>
+      <p class="about-sub">一個免費的英文句子骨架分析工具，為台灣的學生和英文學習者而做。</p>
+      <div class="about-cta">
+        <a class="btn primary" href="/">開始拆解句子</a>
+        <a class="btn" href="/patterns">先認識五大句型</a>
+      </div>
     </header>
 
-    <section class="intro manifesto">
+    <!-- 起心動念 -->
+    <section class="about-sec">
       <h2>為什麼做這個工具</h2>
-      <p class="lead">每讀懂一個句子，就多打開一扇門。</p>
-      <p>在台灣，許多學生背了好幾年的單字，拿到一段英文，還是不知道從哪裡讀起。不是不夠努力，而是很少有人帶他們看見：一個句子的骨架長什麼樣子。</p>
-      <p>這個工具想把「看懂句子」的方法，交到每個人手上。不論住在城市或偏鄉，有沒有補習，身邊有沒有老師可以問，都能隨時把一個英文句子拆開，一步一步讀懂它。</p>
-      <p>語言不只是考試的一個科目。它是一扇窗，窗外有一篇國外的報導、一部沒有字幕的電影、一份夢想中的工作、一位遠方的朋友。</p>
-      <p>我們希望英文不再是篩選人的門檻，而是讓更多台灣孩子走向更多可能的起點。</p>
-      <p class="sign">這個工具免費提供給所有人使用。</p>
+      <div class="about-story">
+        <p>在台灣，許多學生背了好幾年的單字，拿到一段英文，還是不知道從哪裡讀起。不是不夠努力，而是很少有人帶他們看見：一個句子的骨架長什麼樣子。</p>
+        <p>語言不只是考試的一個科目。它是一扇窗，窗外有一篇國外的報導、一部沒有字幕的電影、一份夢想中的工作、一位遠方的朋友。</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar"><span class="pillar-icon">🧭</span><h3>看懂句子的方法</h3><p>把句子拆成主詞、動詞、受詞、補語，先抓骨架，再看修飾，長句子也能一步一步讀懂。</p></div>
+        <div class="pillar"><span class="pillar-icon">🏫</span><h3>每個人都用得到</h3><p>不論住在城市或偏鄉，有沒有補習，身邊有沒有老師可以問，打開網頁就能用。</p></div>
+        <div class="pillar"><span class="pillar-icon">🌏</span><h3>走向更多可能</h3><p>我們希望英文不再是篩選人的門檻，而是讓更多台灣孩子走向更多可能的起點。</p></div>
+      </div>
     </section>
 
-    <section class="intro">
+    <!-- 怎麼使用 -->
+    <section class="about-sec">
       <h2>怎麼使用</h2>
-      <ol class="steps">
-        <li>輸入一個英文句子，或貼上一段文章。</li>
-        <li>先用<b>骨架模式</b>找出句子的核心，再切換到<b>詳細模式</b>看每個修飾語的作用。</li>
-        <li>點任何一個片段，看它的說明；句子下方的<b>文法重點</b>可以展開詳細說明。</li>
-        <li>不熟悉五大句型的話，先看<a href="/patterns">五大句型介紹</a>。</li>
+      <ol class="how">
+        <li><span class="how-num">1</span><h3>貼上句子</h3><p>輸入一個英文句子，或貼上一整段文章。</p></li>
+        <li><span class="how-num">2</span><h3>先看骨架</h3><p>用「骨架模式」找出句子的核心，再切換到「詳細模式」看修飾語。</p></li>
+        <li><span class="how-num">3</span><h3>點開說明</h3><p>點任何一個片段看說明；下方的片語卡、文法重點卡可以展開。</p></li>
+        <li><span class="how-num">4</span><h3>練習鞏固</h3><p>到<a href="/patterns">五大句型</a>複習觀念，再玩<a href="/quiz">句型小遊戲</a>。</p></li>
       </ol>
     </section>
 
-    <section class="intro">
-      <h2>分析結果僅供參考</h2>
-      <p>分析是由程式自動產生的，大部分的國中程度句子可以正確分析，但仍然可能出錯，尤其是比較長、比較複雜的句子。灰色虛線標示「未分析」的部分，代表目前的規則還沒辦法處理。</p>
-      <p>如果發現錯誤，請按句子旁邊的「回報錯誤」，你的回報會讓這個工具越來越準確。</p>
+    <!-- 僅供參考 -->
+    <section class="about-sec">
+      <div class="callout c-tip about-note"><span class="icon">💡</span><div><span class="c-name">分析結果僅供參考</span><span class="c-text">分析由程式自動產生，大部分國中程度的句子都能正確分析，但比較長、比較複雜的句子仍可能出錯。發現錯誤時，請按句子旁的「回報錯誤」，你的回報會讓這個工具越來越準確。</span></div></div>
     </section>
 
-    <section class="intro">
+    <!-- 隱私 -->
+    <section class="about-sec">
       <h2>隱私說明</h2>
-      <ul class="steps">
-        <li>你輸入的句子只用來當下分析，<b>不會被保存</b>。</li>
-        <li>中文翻譯使用本站伺服器上的開源翻譯模型（Qwen3）產生，不會送到其他公司的服務；翻譯結果只暫存在伺服器記憶體中，不會寫入檔案保存。伺服器翻譯暫時無法使用時，會改用瀏覽器內建的翻譯功能（在你自己的裝置上進行）。</li>
-        <li>朗讀使用本站伺服器上的開源語音模型（Kokoro）產生，聲音只暫存在伺服器記憶體中以加快重複朗讀，不會寫入檔案保存。</li>
-        <li>只有你主動送出的「回報錯誤」和「建議」會被保存在只有開發者看得到的私人空間，內容包含你回報的句子和說明，用來改進分析規則；請不要填寫個人資料。</li>
-      </ul>
+      <div class="privacy">
+        <div class="privacy-item"><span class="privacy-icon">🔒</span><div><h3>句子不保存</h3><p>你輸入的句子只用來當下分析，不會被保存。</p></div></div>
+        <div class="privacy-item"><span class="privacy-icon">🌐</span><div><h3>翻譯在本站完成</h3><p>用本站伺服器上的開源模型翻譯，不會送到其他公司；結果只暫存在記憶體，不寫入檔案。</p></div></div>
+        <div class="privacy-item"><span class="privacy-icon">🔊</span><div><h3>朗讀在本站完成</h3><p>用本站伺服器上的開源語音模型產生聲音，只暫存在記憶體，不寫入檔案。</p></div></div>
+        <div class="privacy-item"><span class="privacy-icon">✉️</span><div><h3>只保存你主動送出的回報</h3><p>「回報錯誤」和「建議」存在只有開發者看得到的地方，用來改進分析規則。請不要填寫個人資料。</p></div></div>
+      </div>
+      <p class="about-fine">伺服器翻譯暫時無法使用時，會改用瀏覽器內建的翻譯功能，在你自己的裝置上進行。</p>
     </section>
+
+    <footer class="foot">這個工具免費提供給所有人使用。</footer>
   </main>
 </body>
 </html>

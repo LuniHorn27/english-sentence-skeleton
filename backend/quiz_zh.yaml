@@ -1,0 +1,110 @@
+# 小遊戲題目的中文翻譯（英文句子: 中文）。由 tools/make_quiz_zh.py 產生草稿，人工檢查過；錯的直接改這裡。
+Birds fly.: 鳥會飛。
+The baby is sleeping in her room.: 寶寶正在她的房間裡睡覺。
+The sun rises in the east.: 太陽從東方升起。
+My father works at a bank.: 我爸爸在銀行上班。
+There is a cat under the table.: 桌子底下有一隻貓。
+He runs fast.: 他跑得很快。
+I like you.: 我喜歡你。
+She reads a book every night.: 她每天晚上都會讀一本書。
+We visited our grandparents last Sunday.: 上週日我們去探望了祖父母。
+He wants to go home.: 他想回家。
+They enjoy playing basketball.: 他們喜歡打籃球。
+She runs a small shop.: 她開了一間小商店。
+I think that he is right.: 我覺得他說得對。
+He found the book easily.: 他很容易就找到了那本書。
+She is a nurse.: 她是一位護理師。
+The soup smells good.: 這碗湯聞起來很香。
+He became a doctor.: 他成為一名醫生。
+The weather got cold.: 天氣變冷了。
+You look tired today.: 你今天看起來很累。
+The story sounds interesting.: 這個故事聽起來很有趣。
+The teacher showed us a picture.: 老師給我們看了一張圖片。
+My mom bought me a new bike.: 媽媽買了一輛新腳踏車給我。
+He told us a funny story.: 他跟我們講了一個有趣的故事。
+Grandpa gave each of us a red envelope.: 爺爺給我們每人一個紅包。
+Can you pass me the salt?: 你能把鹽遞給我嗎？
+The news made her sad.: 這個消息讓她很難過。
+We named our dog Lucky.: 我們把狗取名叫 Lucky。
+Please keep the door open.: 請保持門開著。
+He found the book easy.: 他覺得這本書很簡單。
+They elected him class leader.: 他們選他當班長。
+I saw him cross the street.: 我看到他過馬路。
+The old tree behind our house stayed green all year, even in the cold winter.: 我們房子後面那棵老樹一年到頭都保持綠色，即使在寒冷的冬天也一樣。
+My big sister, who likes to cook, made our whole family a big chocolate cake for Mom's birthday.: 喜歡做菜的姊姊，為了媽媽的生日，幫我們全家做了一個大大的巧克力蛋糕。
+Everyone in our class calls the funny boy with the big glasses Little Bear.: 我們班上每個人都叫那個戴大眼鏡的搞笑男孩「小熊」。
+Every morning before school, the children in Miss Lin's class water the small flowers in the garden.: 每天早上上學前，林老師班上的孩子們都會替花園裡的小花澆水。
+The leaves on the big trees near the river turn red and yellow in the fall.: 河邊那些大樹的葉子，到了秋天會變成紅色和黃色。
+Most of the kids at the party found the new game very fun.: 派對上的大多數小孩都覺得這新遊戲非常有趣。
+The nice man at the small store found us a good seat near the window on a busy day.: 在人很多的一天，小店裡那位親切的先生幫我們找到一個靠窗的好位子。
+Even in the heavy rain, the little girl in the yellow coat smiled happily all the way to school.: 即使雨下得很大，穿著黃色外套的小女孩還是一路開心地笑著走到學校。
+The teacher in our English class sent every student a nice card after the school party.: 學校派對結束後，我們英文課的老師寄了一張漂亮的卡片給每位學生。
+The farmers in this small town grow rice, corn, and many kinds of fruit on the hill.: 這座小鎮的農民在山坡上種稻米、玉米以及許多種水果。
+The proposal was approved by the manager.: 這個提案已經獲得經理的核准。
+Tom was given a bag by his dad.: 湯姆的爸爸給了他一個袋子。
+He was elected class leader.: 他當選了班長。
+The students who finished their homework early were allowed to play basketball in the gym after school.: 提早寫完作業的學生，放學後可以在體育館打籃球。
+When I was a child, my grandfather often took me to the night market near his house on Saturday evenings.: 我小時候，爺爺常常在星期六晚上帶我去他家附近的夜市。
+Voting is an important way for citizens to express their opinions about the future of their country.: 投票是公民表達對國家未來看法的重要方式。
+? Many young people in Taiwan choose to study abroad because they want to experience different cultures and improve their English.
+: 許多台灣年輕人選擇留學，是因為他們想體驗不同的文化，並提升自己的英語能力。
+The old man sitting on the bench in the park feeds the pigeons with bread crumbs every morning.: 公園長椅上那位老人每天早上都用麵包屑餵鴿子。
+? Although the weather was terrible, thousands of fans waited outside the stadium for several hours to see their favorite singer.
+: 雖然天氣很糟，還是有好幾千名歌迷在體育場外等了好幾個小時，只為了見到他們最喜歡的歌手。
+The teacher asked the students to give their classmate a big hand after his excellent speech.: 老師請同學們在同學發表精彩演講後為他熱烈鼓掌。
+My parents gave me some useful advice about how to manage my time when I started junior high school.: 我剛上國中時，爸媽給了我一些關於如何管理時間的實用建議。
+The book that my sister lent me last week tells the story of a brave girl who saves her village from a terrible flood.: 上週妹妹借給我的那本書，講述了一位勇敢的女孩如何拯救她的村落，免於慘烈的洪災。
+If you want to become a better writer, you should read as many books as possible and practice writing every day.: 如果你想寫得更好，應該盡量多讀書，並且每天都要練習寫作。
+Scientists believe that drinking enough water every day can help people stay healthy and feel more energetic.: 科學家認為，每天喝足夠的水，有助於人們保持健康，並感到更有活力。
+The small restaurant at the corner of the street, which is famous for its beef noodles, is always crowded at lunchtime.: 街角那家以牛肉麵聞名的小餐廳，午餐時間總是擠滿了人。
+After the long meeting, the manager told everyone in the office that the company would move to a new building next year.: 長時間的會議結束後，主管告訴辦公室的所有人，公司明年會搬到新辦公大樓。
+Learning a new language takes time, but it opens the door to new friends, new ideas, and new opportunities.: 學一門新語言需要時間，但能開啟認識新朋友、獲得新點子與新機會的大門。
+The children were so excited about the school trip that they could not sleep the night before.: 孩子們對校外教學太興奮了，前一天晚上都睡不著。
+She stayed at home and read a book.: 她待在家裡讀了一本書。
+Paris, the capital of France, is a beautiful city.: 巴黎是法國的首都，是一座美麗的城市。
+My friend Tom lives in Tainan.: 我朋友湯姆住在台南。
+Ann is the woman responsible for the error.: Ann 就是要為這個錯誤負責的那位女士。
+Walking to school, I saw a cat.: 走路去學校的時候，我看到一隻貓。
+While walking to class, I ran into an old friend.: 我走路去上課時，遇到一位舊朋友。
+After finishing his homework, Peter went to bed.: 寫完功課後，彼得就去睡覺了。
+As soon as I got home, I called my mother.: 我一回到家，就打給媽媽。
+Even though it was raining, we went out.: 雖然在下雨，我們還是出去了。
+Now that you are here, we can start the meeting.: 既然你已經到了，我們就可以開始會議了。
+Since I came here, I have learned a lot of English.: 從我來到這裡開始，我已經學到了很多英文。
+Since it is raining, we will stay home.: 因為在下雨，我們就待在家裡。
+It was such good coffee that I had another cup.: 那杯咖啡好到讓我再喝了一杯。
+She speaks so fast that I cannot understand her.: 她講得那麼快，我根本跟不上。
+Night markets are popular with tourists from other countries.: 夜市受到來自其他國家遊客的喜愛。
+I am interested in Chinese art.: 我對中國藝術感興趣。
+This table is made of wood.: 這張桌子是木頭做的。
+I am at school.: 我在學校。
+I left my keys at school.: 我把鑰匙留在學校了。
+Please put the book on the table.: 請把書放在桌上。
+He seems happy.: 他看起來很開心。
+The door swung open.: 門一下子打開了。
+He seems to know the answer.: 他好像知道答案。
+She seems to be a kind person.: 她似乎是個親切的人。
+The experience turned him into a good student.: 這段經驗讓他成為了一個優秀的學生。
+We regard him as a genius.: 我們認為他是個天才。
+Many people see Taipei 101 as a symbol of Taiwan.: 許多人將台北101視為台灣的象徵。
+He is regarded as a great leader.: 他被視為一位偉大的領袖。
+She said she was tired.: 她說她很累。
+I know where you will go.: 我知道你要去哪裡。
+I think he is right.: 我覺得他說得對。
+Mary promised me she would help.: 瑪麗向我保證會幫我。
+It is possible we might find a better way.: 或許我們會找到更好的方法。
+It has become very popular.: 它已經變得非常受歡迎。
+It's become very popular.: 它已經變得非常受歡迎。
+She didn't do it, did she?: 她沒做那件事，對吧？
+You can swim, can't you?: 你會游泳，對吧？
+It's nice, isn't it?: 真不錯，不是嗎？
+I have to finish my homework.: 我必須完成我的家庭作業。
+It has to be done.: 這件事一定要完成。
+I suggest you do that as soon as possible.: 我建議你盡快這麼做。
+I used the cupboard to store food.: 我用櫃子來存放食物。
+He lives alone with his parents.: 他和父母單獨住在一起。
+I want you to come.: 我希望你來。
+I would like you to meet my friend.: 我想介紹我的朋友給你認識。
+The door flew open.: 門猛然打開了。
+It takes me an hour to get to school.: 我到學校要花一個小時。
+Tom is taking an exam next week.: 湯姆下週要考試。

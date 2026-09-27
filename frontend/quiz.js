@@ -168,7 +168,7 @@ function feedback(card, item, ok, verdict) {
 function askPattern(item, card) {
   card.append(el("p", "q-prompt", "這句是哪一種句型？"));
   card.append(el("p", "q-sentence", item.sentence));
-  if (item.passive) card.append(el("p", "q-hint", "提示：這句是被動語態，請選「改成被動之前」的句型。"));
+  if (item.zh) card.append(el("p", "q-zh", item.zh));
   const list = el("div", "q-options");
   PATTERNS.forEach(([n, name, formula], i) => {
     const b = button("", "q-option", () => choose(n, b));
@@ -211,6 +211,7 @@ function askSkeleton(item, card) {
     return t;
   });
   card.append(tiles);
+  if (item.zh) card.append(el("p", "q-zh", item.zh));
   const hint = el("p", "q-tip");
   hint.hidden = true;
   card.append(hint);
@@ -292,7 +293,9 @@ function renderEnd() {
     review.append(el("h2", "game-title", `複習答錯的 ${missed.length} 題`));
     for (const { item } of missed) {
       const box = el("div", "review-item");
-      box.append(el("p", "q-answer", patternLabel(item)), answerRow(item), el("p", "q-why", why(item)));
+      box.append(el("p", "q-answer", patternLabel(item)), answerRow(item));
+      if (item.zh) box.append(el("p", "q-zh", item.zh));
+      box.append(el("p", "q-why", why(item)));
       review.append(box);
     }
     game.append(review);

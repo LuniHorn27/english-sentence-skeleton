@@ -1,5 +1,5 @@
 // 五大句型介紹頁：給初學者的編排
-//   第 1 步 認識 4 個零件 → 第 2 步 一張圖看懂五大句型 → 第 3 步 逐一介紹（固定格式）→ 進階（收合）
+//   第 1 步 認識 4 個零件 → 第 2 步 五個句型逐一介紹（固定格式）→ 第 3 步 用一張圖統整
 // 說明和例句都是自己寫的；例句的標法和分析程式的結果一致（改例句時請先用分析頁確認）。
 
 const GROUP = { S: "S", Vt: "V", Vi: "V", V: "V", O: "O", IO: "O", DO: "O", SC: "C", OC: "C" };
@@ -25,13 +25,6 @@ function example(ex) {
   return box;
 }
 
-// 一行 ✗／✓ 對照
-function wrongRight(wrong, right) {
-  const box = el("div", "wr");
-  box.append(el("p", "wr-no", `✗ ${wrong}`), el("p", "wr-ok", `✓ ${right}`));
-  return box;
-}
-
 // ---------- 第 1 步：4 個零件 ----------
 const PARTS = [
   ["S", "主詞", "句子在說「誰」或「什麼」", "S"],
@@ -47,7 +40,7 @@ for (const [tag, name, desc, group, sub] of PARTS) {
   parts.append(card);
 }
 
-// ---------- 第 2 步：地圖 ----------
+// ---------- 第 3 步：統整地圖 ----------
 // n 是程式的內部代號（網址 #p 後面的數字）
 const MAP = [
   { title: "後面不接東西", cells: [{ n: 1, name: "句型一", formula: "S + Vi", ex: "Birds fly." }] },
@@ -83,7 +76,7 @@ for (const row of MAP) {
   pmap.append(r);
 }
 
-// ---------- 第 3 步：五個句型（固定格式） ----------
+// ---------- 第 2 步：五個句型（固定格式） ----------
 const PATTERNS = [
   {
     n: 1, name: "句型一", formula: "S + Vi",
@@ -94,28 +87,16 @@ const PATTERNS = [
       { parts: [["The baby", "S"], ["is sleeping", "Vi"], ["in her room", "M", "副詞・表地點"]], zh: "寶寶在房間裡睡覺。（in her room 是修飾語）" },
     ],
     verbs: "go、come、run、walk、swim、sleep、cry、laugh、smile、arrive、happen",
-    mistake: ["He arrived the station.", "He arrived at the station.", "Vi 後面不能直接接名詞，要先加介系詞。"],
-    more: [
-      "文法書的名稱：完全不及物動詞。",
-      "There is a cat under the table. 表示「有」，本網站把 is 標成 Vi，真正的主詞是 a cat。",
-      "I am at school. 一般歸在句型一：am 表示「在」，at school 是地點修飾語（但不能省略）。也有文法書把 at school 當成主詞補語（句型二），考試時以傳統的句型一為主。",
-    ],
   },
   {
     n: 3, name: "句型二", formula: "S + V + SC",
     point: "動詞後面接補語，說明主詞「是什麼」或「怎麼樣」。",
-    labels: "SC＝主詞補語：主詞 ＝ SC",
+    labels: "SC＝主詞補語：補充說明主詞 S（S ＝ SC）",
     examples: [
       { parts: [["She", "S"], ["is", "V"], ["a nurse", "SC"]], zh: "她是護理師。（She ＝ a nurse）" },
       { parts: [["The soup", "S"], ["smells", "V"], ["good", "SC"]], zh: "這碗湯聞起來很香。（The soup ＝ good）" },
     ],
     verbs: "be（am、is、are）、look、sound、smell、taste、feel、become、get、turn、stay",
-    mistake: ["She looks happily.", "She looks happy.", "補語要用形容詞，不能用副詞。"],
-    more: [
-      "文法書的名稱：不完全不及物動詞（又叫連綴動詞）。",
-      "補語可以是名詞（a nurse），也可以是形容詞（good）。",
-      "He looks happy.（看起來 → 句型二）；He looks at the picture.（看著 → 句型一，at the picture 是修飾語）。",
-    ],
   },
   {
     n: 2, name: "句型三", formula: "S + Vt + O",
@@ -126,27 +107,16 @@ const PATTERNS = [
       { parts: [["They", "S"], ["enjoy", "Vt"], ["playing basketball", "O"]], zh: "他們喜歡打籃球。" },
     ],
     verbs: "like、want、need、have、buy、read、eat、see、enjoy、finish",
-    mistake: ["We discussed about the problem.", "We discussed the problem.", "及物動詞後面直接接受詞，不要多加介系詞。"],
-    more: [
-      "文法書的名稱：完全及物動詞。",
-      "受詞可以是名詞、代名詞，也可以是 V-ing（enjoy playing）、to V（want to go）或一個子句（I think that he is right）。",
-      "被動語態：Mary wrote the letter. → The letter was written by Mary. 本網站標成「句型三（被動語態）」。",
-    ],
   },
   {
     n: 5, name: "句型四", formula: "S + Vt + O + OC",
     point: "受詞後面再接補語，說明受詞「是什麼」或「變得怎樣」。",
-    labels: "OC＝受詞補語：受詞 ＝ OC",
+    labels: "OC＝受詞補語：補充說明受詞 O（O ＝ OC）",
     examples: [
       { parts: [["The news", "S"], ["made", "Vt"], ["her", "O"], ["sad", "OC"]], zh: "這個消息讓她很難過。（her ＝ sad）" },
       { parts: [["We", "S"], ["named", "Vt"], ["our dog", "O"], ["Lucky", "OC"]], zh: "我們把狗取名叫 Lucky。（our dog ＝ Lucky）" },
     ],
     verbs: "make、keep、find、call、name、let、ask、tell",
-    mistake: ["The teacher made us to clean the room.", "The teacher made us clean the room.", "make、let、have 後面接原形動詞，不加 to。"],
-    more: [
-      "文法書的名稱：不完全及物動詞。",
-      "受詞補語可以是形容詞（sad）、名詞（Lucky）、原形動詞（let me go）或 to V（asked us to be quiet）。",
-    ],
   },
   {
     n: 4, name: "句型五", formula: "S + Vt + IO + DO",
@@ -157,13 +127,6 @@ const PATTERNS = [
       { parts: [["My mom", "S"], ["bought", "Vt"], ["me", "IO"], ["a new bike", "DO"]], zh: "媽媽買了一輛新腳踏車給我。" },
     ],
     verbs: "give、send、show、tell、teach、lend、buy、make、cook",
-    mistake: ["He gave a book me.", "He gave a book to me.", "東西放前面時，人要用 to 或 for 帶出來。"],
-    more: [
-      "文法書的名稱：授與動詞。",
-      "改寫：He gave me a book. → He gave a book to me.（to：東西送到對方手上，如 give、send、show、tell、teach、lend）",
-      "改寫：My mom bought me a bike. → My mom bought a bike for me.（for：替對方做，如 buy、make、cook）",
-      "改寫之後 to me、for me 是修飾語，句子變成句型三。",
-    ],
   },
 ];
 
@@ -182,42 +145,8 @@ for (const n of [1, 3, 2, 5, 4]) {
 
   card.append(el("h3", "pcard-h", "常見動詞"), el("p", "pcard-verbs", p.verbs));
 
-  card.append(el("h3", "pcard-h", "⚠️ 常見錯誤"));
-  card.append(wrongRight(p.mistake[0], p.mistake[1]), el("p", "pcard-why", p.mistake[2]));
-
-  const more = el("details", "more");
-  more.append(el("summary", null, "看更多"));
-  const ul = el("ul", "more-list");
-  p.more.forEach((m) => ul.append(el("li", null, m)));
-  more.append(ul);
-  card.append(more);
   wrap.append(card);
 }
-
-// ---------- 進階：動詞的五種分類 ----------
-const adv = document.getElementById("advanced-body");
-adv.append(el("p", null, "文法書依照「後面需要接什麼」把動詞分成五類，剛好對應五大句型："));
-const VERB_TYPES = [
-  ["完全不及物動詞", "不接東西", "句型一：S + Vi"],
-  ["不完全不及物動詞", "主詞補語", "句型二：S + V + SC"],
-  ["完全及物動詞", "一個受詞", "句型三：S + Vt + O"],
-  ["不完全及物動詞", "受詞 ＋ 受詞補語", "句型四：S + Vt + O + OC"],
-  ["授與動詞", "兩個受詞", "句型五：S + Vt + IO + DO"],
-];
-const table = el("div", "vtypes");
-for (const [kind, needs, pattern] of VERB_TYPES) {
-  const row = el("div", "vtype");
-  row.append(el("span", "vtype-kind", kind), el("span", "vtype-needs", `＋ ${needs}`), el("span", "vtype-pattern", pattern));
-  table.append(row);
-}
-adv.append(table);
-const tips = el("ul", "more-list");
-[
-  "及物／不及物：看後面需不需要「受詞」。完全／不完全：看後面需不需要「補語」。",
-  "快速判斷及物動詞：把中文意思放進「我＿他」和「他被我＿」。兩句都說得通（我喜歡他／他被我喜歡），通常是及物動詞。少數動詞中英文用法不同（listen 要說 listen to），最後仍以英文為準。",
-  "同一個動詞可能有不同用法：He runs every morning.（跑步 → 句型一）；He runs a small shop.（經營 → 句型三）。",
-].forEach((t) => tips.append(el("li", null, t)));
-adv.append(tips);
 
 // 從分析頁點過來時，捲到對應的句型
 if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
