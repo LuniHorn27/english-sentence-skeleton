@@ -606,16 +606,20 @@ function renderHistory() {
   const list = $("history-list");
   list.replaceChildren();
   wrap.hidden = items.length === 0;
+  $("history-count").textContent = `（${items.length}）`;
   for (const text of items) {
-    const chip = el("button", "history-chip", text.length > 40 ? `${text.slice(0, 40)}…` : text);
-    chip.type = "button";
-    chip.title = text;
-    chip.addEventListener("click", () => {
+    const li = el("li");
+    const item = el("button", "history-item", text); // 太長的句子由 CSS 截成一行「…」
+    item.type = "button";
+    item.title = text;
+    item.addEventListener("click", () => {
       input.value = text;
       updateCounter();
+      wrap.open = false;
       form.requestSubmit();
     });
-    list.append(chip);
+    li.append(item);
+    list.append(li);
   }
 }
 function addHistory(text) {
