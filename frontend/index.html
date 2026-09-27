@@ -53,20 +53,41 @@
       <button type="button" id="print">🖨️ 列印講義</button>
     </div>
 
-    <footer class="foot">
-      <p>分析結果由程式自動產生，僅供學習參考，可能會有錯誤。發現錯誤時，請按句子旁的「回報錯誤」。</p>
-      <details class="suggest">
-        <summary>提供建議</summary>
-        <form id="suggest-form" class="feedback">
-          <label for="suggest-text" class="sr-only">你的建議</label>
-          <textarea id="suggest-text" rows="3" maxlength="1000" placeholder="希望增加什麼功能？哪裡不好用？"></textarea>
-          <p class="fb-note">請不要填寫姓名、電話等個人資料。</p>
-          <button type="submit" class="primary">送出</button>
+    <!-- 頁面最下方：回饋＋請喝咖啡（咖啡卡片在 site-config.js 設定網址後才會出現） -->
+    <section class="support" aria-label="支持這個工具">
+      <div class="support-card">
+        <h2>一起讓它更好 💬</h2>
+        <p class="support-lead">這個工具還在成長，需要你的幫忙！哪裡好用、哪裡卡卡的、還想要什麼功能，都歡迎告訴我。每一則回饋我都會認真看。</p>
+        <form id="suggest-form" class="support-form">
+          <fieldset class="topics">
+            <legend class="sr-only">回饋類型</legend>
+            <label><input type="radio" name="topic" value="praise" checked><span>👍 覺得好用</span></label>
+            <label><input type="radio" name="topic" value="improve"><span>🛠️ 需要改進</span></label>
+            <label><input type="radio" name="topic" value="idea"><span>💡 想要新功能</span></label>
+          </fieldset>
+          <label for="suggest-text" class="sr-only">你的回饋</label>
+          <textarea id="suggest-text" rows="4" maxlength="1000" placeholder="哪裡讓你覺得好用？例如：翻譯很清楚、小遊戲很好玩……"></textarea>
+          <div class="support-bar">
+            <p class="fb-note">請不要填寫姓名、電話等個人資料。</p>
+            <button type="submit" class="primary">送出回饋</button>
+          </div>
           <p id="suggest-status" class="fb-status" role="status"></p>
         </form>
-      </details>
+      </div>
+      <div class="support-card coffee-card" hidden>
+        <span class="coffee-icon" aria-hidden="true">☕</span>
+        <h2>喜歡這個工具嗎？</h2>
+        <p class="support-lead">這個工具免費提供給大家使用。如果它幫上了你，歡迎請開發者喝杯咖啡，支持它繼續走下去。</p>
+        <a class="btn coffee-btn" href="#" target="_blank" rel="noopener">☕ 請我喝杯咖啡</a>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>分析結果由程式自動產生，僅供學習參考，可能會有錯誤。發現錯誤時，請按句子旁的「回報錯誤」。</p>
     </footer>
   </main>
+  <script src="/static/site-config.js"></script>
+  <script src="/static/support.js"></script>
   <script src="/static/speech.js"></script>
   <script src="/static/app.js"></script>
   <script src="/static/translate.js"></script>

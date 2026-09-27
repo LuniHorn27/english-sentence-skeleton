@@ -412,19 +412,34 @@ function feedbackForm(sIdx) {
 
 // ---------- 提供建議（頁尾） ----------
 const suggestForm = $("suggest-form");
+// 選不同的回饋類型，提示文字和感謝語跟著換
+const HINTS = {
+  praise: "哪裡讓你覺得好用？例如：翻譯很清楚、小遊戲很好玩……",
+  improve: "哪裡用起來卡卡的？例如：某個句子分析錯了、找不到某個按鈕……",
+  idea: "還想要什麼功能？例如：可以存下分析過的句子、多一點練習題……",
+};
+const THANKS = {
+  praise: "謝謝你的鼓勵！這是繼續做下去最大的動力 🙌",
+  improve: "收到了，謝謝你！我會盡快改進 🛠️",
+  idea: "好點子！我會把它放進規劃裡 💡",
+};
 if (suggestForm) {
+  suggestForm.addEventListener("change", (e) => {
+    if (e.target.name === "topic") $("suggest-text").placeholder = HINTS[e.target.value];
+  });
   suggestForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const box = $("suggest-text");
     const status = $("suggest-status");
     if (!box.value.trim()) {
-      status.textContent = "請先寫下你的建議";
+      status.textContent = "請先寫下你想說的話";
       return;
     }
     try {
-      await sendFeedback({ kind: "suggestion", message: box.value.trim() });
+      const topic = suggestForm.elements.topic.value;
+      await sendFeedback({ kind: "suggestion", topic, message: box.value.trim() });
       box.value = "";
-      status.textContent = "收到了，謝謝你的建議！";
+      status.textContent = THANKS[topic] || THANKS.praise;
     } catch (err) {
       status.textContent = err.message;
     }
