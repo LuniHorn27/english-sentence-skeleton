@@ -67,7 +67,7 @@ export const SentenceScene: React.FC<{ def: SentenceSceneDef }> = ({ def }) => {
         <div style={{ height: 64, fontSize: 46, color: C.text2, opacity: zh?.v ? interpolate(since(zh.t), [0, 10], [0, 1], clamp) : 0 }}>{zh?.v}</div>
         <div style={{ height: 130, display: "flex", alignItems: "center" }}>
           {test?.v ? (
-            <TestRow test={test.v} defBlocks={blocks} since={since(test.t)} />
+            <TestRow test={test.v} defBlocks={blocks} since={since(test.t)} judgeSince={tl.judge === undefined ? -1 : since(tl.judge)} />
           ) : chip?.v ? (
             <Chip text={chip.v} p={pop(chip.t)} />
           ) : null}
@@ -79,8 +79,13 @@ export const SentenceScene: React.FC<{ def: SentenceSceneDef }> = ({ def }) => {
       <Subtitle text={sub?.text} since={sub ? since(sub.start) : 0} />
 
       {tl.says.map((s, i) => (
-        <Sequence key={i} from={Math.round(s.t * fps)} layout="none">
+        <Sequence key={`en${i}`} from={Math.round(s.t * fps)} layout="none">
           <Html5Audio src={staticFile(`audio/${s.v}.wav`)} />
+        </Sequence>
+      ))}
+      {tl.voices.map((s, i) => (
+        <Sequence key={`zh${i}`} from={Math.round(s.t * fps)} layout="none">
+          <Html5Audio src={staticFile(`voice/${s.v}.wav`)} />
         </Sequence>
       ))}
     </Frame>
@@ -123,14 +128,14 @@ const Title: React.FC<{ def: SentenceSceneDef; titles: { t: number; v: string }[
   );
 };
 
-// 等號測試：先顯示「a ＝ b ？」，1.3 秒後揭曉 ＝ ✓ 或 ≠ ✗
-const TestRow: React.FC<{ test: TestDef; defBlocks: (BlockState & { id: string })[]; since: number }> = ({ test, defBlocks, since }) => {
+// 等號測試：先顯示「a ＝ b ？」，judge 時揭曉 ＝ ✓ 或 ≠ ✗
+const TestRow: React.FC<{ test: TestDef; defBlocks: (BlockState & { id: string })[]; since: number; judgeSince: number }> = ({ test, defBlocks, since, judgeSince }) => {
   const { fps } = useVideoConfig();
   const a = defBlocks.find((b) => b.id === test.a)!;
   const b = defBlocks.find((x) => x.id === test.b)!;
   const enter = spring({ frame: since, fps, config: { damping: 14 } });
-  const judged = since >= 1.3 * fps;
-  const judgeP = judged ? spring({ frame: since - 1.3 * fps, fps, config: { damping: 10 } }) : 0;
+  const judged = judgeSince >= 0;
+  const judgeP = judged ? spring({ frame: judgeSince, fps, config: { damping: 10 } }) : 0;
   const color = test.ok ? C.ok : C.danger;
   const mini = (x: BlockState) => (
     <span style={{ fontSize: 52, fontWeight: 600, color: ROLE[x.role].fg, background: ROLE[x.role].bg, border: `4px solid ${ROLE[x.role].line}`, borderRadius: 16, padding: "4px 24px 8px" }}>{x.text}</span>

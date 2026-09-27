@@ -12,7 +12,8 @@ export type Action = { at?: number } & (
   | { hide: string[] } // 積木縮小消失
   | { count: string[] } // 動詞後面的積木標上 1、2
   | { chip: string | null } // 句子下方的小提示，例如「動詞後面：0 塊」
-  | { test: TestDef | null } // 等號測試
+  | { test: TestDef | null } // 等號測試：先出現「a ＝ b ？」
+  | { judge: true } // 等號測試揭曉：＝ ✓ 或 ≠ ✗
   | { pulse: string[] } // 積木的標籤閃一下
   | { relabel: { id: string; role: Role } } // 換標籤（例如 DO → O）
   | { say: string } // 唸英文（sentences.json 的 key）
@@ -23,8 +24,9 @@ export type Action = { at?: number } & (
   | { big: string | null } // 畫面中央的大字
 );
 
-// 一拍：sec 秒，期間顯示一行字幕
-export type Beat = { sec: number; sub?: string; do?: Action[] };
+// 一拍：n 是旁白（narration.json 的 key），字幕和中文語音都用它；
+// 長度自動配合旁白和英文朗讀，sec 是最短秒數；noSub＝只唸不顯示字幕（例如標題已經在畫面上）
+export type Beat = { n?: string; sec?: number; noSub?: boolean; do?: Action[] };
 
 export type SentenceSceneDef = {
   kind: "sentence";
