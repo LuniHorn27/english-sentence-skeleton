@@ -94,6 +94,10 @@ SUPPLEMENT = {
         "do", "wish", "cause", "cost", "save", "spare", "deny", "envy", "forgive", "grant", "refuse",
         "charge", "fine", "allow",
     },
+    "SVC": {
+        # 動詞 ＋ 形容詞表結果（The door flew open.、The toast burned black.、end up alone）
+        "fly", "burst", "swing", "slam", "burn", "break", "come", "run", "wear", "end", "dry", "freeze",
+    },
     "SV": {
         # 動詞 ＋ 介系詞片語（believe in、depend on）：動詞本身是不及物
         "believe",
@@ -104,7 +108,7 @@ SUPPLEMENT = {
 LEXICON = {
     "SVC": set(L.LINKING_VERBS),
     "SVOO": set(L.DATIVE_VERBS),
-    "SVOC": set(L.CAUSATIVE_PERCEPTION),
+    "SVOC": set(L.CAUSATIVE_PERCEPTION) | set(L.VERB_OBJ_TO_V),
 }
 
 

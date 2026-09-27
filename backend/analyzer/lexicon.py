@@ -22,7 +22,7 @@ DATIVE_VERBS = {
     "give", "show", "send", "tell", "pass", "buy", "make", "lend", "bring",
     "teach", "offer", "cook", "find", "get", "write", "read", "sing", "hand",
     "pay", "owe", "promise", "ask", "cost", "leave", "save", "sell", "throw",
-    "build", "bake", "draw", "fetch", "order",
+    "build", "bake", "draw", "fetch", "order", "take",
 }
 
 # seem ＋ 不定詞：不定詞是主詞補語（賴世雄 p.32）
@@ -36,6 +36,26 @@ OC_PREP_VERBS = {
     ("consider", "as"), ("accept", "as"), ("recognize", "as"), ("define", "as"),
     ("elect", "as"), ("appoint", "as"), ("choose", "as"),
 }
+
+# 動詞 ＋ 受詞 ＋ 不定詞：不定詞是受詞補語（asked him to write…）。
+# 不在這個清單的動詞，受詞後面的不定詞當「表目的」（used the cupboard to store food）
+VERB_OBJ_TO_V = {
+    "advise", "allow", "ask", "beg", "bid", "cause", "challenge", "command", "compel", "convince", "dare",
+    "enable", "encourage", "entice", "expect", "forbid", "force", "get", "help", "hire", "inspire", "instruct",
+    "intend", "invite", "lead", "like", "love", "hate", "mean", "motivate", "need", "oblige", "order",
+    "pay", "permit", "persuade", "prefer", "prepare", "pressure", "push", "recommend", "remind", "request",
+    "require", "schedule", "seduce", "teach", "tell", "tempt", "train", "trust", "urge", "want", "warn", "wish",
+    "would", "choose", "elect", "appoint", "select",
+    # 動詞 ＋ 受詞 ＋ to be（認為類，賴世雄 p.54）；被動也常見：is said to be、is supposed to
+    "believe", "consider", "deem", "think", "find", "know", "suppose", "assume", "declare", "judge",
+    "prove", "report", "say", "understand", "imagine", "feel",
+}
+
+# 動詞 ＋ 子句（子句裡用原形動詞）：I suggest you do that.、demanded he pay back → 整個子句是受詞
+SUBJUNCTIVE_VERBS = {"suggest", "demand", "insist", "recommend", "propose", "request", "require", "urge", "ask", "advise"}
+
+# 放在動詞後面、當副詞用的形容詞（He lives alone.）；連綴動詞後面照舊是補語（She felt alone.）
+ADVERBIAL_ADJS = {"alone"}
 
 # 使役動詞、感官動詞：＋ 受詞 ＋ 原形動詞
 CAUSATIVE_PERCEPTION = {"make", "let", "have", "help", "see", "hear", "watch", "feel", "notice"}
@@ -83,7 +103,7 @@ PLACE_ADVERBS = {
 }
 
 # 表示語氣的副詞
-TONE_ADVERBS = {"please", "also", "too", "only", "just", "even", "really", "actually", "certainly", "surely", "maybe", "perhaps"}
+TONE_ADVERBS = {"please", "yes", "no", "also", "too", "only", "just", "even", "really", "actually", "certainly", "surely", "maybe", "perhaps"}
 
 # 天氣、狀況名詞（in the heavy rain → 表狀況）
 CONDITION_NOUNS = {"rain", "snow", "wind", "storm", "sun", "sunshine", "heat", "cold", "dark", "darkness", "fog", "weather", "silence", "hurry", "danger", "trouble"}

@@ -708,6 +708,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -1105,6 +1106,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -1594,6 +1596,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
   examples:
     SVO: We elected him as governor.
     SVOC: We elected him governor.
@@ -1855,6 +1858,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
     - 賴世雄
     - 題庫
@@ -2032,6 +2036,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
   examples:
     SVO: He assumed the position that dogs are people.
     SVOC: He knew the choice to be a bad one.
@@ -3021,6 +3026,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SV: I begged for release.
@@ -3121,6 +3127,7 @@
     - 題庫
     SVOC:
     - VerbNet
+    - 字表
     - 賴世雄
   examples:
     SVO: The tourists admired the paintings.
@@ -3391,6 +3398,7 @@
   common: true
   patterns:
     SVOC:
+    - 字表
     - 賴世雄
 - verb: biff
   common: false
@@ -4535,6 +4543,8 @@
     SV:
     - ECDICT
     - VerbNet
+    SVC:
+    - 補充
     SVO:
     - ECDICT
     - VerbNet
@@ -5068,6 +5078,8 @@
     SV:
     - ECDICT
     - VerbNet
+    SVC:
+    - 補充
     SVO:
     - ECDICT
     - VerbNet
@@ -5106,6 +5118,8 @@
   patterns:
     SV:
     - VerbNet
+    SVC:
+    - 補充
     SVO:
     - VerbNet
   examples:
@@ -5939,6 +5953,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
     SVOO:
     - 補充
@@ -6158,6 +6173,7 @@
     SVO:
     - ECDICT
     SVOC:
+    - 字表
     - 補充
 - verb: chamber
   common: true
@@ -6640,6 +6656,8 @@
     - VerbNet
     - 補充
     - 題庫
+    SVOC:
+    - 字表
     SVOO:
     - VerbNet
   examples:
@@ -7725,6 +7743,7 @@
     SVC:
     - VerbNet
     - 字表
+    - 補充
   examples:
     SV: A ship appeared.
     SVC: The belt came undone.
@@ -7749,6 +7768,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: He ordered that she should come immediately.
@@ -7918,6 +7938,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
     - 賴世雄
   examples:
@@ -8496,6 +8517,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 賴世雄
   examples:
     SVO: I considered how he could become professor.
@@ -8883,6 +8905,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SV: The little children amused easily.
@@ -10144,6 +10167,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: I urged him.
@@ -10490,6 +10514,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
   examples:
     SVO: The president maintained that the matter was closed.
     SVOC: The president declared Smith foolish.
@@ -10643,6 +10668,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 賴世雄
   examples:
     SVO: I considered how he could become professor.
@@ -13178,6 +13204,7 @@
     - VerbNet
     SVO:
     - VerbNet
+    - 題庫
     SVOO:
     - 補充
   examples:
@@ -13729,6 +13756,8 @@
     SV:
     - ECDICT
     - VerbNet
+    SVC:
+    - 補充
     SVO:
     - ECDICT
     - VerbNet
@@ -14095,6 +14124,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 賴世雄
     - 題庫
   examples:
@@ -14417,6 +14447,7 @@
     SVO:
     - ECDICT
     SVOC:
+    - 字表
     - 補充
 - verb: enact
   common: false
@@ -14498,6 +14529,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -14529,6 +14561,8 @@
   patterns:
     SV:
     - VerbNet
+    SVC:
+    - 補充
     SVO:
     - VerbNet
   examples:
@@ -14932,6 +14966,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 賴世雄
   examples:
     SV: The little children amused easily.
@@ -15721,6 +15756,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SVO: The populace felt that the RIAA had too much power.
@@ -16657,6 +16693,7 @@
     - 題庫
     SVOC:
     - VerbNet
+    - 字表
     - 補充
     - 賴世雄
     - 題庫
@@ -17323,6 +17360,8 @@
     - ECDICT
     - VerbNet
     - 題庫
+    SVC:
+    - 補充
     SVO:
     - ECDICT
     - VerbNet
@@ -17476,6 +17515,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
   examples:
     SVO: The rules forbade us from smoking.
@@ -17487,6 +17527,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
     - 賴世雄
   examples:
@@ -17799,6 +17840,8 @@
     SV:
     - ECDICT
     - VerbNet
+    SVC:
+    - 補充
     SVO:
     - ECDICT
     - VerbNet
@@ -18499,6 +18542,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
     - 賴世雄
     SVOO:
@@ -19930,6 +19974,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: The tourists admired the paintings.
@@ -20383,6 +20428,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -21228,6 +21274,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SVO: He characterized him as smart.
@@ -21980,6 +22027,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SV: The little children amused easily.
@@ -22042,6 +22090,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -22104,6 +22153,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SVO: I meant to say 'green'.
@@ -22545,6 +22595,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: We promoted the cause.
@@ -23079,6 +23130,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
   examples:
     SV: Her cousin clerked for Judge Davis.
     SVO: He put the probability at 0.9.
@@ -23424,6 +23476,9 @@
     SVO:
     - VerbNet
     - 題庫
+    SVOC:
+    - VerbNet?
+    - 字表
   examples:
     SV: I understand.
     SVO: I understood how she did it.
@@ -23830,6 +23885,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SV: This remark led to further arguments amongst guests.
@@ -24222,6 +24278,7 @@
     - 題庫
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SVO: The tourists admired the paintings.
@@ -24706,6 +24763,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: The tourists admired the paintings.
@@ -25351,6 +25409,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
   examples:
     SVO: I meant to say 'green'.
@@ -26329,6 +26388,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: I forced him into coming.
@@ -26881,6 +26941,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SVO: Success requires hard work.
@@ -27389,6 +27450,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: I forced him into coming.
@@ -27691,6 +27753,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -28790,6 +28853,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -29159,6 +29223,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -29231,6 +29296,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: I forced him into coming.
@@ -30609,6 +30675,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SVO: The tourists admired the paintings.
@@ -30667,6 +30734,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -30718,6 +30786,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 字表
     SVOO:
     - VerbNet
   examples:
@@ -31273,6 +31344,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
   examples:
     SVO: The president maintained that the matter was closed.
     SVOC: The president declared Smith foolish.
@@ -31646,6 +31718,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 賴世雄
     SVOO:
     - VerbNet
@@ -32886,6 +32959,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 字表
   examples:
     SVO: They praised the volunteers.
 - verb: recommit
@@ -33709,6 +33784,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -34012,6 +34088,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
   examples:
     SV: Kevin reported to Martha.
     SVO: He characterized him as smart.
@@ -34124,6 +34201,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: I begged to be dismissed.
@@ -34135,6 +34213,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
   examples:
     SVO: He ordered that she should come immediately.
@@ -35362,6 +35441,8 @@
     - VerbNet
     - 字表
     - 題庫
+    SVC:
+    - 補充
     SVO:
     - ECDICT
     - VerbNet
@@ -35813,6 +35894,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 字表
   examples:
     SVO: This indicates how she did it.
 - verb: scald
@@ -35972,6 +36055,7 @@
     SVO:
     - ECDICT
     SVOC:
+    - 字表
     - 補充
 - verb: scheme
   common: true
@@ -36526,6 +36610,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 賴世雄
   examples:
     SVO: I lured him.
@@ -36653,6 +36738,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
   examples:
     SVO: He characterized him as smart.
     SVOC: He characterized him to be smart.
@@ -38183,11 +38269,13 @@
   examples:
     SVO: Winnie the Pooh subjugated the unfortunate Pixies.
 - verb: slam
-  common: false
+  common: true
   patterns:
     SV:
     - ECDICT
     - VerbNet
+    SVC:
+    - 補充
     SVO:
     - ECDICT
     - VerbNet
@@ -41982,6 +42070,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
   examples:
     SVO: I considered how he could become professor.
     SVOC: They thought him smart.
@@ -42390,6 +42479,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 題庫
     SVO:
     - ECDICT
     - VerbNet
@@ -42411,6 +42501,7 @@
     - VerbNet
     SVC:
     - VerbNet
+    - 補充
     - 題庫
     SVO:
     - ECDICT
@@ -42947,6 +43038,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -43095,6 +43187,7 @@
     - 題庫
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
     - 賴世雄
     SVOO:
@@ -43114,7 +43207,7 @@
   examples:
     SV: She worked.
 - verb: tempt
-  common: false
+  common: true
   patterns:
     SV:
     - VerbNet
@@ -43123,6 +43216,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
   examples:
     SV: The little children amused easily.
     SVO: The clown amused the children.
@@ -43347,6 +43441,7 @@
     - 題庫
     SVOC:
     - VerbNet
+    - 字表
     - 賴世雄
   examples:
     SV: We focused on it.
@@ -44265,6 +44360,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SVO: I hired two secretaries.
@@ -44880,6 +44976,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
   examples:
     SVO: The tourists admired the paintings.
@@ -45418,6 +45515,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 字表
   examples:
     SV: I understand.
     SVO: I accepted how you did it.
@@ -45948,6 +46048,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 字表
     - 補充
     - 賴世雄
     SVOO:
@@ -46743,6 +46844,7 @@
     - 題庫
     SVOC:
     - VerbNet
+    - 字表
     - 補充
     - 賴世雄
   examples:
@@ -46801,6 +46903,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 字表
     - 補充
     SVOO:
     - VerbNet
@@ -46941,6 +47044,8 @@
     SV:
     - ECDICT
     - VerbNet
+    SVC:
+    - 補充
     SVO:
     - ECDICT
     - VerbNet
@@ -47714,6 +47819,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 字表
     - 補充
     - 賴世雄
     SVOO:
@@ -47910,6 +48016,11 @@
     - VerbNet
   examples:
     SVO: The tourists admired the paintings.
+- verb: would
+  common: true
+  patterns:
+    SVOC:
+    - 字表
 - verb: wound
   common: true
   patterns:

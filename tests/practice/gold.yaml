@@ -1657,3 +1657,151 @@
     function: 附加問句
     modifies: null
     text: isn't it
+- id: '98'
+  sentence: I have to finish my homework.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: have to
+  - role: Vt
+    text: finish
+  - role: O
+    text: my homework
+    head:
+    - homework
+- id: '99'
+  sentence: It has to be done.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: S
+    text: It
+  - role: aux
+    text: has to
+  - role: aux
+    text: be
+  - role: Vt
+    text: done
+- id: '100'
+  sentence: I suggest you do that as soon as possible.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: suggest
+  - role: O
+    text: you do that as soon as possible
+- id: '101'
+  sentence: I used the cupboard to store food.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: used
+  - role: O
+    text: the cupboard
+    head:
+    - cupboard
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: to store food
+- id: '102'
+  sentence: He lives alone with his parents.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: lives
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: alone
+  - role: M
+    function: 副詞・表伴隨
+    modifies: null
+    text: with his parents
+- id: '103'
+  sentence: I want you to come.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: want
+  - role: O
+    text: you
+  - role: OC
+    text: to come
+- id: '104'
+  sentence: I would like you to meet my friend.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: would
+  - role: Vt
+    text: like
+  - role: O
+    text: you
+  - role: OC
+    text: to meet my friend
+- id: '105'
+  sentence: The door flew open.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The door
+    head:
+    - door
+  - role: V
+    text: flew
+  - role: SC
+    text: open
+- id: '106'
+  sentence: It takes me an hour to get to school.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vt
+    text: takes
+  - role: IO
+    text: me
+  - role: DO
+    text: an hour
+  - role: RS
+    text: to get to school
+- id: '107'
+  sentence: Tom is taking an exam next week.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Tom
+  - role: aux
+    text: is
+  - role: Vt
+    text: taking
+  - role: O
+    text: an exam
+    head:
+    - exam
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: next week

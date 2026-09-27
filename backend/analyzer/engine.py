@@ -36,6 +36,11 @@ def get_nlp():
 
         warnings.filterwarnings("ignore")
         _nlp = spacy.load("en_core_web_trf")
+        # 名詞後面的 'll 也要拆開（this rain'll last → rain ＋ 'll）
+        from spacy.util import compile_suffix_regex
+
+        suffixes = list(_nlp.Defaults.suffixes) + [r"(?<=[A-Za-z])['’]ll$"]
+        _nlp.tokenizer.suffix_search = compile_suffix_regex(suffixes).search
     return _nlp
 
 
@@ -62,6 +67,7 @@ class ClauseInfo:
     pattern: int = 0
     flags: set = field(default_factory=set)
     verb_token: object = None  # 真正要標 Vt／Vi／V 的字
+    elliptic: bool = False  # 省略句：I can't.、I will.（只有助動詞）
 
 
 # ---------- 修飾語功能 ----------
@@ -210,6 +216,21 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         info.passive = False  # It's become popular.、It's been a long time：'s 是 has，不是被動
     info.existential = "expl" in deps and v.lemma_ == "be"
 
+    # 省略句：I can't.、Yes, I will.、I did.（只有助動詞，後面的動詞省略了）
+    if (v.tag_ == "MD" or (v.lemma_ == "do" and v.pos_ == "AUX")) and not any(
+            c.dep_ in ("xcomp", "ccomp", "acomp", "attr", "dobj", "oprd", "dative", "advcl", "prep") for c in children):
+        info.elliptic = True
+        info.pattern = 1
+        roots[v.i] = Spec("aux", clause=index)
+        for c in children:
+            if c.dep_ in ("nsubj", "nsubjpass"):
+                roots[c.i] = Spec("S", clause=index)
+            elif c.dep_ == "neg":
+                roots[c.i] = Spec("aux", clause=index, kind="neg")
+            elif c.dep_ in ("advmod", "npadvmod", "intj"):
+                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+        return info
+
     # 分析程式把 enjoy 之類的主要動詞誤判成助動詞：enjoy 才是動詞，後面的 playing 是受詞
     fake = [c for c in children if c.dep_ == "aux" and not is_real_aux(c) and c.pos_ in ("VERB", "AUX")]
     if fake:
@@ -225,9 +246,34 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         info.pattern = 2
         return info
 
+    # have to／has to／had to ＋ 原形動詞：have to 當助動詞，後面的動詞才是主要動詞（It has to be done.）
+    have_to = next((c for c in children if c.dep_ == "xcomp" and c.pos_ in ("VERB", "AUX") and any(
+        g.dep_ == "aux" and g.lower_ == "to" and g.i == v.i + 1 for g in c.children)), None)
+    if v.lemma_ == "have" and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
+        roots[v.i] = Spec("aux", clause=index)
+        inner = assign_clause(have_to, roots, index, sent, shared_subject=True)
+        for c in children:
+            if c is have_to or c.dep_ == "punct":
+                continue
+            if c.dep_ in ("nsubj", "nsubjpass", "csubj"):
+                roots[c.i] = Spec("S", clause=index)
+            elif c.dep_ in ("aux", "auxpass") or (c.dep_ == "neg" and c.i < v.i):
+                roots[c.i] = Spec("aux", clause=index, kind="neg" if c.dep_ == "neg" else "")
+            elif c.dep_ in ("advmod", "npadvmod", "prep", "neg"):
+                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+        for t in have_to.children:
+            if t.dep_ == "aux" and t.lower_ == "to":
+                roots[t.i] = Spec("aux", clause=index)
+        inner.pattern = clause_pattern(roots, index, inner)
+        inner.question = any(c.dep_ == "aux" and c.i < v.i for c in children) and any(
+            c.dep_ == "nsubj" and c.i < v.i and any(a.dep_ == "aux" and a.i < c.i for a in children) for c in children)
+        return inner
+
     be_aux = next((c for c in children if c.dep_ == "auxpass" and c.lemma_ == "be"), None)
     stative_pair = any(c.dep_ == "prep" and (v.lower_, c.lower_) in L.STATIVE_PAIRS for c in children)
-    if info.passive and be_aux is not None and (v.lower_ in L.ADJ_PARTICIPLES or stative_pair) and "agent" not in deps:
+    modal_before = any(c.dep_ == "aux" and (c.tag_ == "MD" or c.lower_ == "to") for c in children)
+    if info.passive and be_aux is not None and (v.lower_ in L.ADJ_PARTICIPLES or stative_pair) and "agent" not in deps \
+            and not (modal_before and not stative_pair):  # It has to be done、must be done 是被動
         # 其實是形容詞：The restaurant is crowded（句型二），不是被動語態
         info.passive = False
         roots[be_aux.i] = Spec(VERB_ROLE, clause=index)
@@ -275,7 +321,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         and not any(c.dep_ == "dative" for c in children)
         and nominal_after[0].dep_ in ("dobj", "npadvmod")
         and nominal_after[1].dep_ in ("dobj", "npadvmod", "attr", "oprd")
-        and nominal_after[1].lemma_.lower() not in L.TIME_NOUNS
+        and (nominal_after[1].lemma_.lower() not in L.TIME_NOUNS
+             or (v.lemma_ in ("take", "cost") and nominal_after[0].pos_ in ("PRON", "PROPN")))  # took us a long time
     ):
         dative_fix = (nominal_after[0], nominal_after[1])
 
@@ -348,7 +395,10 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             roots[c.i] = Spec("M", function=adverb_function(c), clause=index,
                               kind="npadv" if d == "npadvmod" else "")
         elif d == "advcl" and c.pos_ == "ADJ" and c.i == v.i + 1 and not has_obj and not list(c.children):
-            roots[c.i] = Spec("SC", clause=index)  # The door flew open.
+            if c.lower_ in L.ADVERBIAL_ADJS and v.lemma_.lower() not in L.LINKING_VERBS:
+                roots[c.i] = Spec("M", function="副詞・表方式", clause=index)  # He lives alone.
+            else:
+                roots[c.i] = Spec("SC", clause=index)  # The door flew open.
         elif d == "advcl":
             f = advcl_function(c)
             if f:
@@ -405,7 +455,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     if subj is not None and subj.lower_ == "it":
         for r in [v] + [c for c in children if c.i in roots and roots[c.i].role == "SC"]:
             for g in r.children:
-                if g.dep_ in ("xcomp", "ccomp") and (g.i not in roots or roots[g.i].role in ("O", "unknown")):
+                if g.dep_ in ("xcomp", "ccomp") and (g.i not in roots or roots[g.i].role in ("O", "unknown")
+                                                     or (roots[g.i].role == "OC" and v.lemma_ in ("take", "cost"))):
                     if any(x.lower_ == "to" or x.dep_ in ("mark", "nsubj", "nsubjpass") for x in g.children):
                         roots[g.i] = Spec("RS", clause=index)
                         info.flags.add("dummy_it")
@@ -433,7 +484,8 @@ def assign_complement(c, v, roots, index, info, has_obj):
     has_mark = any(g.dep_ == "mark" for g in c.children)
     has_to = any(g.dep_ == "aux" and g.lower_ == "to" for g in c.children)
     has_helper = any(g.dep_ in ("aux", "auxpass") for g in c.children)
-    if small_subj and not has_mark and not has_to and not has_helper and small_subj[0].tag_ != "PRP$" \
+    subjunctive = v.lemma_.lower() in L.SUBJUNCTIVE_VERBS and c.tag_ == "VB" and c.dep_ == "ccomp"
+    if small_subj and not has_mark and not has_to and not has_helper and small_subj[0].tag_ != "PRP$" and not subjunctive \
             and c.tag_ in ("VB", "JJ", "NN", "NNS", "NNP", "VBN", "VBG", "RB"):
         # 有助動詞的是完整子句（She said she didn't know…），不是小子句
         # 小子句：made [us] [clean the classroom]、found [the game] [very fun]
@@ -441,8 +493,19 @@ def assign_complement(c, v, roots, index, info, has_obj):
         roots[c.i] = Spec("OC", clause=index)
         if c.tag_ == "VB" and v.lemma_.lower() in L.CAUSATIVE_PERCEPTION:
             info.flags.add("causative_perception")
+    elif small_subj and has_to and c.dep_ == "ccomp" and v.lemma_.lower() in L.VERB_OBJ_TO_V \
+            and all(g.lower_ == "to" for g in c.children if g.dep_ in ("aux", "auxpass")):
+        # want [you] [to come]、would like [you] [to meet…]：分析程式把受詞看成不定詞的主詞
+        roots[small_subj[0].i] = Spec("O", clause=index)
+        roots[c.i] = Spec("OC", clause=index)
+        info.flags.add("verb_obj_to_v")
     elif c.dep_ == "xcomp" and c.pos_ in ("ADJ", "NOUN", "PROPN", "NUM"):
         roots[c.i] = Spec("OC" if (has_obj or info.passive) else "SC", clause=index)
+    elif c.dep_ == "xcomp" and (has_obj or info.passive) and c.tag_ == "VB" and has_to \
+            and v.lemma_.lower() not in L.VERB_OBJ_TO_V | L.CAUSATIVE_PERCEPTION \
+            and c.lemma_ != "be" and not any(g.dep_ in ("nsubj", "nsubjpass") and g.lower_ == "it" for g in v.children):
+        # to be … 一律是補語（characterized him to be smart）；主詞是 It 的交給虛主詞規則（It took us a long time to decide）
+        roots[c.i] = Spec("M", function="副詞・表目的", clause=index)  # used the cupboard to store food
     elif c.dep_ == "xcomp" and (has_obj or info.passive) and c.tag_ == "VB":
         # asked [the students] [to give…]、made [us] [clean…]、were allowed [to play…]
         roots[c.i] = Spec("OC", clause=index)
@@ -907,12 +970,13 @@ def analyze_sentence(text: str) -> SentenceResult:
                             function=None, modifies=None, heads=[], structure=None, clause=info.index,
                             inner=[], _root=None, _spec=Spec("S", kind="implicit")))
 
-    # 否定：Do ＋ n't、is ＋ not 合成一個 aux 片段
+    # 否定：Do ＋ n't、is ＋ not 合成一個 aux 片段；have ＋ to 合成 have to
     raw.sort(key=lambda c: (c["start"], 0 if c.get("implicit") else 1))
     joined = []
     for c in raw:
-        if joined and joined[-1]["role"] == "aux" and c["role"] == "aux" and c["text"].lower() in ("n't", "not") \
-                and stext[joined[-1]["end"]:c["start"]].strip() == "":
+        if joined and joined[-1]["role"] == "aux" and c["role"] == "aux" and stext[joined[-1]["end"]:c["start"]].strip() == "" \
+                and (c["text"].lower() in ("n't", "not")
+                     or (c["text"].lower() == "to" and joined[-1]["text"].lower() in ("have", "has", "had"))):
             prev = joined.pop()
             c = dict(prev, end=c["end"], text=stext[prev["start"]:c["end"]])
         joined.append(c)
@@ -951,12 +1015,12 @@ def analyze_sentence(text: str) -> SentenceResult:
         clauses = parallel_clauses(infos, chunks)
     else:
         clauses = [
-            Clause(index=i, pattern=info.pattern, passive=info.passive, formula=formula(info, chunks))
+            Clause(index=i, pattern=info.pattern, passive=info.passive, formula=formula(info, chunks), elliptic=info.elliptic)
             for i, info in infos.items()
         ]
     for cl in clauses:
         info = infos.get(cl.index)
-        if info is not None and info.verb_token is not None:
+        if info is not None and info.verb_token is not None and not info.elliptic:
             cl.verb = info.verb_token.lemma_.lower()
             cl.doubt = verb_check(cl.verb, cl.pattern)
     phrases = find_phrases(sent)
@@ -1012,6 +1076,8 @@ FORMULA = {1: "S + Vi", 2: "S + Vt + O", 3: "S + V + SC", 4: "S + Vt + IO + DO",
 
 
 def formula(info, chunks):
+    if info.elliptic:
+        return "S + 助動詞（後面的動詞省略了）"
     if not info.passive:
         return FORMULA[info.pattern]
     rest = {4: " + DO", 5: " + OC"}.get(info.pattern, "")

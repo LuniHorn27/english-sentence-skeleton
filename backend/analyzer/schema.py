@@ -70,10 +70,13 @@ class Clause(BaseModel):
     formula: str = Field(description="例如 S + Vt + O；被動為 S + be + p.p. …")
     verb: Optional[str] = Field(None, description="主要動詞的原形")
     doubt: Optional[str] = Field(None, description="動詞句型字典檢查不通過時的原因（verb_check.py）")
+    elliptic: bool = Field(False, description="省略句：只有助動詞，後面的動詞省略了（I can't.），沒有句型")
 
     @computed_field
     @property
     def label(self) -> str:
+        if self.elliptic:
+            return f"省略句：{self.formula}"
         num = "一二三四五"[PATTERN_DISPLAY[self.pattern] - 1]
         return f"句型{num}{'（被動語態）' if self.passive else ''}：{self.formula}"
 
