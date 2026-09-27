@@ -210,7 +210,42 @@ function explainBox(sentence, view) {
     box.append(el("br"));
     box.append(document.createTextNode(chunk.note));
   }
+  if (!chunk.implicit) box.append(wordList(chunk.text));
   return box;
+}
+
+// ---------- 查單字：片段裡重要單字的音標和中文意思（ECDICT） ----------
+const lookupCache = new Map();
+function fetchWords(text) {
+  if (!lookupCache.has(text)) {
+    lookupCache.set(text, fetch("/api/lookup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: text.slice(0, 300) }),
+    }).then((r) => (r.ok ? r.json() : { words: [] })).then((d) => d.words).catch(() => []));
+  }
+  return lookupCache.get(text);
+}
+
+function wordList(text) {
+  const wrap = el("div", "lookup");
+  fetchWords(text).then((words) => {
+    if (!words.length) return;
+    wrap.append(el("span", "lookup-title", "📖 單字"));
+    const ul = el("ul", "lookup-list");
+    for (const w of words) {
+      const li = el("li");
+      li.append(el("b", "lookup-word", w.word));
+      if (w.form_only) li.append(el("span", "lookup-base", `（${w.base} 的變化形）`));
+      if (w.phonetic) li.append(el("span", "lookup-ph", `/${w.phonetic}/`));
+      li.append(el("span", "lookup-mean", w.meaning));
+      if (w.base_meaning) li.append(el("span", "lookup-also", `也是 ${w.base} 的變化形：${w.base_meaning}`));
+      ul.append(li);
+    }
+    wrap.append(ul);
+    wrap.append(el("span", "lookup-src", "字典：ECDICT"));
+  });
+  return wrap;
 }
 
 // ---------- 文法重點卡 ----------

@@ -178,6 +178,17 @@ button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
 .explain { font-size: 14px; color: var(--text-2); background: var(--surface-2); border-radius: 8px; padding: 8px 12px; margin-top: 10px; line-height: 1.7; }
 .explain strong { color: var(--text); font-weight: 600; }
 .explain .struct { color: var(--muted); font-size: 13px; }
+/* 查單字 */
+.lookup:empty { display: none; }
+.lookup { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-strong); }
+.lookup-title { display: block; font-size: 12px; font-weight: 600; color: var(--text-2); margin-bottom: 2px; }
+.lookup-list { list-style: none; margin: 0; padding: 0; }
+.lookup-list li { margin: 3px 0; }
+.lookup-word { color: var(--text); margin-right: 6px; }
+.lookup-base, .lookup-ph { color: var(--muted); margin-right: 6px; }
+.lookup-mean { color: var(--text-2); }
+.lookup-also { display: block; font-size: 13px; color: var(--muted); }
+.lookup-src { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; }
 
 /* ---------- 文法重點卡 ---------- */
 /* 片語卡和文法重點卡：寬螢幕並排兩欄，展開的卡片佔滿整行 */

@@ -25,7 +25,7 @@ from pydantic import BaseModel, Field
 
 from backend.analyzer.engine import analyze_text, get_nlp
 from backend.analyzer.phrases import translation_hints
-from backend import translate, tts
+from backend import dictionary, translate, tts
 from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -263,6 +263,17 @@ def translate_sentence(req: TranslateRequest, request: Request):
     except Exception:
         log.exception("翻譯失敗（輸入長度 %d 字元）", len(req.text))
         raise HTTPException(503, "翻譯暫時無法使用")
+
+
+# ---------- 查單字（ECDICT） ----------
+class LookupRequest(BaseModel):
+    text: str = Field(min_length=1, max_length=300)
+
+
+@app.post("/api/lookup")
+def lookup(req: LookupRequest, request: Request):
+    check_rate(request, "lookup", 120, 60, "查詢次數太多了，請等一分鐘後再試")
+    return {"words": dictionary.lookup_text(req.text)}
 
 
 @app.get("/api/cards/{card_id}", response_model=Card)
