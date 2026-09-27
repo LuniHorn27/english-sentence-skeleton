@@ -3,6 +3,7 @@
 - 選這個模型的原因見 docs/翻譯實測-比較報告.md（26 句實測，品質最好、速度第二快）。
 - 模型輸出偶爾有簡體字，一律經過 OpenCC（s2twp）轉成台灣繁體與台灣用語。
 - 句子裡有慣用語時（例如 give someone a big hand），把真正的意思告訴模型，避免照字面翻。
+- 原文是 and、翻譯卻變成「但是」時，指明連接詞再翻一次。
 - 翻譯裡如果留下英文單字（原句的專有名詞、縮寫除外），加一句提醒再翻一次。
 - 翻過的句子暫存在記憶體（最多 500 句）；不寫進硬碟，伺服器重新啟動就清空（隱私）。
 - 完全在自己的伺服器上執行，不呼叫任何外部服務。
@@ -24,8 +25,19 @@ SYSTEM_PROMPT = (
     "你是專業的英翻中譯者，服務對象是台灣的英文學習者。"
     "請把使用者給的英文句子翻譯成自然、通順的台灣繁體中文，使用台灣的慣用詞彙（例如：軟體、影片、資訊、機車、捷運）。"
     "遇到慣用語或片語，要翻出真正的意思，不要逐字直譯。"
+    "連接詞要照原文的意思翻（and＝而且、並且、和；but＝但是；so＝所以），不要自己改成別的關係。"
     "只輸出翻譯結果，不要加任何解釋、引號或英文。"
 )
+CONTRAST_WORDS = re.compile(r"\b(but|yet|however|although|though|while|whereas|still|instead)\b", re.I)
+CONJ_NOTE = "注意：原文的連接詞是 and（而且、並且、和），不是 but，翻譯裡不要出現「但、可是、不過、卻」。"
+
+
+def and_as_but(zh: str, source: str) -> bool:
+    """原文只有 and、沒有轉折字，翻譯卻出現「但是」之類的字"""
+    return bool(re.search(r"\band\b", source, re.I)) and not CONTRAST_WORDS.search(source) \
+        and bool(re.search(r"但|可是|不過|卻", zh))
+
+
 RETRY_NOTE = "注意：每個英文單字都要翻成中文（人名、地名、縮寫可以保留）。"
 
 _llm = None
@@ -72,6 +84,9 @@ def leftover_english(zh: str, source: str) -> list[str]:
 TAIWAN_FIXES = [
     (re.compile(r"(抽|吸|戒|點)(了|過|完|根)?煙"), r"\1\2菸"),
     (re.compile(r"香煙|煙草|煙酒|煙蒂|煙灰缸"), lambda m: m.group().replace("煙", "菸")),
+    # OpenCC 會把「通過」一律轉成「透過」；考試、審核的「通過」要改回來
+    (re.compile(r"(沒有|沒|未|不|順利|已經|才|都)透過"), r"\1通過"),
+    (re.compile(r"透過(了|考試|測驗|檢查|審核|面試)"), r"通過\1"),
 ]
 
 
@@ -105,6 +120,10 @@ def translate(text: str, hints: str = "") -> str:
         if leftover_english(zh, text):
             retry = _generate(text, extra + RETRY_NOTE)
             if len(leftover_english(retry, text)) < len(leftover_english(zh, text)):
+                zh = retry
+        if and_as_but(zh, text):
+            retry = _generate(text, extra + CONJ_NOTE)
+            if not and_as_but(retry, text) and not leftover_english(retry, text):
                 zh = retry
         _cache[key] = zh
         while len(_cache) > CACHE_SIZE:

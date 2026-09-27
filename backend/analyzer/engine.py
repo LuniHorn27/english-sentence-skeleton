@@ -314,7 +314,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             if prev is not None and prev.i in roots and roots[prev.i].role == "aux":
                 roots[c.i] = Spec("aux", clause=index, kind="neg")
             else:
-                roots[c.i] = Spec("M", function="副詞・表語氣", clause=index)
+                roots[c.i] = Spec("M", function="副詞・表否定", clause=index)  # not、never（沒有跟在助動詞後面時）
         elif d == "dative":
             if c.pos_ == "ADP":  # to me、for me：介系詞片語
                 roots[c.i] = Spec("M", function=adverb_function_prep_like(c), clause=index)

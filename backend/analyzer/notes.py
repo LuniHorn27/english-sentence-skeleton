@@ -8,6 +8,7 @@ ADVERB_NOTE = {
     "副詞・表狀況": "說明動作發生時的狀況。",
     "副詞・表路程": "說明「多遠」或「經過哪裡」。",
     "副詞・表語氣": "加強或改變句子的語氣。",
+    "副詞・表否定": "表示否定，意思是「不、沒有」。",
     "副詞・表伴隨": "說明「跟誰一起」。",
     "副詞・表對象": "說明動作的「對象」：對誰、對什麼做這個動作。",
     "副詞・表執行者": "被動語態的 by ＋ 執行者：說明這個動作是「誰」做的。",
@@ -125,6 +126,8 @@ def chunk_note(c, infos, text, compound=None) -> str:
                 note += f"也可以理解成說明動作發生的地點（副詞），意思差不多。"
             return note
         base = ADVERB_NOTE.get(f, "")
+        if f == "副詞・表否定" and c["text"].lower() == "never":
+            base = "表示否定，意思是「從來不、從來沒有」。"
         if f == "副詞・表對象" and root is not None and (root.head.pos_ == "ADJ" or root.head.dep_ == "acomp"):
             adj = root.head.text
             base = (f"放在形容詞 {adj} 後面，說明 {adj} 的對象或範圍（對什麼、在哪方面）。"
