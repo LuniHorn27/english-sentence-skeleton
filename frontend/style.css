@@ -221,6 +221,9 @@ a { color: var(--accent-line); }
 .intro h4 { font-size: 14px; font-weight: 600; margin: 14px 0 4px; }
 .intro p { margin: 6px 0; }
 .intro .muted { color: var(--text-2); }
+.manifesto p { line-height: 1.9; margin: 10px 0; }
+.manifesto .lead { font-size: 22px; font-weight: 700; line-height: 1.5; margin: 4px 0 14px; }
+.manifesto .sign { color: var(--text-2); margin-top: 16px; }
 .steps { padding-left: 22px; margin: 0 0 10px; }
 .steps li { margin: 6px 0; }
 .label-table { display: grid; gap: 8px; }

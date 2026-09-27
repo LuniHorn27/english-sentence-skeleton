@@ -98,6 +98,7 @@ const PATTERNS = [
     more: [
       "文法書的名稱：完全不及物動詞。",
       "There is a cat under the table. 表示「有」，本網站把 is 標成 Vi，真正的主詞是 a cat。",
+      "I am at school. 一般歸在句型一：am 表示「在」，at school 是地點修飾語（但不能省略）。也有文法書把 at school 當成主詞補語（句型二），考試時以傳統的句型一為主。",
     ],
   },
   {

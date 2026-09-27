@@ -4,6 +4,8 @@
 """
 import json
 import logging
+import os
+import uuid
 import threading
 import time
 from collections import defaultdict, deque
@@ -100,9 +102,27 @@ def analyze(req: AnalyzeRequest, request: Request):
 
 
 # ---------- 使用者回饋（2-5） ----------
-FEEDBACK_FILE = ROOT / "data" / "feedback.jsonl"
+# 本機：存在 data/feedback.jsonl。
+# 上線（Hugging Face Spaces）：主機重新啟動時檔案會消失，所以設定了 FEEDBACK_DATASET（私人資料集名稱）
+# 和 HF_TOKEN（Space 的 secret）時，每 10 分鐘自動同步到那個私人資料集；每次開機寫到新的檔案，不會蓋掉舊的。
 FEEDBACK_LIMIT = 20  # 同一個來源每小時最多幾則，防止洗版
+FEEDBACK_DATASET = os.environ.get("FEEDBACK_DATASET")
+FEEDBACK_FILE = ROOT / "data" / "feedback.jsonl"
 _feedback_lock = threading.Lock()
+if FEEDBACK_DATASET and os.environ.get("HF_TOKEN"):
+    try:
+        from huggingface_hub import CommitScheduler
+
+        _synced = ROOT / "data" / "feedback" / f"feedback-{datetime.now(timezone.utc):%Y%m%d-%H%M%S}-{uuid.uuid4().hex[:6]}.jsonl"
+        _synced.parent.mkdir(parents=True, exist_ok=True)
+        _scheduler = CommitScheduler(
+            repo_id=FEEDBACK_DATASET, repo_type="dataset", folder_path=_synced.parent,
+            path_in_repo="feedback", every=10, private=True, token=os.environ["HF_TOKEN"],
+        )
+        FEEDBACK_FILE, _feedback_lock = _synced, _scheduler.lock  # 寫檔和上傳不會同時進行
+        log.info("回饋會同步到私人資料集 %s", FEEDBACK_DATASET)
+    except Exception:
+        log.exception("回饋同步設定失敗，先存在主機上的檔案（重新啟動會消失）")
 
 
 class Feedback(BaseModel):
@@ -118,7 +138,7 @@ class Feedback(BaseModel):
 def feedback(item: Feedback, request: Request):
     check_rate(request, "feedback", FEEDBACK_LIMIT, 3600, "回饋次數太多了，請稍後再試")
     with _feedback_lock:
-        FEEDBACK_FILE.parent.mkdir(exist_ok=True)
+        FEEDBACK_FILE.parent.mkdir(parents=True, exist_ok=True)
         record = {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), **item.model_dump()}
         with FEEDBACK_FILE.open("a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")

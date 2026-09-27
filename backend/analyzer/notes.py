@@ -62,6 +62,8 @@ def chunk_note(c, infos, text, compound=None) -> str:
     if role == "Vi":
         if info and info.existential:
             return "be 動詞在這裡表示「存在、有」，後面不接受詞，所以是 Vi。單複數跟著後面真正的主詞。"
+        if info and info.verb_token.lemma_ == "be":
+            return "be 動詞在這裡表示「在（某個地方）」，是不及物動詞 Vi。後面的地點是修飾語，但不能省略，少了它意思就不完整。"
         return f"{prefix}不及物動詞，後面不需要受詞，主幹到這裡就完整了。"
     if role == "V":
         return f"{prefix}動詞。補充：這是「連綴動詞」，像等號一樣把主詞和後面的補語連起來，後面接的不是受詞。"

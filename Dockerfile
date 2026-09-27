@@ -29,8 +29,7 @@ COPY --chown=app:app backend backend
 COPY --chown=app:app frontend frontend
 COPY --chown=app:app tests/practice/gold.yaml tests/practice/gold.yaml
 
-# 模型都在建置時下載好了，執行時不再連線到 Hugging Face
-ENV HF_HUB_OFFLINE=1
+# 模型都在建置時下載好了；執行時只有「回饋同步到私人資料集」會連線到 Hugging Face
 EXPOSE 7860
 # --proxy-headers：主機前面有代理伺服器時，才能取得使用者真正的來源位址（次數限制要用）
 CMD ["uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "7860", "--proxy-headers", "--forwarded-allow-ips", "*"]
