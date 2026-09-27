@@ -68,6 +68,8 @@ class Clause(BaseModel):
     pattern: Literal[1, 2, 3, 4, 5]
     passive: bool = False
     formula: str = Field(description="例如 S + Vt + O；被動為 S + be + p.p. …")
+    verb: Optional[str] = Field(None, description="主要動詞的原形")
+    doubt: Optional[str] = Field(None, description="動詞句型字典檢查不通過時的原因（verb_check.py）")
 
     @computed_field
     @property
