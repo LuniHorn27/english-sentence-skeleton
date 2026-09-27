@@ -111,8 +111,18 @@ def adverb_function(tok) -> str:
     return "副詞・表方式"
 
 
-def advcl_function(tok) -> Optional[str]:
+def clause_opener(tok):
+    """副詞子句的連接詞：mark（because、if…）或句首的 when／where（WRB）"""
     mark = next((c for c in tok.children if c.dep_ == "mark"), None)
+    if mark is None:
+        first = min(tok.subtree, key=lambda t: t.i)
+        if first.tag_ == "WRB" and first.head.i == tok.i:
+            mark = first
+    return mark
+
+
+def advcl_function(tok) -> Optional[str]:
+    mark = clause_opener(tok)
     if mark is not None:
         f = L.SUBORDINATORS.get(mark.lower_)
         if mark.lower_ == "so":  # so that
@@ -140,7 +150,7 @@ def is_real_aux(tok):
     return tok.lemma_.lower() in L.AUX_LEMMAS or tok.lower_ in ("n't", "not", "'s", "'re", "'m", "'ve", "'ll", "'d", "ca", "wo")
 
 
-def assign_clause(v, roots: dict, index: int, sent) -> ClauseInfo:
+def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> ClauseInfo:
     info = ClauseInfo(verb=v, index=index, verb_token=v)
     children = [c for c in v.children]
     deps = {c.dep_ for c in children}
@@ -162,13 +172,34 @@ def assign_clause(v, roots: dict, index: int, sent) -> ClauseInfo:
         info.pattern = 2
         return info
 
+    be_aux = next((c for c in children if c.dep_ == "auxpass" and c.lemma_ == "be"), None)
+    if info.passive and be_aux is not None and v.lower_ in L.ADJ_PARTICIPLES and "agent" not in deps:
+        # 其實是形容詞：The restaurant is crowded（句型三），不是被動語態
+        info.passive = False
+        roots[be_aux.i] = Spec(VERB_ROLE, clause=index)
+        roots[v.i] = Spec("SC", clause=index)
+        info.verb_token = be_aux
+        for c in children:
+            if c.i == be_aux.i or c.dep_ == "punct":
+                continue
+            if c.dep_ in ("nsubjpass", "nsubj"):
+                roots[c.i] = Spec("S", clause=index)
+            elif c.dep_ in ("aux", "auxpass", "neg"):
+                roots[c.i] = Spec("aux", clause=index)
+            elif c.dep_ in ("advmod", "npadvmod") and c.i < v.i:
+                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+            elif c.dep_ in ("prep", "advmod", "npadvmod") and adverb_function(c) in ("副詞・表時間", "副詞・表地點"):
+                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+        info.pattern = 3
+        return info
+
     roots[v.i] = Spec(VERB_ROLE, clause=index)
     subjects = [c for c in children if c.dep_ in ("nsubj", "nsubjpass", "csubj", "csubjpass")]
     auxes = [c for c in children if c.dep_ in ("aux", "auxpass")]
     info.question = bool(subjects) and (
         any(a.i < subjects[0].i for a in auxes) or (v.i < subjects[0].i and v.lemma_ == "be" and not info.existential)
     )
-    info.imperative = not subjects and v.tag_ == "VB" and not info.existential and not any(
+    info.imperative = not shared_subject and not subjects and v.tag_ == "VB" and not info.existential and not any(
         a.lower_ in ("to",) for a in auxes
     )
 
@@ -196,6 +227,11 @@ def assign_clause(v, roots: dict, index: int, sent) -> ClauseInfo:
             g = next((x for x in c.children if x.dep_ == "nsubj"), None) if c.dep_ == "dobj" else None
             if g is not None and c.pos_ == "NOUN" and g.pos_ in ("NOUN", "PRON", "PROPN") and g.i < c.i:
                 dative_fix = (g, c)
+
+    that_clause = next((c for c in children if c.dep_ == "ccomp" and clause_opener(c) is not None and c.i > v.i), None)
+    dobj = next((c for c in children if c.dep_ == "dobj"), None)
+    if dative_fix is None and dobj is not None and that_clause is not None and v.lemma_.lower() in L.DATIVE_VERBS | {"remind", "inform", "promise", "teach", "warn", "assure"}:
+        dative_fix = (dobj, that_clause)  # told [everyone] [that the company would move]
 
     has_dative = any(c.dep_ == "dative" and c.pos_ != "ADP" for c in children) or dative_fix is not None
     has_obj = bool(objects) or dative_fix is not None
@@ -238,6 +274,12 @@ def assign_clause(v, roots: dict, index: int, sent) -> ClauseInfo:
             roots[c.i] = Spec("OC", clause=index)
         elif d in ("xcomp", "ccomp"):
             assign_complement(c, v, roots, index, info, has_obj)
+        elif d == "prep" and c.lower_ == "to" and any(
+            o.dep_ == "dobj" and o.lemma_.lower() in L.NOUNS_TAKING_TO and c.i == max(t.i for t in o.subtree) + 1
+            for o in children
+        ):
+            obj = next(o for o in children if o.dep_ == "dobj")
+            roots[c.i] = Spec("M", function="形容詞・修飾", modifies=obj, clause=index)
         elif d in ("prep", "agent", "advmod", "npadvmod", "intj"):
             roots[c.i] = Spec("M", function=adverb_function(c), clause=index,
                               kind="npadv" if d == "npadvmod" else "")
@@ -256,7 +298,16 @@ def assign_clause(v, roots: dict, index: int, sent) -> ClauseInfo:
 
     if dative_fix:
         roots[dative_fix[0].i] = Spec("IO", clause=index)
-        roots[dative_fix[1].i] = Spec("DO", clause=index)
+        do = dative_fix[1]
+        roots[do.i] = Spec("DO", clause=index, inner_verb=do if do.pos_ in ("VERB", "AUX") else None)
+
+    # so excited … that they could not sleep：that 子句是「表結果」的副詞子句
+    for r in [c for c in children if c.i in roots and roots[c.i].role in ("SC", "OC")]:
+        if any(g.lower_ in ("so", "such") for g in r.subtree):
+            for g in r.children:
+                if g.dep_ in ("ccomp", "advcl") and any(m.dep_ == "mark" and m.lower_ == "that" for m in g.children):
+                    roots[g.i] = Spec("M", function="副詞子句・表結果", clause=index, kind="advcl", inner_verb=g)
+                    info.flags.add("so_that")
 
     # 虛主詞 It：It is hard to learn English → to learn English 是真主詞
     subj = subjects[0] if subjects else None
@@ -298,12 +349,16 @@ def assign_complement(c, v, roots, index, info, has_obj):
             info.flags.add("causative_perception")
     elif c.dep_ == "xcomp" and c.pos_ in ("ADJ", "NOUN", "PROPN", "NUM"):
         roots[c.i] = Spec("OC" if (has_obj or info.passive) else "SC", clause=index)
-    elif c.dep_ == "xcomp" and has_obj and c.tag_ == "VB" and not has_to:
+    elif c.dep_ == "xcomp" and (has_obj or info.passive) and c.tag_ == "VB":
+        # asked [the students] [to give…]、made [us] [clean…]、were allowed [to play…]
         roots[c.i] = Spec("OC", clause=index)
+        if has_to:
+            info.flags.add("verb_obj_to_v")
         if v.lemma_.lower() in L.CAUSATIVE_PERCEPTION:
             info.flags.add("causative_perception")
     else:
-        roots[c.i] = Spec("O", clause=index)
+        opener = clause_opener(c)
+        roots[c.i] = Spec("O", clause=index, inner_verb=c if opener is not None and c.dep_ == "ccomp" else None)
         if c.tag_ == "VBG" or has_to:
             info.flags.add("to_v_or_ving_object")
 
@@ -530,9 +585,9 @@ def inner_chunks(sent, verb, text, base):
     """可以展開的子句（形容詞子句、副詞子句）內部的拆解"""
     roots = {}
     info = assign_clause(verb, roots, 0, sent)
-    for c in verb.children:
-        if c.dep_ == "mark":
-            roots[c.i] = Spec("conj")
+    opener = clause_opener(verb)
+    if opener is not None:
+        roots[opener.i] = Spec("conj")
     roots = {i: s for i, s in roots.items() if sent.doc[i] in set(verb.subtree)}
     sub = list(verb.subtree)
     out = to_chunks(sent, roots, {0: info}, text, base, set(), {}, tokens=sub, with_inner=False)
@@ -631,9 +686,22 @@ def analyze_sentence(text: str) -> SentenceResult:
                 roots[c.i] = Spec("conj", clause=0)
         flags.add("coordinating_conj")
     elif lead is None or joiner is None:
-        for c in root.children:
-            if c.dep_ in ("conj", "cc"):
-                roots[c.i] = Spec("unknown", clause=0)
+        shared = [c for c in root.children if c.dep_ == "conj" and c.pos_ in ("VERB", "AUX")]
+        if shared:
+            # 動詞的對等連接：主詞只寫一次，兩個動詞各自有自己的受詞或補語
+            for c in shared:
+                idx = len(infos)
+                infos[idx] = assign_clause(c, roots, idx, sent, shared_subject=True)
+            for c in root.children:
+                if c.dep_ == "cc":
+                    roots[c.i] = Spec("conj", clause=0)
+            kind = "compound"
+            flags.add("coordinating_conj")
+            flags.add("shared_subject")
+        else:
+            for c in root.children:
+                if c.dep_ in ("conj", "cc"):
+                    roots[c.i] = Spec("unknown", clause=0)
 
     owner_of = make_owner_fn(roots)
     expand_noun_modifiers(roots, list(sent), owner_of)
@@ -667,7 +735,8 @@ def analyze_sentence(text: str) -> SentenceResult:
     # 修飾語位置：形容詞修飾語放在名詞後面
     if any(c["_spec"].modifies is not None and c["_spec"].modifies.i < c["_root"].i for c in raw):
         flags.add("modifier_position")
-    if any(c["_spec"].kind == "relcl" for c in raw):
+    if any(c["_spec"].kind == "relcl" and any(t.tag_ in ("WDT", "WP", "WP$") or t.lower_ == "that"
+                                              for t in c["_root"].subtree) for c in raw):
         flags.add("relative_pronoun")
 
     # 沒有分配到的字 → 未分析

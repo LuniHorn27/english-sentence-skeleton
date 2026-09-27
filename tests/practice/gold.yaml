@@ -712,3 +712,354 @@
     text: class leader
     head:
     - leader
+- id: '45'
+  sentence: The students who finished their homework early were allowed to play basketball in the gym after school.
+  pattern: 5
+  passive: true
+  chunks:
+  - role: S
+    text: The students
+    head:
+    - students
+  - role: M
+    function: 形容詞・修飾
+    modifies: students
+    text: who finished their homework early
+  - role: aux
+    text: were
+  - role: Vt
+    text: allowed
+  - role: OC
+    text: to play basketball in the gym after school
+- id: '46'
+  sentence: When I was a child, my grandfather often took me to the night market near his house on Saturday evenings.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: When I was a child
+  - role: S
+    text: my grandfather
+    head:
+    - grandfather
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: often
+  - role: Vt
+    text: took
+  - role: O
+    text: me
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the night market
+  - role: M
+    function: 形容詞・修飾
+    modifies: market
+    text: near his house
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: on Saturday evenings
+- id: '47'
+  sentence: Voting is an important way for citizens to express their opinions about the future of their country.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Voting
+  - role: V
+    text: is
+  - role: SC
+    text: an important way
+    head:
+    - way
+  - role: M
+    function: 形容詞・修飾
+    modifies: way
+    text: for citizens to express their opinions
+  - role: M
+    function: 形容詞・修飾
+    modifies: opinions
+    text: about the future of their country
+- id: '48'
+  sentence: Many young people in Taiwan choose to study abroad because they want to experience different cultures and improve their English.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Many young people
+    head:
+    - people
+  - role: M
+    function: 形容詞・修飾
+    modifies: people
+    text: in Taiwan
+  - role: Vt
+    text: choose
+  - role: O
+    text: to study abroad
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because they want to experience different cultures and improve their English
+- id: '49'
+  sentence: The old man sitting on the bench in the park feeds the pigeons with bread crumbs every morning.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The old man
+    head:
+    - man
+  - role: M
+    function: 形容詞・修飾
+    modifies: man
+    text: sitting on the bench in the park
+  - role: Vt
+    text: feeds
+  - role: O
+    text: the pigeons
+    head:
+    - pigeons
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: with bread crumbs
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every morning
+- id: '50'
+  sentence: Although the weather was terrible, thousands of fans waited outside the stadium for several hours to see their favorite singer.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Although the weather was terrible
+  - role: S
+    text: thousands of fans
+  - role: Vi
+    text: waited
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: outside the stadium
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: for several hours
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: to see their favorite singer
+- id: '51'
+  sentence: The teacher asked the students to give their classmate a big hand after his excellent speech.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The teacher
+    head:
+    - teacher
+  - role: Vt
+    text: asked
+  - role: O
+    text: the students
+    head:
+    - students
+  - role: OC
+    text: to give their classmate a big hand after his excellent speech
+- id: '52'
+  sentence: My parents gave me some useful advice about how to manage my time when I started junior high school.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: My parents
+    head:
+    - parents
+  - role: Vt
+    text: gave
+  - role: IO
+    text: me
+  - role: DO
+    text: some useful advice
+    head:
+    - advice
+  - role: M
+    function: 形容詞・修飾
+    modifies: advice
+    text: about how to manage my time
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when I started junior high school
+- id: '53'
+  sentence: The book that my sister lent me last week tells the story of a brave girl who saves her village from a terrible flood.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The book
+    head:
+    - book
+  - role: M
+    function: 形容詞・修飾
+    modifies: book
+    text: that my sister lent me last week
+  - role: Vt
+    text: tells
+  - role: O
+    text: the story of a brave girl
+    head:
+    - story
+  - role: M
+    function: 形容詞・修飾
+    modifies: girl
+    text: who saves her village from a terrible flood
+- id: '54'
+  sentence: If you want to become a better writer, you should read as many books as possible and practice writing every day.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If you want to become a better writer
+  - role: S
+    text: you
+  - role: aux
+    text: should
+  - role: Vt
+    text: read
+  - role: O
+    text: as many books
+    head:
+    - books
+  - role: M
+    function: 形容詞・修飾
+    modifies: books
+    text: as possible
+  - role: conj
+    text: and
+  - role: Vt
+    text: practice
+  - role: O
+    text: writing
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every day
+- id: '55'
+  sentence: Scientists believe that drinking enough water every day can help people stay healthy and feel more energetic.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Scientists
+  - role: Vt
+    text: believe
+  - role: O
+    text: that drinking enough water every day can help people stay healthy and feel more energetic
+- id: '56'
+  sentence: The small restaurant at the corner of the street, which is famous for its beef noodles, is always crowded at lunchtime.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The small restaurant
+    head:
+    - restaurant
+  - role: M
+    function: 形容詞・修飾
+    modifies: restaurant
+    text: at the corner of the street
+  - role: M
+    function: 形容詞・修飾
+    modifies: restaurant
+    text: which is famous for its beef noodles
+  - role: V
+    text: is
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: always
+  - role: SC
+    text: crowded
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: at lunchtime
+- id: '57'
+  sentence: After the long meeting, the manager told everyone in the office that the company would move to a new building next year.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: After the long meeting
+  - role: S
+    text: the manager
+    head:
+    - manager
+  - role: Vt
+    text: told
+  - role: IO
+    text: everyone
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the office
+  - role: DO
+    text: that the company would move to a new building next year
+- id: '58'
+  sentence: Learning a new language takes time, but it opens the door to new friends, new ideas, and new opportunities.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Learning a new language
+  - role: Vt
+    text: takes
+  - role: O
+    text: time
+  - role: conj
+    text: but
+  - role: S
+    text: it
+  - role: Vt
+    text: opens
+  - role: O
+    text: the door
+    head:
+    - door
+  - role: M
+    function: 形容詞・修飾
+    modifies: door
+    text: to new friends, new ideas, and new opportunities
+- id: '59'
+  sentence: The children were so excited about the school trip that they could not sleep the night before.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The children
+    head:
+    - children
+  - role: V
+    text: were
+  - role: SC
+    text: so excited about the school trip
+    head:
+    - excited
+  - role: M
+    function: 副詞子句・表結果
+    modifies: null
+    text: that they could not sleep the night before

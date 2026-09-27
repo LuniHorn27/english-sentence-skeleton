@@ -11,7 +11,7 @@ import sys
 import yaml
 
 CN_NUM = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5}
-CORE_ROLES = {"S", "Vi", "Vt", "V", "aux.", "O", "IO", "DO", "SC", "OC"}
+CORE_ROLES = {"S", "Vi", "Vt", "V", "aux.", "O", "IO", "DO", "SC", "OC", "conj", "RS"}
 
 
 def parse_chunk(raw):

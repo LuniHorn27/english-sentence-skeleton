@@ -90,6 +90,7 @@ QUANTIFIERS = {
     "most", "some", "all", "half", "each", "one", "many", "much", "few", "both",
     "any", "none", "several", "neither", "either", "lots", "plenty", "part",
     "rest", "majority", "two", "three", "four", "five", "every", "lot", "number", "couple",
+    "hundred", "hundreds", "thousand", "thousands", "million", "millions", "dozen", "dozens",
 }
 
 # 單位詞：a glass of water（核心字是 of 後面的名詞）
@@ -105,6 +106,7 @@ SUBORDINATORS = {
     "until": "表時間", "till": "表時間", "since": "表時間", "as": "表時間",
     "once": "表時間", "whenever": "表時間",
     "because": "表原因",
+    "where": "表地點", "wherever": "表地點",
     "if": "表條件", "unless": "表條件",
     "although": "表讓步", "though": "表讓步",
     "so": "表目的",
@@ -129,3 +131,15 @@ VERB_PREP_OBJECT = {
     ("dream", "of"), ("dream", "about"), ("hear", "of"), ("hear", "about"), ("speak", "to"),
     ("reply", "to"), ("ask", "for"), ("pay", "for"), ("search", "for"), ("apply", "for"),
 }
+
+# 看起來像被動、其實當形容詞用的過去分詞（is crowded → 句型三 S + V + SC）
+ADJ_PARTICIPLES = {
+    "crowded", "interested", "excited", "bored", "tired", "surprised", "worried",
+    "scared", "frightened", "pleased", "satisfied", "married", "closed", "finished",
+    "located", "shocked", "disappointed", "amazed", "embarrassed", "confused",
+    "exhausted", "delighted", "annoyed", "relaxed", "prepared", "done", "gone",
+    "lost", "used", "dressed", "broken", "packed", "filled", "covered",
+}
+
+# 名詞 ＋ to（the door to success、the way to school）：to 片語修飾前面的名詞
+NOUNS_TAKING_TO = {"door", "way", "key", "road", "path", "answer", "solution", "entrance", "gate", "access", "trip", "visit", "invitation", "journey", "route"}
