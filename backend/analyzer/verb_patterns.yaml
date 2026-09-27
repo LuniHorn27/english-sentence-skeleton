@@ -12,33 +12,6 @@
 # 依其授權條款使用（含免責聲明），條款全文見 backend/analyzer/LICENSE-VerbNet.txt。
 # 例句（examples）取自 VerbNet。及物／不及物資訊取自 ECDICT（MIT 授權，Copyright (c) 2025 Linwei，
 # 條款全文見 backend/analyzer/LICENSE-ECDICT.txt）。
-- verb: December
-  common: false
-  patterns:
-    SV:
-    - VerbNet
-  examples:
-    SV: My family always summered at the seashore.
-- verb: FedEx
-  common: false
-  patterns:
-    SVO:
-    - VerbNet
-    SVOO:
-    - VerbNet
-  examples:
-    SVO: Nora sent the book.
-    SVOO: Nora sent me the book.
-- verb: UPS
-  common: false
-  patterns:
-    SVO:
-    - VerbNet
-    SVOO:
-    - VerbNet
-  examples:
-    SVO: Nora sent the book.
-    SVOO: Nora sent me the book.
 - verb: abandon
   common: true
   patterns:
@@ -23178,16 +23151,6 @@
     - VerbNet
   examples:
     SV: John slouched.
-- verb: k.o.
-  common: false
-  patterns:
-    SVO:
-    - VerbNet
-    SVOC:
-    - VerbNet
-  examples:
-    SVO: Paula socked the mugger.
-    SVOC: They knifed him dead.
 - verb: kayak
   common: false
   patterns:
@@ -40151,13 +40114,6 @@
     - ECDICT
   examples:
     SV: The horse ran.
-- verb: spring up
-  common: false
-  patterns:
-    SV:
-    - VerbNet
-  examples:
-    SV: A ship appeared.
 - verb: sprinkle
   common: false
   patterns:
@@ -42874,13 +42830,6 @@
     - VerbNet
   examples:
     SV: Sasha dawdled in the museum.
-- verb: tart up
-  common: false
-  patterns:
-    SVO:
-    - VerbNet
-  examples:
-    SVO: Bill repaired the tractor.
 - verb: task
   common: true
   patterns:

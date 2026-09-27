@@ -325,6 +325,7 @@ def build():
     common = {w for w, i in (ec or {}).items() if i["common"]}
     # 字典收錄範圍：常用動詞 ＋ 其他來源提到的動詞；VerbNet 裡的其他動詞也收，但標成不常用
     vocab = set(vn) | lai_verbs | lex_verbs | set(gold) | common
+    vocab = {w for w in vocab if re.fullmatch(r"[a-z]+", w)}  # 去掉 VerbNet 裡的專有名詞（December）
 
     entries, review = [], defaultdict(list)
     for verb in sorted(vocab):
