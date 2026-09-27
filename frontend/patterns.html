@@ -11,35 +11,51 @@
     <p class="back"><a href="/">← 回到句子分析</a></p>
     <header class="top">
       <h1>五大句型</h1>
-      <p class="hint">英文句子不管多長，骨架都逃不出這五種。先認識骨架，再看分析結果就會清楚很多。</p>
+      <p class="hint">英文句子不論長短，都是由「主詞」和「動詞」撐起骨架。動詞後面還需要接什麼成分，決定了這個句子屬於哪一種句型。</p>
+      <nav class="toc" aria-label="本頁目錄">
+        <a href="#basics">句子的成分</a>
+        <a href="#verbs">動詞決定句型</a>
+        <a href="#p1">句型一</a>
+        <a href="#p3">句型二</a>
+        <a href="#p2">句型三</a>
+        <a href="#p5">句型四</a>
+        <a href="#p4">句型五</a>
+        <a href="#compare">容易混淆的句型</a>
+      </nav>
     </header>
 
-    <section class="intro">
-      <h2>怎麼找出句子的骨架？</h2>
-      <ol class="steps">
-        <li><b>找動詞</b>：找出句子最核心的動作或狀態（會跟著主詞、時態變化的那個字）。</li>
-        <li><b>問「誰」</b>：是誰在做這個動作？答案就是<b>主詞 S</b>。</li>
-        <li><b>看動詞後面需要什麼</b>：不需要東西、需要受詞、需要補語，還是需要兩個成分？這決定了是哪一種句型。</li>
-        <li><b>其他都是修飾語</b>：時間、地點、方式、形容名詞的片語……拿掉之後，骨架仍然完整。</li>
-      </ol>
-      <div class="callout c-info"><span class="icon">ℹ</span><div><span class="c-name">關於句型編號</span><span class="c-text">不同教科書的句型編號不太一樣。本網站採用賴世雄《常春藤英文文法》的編號：句型二是 S + V + SC、句型三是 S + Vt + O、句型四是 S + Vt + O + OC、句型五是 S + Vt + IO + DO。編號一定和公式一起出現，看公式就不會搞混。</span></div></div>
+    <section class="intro" id="basics">
+      <h2>一、句子的成分</h2>
+      <p>一個英文句子可以拆成五種成分：<b>主詞、動詞、受詞、補語、修飾語</b>。前四種組成句子的骨架，決定句型；修飾語用來補充時間、地點、方式等資訊，拿掉之後骨架仍然完整。</p>
+      <div class="label-table" id="labels"></div>
+      <div class="callout c-info"><span class="icon">ℹ</span><div><span class="c-name">關於句型編號</span><span class="c-text">不同教科書的句型編號不太一樣。本網站採用賴世雄《常春藤英文文法》的編號，並且一律和公式一起出現，看公式就不會搞混。</span></div></div>
     </section>
 
-    <section class="intro">
-      <h2>標籤對照</h2>
-      <div class="label-table" id="labels"></div>
+    <section class="intro" id="verbs">
+      <h2>二、動詞決定句型</h2>
+      <p>動詞依照「後面需要接什麼成分」分成五類，每一類剛好對應一種句型。</p>
+      <ul class="plain">
+        <li><b>及物／不及物</b>：看後面需不需要<b>受詞</b>。</li>
+        <li><b>完全／不完全</b>：看後面需不需要<b>補語</b>。不需要補語，意思就完整，叫「完全」；需要補語才完整，叫「不完全」。</li>
+      </ul>
+      <div class="table-wrap">
+        <table class="verb-table">
+          <thead><tr><th>動詞種類</th><th>後面接什麼</th><th>句型</th><th>例句</th></tr></thead>
+          <tbody id="verb-rows"></tbody>
+        </table>
+      </div>
+      <div class="callout c-tip"><span class="icon">💡</span><div><span class="c-name">小技巧：及物還是不及物？</span><span class="c-text">把動詞的中文意思放進「我＿他」和「他被我＿」兩句。兩句都說得通，通常是及物動詞；說不通，通常是不及物動詞。<br>例：我喜歡他／他被我喜歡 ✓ → like 是及物動詞；我哭他 ✗ → cry 是不及物動詞。<br>這是從中文意思判斷的快速方法，少數動詞的中英文用法不同（例如 listen 要說 listen <b>to</b> music），最後仍以英文的用法為準。</span></div></div>
+      <div class="callout c-info"><span class="icon">ℹ</span><div><span class="c-name">補充：同一個動詞，不同句型</span><span class="c-text">很多動詞不只一種用法，要看句子裡後面接了什麼。<br>He <b>runs</b> every morning.（跑步，不及物 → 句型一）<br>He <b>runs</b> a small shop.（經營，及物 → 句型三）</span></div></div>
     </section>
 
     <div id="patterns"></div>
 
     <section class="intro" id="compare">
-      <h2>最容易搞混：句型四（S + Vt + O + OC）vs 句型五（S + Vt + IO + DO）</h2>
-      <p>兩種句型的動詞後面都有兩個成分，差別在於：<b>第二個成分和第一個成分是不是「同一個東西」</b>。</p>
-      <div id="compare-examples"></div>
-      <div class="callout c-tip"><span class="icon">💡</span><div><span class="c-name">小技巧</span><span class="c-text">等號測試：him = happy？說得通，所以是句型四（O + OC）。him = a cake？不對，所以是句型五（IO + DO）。</span></div></div>
+      <h2>容易混淆的句型</h2>
+      <div id="compare-list"></div>
     </section>
 
-    <footer class="foot">內容為本工具自行撰寫的學習說明，參考了常見的文法教學架構。</footer>
+    <footer class="foot">說明和例句由本工具自行撰寫；動詞的五種分類參考賴世雄《常春藤英文文法》的教學架構。</footer>
   </main>
   <script src="/static/patterns.js"></script>
 </body>
