@@ -747,6 +747,19 @@ def tense_flags(info, roots, doc, flags):
         flags.add("present_perfect")
 
 
+def tag_question_main(root, sent):
+    """句尾是「助動詞 ＋ 代名詞 ?」的附加問句時，回傳前面真正的主要動詞"""
+    if not sent.text.rstrip().endswith("?") or root.lemma_.lower() not in L.AUX_LEMMAS:
+        return None
+    kids = [c for c in root.children if c.dep_ != "punct"]
+    main = next((c for c in kids if c.dep_ == "ccomp" and c.i < root.i), None)
+    subj = [c for c in kids if c.dep_ in ("nsubj", "expl") and c.i > root.i]
+    rest = [c for c in kids if c is not main and c not in subj and c.dep_ != "neg"]
+    if main is None or len(subj) != 1 or subj[0].pos_ != "PRON" or rest:
+        return None
+    return main
+
+
 # ---------- 主程式 ----------
 def analyze_sentence(text: str) -> SentenceResult:
     text = text.strip()
@@ -777,6 +790,12 @@ def analyze_sentence(text: str) -> SentenceResult:
     flags: set[str] = set()
     vars_: dict[str, dict] = {}
     kind = "simple"
+
+    # 附加問句：She didn't do it, did she? 分析程式把句尾的 did she 當成主要動詞
+    tag_main = tag_question_main(root, sent)
+    if tag_main is not None:
+        roots[root.i] = Spec("M", function="附加問句", clause=0)
+        root = tag_main
 
     # so 連接的對等句，分析程式有時把前半句當成後半句動詞的 ccomp
     lead = next((c for c in root.children if c.dep_ == "ccomp" and c.i < root.i

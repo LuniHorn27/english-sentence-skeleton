@@ -1610,3 +1610,50 @@
     text: very popular
     head:
     - popular
+- id: '95'
+  sentence: She didn't do it, did she?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: didn't
+  - role: Vt
+    text: do
+  - role: O
+    text: it
+  - role: M
+    function: 附加問句
+    modifies: null
+    text: did she
+- id: '96'
+  sentence: You can swim, can't you?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: aux
+    text: can
+  - role: Vi
+    text: swim
+  - role: M
+    function: 附加問句
+    modifies: null
+    text: can't you
+- id: '97'
+  sentence: It's nice, isn't it?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: '''s'
+  - role: SC
+    text: nice
+  - role: M
+    function: 附加問句
+    modifies: null
+    text: isn't it
