@@ -1,7 +1,7 @@
 id: dative_verbs
 title: 授與動詞
 brief: 後面可以接兩個受詞：給「誰」（IO）、給「什麼」（DO）。
-trigger: 句型四 S + Vt + IO + DO
+trigger: 句型五 S + Vt + IO + DO
 blocks:
 - type: formula
   text: 授與動詞 ＋ 人（IO）＋ 物（DO）

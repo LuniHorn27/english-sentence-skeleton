@@ -224,7 +224,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     be_aux = next((c for c in children if c.dep_ == "auxpass" and c.lemma_ == "be"), None)
     stative_pair = any(c.dep_ == "prep" and (v.lower_, c.lower_) in L.STATIVE_PAIRS for c in children)
     if info.passive and be_aux is not None and (v.lower_ in L.ADJ_PARTICIPLES or stative_pair) and "agent" not in deps:
-        # 其實是形容詞：The restaurant is crowded（句型三），不是被動語態
+        # 其實是形容詞：The restaurant is crowded（句型二），不是被動語態
         info.passive = False
         roots[be_aux.i] = Spec(VERB_ROLE, clause=index)
         roots[v.i] = Spec("SC", clause=index)
@@ -943,7 +943,7 @@ COUNT = {2: "兩", 3: "三", 4: "四"}
 
 
 def parallel_clauses(infos, chunks):
-    """平行結構的標題：句型相同 → 句型二：S + Vt + O（兩組 Vt + O 並列）；不同 → 各自列出，後面的主詞加括號"""
+    """平行結構的標題：句型相同 → 句型三：S + Vt + O（兩組 Vt + O 並列）；不同 → 各自列出，後面的主詞加括號"""
     items = [infos[i] for i in sorted(infos)]
     first = items[0]
     if all(x.pattern == first.pattern and x.passive == first.passive for x in items):

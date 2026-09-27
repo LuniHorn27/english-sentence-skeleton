@@ -10,7 +10,8 @@ import sys
 
 import yaml
 
-CN_NUM = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5}
+# 題庫寫的是顯示編號（賴世雄版），轉成程式的內部代號（見 backend/analyzer/schema.py 的 PATTERN_DISPLAY）
+CN_NUM = {"一": 1, "二": 3, "三": 2, "四": 5, "五": 4}
 CORE_ROLES = {"S", "Vi", "Vt", "V", "aux.", "O", "IO", "DO", "SC", "OC", "conj", "RS"}
 
 

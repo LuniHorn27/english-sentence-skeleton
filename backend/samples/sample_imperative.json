@@ -12,7 +12,7 @@
           "pattern": 5,
           "passive": false,
           "formula": "S + Vt + O + OC",
-          "label": "句型五：S + Vt + O + OC"
+          "label": "句型四：S + Vt + O + OC"
         }
       ],
       "chunks": [
@@ -93,7 +93,7 @@
           "vars": {}
         }
       ],
-      "header": "句型五：S + Vt + O + OC"
+      "header": "句型四：S + Vt + O + OC"
     }
   ]
 }

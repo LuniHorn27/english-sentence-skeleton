@@ -7,11 +7,11 @@ blocks:
   text: 常見例子
 - type: list
   items:
-  - find：He found the book. 找到（句型二）／He found the book <b>easy</b>. 覺得（句型五）／She found us a seat. 替…找到（句型四）
-  - run：He runs fast. 跑（句型一）／She runs a shop. 經營（句型二）
-  - turn：The leaves turn red. 變成（句型三）／The snow turned the town white. 使…變成（句型五）
-  - make：She made a cake. 做（句型二）／She made us a cake. 替…做（句型四）／The news made her sad. 使（句型五）
-  - keep：Keep quiet. 保持（句型三）／Keep the door open. 使…保持（句型五）
+  - find：He found the book. 找到（句型三）／He found the book <b>easy</b>. 覺得（句型四）／She found us a seat. 替…找到（句型五）
+  - run：He runs fast. 跑（句型一）／She runs a shop. 經營（句型三）
+  - turn：The leaves turn red. 變成（句型二）／The snow turned the town white. 使…變成（句型四）
+  - make：She made a cake. 做（句型三）／She made us a cake. 替…做（句型五）／The news made her sad. 使（句型四）
+  - keep：Keep quiet. 保持（句型二）／Keep the door open. 使…保持（句型四）
 - type: tip
   text: 判斷方法：先看動詞後面有幾個成分，再用「等號測試」和「改寫測試」確認是補語還是受詞。
 see_also: []

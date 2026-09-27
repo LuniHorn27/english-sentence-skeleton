@@ -23,7 +23,7 @@ blocks:
   text: 很多人看到後面的 to learn，就以為是 S + V + O。
   examples:
   - en: It is hard to learn English.
-    zh: 句型三（S + V + SC），hard 才是補語
+    zh: 句型二（S + V + SC），hard 才是補語
     mark: none
 see_also:
 - there_be

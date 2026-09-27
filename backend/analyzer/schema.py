@@ -21,6 +21,11 @@ Role = Literal[
 
 CORE_ROLES = {"S", "Vt", "Vi", "V", "O", "IO", "DO", "SC", "OC"}  # 算進公式的角色
 
+# 句型的「內部代號」→「顯示編號」（採賴世雄／常春藤的編號，2026-09-27 使用者決定）
+#   內部代號：1 S+Vi、2 S+Vt+O、3 S+V+SC、4 S+Vt+IO+DO、5 S+Vt+O+OC（程式與題庫資料使用）
+#   顯示編號：句型一 S+Vi、句型二 S+V+SC、句型三 S+Vt+O、句型四 S+Vt+O+OC、句型五 S+Vt+IO+DO
+PATTERN_DISPLAY = {1: 1, 2: 3, 3: 2, 4: 5, 5: 4}
+
 
 class Span(BaseModel):
     """句子中的一段文字，start／end 是字元位置（end 不含）"""
@@ -67,7 +72,7 @@ class Clause(BaseModel):
     @computed_field
     @property
     def label(self) -> str:
-        num = "一二三四五"[self.pattern - 1]
+        num = "一二三四五"[PATTERN_DISPLAY[self.pattern] - 1]
         return f"句型{num}{'（被動語態）' if self.passive else ''}：{self.formula}"
 
 

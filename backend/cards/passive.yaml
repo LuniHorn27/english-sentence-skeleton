@@ -26,10 +26,10 @@ blocks:
   text: 哪些句型能改被動？
 - type: list
   items:
-  - 句型二 S + Vt + O：受詞變主詞
-  - 句型四 S + Vt + IO + DO：兩個受詞都可以當主詞（Tom <b>was given</b> a bag.）
-  - 句型五 S + Vt + O + OC：補語留在後面（He <b>was elected</b> class leader.）
-  - 句型一、句型三沒有受詞，不能改被動
+  - 句型三 S + Vt + O：受詞變主詞
+  - 句型五 S + Vt + IO + DO：兩個受詞都可以當主詞（Tom <b>was given</b> a bag.）
+  - 句型四 S + Vt + O + OC：補語留在後面（He <b>was elected</b> class leader.）
+  - 句型一（S + Vi）、句型二（S + V + SC）沒有受詞，不能改被動
 - type: heading
   text: 不同時態的被動
 - type: list

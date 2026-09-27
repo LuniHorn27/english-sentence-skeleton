@@ -12,14 +12,14 @@
           "pattern": 2,
           "passive": false,
           "formula": "S + Vt + O",
-          "label": "句型二：S + Vt + O"
+          "label": "句型三：S + Vt + O"
         },
         {
           "index": 1,
           "pattern": 2,
           "passive": false,
           "formula": "S + Vt + O",
-          "label": "句型二：S + Vt + O"
+          "label": "句型三：S + Vt + O"
         }
       ],
       "chunks": [
@@ -114,7 +114,7 @@
           "vars": {}
         }
       ],
-      "header": "句型二：S + Vt + O　＆　句型二：S + Vt + O"
+      "header": "句型三：S + Vt + O　＆　句型三：S + Vt + O"
     }
   ]
 }

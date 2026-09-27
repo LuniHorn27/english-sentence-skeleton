@@ -1,7 +1,7 @@
 id: linking_verbs
 title: 連綴動詞
 brief: 後面接形容詞或名詞，說明主詞的狀態或身分，而不是動作的對象。
-trigger: 動詞後面接主詞補語（句型三），而且不是 be 動詞
+trigger: 動詞後面接主詞補語（句型二），而且不是 be 動詞
 blocks:
 - type: formula
   text: 主詞 ＋ 連綴動詞 ＋ 補語　→　主詞 ＝ 補語

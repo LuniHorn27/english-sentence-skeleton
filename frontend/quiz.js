@@ -3,9 +3,10 @@
 //   2. 點出句子裡的主詞／動詞／受詞／補語
 
 const GROUP = { S: "S", Vt: "V", Vi: "V", V: "V", aux: "V", O: "O", IO: "O", DO: "O", SC: "C", OC: "C" };
+// [內部代號, 顯示文字]，依賴世雄的編號排列
 const PATTERNS = [
-  [1, "句型一：S + Vi"], [2, "句型二：S + Vt + O"], [3, "句型三：S + V + SC"],
-  [4, "句型四：S + Vt + IO + DO"], [5, "句型五：S + Vt + O + OC"],
+  [1, "句型一：S + Vi"], [3, "句型二：S + V + SC"], [2, "句型三：S + Vt + O"],
+  [5, "句型四：S + Vt + O + OC"], [4, "句型五：S + Vt + IO + DO"],
 ];
 const TARGETS = {
   S: ["主詞（S）", (r) => r === "S"],
@@ -47,7 +48,7 @@ function answerRow(item) {
 }
 
 function patternLabel(item) {
-  const label = PATTERNS[item.pattern - 1][1];
+  const label = PATTERNS.find(([n]) => n === item.pattern)[1];
   return item.passive ? label.replace("：", "（被動語態）：") : label;
 }
 

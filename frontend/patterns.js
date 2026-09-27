@@ -44,8 +44,8 @@ const LABELS = [
   ["Vt", "及物動詞", "後面需要受詞"],
   ["V", "連綴動詞", "像等號，後面接補語（be、look、become…）"],
   ["O", "受詞", "動作的對象"],
-  ["IO", "間接受詞", "句型四：給「誰」"],
-  ["DO", "直接受詞", "句型四：給「什麼」"],
+  ["IO", "間接受詞", "句型五：給「誰」"],
+  ["DO", "直接受詞", "句型五：給「什麼」"],
   ["SC", "主詞補語", "說明主詞：主詞 ＝ 補語"],
   ["OC", "受詞補語", "說明受詞：受詞 ＝ 補語"],
 ];
@@ -63,7 +63,7 @@ const PATTERNS = [
     warn: ["不及物動詞後面不能直接接名詞，要先加介系詞。", [["no", "He arrived the station."], ["ok", "He arrived at the station."]]],
   },
   {
-    n: 2, name: "句型二", formula: "S + Vt + O",
+    n: 2, name: "句型三", formula: "S + Vt + O",
     idea: "主詞對某個對象做了動作，這個對象就是受詞。",
     test: "問「動詞 ＋ 什麼？」有答案，而且答案和主詞不是同一個東西。",
     examples: [
@@ -74,7 +74,7 @@ const PATTERNS = [
     warn: ["及物動詞一定要有受詞，也不要多加介系詞。", [["no", "We discussed about the problem."], ["ok", "We discussed the problem."]]],
   },
   {
-    n: 3, name: "句型三", formula: "S + V + SC",
+    n: 3, name: "句型二", formula: "S + V + SC",
     idea: "動詞像等號，把主詞和後面的補語連起來，說明主詞「是什麼」或「怎麼樣」。",
     test: "等號測試：主詞 ＝ 補語 說得通。常見的動詞：be、look、sound、smell、taste、feel、become、get、turn、stay。",
     examples: [
@@ -85,7 +85,7 @@ const PATTERNS = [
     warn: ["補語用形容詞，不用副詞。", [["no", "The soup smells well."], ["ok", "The soup smells good."]]],
   },
   {
-    n: 4, name: "句型四", formula: "S + Vt + IO + DO",
+    n: 4, name: "句型五", formula: "S + Vt + IO + DO",
     idea: "主詞把某樣東西（DO）給了某個人（IO）。動詞後面有兩個受詞。",
     test: "改寫測試：可以改成「DO ＋ to／for ＋ IO」。常見的動詞：give、show、send、tell、buy、make。",
     examples: [
@@ -95,7 +95,7 @@ const PATTERNS = [
     warn: ["改寫成一個受詞時，介系詞不能省略。", [["no", "He gave a book me."], ["ok", "He gave a book to me."]]],
   },
   {
-    n: 5, name: "句型五", formula: "S + Vt + O + OC",
+    n: 5, name: "句型四", formula: "S + Vt + O + OC",
     idea: "主詞讓受詞變成某種狀態，或把受詞叫做什麼。受詞後面的補語用來說明受詞。",
     test: "等號測試：受詞 ＝ 補語 說得通。常見的動詞：make、keep、find、call、name、elect、let、see。",
     examples: [
@@ -117,9 +117,10 @@ for (const [tag, name, desc] of LABELS) {
   labels.append(row);
 }
 
-// 五個句型
+// 五個句型（依賴世雄的編號排列；n 是程式的內部代號，也是網址 #p 後面的數字）
+const DISPLAY_ORDER = [1, 3, 2, 5, 4];
 const wrap = document.getElementById("patterns");
-for (const p of PATTERNS) {
+for (const p of DISPLAY_ORDER.map((n) => PATTERNS.find((x) => x.n === n))) {
   const sec = el("section", "intro pattern-sec");
   sec.id = `p${p.n}`;
   const h = el("h2");
@@ -133,12 +134,12 @@ for (const p of PATTERNS) {
   wrap.append(sec);
 }
 
-// 句型四 vs 五
+// 句型四 vs 句型五
 const cmp = document.getElementById("compare-examples");
-cmp.append(el("h4", null, "句型四：她做了一個蛋糕給他"));
-cmp.append(sentenceRow([["She", "S"], ["made", "Vt"], ["him", "IO"], ["a cake", "DO"]]));
-cmp.append(el("h4", null, "句型五：她讓他很開心"));
+cmp.append(el("h4", null, "句型四：S + Vt + O + OC　她讓他很開心"));
 cmp.append(sentenceRow([["She", "S"], ["made", "Vt"], ["him", "O"], ["happy", "OC"]]));
+cmp.append(el("h4", null, "句型五：S + Vt + IO + DO　她做了一個蛋糕給他"));
+cmp.append(sentenceRow([["She", "S"], ["made", "Vt"], ["him", "IO"], ["a cake", "DO"]]));
 
 // 從分析頁點過來時，捲到對應的句型
 if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
