@@ -13,7 +13,7 @@
   python tools/build_verb_dict.py
 輸出：
   backend/analyzer/verb_patterns.yaml   字典本身（之後給分析程式檢查用）
-  docs/動詞句型字典-待確認.md             只列出來源互相矛盾、需要人工確認的動詞
+  docs/動詞句型字典-審核紀錄.md           來源互相矛盾的地方，以及怎麼處理
 
 句型一律用公式代號，避免和句型編號混淆：
   SV = 句型一 S+Vi、SVC = 句型二 S+V+SC、SVO = 句型三 S+Vt+O、
@@ -37,7 +37,7 @@ VERBNET_DIR = ROOT / "data/verbnet/verbnet3.4"
 ECDICT_CSV = ROOT / "data/ecdict/ecdict.csv"
 GOLD = ROOT / "tests/practice/gold.yaml"
 OUT_YAML = ROOT / "backend/analyzer/verb_patterns.yaml"
-OUT_REVIEW = ROOT / "docs/動詞句型字典-待確認.md"
+OUT_REVIEW = ROOT / "docs/動詞句型字典-審核紀錄.md"
 
 CODES = ["SV", "SVC", "SVO", "SVOC", "SVOO"]
 LABEL = {
@@ -145,10 +145,15 @@ def classify(frame):
         return "SV", False
     roles = direct_np_roles(frame)
     first, fb = core[0], core[0].split(".")[0]
-    # 介系詞片語後面才出現的子句或名詞（relies on him to help），換算不可靠
-    pp_first = post.index(first) > 0 and post[0].split(".")[0].startswith("PP")
+    # 下面兩種情況換算不可靠，標成有疑問：
+    # 1. 核心成分前面或中間夾著介系詞片語（relies on him to help、based their plans on him getting…）
+    idx = [post.index(t) for t in core]
+    pp_inside = any(post[i].split(".")[0].startswith("PP") for i in range(0, idx[-1]) if i not in idx)
+    # 2. 句型描述裡的名詞數量和語法結構對不起來（VerbNet 資料本身的錯誤）
+    n_np = sum(t.split(".")[0] in NP_TOKENS for t in core)
+    mismatch = n_np > len(roles)
     got = _classify_core(frame, core, roles, first, fb, post)
-    return (got[0], True) if pp_first and got[0] != "SV" else got
+    return (got[0], True) if (pp_inside or mismatch) and got[0] != "SV" else got
 
 
 def _classify_core(frame, core, roles, first, fb, post):
@@ -156,8 +161,6 @@ def _classify_core(frame, core, roles, first, fb, post):
     if fb in ADJ_TOKENS:
         return ("SVC", False) if len(core) == 1 else ("SVOC", False)
     if fb in CLAUSE_TOKENS or fb == "to":
-        if fb == "S_INF" and subject_role(frame) not in ("Agent", "Experiencer", "Causer"):
-            return "SVC", True  # He seemed to come：賴世雄把 seem ＋ 不定詞算主詞補語
         return "SVO", False  # 受詞是子句、不定詞或動名詞
     if fb not in NP_TOKENS:
         return "SVO", True
@@ -172,6 +175,8 @@ def _classify_core(frame, core, roles, first, fb, post):
     if sb in ADJ_TOKENS or sb == "to":
         return "SVOC", False  # made him angry／judged him to be a good man
     if sb == "S":
+        if roles and roles[0] in RECIPIENT_ROLES:
+            return "SVOO", False  # informed me (that) his situation had changed
         return "SVOC", False  # let us smoke
     if sb in ("S_INF", "S-INF"):
         return "SVOC", True  # asked him to leave；但也可能是表目的（used the cupboard to store food）
@@ -293,9 +298,10 @@ def build():
     for verb in sorted(vocab):
         src = defaultdict(set)
         examples = {}
+        doubtful = set()
         for code, hits in vn.get(verb, {}).items():
             if all(d for _, _, d in hits):
-                src[code].add("VerbNet?")  # 只有換算時有疑問的結構
+                doubtful.add(code)  # 只有換算時有疑問的結構：其他來源也有才收
             else:
                 src[code].add("VerbNet")
             ex = next((e for _, e, d in hits if e and not d), None)
@@ -314,6 +320,8 @@ def build():
                 src[code].add("字表")
         for code, _id in gold.get(verb, ()):
             src[code].add("題庫")
+        for code in doubtful & set(src):
+            src[code].add("VerbNet?")
         if not src:
             continue
 
@@ -374,55 +382,71 @@ def write_yaml(entries):
 
 
 def write_review(review, entries, vn_stats, has_ecdict):
-    by_verb = {e["verb"]: e for e in entries}
     n_common = sum(e["common"] for e in entries)
+
+    def verbs(items):
+        return "、".join(sorted({i[0] for i in items})) or "（無）"
+
     lines = [
-        "# 動詞句型字典：待確認清單",
+        "# 動詞句型字典：審核紀錄",
         "",
-        "> 由 `tools/build_verb_dict.py` 自動產生。字典本身在 `backend/analyzer/verb_patterns.yaml`。",
-        "> 這裡只列**常用動詞**中，來源互相矛盾、需要人判斷的地方。",
+        "> 由 `tools/build_verb_dict.py` 自動產生，字典本身在 `backend/analyzer/verb_patterns.yaml`。",
+        "> 下面是**常用動詞**中來源互相矛盾的地方。Claude 已逐項看過，處理方式寫在每一段；",
+        "> 需要你決定的規則問題另外列在 `docs/待審核清單.md`。",
         "",
         "## 概況",
         "",
-        f"- 收錄動詞：{len(entries)} 個，其中常用 {n_common} 個",
-        f"- VerbNet 句子結構：{vn_stats['frames']} 個，略過 {vn_stats['skipped']} 個（被動、直接引述、中間語態）",
+        f"- 收錄動詞 {len(entries)} 個，其中常用 {n_common} 個",
+        f"- VerbNet 句子結構 {vn_stats['frames']} 個，略過 {vn_stats['skipped']} 個（被動、直接引述、中間語態）",
         f"- ECDICT：{'已使用' if has_ecdict else '⚠️ 尚未下載，這一版沒有及物／不及物資訊'}",
+        "- 換算時有疑問、又沒有其他來源支持的句型，不收進字典",
+        "",
+        "## 處理方式",
+        "",
+        "字典之後是拿來**檢查**分析結果：分析出來的句型不在字典裡，才標「不確定」。",
+        "所以字典多列一個句型，頂多少抓到一個錯；少列一個句型，正確的句子會被誤標。",
+        "原則是**寧可多列**：VerbNet 列出的用法只要是正確的英文，就保留。",
+        "",
+        f"### 1. 只有 VerbNet 說可以用句型二 S+V+SC（{len(review.get('SVC', []))} 個）→ 全部保留",
+        "",
+        "都是「動詞＋形容詞表結果」，例如 *The door swung open.*、*The belt came undone.*、*fall ill*。",
+        "賴世雄的連綴動詞清單沒有列，但這些形容詞確實是主詞補語。",
+        "",
+        verbs(review.get("SVC", [])),
+        "",
+        f"### 2. 只有 VerbNet 說可以用句型四 S+Vt+O+OC（{len(review.get('SVOC', []))} 個）→ 全部保留",
+        "",
+        "大多是三種用法：",
+        "",
+        "- 動詞＋受詞＋形容詞表結果：*kick the door open*、*paint the wall red*、*tie the box shut*",
+        "- 讓人產生某種感覺：*The movie bored me silly.*",
+        "- 動詞＋受詞＋to be／名詞：*consider him to be a mentor*、*name the ship Seafarer*",
+        "",
+        verbs(review.get("SVOC", [])),
+        "",
+        f"### 3. 只有 VerbNet 說可以用句型五 S+Vt+IO+DO（{len(review.get('SVOO', []))} 個）→ 全部保留",
+        "",
+        "大多是「替某人做某事」：*fix me a sandwich*、*bake me a cake*、*win me a prize*，",
+        "以及「告訴某人某事」：*warn Helen that…*。",
+        "",
+        verbs(review.get("SVOO", [])),
+        "",
+        f"### 4. 賴世雄或題庫有、VerbNet 和 ECDICT 都沒有（{len(review.get('missing', []))} 項）→ 全部補上",
+        "",
+        "台灣教材的用法優先。",
         "",
     ]
-
-    def fmt(verb):
-        e = by_verb[verb]
-        return "、".join(LABEL[c] for c in e["patterns"])
-
-    sections = [
-        ("SVC", "句型二 S+V+SC：只有 VerbNet 說可以接主詞補語", "VerbNet 的「補語」範圍比台灣教材寬（例如 *come undone*、*fall ill*）。請確認哪些要留。"),
-        ("SVOC", "句型四 S+Vt+O+OC：只有 VerbNet 說可以接受詞補語", "包含「動詞＋受詞＋形容詞」的結果用法（*wipe the table clean*），台灣教材通常也算句型四。"),
-        ("SVOO", "句型五 S+Vt+IO+DO：只有 VerbNet 說可以接兩個受詞", ""),
+    for v, c, src in review.get("missing", []):
+        lines.append(f"- {v}：{LABEL[c]}（{'、'.join(src)}）")
+    lines += [
+        "",
+        f"### 5. ECDICT 只標不及物，VerbNet 卻說可以接受詞（{len(review.get('vi_only', []))} 個）→ 保留",
+        "",
+        "多半是接不定詞（*long to go*、*seem to know*）或少見的及物用法（*exit the building*）。",
+        "",
+        verbs(review.get("vi_only", [])),
+        "",
     ]
-    for code, title, note in sections:
-        items = review.get(code, [])
-        lines += [f"## {title}（{len(items)} 個）", ""]
-        if note:
-            lines += [note, ""]
-        if items:
-            lines += ["| 動詞 | 字典目前的句型 | 這個句型的來源 |", "|---|---|---|"]
-            lines += [f"| {v} | {fmt(v)} | {'、'.join(s)} |" for v, s in items]
-        lines.append("")
-
-    items = review.get("missing", [])
-    lines += [f"## 題庫或賴世雄用到、但 VerbNet 和 ECDICT 都沒有的句型（{len(items)} 個）", "",
-              "可能是 VerbNet 漏收，也可能是題庫標錯。", ""]
-    if items:
-        lines += ["| 動詞 | 句型 | 來源 |", "|---|---|---|"]
-        lines += [f"| {v} | {LABEL[c]} | {'、'.join(s)} |" for v, c, s in items]
-    lines.append("")
-
-    items = review.get("vi_only", [])
-    lines += [f"## ECDICT 只標不及物（vi.），VerbNet 卻說可以接受詞（{len(items)} 個）", ""]
-    if items:
-        lines += ["| 動詞 | VerbNet 的句型 |", "|---|---|"]
-        lines += [f"| {v} | {'、'.join(LABEL[c] for c in s)} |" for v, s in items]
-    lines.append("")
     OUT_REVIEW.write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -432,4 +456,4 @@ if __name__ == "__main__":
     write_review(review, entries, vn_stats, has_ecdict)
     print(f"動詞 {len(entries)} 個（常用 {sum(e['common'] for e in entries)} 個）")
     for k, v in review.items():
-        print(f"  待確認 {k}: {len(v)}")
+        print(f"  來源矛盾 {k}: {len(v)}")

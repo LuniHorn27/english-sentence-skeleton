@@ -116,8 +116,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: I helped with the homework.
     SVO: I helped him.
@@ -127,8 +125,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: abnegate
@@ -207,8 +203,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: He refrained.
 - verb: abstract
@@ -388,10 +382,11 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
+    SVO:
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: achieve
   common: true
   patterns:
@@ -427,18 +422,18 @@
   examples:
     SV: They confessed to us.
     SVO: He confessed how she did it.
-    SVOC: I admitted him to be a great smoker.
+    SVOC: He confessed himself flummoxed.
 - verb: acquaint
   common: false
   patterns:
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
+    SVOO:
     - VerbNet
   examples:
     SVO: John informed me.
-    SVOC: John informed me that his situation had changed.
+    SVOO: John informed me that his situation had changed.
 - verb: acquiesce
   common: false
   patterns:
@@ -610,8 +605,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: admit
@@ -628,7 +621,7 @@
   examples:
     SV: They confessed to us.
     SVO: She admitted us.
-    SVOC: I admitted him to be a great smoker.
+    SVOC: He confessed himself flummoxed.
 - verb: admix
   common: false
   patterns:
@@ -638,8 +631,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -651,8 +642,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -678,8 +667,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: adorn
@@ -942,8 +929,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: I helped with the homework.
     SVO: I helped him.
@@ -964,8 +949,6 @@
   patterns:
     SV:
     - ECDICT
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -1108,14 +1091,11 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
     SVOO:
     - VerbNet
   examples:
     SVO: She admitted us.
-    SVOC: They allowed us to smoke.
-    SVOO: I promised somebody my time.
+    SVOO: They allowed us to smoke.
 - verb: allowance
   common: true
   patterns:
@@ -1525,9 +1505,12 @@
     - VerbNet
     - 字表
     - 賴世雄
+    SVO:
+    - VerbNet
   examples:
     SV: A ship appeared.
     SVC: He appeared crazy.
+    SVO: He seemed to come.
 - verb: appease
   common: false
   patterns:
@@ -1544,8 +1527,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: applique
@@ -1566,8 +1547,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I put the book on/under/near the table.
 - verb: appoint
@@ -1609,8 +1588,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: The price of oil soared.
     SVO: The tourists admired the paintings.
@@ -1622,11 +1599,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
 - verb: apprentice
   common: false
   patterns:
@@ -1641,11 +1615,11 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
+    SVOO:
     - VerbNet
   examples:
     SVO: John informed me.
-    SVOC: John informed me that his situation had changed.
+    SVOO: John informed me that his situation had changed.
 - verb: approach
   common: true
   patterns:
@@ -1685,11 +1659,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: He put the probability at 0.9.
-    SVOC: He estimated the temperature to be 50 degrees.
 - verb: arch
   common: true
   patterns:
@@ -1944,11 +1915,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: The inspector analyzed the building.
-    SVOC: He estimated the temperature to be 50 degrees.
 - verb: assign
   common: true
   patterns:
@@ -1983,8 +1951,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: I helped with the homework.
     SVO: I helped him.
@@ -2207,8 +2173,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: They tolerated birds.
 - verb: autograph
@@ -2564,8 +2528,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: They agreed.
 - verb: baptize
@@ -2637,8 +2599,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: barge
@@ -2687,14 +2647,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SVO: We based our plans on his information.
-    SVOC: They based their plans on him getting in on time.
-    SVOO: They based their decision on whether he happened to come or not.
 - verb: bash
   common: false
   patterns:
@@ -2785,12 +2739,9 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SV: Sparta battled with Athens.
     SVO: Sparta fought Athens.
-    SVOO: Sparta fought Athens about whether Athens should rule the island.
 - verb: bawl
   common: false
   patterns:
@@ -2872,8 +2823,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -3004,8 +2953,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: I begged for release.
     SVO: I begged to be dismissed.
@@ -3035,12 +2982,9 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: The party began.
     SVO: He began to pack.
-    SVOC: His property begins at the fence.
 - verb: beguile
   common: false
   patterns:
@@ -3302,8 +3246,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: beware
@@ -3349,8 +3291,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: bicycle
@@ -4382,12 +4322,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SV: Sparta battled with Athens.
     SVO: Sparta fought Athens.
-    SVOO: Sparta fought Athens about whether Athens should rule the island.
 - verb: boycott
   common: true
   patterns:
@@ -4482,8 +4419,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: bray
@@ -4583,8 +4518,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: brick
@@ -4664,8 +4597,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -4872,16 +4803,13 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet
     SVOO:
     - VerbNet
     - 字表
   examples:
     SV: $100,000 builds a house out of sticks.
     SVO: We based our plans on his information.
-    SVOC: They based their plans on him getting in on time.
-    SVOO: They based their decision on whether he happened to come or not.
+    SVOO: Martha carved the baby a toy out of a piece of wood.
 - verb: bulge
   common: false
   patterns:
@@ -6406,8 +6334,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: chew
@@ -7426,8 +7352,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: coexist
@@ -7563,8 +7487,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: collude
@@ -7622,12 +7544,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SV: Sparta battled with Athens.
     SVO: Sparta fought Athens.
-    SVOO: Sparta fought Athens about whether Athens should rule the island.
 - verb: combine
   common: true
   patterns:
@@ -7635,8 +7554,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -7678,8 +7595,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: He ordered that she should come immediately.
 - verb: commandeer
@@ -7688,8 +7603,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: commemorate
@@ -7744,8 +7657,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -7754,8 +7665,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: They agreed.
 - verb: commission
@@ -7870,8 +7779,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: compile
@@ -7939,8 +7846,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -7950,11 +7855,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
 - verb: compress
   common: false
   patterns:
@@ -8051,8 +7953,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: We focused on it.
 - verb: concern
@@ -8099,8 +7999,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: They agreed.
 - verb: condemn
@@ -8182,7 +8080,7 @@
   examples:
     SV: They confessed to us.
     SVO: He confessed how she did it.
-    SVOC: I admitted him to be a great smoker.
+    SVOC: He confessed himself flummoxed.
 - verb: confide
   common: false
   patterns:
@@ -8209,8 +8107,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: We committed John.
 - verb: confirm
@@ -8219,11 +8115,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: This indicates how she did it.
-    SVOC: This indicates him to be the thief.
 - verb: confiscate
   common: false
   patterns:
@@ -8440,7 +8333,7 @@
     - 賴世雄
   examples:
     SVO: I considered how he could become professor.
-    SVOC: They considered him to be a mentor.
+    SVOC: I considered the matter closed.
 - verb: consist
   common: true
   patterns:
@@ -8466,8 +8359,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: Ice cream integrates with desserts.
     SVO: We incorporated cranberries into our salad.
@@ -8525,8 +8416,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The lack of money limited the help.
 - verb: constrict
@@ -8568,14 +8457,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SVO: We based our plans on his information.
-    SVOC: They based their plans on him getting in on time.
-    SVOO: They based their decision on whether he happened to come or not.
 - verb: consult
   common: true
   patterns:
@@ -8599,8 +8482,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I spent all that money.
 - verb: contact
@@ -8893,8 +8774,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: They collaborated on the task.
 - verb: cop
@@ -9001,8 +8880,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: They agreed.
 - verb: corroborate
@@ -9316,13 +9193,11 @@
   patterns:
     SV:
     - VerbNet
-    SVC:
-    - VerbNet?
     SVO:
     - VerbNet
   examples:
     SV: Danny longs for a sunny day.
-    SVO: Dorothy needed new shoes.
+    SVO: John hankered to move up the corporate ladder.
 - verb: crawl
   common: false
   patterns:
@@ -9359,8 +9234,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -10089,8 +9962,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I urged him.
 - verb: darken
@@ -10290,12 +10161,9 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SV: Sparta battled with Athens.
     SVO: Sparta fought Athens.
-    SVOO: Sparta fought Athens about whether Athens should rule the island.
 - verb: debone
   common: false
   patterns:
@@ -10458,8 +10326,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -10582,11 +10448,10 @@
     SVO:
     - VerbNet
     SVOC:
-    - VerbNet
+    - VerbNet?
     - 賴世雄
   examples:
     SVO: I considered how he could become professor.
-    SVOC: They considered him to be a mentor.
 - verb: deepen
   common: false
   patterns:
@@ -10932,8 +10797,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: deink
@@ -11081,8 +10944,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: He ordered that she should come immediately.
 - verb: demast
@@ -11146,12 +11007,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: I explained.
     SVO: This indicates how she did it.
-    SVOC: This indicates him to be the thief.
 - verb: demoralize
   common: false
   patterns:
@@ -11234,8 +11092,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: She relies on it.
 - verb: depict
@@ -11263,8 +11119,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: depopulate
@@ -11542,8 +11396,6 @@
   patterns:
     SV:
     - ECDICT
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -11558,8 +11410,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: He refrained.
 - verb: despair
@@ -11576,8 +11426,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: despoil
@@ -11705,8 +11553,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: detonate
@@ -11886,8 +11732,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: dictate
@@ -11921,12 +11765,12 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
+    - VerbNet
   examples:
     SV: The bridge gave way.
+    SVO: John hankered to move up the corporate ladder.
 - verb: diet
   common: true
   patterns:
@@ -11940,8 +11784,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: They agreed.
 - verb: differentiate
@@ -12121,8 +11963,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: They agreed.
 - verb: disappear
@@ -12239,11 +12079,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: This indicates how she did it.
-    SVOC: This indicates him to be the thief.
 - verb: discolor
   common: false
   patterns:
@@ -12362,8 +12199,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: disembark
@@ -12560,8 +12395,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: dislocate
@@ -12729,8 +12562,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: disquiet
@@ -12944,8 +12775,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: disturb
@@ -13316,8 +13145,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: drain
@@ -13373,8 +13200,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: dream
@@ -13382,8 +13207,6 @@
   patterns:
     SV:
     - VerbNet
-    SVC:
-    - VerbNet?
     SVO:
     - VerbNet
     SVOC:
@@ -13663,12 +13486,9 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SV: Sparta battled with Athens.
     SVO: Sparta fought Athens.
-    SVOO: Sparta fought Athens about whether Athens should rule the island.
 - verb: dull
   common: true
   patterns:
@@ -13844,10 +13664,9 @@
     - VerbNet
     SVO:
     - ECDICT
-    - VerbNet
+    - VerbNet?
   examples:
     SV: The voices echoed.
-    SVO: The hall echoed with voices.
 - verb: eddy
   common: false
   patterns:
@@ -14235,8 +14054,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: I empathized.
 - verb: emphasize
@@ -14399,12 +14216,9 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: The storm ended.
     SVO: John cut the engine.
-    SVOC: His property begins at the fence.
 - verb: endorse
   common: false
   patterns:
@@ -14549,8 +14363,6 @@
 - verb: enjoy
   common: true
   patterns:
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -14810,8 +14622,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -14881,8 +14691,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: epoxy
@@ -15064,25 +14872,16 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SVO: We based our plans on his information.
-    SVOC: They based their plans on him getting in on time.
-    SVOO: They based their decision on whether he happened to come or not.
 - verb: esteem
   common: false
   patterns:
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: The tourists admired the paintings.
-    SVOC: They considered him to be a mentor.
 - verb: estimate
   common: true
   patterns:
@@ -15091,11 +14890,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: He put the probability at 0.9.
-    SVOC: He estimated the temperature to be 50 degrees.
 - verb: etch
   common: false
   patterns:
@@ -15272,8 +15068,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: examine
@@ -15397,8 +15191,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: execute
@@ -15427,8 +15219,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I used the shovel.
 - verb: exfoliate
@@ -15492,8 +15282,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -15565,8 +15353,6 @@
 - verb: expect
   common: true
   patterns:
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -15657,8 +15443,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I used the shovel.
 - verb: explore
@@ -16056,11 +15840,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
 - verb: fatigue
   common: false
   patterns:
@@ -16102,8 +15883,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: favour
@@ -16124,8 +15903,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -16149,8 +15926,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: I suffered.
     SVO: The tourists admired the paintings.
@@ -16363,8 +16138,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: fiddle
@@ -16399,12 +16172,9 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SV: Sparta battled with Athens.
     SVO: Sparta fought Athens.
-    SVOO: Sparta fought Athens about whether Athens should rule the island.
 - verb: figure
   common: true
   patterns:
@@ -17259,12 +17029,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: Jackie chased after the thief.
     SVO: He followed the tenets of Buddhism.
-    SVOC: I understood him to be a good doctor.
 - verb: fondle
   common: false
   patterns:
@@ -17309,8 +17076,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: He refrained.
 - verb: forbid
@@ -17518,14 +17283,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SVO: We based our plans on his information.
-    SVOC: They based their plans on him getting in on time.
-    SVOO: They based their decision on whether he happened to come or not.
 - verb: fowl
   common: false
   patterns:
@@ -17930,8 +17689,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -18197,11 +17954,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: He put the probability at 0.9.
-    SVOC: He estimated the temperature to be 50 degrees.
 - verb: gawk
   common: false
   patterns:
@@ -18341,7 +18095,7 @@
     SV: He converted to Buddhism.
     SVC: The belt came undone.
     SVO: My wife had twins.
-    SVOC: I understood him to be a good doctor.
+    SVOC: John took the radio apart.
     SVOO: Carmen bought Mary a dress.
 - verb: ghost
   common: false
@@ -18908,11 +18662,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
 - verb: grass
   common: false
   patterns:
@@ -19156,15 +18907,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SV: I landed in Russia.
     SVO: We based our plans on his information.
-    SVOC: They based their plans on him getting in on time.
-    SVOO: They based their decision on whether he happened to come or not.
 - verb: group
   common: true
   patterns:
@@ -19222,8 +18967,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: gruel
@@ -19294,11 +19037,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: He put the probability at 0.9.
-    SVOC: He estimated the temperature to be 50 degrees.
 - verb: guest
   common: false
   patterns:
@@ -19616,10 +19356,11 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
+    SVO:
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: happen
   common: true
   patterns:
@@ -19746,8 +19487,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: haul
@@ -20492,10 +20231,11 @@
   patterns:
     SV:
     - VerbNet
-    SVC:
-    - VerbNet?
+    SVO:
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: hopscotch
   common: false
   patterns:
@@ -20576,8 +20316,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: house
@@ -20735,12 +20473,12 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: hunt
   common: true
   patterns:
@@ -20958,8 +20696,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: ignite
@@ -21013,8 +20749,6 @@
   patterns:
     SV:
     - ECDICT
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -21127,8 +20861,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: impersonate
@@ -21161,8 +20893,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -21194,8 +20924,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I begged to be dismissed.
 - verb: impose
@@ -21448,8 +21176,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: indurate
@@ -21538,8 +21264,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: inform
@@ -21550,11 +21274,11 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
+    SVOO:
     - VerbNet
   examples:
     SVO: John informed me.
-    SVOC: John informed me that his situation had changed.
+    SVOO: John informed me that his situation had changed.
 - verb: infuriate
   common: false
   patterns:
@@ -21880,8 +21604,6 @@
 - verb: intend
   common: true
   patterns:
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -21908,8 +21630,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: They agreed.
 - verb: intercept
@@ -22030,8 +21750,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -22304,8 +22022,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: We promoted the cause.
 - verb: invoice
@@ -22324,8 +22040,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: They thoughtlessly involved me.
 - verb: iodize
@@ -22439,13 +22153,11 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
     SVO:
     - VerbNet
   examples:
     SV: Danny longs for a sunny day.
-    SVO: My eyes were itching me.
+    SVO: John hankered to move up the corporate ladder.
 - verb: jab
   common: false
   patterns:
@@ -22809,8 +22521,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: joy
@@ -22834,7 +22544,7 @@
   examples:
     SV: Her cousin clerked for Judge Davis.
     SVO: He put the probability at 0.9.
-    SVOC: He estimated the temperature to be 50 degrees.
+    SVOC: I judged him to be a good man.
 - verb: jug
   common: false
   patterns:
@@ -23179,12 +22889,9 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: I understand.
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
 - verb: kvetch
   common: false
   patterns:
@@ -23313,8 +23020,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: laminate
@@ -23580,12 +23285,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: This remark led to further arguments amongst guests.
     SVO: Jackie accompanied Rose.
-    SVOC: His property begins at the fence.
 - verb: leaf
   common: true
   patterns:
@@ -23794,7 +23496,6 @@
     - ECDICT
     - VerbNet
     SVOC:
-    - VerbNet
     - 字表
     - 賴世雄
     SVOO:
@@ -23802,7 +23503,6 @@
   examples:
     SV: The bank lent to fewer customers.
     SVO: She admitted us.
-    SVOC: They let us smoke.
     SVOO: They lent me a bicycle.
 - verb: letter
   common: true
@@ -23960,8 +23660,6 @@
   patterns:
     SV:
     - ECDICT
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -23987,8 +23685,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The lack of money limited the help.
 - verb: limp
@@ -24181,8 +23877,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: lob
@@ -24206,8 +23900,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -24301,10 +23993,11 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
+    SVO:
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: look
   common: true
   patterns:
@@ -24450,8 +24143,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: low
@@ -24578,10 +24269,11 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
+    SVO:
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: luxuriate
   common: false
   patterns:
@@ -25160,8 +24852,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -25244,8 +24934,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -25464,8 +25152,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -25590,8 +25276,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: misspell
@@ -25608,8 +25292,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I spent all that money.
 - verb: mist
@@ -25642,8 +25324,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: misunderstand
@@ -25749,8 +25429,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -26052,8 +25730,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: motor
@@ -26149,8 +25825,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: I suffered.
     SVO: The tourists admired the paintings.
@@ -26327,8 +26001,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: We focused on it.
 - verb: mushroom
@@ -26574,8 +26246,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: Success requires hard work.
 - verb: neck
@@ -26595,8 +26265,6 @@
   patterns:
     SV:
     - ECDICT
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -26704,8 +26372,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -26940,13 +26606,10 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
     SVOO:
     - VerbNet
   examples:
     SVO: Earl alerted Helen.
-    SVOC: John informed me that his situation had changed.
     SVOO: Earl warned Helen that the party would be tonight.
 - verb: nourish
   common: false
@@ -27092,8 +26755,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: oblige
@@ -27104,8 +26765,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: obliterate
@@ -27395,8 +27054,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
     - 字表
@@ -27715,11 +27372,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: He put the probability at 0.9.
-    SVOC: He estimated the temperature to be 50 degrees.
 - verb: overhang
   common: false
   patterns:
@@ -28071,8 +27725,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: Susan was chitchatting.
     SVO: I forced him into coming.
@@ -28833,11 +28485,11 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
+    SVOO:
     - VerbNet
   examples:
     SVO: She admitted us.
-    SVOC: They allowed us to smoke.
+    SVOO: They allowed us to smoke.
 - verb: perpetuate
   common: false
   patterns:
@@ -28899,8 +28551,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: pertain
@@ -28978,8 +28628,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -29176,10 +28824,11 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
+    SVO:
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: ping
   common: false
   patterns:
@@ -29340,8 +28989,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: placate
@@ -29396,8 +29043,6 @@
   patterns:
     SV:
     - ECDICT
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -29473,8 +29118,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -29866,8 +29509,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: We focused on it.
 - verb: pontificate
@@ -29968,7 +29609,7 @@
     - VerbNet
   examples:
     SVO: I considered how he could become professor.
-    SVOC: They considered him to be a mentor.
+    SVOC: They thought him smart.
 - verb: position
   common: true
   patterns:
@@ -30168,10 +29809,11 @@
   patterns:
     SV:
     - VerbNet
-    SVC:
-    - VerbNet?
+    SVO:
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: preach
   common: false
   patterns:
@@ -30258,8 +29900,6 @@
 - verb: prefer
   common: true
   patterns:
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -30369,8 +30009,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -30502,8 +30140,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: probe
@@ -30585,8 +30221,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -30690,12 +30324,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: John slouched.
     SVO: He put the probability at 0.9.
-    SVOC: He estimated the temperature to be 50 degrees.
 - verb: proliferate
   common: false
   patterns:
@@ -30773,8 +30404,6 @@
     - VerbNet
     SVOC:
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SVO: The captain baptized the ship.
     SVOC: The captain named the ship Seafarer.
@@ -30831,8 +30460,6 @@
   patterns:
     SV:
     - ECDICT
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -31435,11 +31062,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: He put the probability at 0.9.
-    SVOC: He estimated the temperature to be 50 degrees.
 - verb: quarantine
   common: false
   patterns:
@@ -31454,8 +31078,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: quarry
@@ -31719,8 +31341,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -31790,8 +31410,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: rain
@@ -31959,11 +31577,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: I considered how he could become professor.
-    SVOC: They considered him to be a mentor.
 - verb: ration
   common: false
   patterns:
@@ -32081,15 +31696,12 @@
     SVO:
     - VerbNet
     - 題庫
-    SVOC:
-    - VerbNet
     SVOO:
     - VerbNet
     - 字表
   examples:
     SV: Rhoda learned from an old book.
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
     SVOO: Wanda taught the students French.
 - verb: readapt
   common: false
@@ -32129,11 +31741,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: The tourists admired the paintings.
-    SVOC: This indicates him to be the thief.
 - verb: realise
   common: true
   patterns:
@@ -32147,11 +31756,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
 - verb: reallocate
   common: false
   patterns:
@@ -32440,12 +32046,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: She relies on it.
     SVO: I considered how he could become professor.
-    SVOC: They considered him to be a mentor.
 - verb: reclaim
   common: false
   patterns:
@@ -32490,11 +32093,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
 - verb: recognize
   common: true
   patterns:
@@ -32503,11 +32103,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
 - verb: recoil
   common: false
   patterns:
@@ -32537,8 +32134,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The eggs mixed with the cream.
     SVO: Herman mixed the eggs with the cream.
@@ -32775,8 +32370,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: Lawmakers cut the budget by 10% from $1.46 million to $1.3 million.
 - verb: reek
@@ -32868,12 +32461,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SV: Sparta battled with Athens.
     SVO: Sparta fought Athens.
-    SVOO: Sparta fought Athens about whether Athens should rule the island.
 - verb: refine
   common: false
   patterns:
@@ -32923,8 +32513,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: He refrained.
 - verb: refresh
@@ -33015,8 +32603,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: regroup
@@ -33226,8 +32812,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -33281,8 +32865,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: rely
@@ -33291,8 +32873,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: She relies on it.
 - verb: remain
@@ -33378,11 +32958,11 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
+    SVOO:
     - VerbNet
   examples:
     SVO: John informed me.
-    SVOC: John informed me that his situation had changed.
+    SVOO: John informed me that his situation had changed.
 - verb: remit
   common: false
   patterns:
@@ -33784,8 +33364,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I begged to be dismissed.
 - verb: require
@@ -33794,8 +33372,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: He ordered that she should come immediately.
 - verb: rerelease
@@ -33842,8 +33418,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: reserve
@@ -33889,11 +33463,8 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet
   examples:
     SV: The voices echoed.
-    SVO: The hall echoed with voices.
 - verb: resort
   common: true
   patterns:
@@ -33913,18 +33484,15 @@
     - VerbNet
     SVO:
     - ECDICT
-    - VerbNet
+    - VerbNet?
   examples:
     SV: The voices echoed.
-    SVO: The hall echoed with voices.
 - verb: respect
   common: true
   patterns:
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: respond
@@ -33967,8 +33535,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The sign discouraged us from smoking.
 - verb: restrict
@@ -33977,8 +33543,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The lack of money limited the help.
 - verb: resubmit
@@ -34140,8 +33704,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I spent all that money.
 - verb: reveal
@@ -34176,18 +33738,15 @@
     - VerbNet
     SVO:
     - ECDICT
-    - VerbNet
+    - VerbNet?
   examples:
     SV: The voices echoed.
-    SVO: The hall echoed with voices.
 - verb: revere
   common: false
   patterns:
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: reverse
@@ -34917,8 +34476,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: ruffle
@@ -34988,8 +34545,6 @@
   patterns:
     SV:
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: We focused on it.
 - verb: rummage
@@ -35031,8 +34586,6 @@
     - ECDICT
     - VerbNet
     - 題庫
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -35061,8 +34614,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: The horse ran.
     SVO: I forced him into coming.
@@ -35289,8 +34840,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: sandpaper
@@ -35353,8 +34902,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -35453,8 +35000,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: saw
@@ -35480,8 +35025,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SVO: This indicates how she did it.
 - verb: scald
@@ -36014,8 +35557,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: sculpt
@@ -36199,14 +35740,13 @@
     - VerbNet
     - 題庫
     SVOC:
-    - VerbNet
+    - VerbNet?
     - 字表
     - 賴世雄
     - 題庫
   examples:
     SV: I understand.
     SVO: I understood how she did it.
-    SVOC: I understood him to be a good doctor.
 - verb: seed
   common: true
   patterns:
@@ -36241,9 +35781,12 @@
     - VerbNet
     - 字表
     - 賴世雄
+    SVO:
+    - VerbNet
   examples:
     SV: The matter seems in dispute.
     SVC: He appeared crazy.
+    SVO: He seemed to come.
 - verb: seep
   common: false
   patterns:
@@ -36342,8 +35885,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -37037,8 +36578,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
     SVOO:
     - VerbNet
     - 字表
@@ -37046,7 +36585,6 @@
   examples:
     SV: I explained.
     SVO: Jennifer craned her neck.
-    SVOC: This indicates him to be the thief.
     SVOO: Wanda taught the students French.
 - verb: shower
   common: true
@@ -37369,8 +36907,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -37738,8 +37274,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: skirt
@@ -39214,8 +38748,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: spatter
@@ -39332,8 +38864,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SVO: She says 'enchilada' with a proper Mexican accent.
 - verb: spellbind
@@ -39355,8 +38885,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I spent all that money.
 - verb: spew
@@ -39844,8 +39372,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: squall
@@ -39868,8 +39394,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I spent all that money.
 - verb: square
@@ -40223,8 +39747,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: The dog flopped.
     SVO: The tourists admired the paintings.
@@ -40293,12 +39815,9 @@
     - ECDICT
     - VerbNet
     - 題庫
-    SVOC:
-    - VerbNet
   examples:
     SV: The party began.
     SVO: He began to pack.
-    SVOC: His property begins at the fence.
 - verb: startle
   common: false
   patterns:
@@ -40401,8 +39920,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: steel
@@ -40717,12 +40234,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: Cornelia lodged with the Stevensons.
     SVO: The rules forbade us from smoking.
-    SVOC: His property begins at the fence.
 - verb: stopper
   common: false
   patterns:
@@ -41037,8 +40551,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: strut
@@ -41231,8 +40743,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: subscribe
@@ -41317,8 +40827,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I helped him.
 - verb: succumb
@@ -41371,8 +40879,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: I suffered.
     SVO: The tourists admired the paintings.
@@ -41415,11 +40921,8 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SVO: This indicates how she did it.
-    SVOC: This indicates him to be the thief.
 - verb: suit
   common: true
   patterns:
@@ -41491,8 +40994,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I urged him.
 - verb: sun
@@ -41588,8 +41089,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: I begged for release.
     SVO: I begged to be dismissed.
@@ -41609,8 +41108,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: suppose
@@ -41625,7 +41122,7 @@
     - VerbNet
   examples:
     SVO: I considered how he could become professor.
-    SVOC: They considered him to be a mentor.
+    SVOC: They thought him smart.
 - verb: suppress
   common: false
   patterns:
@@ -41762,7 +41259,7 @@
     - VerbNet
   examples:
     SVO: I considered how he could become professor.
-    SVOC: They considered him to be a mentor.
+    SVOC: They thought him smart.
 - verb: suspend
   common: false
   patterns:
@@ -41917,8 +41414,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: Sylvia fidgeted.
     SVO: I forced him into coming.
@@ -42146,8 +41641,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: I empathized.
 - verb: synthesise
@@ -42581,8 +42074,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
     SVOO:
     - VerbNet
     - 字表
@@ -42590,7 +42081,6 @@
   examples:
     SV: I explained.
     SVO: I explained how it can be done.
-    SVOC: She told him that he should not go.
     SVOO: Wanda taught the students French.
 - verb: team
   common: true
@@ -42664,8 +42154,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -42679,8 +42167,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -42693,8 +42179,6 @@
     - VerbNet
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -42720,8 +42204,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -42738,7 +42220,7 @@
     - VerbNet
     - 題庫
     SVOC:
-    - VerbNet
+    - VerbNet?
     - 賴世雄
     SVOO:
     - VerbNet
@@ -42748,7 +42230,6 @@
   examples:
     SV: I explained.
     SVO: I explained how it can be done.
-    SVOC: She told him that he should not go.
     SVOO: Wanda taught the students French.
 - verb: temp
   common: false
@@ -42833,12 +42314,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: The storm ended.
     SVO: I fired two secretaries.
-    SVOC: His property begins at the fence.
 - verb: terrify
   common: true
   patterns:
@@ -42976,8 +42454,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -42988,17 +42464,18 @@
   examples:
     SV: We focused on it.
     SVO: I considered how he could become professor.
-    SVOC: They considered him to be a mentor.
+    SVOC: They thought him smart.
 - verb: thirst
   common: true
   patterns:
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
+    SVO:
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: thrash
   common: false
   patterns:
@@ -43550,8 +43027,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: toll
@@ -44137,8 +43612,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: treat
@@ -44532,8 +44005,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet?
   examples:
     SV: The price of oil soared.
     SVO: Oil rose 565% from $26 to $147.
@@ -44592,8 +44063,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: tutor
@@ -44998,12 +44467,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: I understand.
     SVO: I accepted how you did it.
-    SVOC: I understood him to be a good doctor.
 - verb: understudy
   common: false
   patterns:
@@ -45389,11 +44855,11 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
+    SVOO:
     - VerbNet
   examples:
     SVO: John informed me.
-    SVOC: John informed me that his situation had changed.
+    SVOO: John informed me that his situation had changed.
 - verb: upgrade
   common: false
   patterns:
@@ -45495,8 +44961,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: Cynthia ate.
     SVO: I spent all that money.
@@ -45518,8 +44982,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I used the shovel.
 - verb: utter
@@ -45590,8 +45052,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: vamoose
@@ -45734,8 +45194,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: ventilate
@@ -45764,12 +45222,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
   examples:
     SV: I explained.
     SVO: This indicates how she did it.
-    SVOC: This indicates him to be the thief.
 - verb: vest
   common: true
   patterns:
@@ -46263,8 +45718,6 @@
   patterns:
     SV:
     - ECDICT
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -46281,8 +45734,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVO:
-    - VerbNet?
   examples:
     SV: Sparta battled with Athens.
 - verb: warble
@@ -46373,8 +45824,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I spent all that money.
 - verb: watch
@@ -46723,8 +46172,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: wheel
@@ -47215,8 +46662,6 @@
   patterns:
     SVO:
     - VerbNet
-    SVOC:
-    - VerbNet?
     SVOO:
     - VerbNet
   examples:
@@ -47235,8 +46680,6 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
     SVO:
     - ECDICT
     - VerbNet
@@ -47245,7 +46688,7 @@
     - 賴世雄
   examples:
     SV: Danny longs for a sunny day.
-    SVO: I wished for her to do it.
+    SVO: John hankered to move up the corporate ladder.
     SVOC: I wished him to be nice.
 - verb: withdraw
   common: true
@@ -47348,8 +46791,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: I forced him into coming.
 - verb: wood
@@ -47384,8 +46825,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SV: They worked on the task.
     SVO: The nail functioned as a coat hook.
@@ -47436,8 +46875,6 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet?
   examples:
     SVO: The tourists admired the paintings.
 - verb: wound
@@ -47541,12 +46978,9 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOO:
-    - VerbNet
   examples:
     SV: Sparta battled with Athens.
     SVO: Sparta fought Athens.
-    SVOO: Sparta fought Athens about whether Athens should rule the island.
 - verb: wriggle
   common: false
   patterns:
@@ -47591,15 +47025,12 @@
     SVO:
     - ECDICT
     - VerbNet
-    SVOC:
-    - VerbNet
     SVOO:
     - VerbNet
     - 字表
   examples:
     SV: Claire drew.
     SVO: David constructed a house.
-    SVOC: She told him that he should not go.
     SVOO: Wanda taught the students French.
 - verb: writhe
   common: false
@@ -47697,10 +47128,11 @@
     SV:
     - ECDICT
     - VerbNet
-    SVC:
-    - VerbNet?
+    SVO:
+    - VerbNet
   examples:
     SV: Danny longs for a sunny day.
+    SVO: John hankered to move up the corporate ladder.
 - verb: yell
   common: true
   patterns:
@@ -47740,8 +47172,6 @@
   patterns:
     SV:
     - ECDICT
-    SVC:
-    - VerbNet?
     SVO:
     - VerbNet
     SVOC:
