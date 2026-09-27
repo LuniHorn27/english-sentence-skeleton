@@ -23,13 +23,16 @@ MAX_CHARS = 2000  # 和分析的上限一樣；一整句不會被截斷
 
 SYSTEM_PROMPT = (
     "你是專業的英翻中譯者，服務對象是台灣的英文學習者。"
-    "請把使用者給的英文句子翻譯成自然、通順的台灣繁體中文，使用台灣的慣用詞彙（例如：軟體、影片、資訊、機車、捷運）。"
+    "請把使用者給的英文句子翻譯成自然、通順的台灣繁體中文，使用台灣的慣用詞彙（例如：軟體、影片、資訊、捷運；scooter 是機車，bike 是腳踏車）。"
     "遇到慣用語或片語，要翻出真正的意思，不要逐字直譯。"
     "連接詞要照原文的意思翻（and＝而且、並且、和；but＝但是；so＝所以），不要自己改成別的關係。"
+    "代名詞 it、this、that 指前面提到的一件事時，要翻出來（例如「這」「這件事」），不要省略；"
+    "但 It is hard to…、It is raining 這種虛主詞的 It 不用翻。"
     "只輸出翻譯結果，不要加任何解釋、引號或英文。"
 )
 CONTRAST_WORDS = re.compile(r"\b(but|yet|however|although|though|while|whereas|still|instead)\b", re.I)
-CONJ_NOTE = "注意：原文的連接詞是 and（而且、並且、和），不是 but，翻譯裡不要出現「但、可是、不過、卻」。"
+# 放在系統指示裡模型常常不理會，所以直接放在要翻的句子前面
+CONJ_PREFIX = "原文的 and 要翻成「而且」或「並且」，不要翻成「但」。請翻譯：\n"
 
 
 def and_as_but(zh: str, source: str) -> bool:
@@ -38,7 +41,7 @@ def and_as_but(zh: str, source: str) -> bool:
         and bool(re.search(r"但|可是|不過|卻", zh))
 
 
-RETRY_NOTE = "注意：每個英文單字都要翻成中文（人名、地名、縮寫可以保留）。"
+RETRY_PREFIX = "每個英文單字都要翻成中文（人名、地名、縮寫可以保留），翻譯裡不能留下英文。請翻譯：\n"
 
 _llm = None
 _converter = None
@@ -86,6 +89,8 @@ TAIWAN_FIXES = [
     (re.compile(r"香煙|煙草|煙酒|煙蒂|煙灰缸"), lambda m: m.group().replace("煙", "菸")),
     # OpenCC 會把「通過」一律轉成「透過」；考試、審核的「通過」要改回來
     (re.compile(r"(沒有|沒|未|不|順利|已經|才|都)透過"), r"\1通過"),
+    (re.compile(r"臺"), "台"),
+    (re.compile(r"核準|批準|準許"), lambda m: m.group().replace("準", "准")),  # OpenCC 把「准」轉成「準」  # 網站統一用「台灣、台北」
     (re.compile(r"透過(了|考試|測驗|檢查|審核|面試)"), r"通過\1"),
 ]
 
@@ -96,9 +101,9 @@ def taiwan_fix(zh: str) -> str:
     return zh
 
 
-def _generate(text: str, extra: str = "") -> str:
+def _generate(text: str, extra: str = "", prefix: str = "") -> str:
     out = _llm.create_chat_completion(
-        messages=[{"role": "system", "content": SYSTEM_PROMPT + extra}, {"role": "user", "content": text}],
+        messages=[{"role": "system", "content": SYSTEM_PROMPT + extra}, {"role": "user", "content": prefix + text}],
         temperature=0.0,
         max_tokens=800,
     )
@@ -118,11 +123,11 @@ def translate(text: str, hints: str = "") -> str:
             return _cache[key]
         zh = _generate(text, extra)
         if leftover_english(zh, text):
-            retry = _generate(text, extra + RETRY_NOTE)
+            retry = _generate(text, extra, RETRY_PREFIX)
             if len(leftover_english(retry, text)) < len(leftover_english(zh, text)):
                 zh = retry
         if and_as_but(zh, text):
-            retry = _generate(text, extra + CONJ_NOTE)
+            retry = _generate(text, extra, CONJ_PREFIX)
             if not and_as_but(retry, text) and not leftover_english(retry, text):
                 zh = retry
         _cache[key] = zh
