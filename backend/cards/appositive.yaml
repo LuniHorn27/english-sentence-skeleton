@@ -1,0 +1,22 @@
+id: appositive
+title: 同位語
+brief: 緊接在名詞後面，換個說法補充說明它，兩者指的是同一個人事物。
+trigger: 名詞後面接另一個名詞片語，補充說明前面的名詞
+blocks:
+- type: formula
+  text: 名詞 ＋ ,（同位語）, …
+- type: examples
+  examples:
+  - en: Paris, <b>the capital of France</b>, is a beautiful city.
+    zh: Paris ＝ the capital of France
+    mark: none
+  - en: My friend <b>Tom</b> lives in Tainan.
+    zh: My friend ＝ Tom
+    mark: none
+- type: tip
+  text: 同位語可以想成省略了 who is／which is：Paris, <b>which is</b> the capital of France, …
+- type: info
+  text: 補充說明、拿掉也不影響意思時，前後要加逗號；用來指定是哪一個時（my friend Tom），通常不加逗號。
+see_also:
+- relative_pronoun
+- modifier_position

@@ -1,0 +1,37 @@
+id: so_such_that
+title: so／such … that
+brief: 「太……以致於……」：that 後面說明造成的結果。
+trigger: so ＋ 形容詞／副詞 ＋ that，或 such ＋ 名詞 ＋ that
+blocks:
+- type: formula
+  text: so ＋ 形容詞／副詞 ＋ that ＋ 結果
+- type: examples
+  examples:
+  - en: The coffee was <b>so hot that</b> I couldn't drink it.
+    zh: so ＋ 形容詞
+    mark: none
+  - en: She speaks <b>so fast that</b> I can't understand her.
+    zh: so ＋ 副詞
+    mark: none
+- type: formula
+  text: such ＋（a）＋ 形容詞 ＋ 名詞 ＋ that ＋ 結果
+- type: examples
+  examples:
+  - en: It was <b>such good coffee that</b> I had another cup.
+    zh: such ＋ 名詞
+    mark: none
+- type: tip
+  text: 看後面是不是名詞：只有形容詞或副詞用 so，有名詞用 such。例外：so many／so much／so few／so little ＋ 名詞。
+- type: info
+  text: 口語常省略 that：I was so hungry (that) I ate two bowls.
+- type: warn
+  text: so 後面不能直接接名詞。
+  examples:
+  - en: It was so good coffee that I had another cup.
+    zh: ''
+    mark: 'no'
+  - en: It was such good coffee that I had another cup.
+    zh: ''
+    mark: ok
+see_also:
+- subordinating_conj

@@ -121,15 +121,64 @@ def clause_opener(tok):
     return mark
 
 
-def advcl_function(tok) -> Optional[str]:
+def opener_tokens(tok):
+    """副詞子句開頭的連接詞（可以是多個字：as soon as、even though…），回傳 (字的清單, 功能)"""
+    words = [t for t in sorted(tok.subtree, key=lambda t: t.i) if not t.is_punct][:3]
+    for n in (3, 2):
+        phrase = " ".join(t.lower_ for t in words[:n])
+        if len(words) >= n and phrase in L.MULTI_SUBORDINATORS:
+            return words[:n], L.MULTI_SUBORDINATORS[phrase]
     mark = clause_opener(tok)
     if mark is not None:
-        f = L.SUBORDINATORS.get(mark.lower_)
-        if mark.lower_ == "so":  # so that
-            f = "表目的"
-        return f"副詞子句・{f}" if f else None
+        return [mark], L.SUBORDINATORS.get(mark.lower_)
+    return [], None
+
+
+def adjective_pp_function(adj, prep):
+    """形容詞後面的介系詞片語：固定搭配是「表對象」，時間、場所才標時間、地點"""
+    pair = (adj.lower_, prep.lower_)
+    if pair in L.ADJ_PREPS or pair in L.STATIVE_PAIRS:
+        return "副詞・表對象"
+    obj = next((c for c in prep.children if c.dep_ == "pobj"), None)
+    olemma = obj.lemma_.lower() if obj is not None else ""
+    if prep.lower_ in L.TIME_PREPS or olemma in L.TIME_NOUNS:
+        return "副詞・表時間"
+    if olemma in L.PLACE_NOUNS:
+        return "副詞・表地點"
+    return "副詞・表對象"
+
+
+def multi_opener_clause(adv):
+    """As soon as I got home：分析程式把 as soon 當副詞、子句掛在它底下。回傳 (子句的動詞, 功能)"""
+    words = [t for t in sorted(adv.subtree, key=lambda t: t.i) if not t.is_punct][:3]
+    clause = next((t for t in adv.subtree if t.dep_ in ("advcl", "ccomp") and t.pos_ in ("VERB", "AUX")), None)
+    if clause is None:
+        return None
+    for n in (3, 2):
+        phrase = " ".join(t.lower_ for t in words[:n])
+        if len(words) >= n and phrase in L.MULTI_SUBORDINATORS:
+            return clause, L.MULTI_SUBORDINATORS[phrase]
+    return None
+
+
+def has_perfect(verb):
+    return any(c.dep_ == "aux" and c.lemma_ == "have" for c in verb.children)
+
+
+def advcl_function(tok) -> Optional[str]:
+    opener, f = opener_tokens(tok)
+    no_subject = not any(c.dep_ in ("nsubj", "nsubjpass", "expl") for c in tok.children)
+    if opener and opener[0].lower_ == "since" and len(opener) == 1:
+        f = "表時間" if has_perfect(tok.head) or has_perfect(tok) else "表原因"
+    if opener:
+        if not f:
+            return None
+        # 沒有主詞的（While walking to class）是縮減後的副詞片語，不是完整的子句（Azar 18-1）
+        return f"副詞・{f}" if no_subject and tok.tag_ in ("VBG", "VBN") else f"副詞子句・{f}"
     if any(c.dep_ == "aux" and c.lower_ == "to" for c in tok.children):
         return "副詞・表目的"  # 不定詞表目的：to buy milk
+    if no_subject and tok.tag_ in ("VBG", "VBN"):
+        return "副詞・分詞構句"  # Walking to school, I saw a cat.
     return None
 
 
@@ -173,7 +222,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         return info
 
     be_aux = next((c for c in children if c.dep_ == "auxpass" and c.lemma_ == "be"), None)
-    if info.passive and be_aux is not None and v.lower_ in L.ADJ_PARTICIPLES and "agent" not in deps:
+    stative_pair = any(c.dep_ == "prep" and (v.lower_, c.lower_) in L.STATIVE_PAIRS for c in children)
+    if info.passive and be_aux is not None and (v.lower_ in L.ADJ_PARTICIPLES or stative_pair) and "agent" not in deps:
         # 其實是形容詞：The restaurant is crowded（句型三），不是被動語態
         info.passive = False
         roots[be_aux.i] = Spec(VERB_ROLE, clause=index)
@@ -188,8 +238,12 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("aux", clause=index)
             elif c.dep_ in ("advmod", "npadvmod") and c.i < v.i:
                 roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+            elif c.dep_ == "prep" and (v.lower_, c.lower_) in L.STATIVE_PAIRS:
+                roots[c.i] = Spec("M", function="副詞・表對象", clause=index)  # interested in art
             elif c.dep_ in ("prep", "advmod", "npadvmod") and adverb_function(c) in ("副詞・表時間", "副詞・表地點"):
                 roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+            elif c.dep_ == "prep" and c.i > v.i:
+                roots[c.i] = Spec("M", function="副詞・表對象", clause=index)  # interested in art
         info.pattern = 3
         return info
 
@@ -280,6 +334,10 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         ):
             obj = next(o for o in children if o.dep_ == "dobj")
             roots[c.i] = Spec("M", function="形容詞・修飾", modifies=obj, clause=index)
+        elif d == "advmod" and multi_opener_clause(c) is not None:
+            clause_verb, f = multi_opener_clause(c)
+            roots[c.i] = Spec("M", function=f"副詞子句・{f}", clause=index, kind="advcl", inner_verb=clause_verb)
+            info.flags.add("subordinating_conj")
         elif d in ("prep", "agent", "advmod", "npadvmod", "intj"):
             roots[c.i] = Spec("M", function=adverb_function(c), clause=index,
                               kind="npadv" if d == "npadvmod" else "")
@@ -289,6 +347,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("M", function=f, clause=index, kind="advcl", inner_verb=c if f.startswith("副詞子句") else None)
                 if f.startswith("副詞子句"):
                     info.flags.add("subordinating_conj")
+                elif f == "副詞・分詞構句" or (f != "副詞・表目的" and c.tag_ in ("VBG", "VBN")):
+                    info.flags.add("participle_phrase")
             else:
                 roots[c.i] = Spec("unknown", clause=index)
         elif d in ("punct", "prt", "cc", "conj", "mark"):
@@ -301,13 +361,28 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         do = dative_fix[1]
         roots[do.i] = Spec("DO", clause=index, inner_verb=do if do.pos_ in ("VERB", "AUX") else None)
 
-    # so excited … that they could not sleep：that 子句是「表結果」的副詞子句
-    for r in [c for c in children if c.i in roots and roots[c.i].role in ("SC", "OC")]:
-        if any(g.lower_ in ("so", "such") for g in r.subtree):
-            for g in r.children:
-                if g.dep_ in ("ccomp", "advcl") and any(m.dep_ == "mark" and m.lower_ == "that" for m in g.children):
-                    roots[g.i] = Spec("M", function="副詞子句・表結果", clause=index, kind="advcl", inner_verb=g)
-                    info.flags.add("so_that")
+    # so／such … that：that 子句是「表結果」的副詞子句（Azar 19-4）
+    #   so excited that…、such good coffee that…、speaks so fast that…
+    for g in v.subtree:
+        if g.dep_ not in ("ccomp", "advcl") or g.i == v.i:
+            continue
+        if not any(m.dep_ == "mark" and m.lower_ == "that" for m in g.children):
+            continue
+        anchor = g.head
+        while anchor.pos_ not in ("VERB", "AUX") and anchor.head.i != anchor.i:
+            anchor = anchor.head
+        if anchor.i != v.i:
+            continue  # 屬於別的子句
+        before = [t for t in g.head.subtree if t.i < g.i and t not in set(g.subtree)]
+        if any(t.lower_ in ("so", "such") for t in before):
+            roots[g.i] = Spec("M", function="副詞子句・表結果", clause=index, kind="advcl", inner_verb=g)
+            info.flags.add("so_such_that")
+
+    # 形容詞補語後面的介系詞片語另外切開：excited [about the trip]、popular [with tourists]
+    for r in [c for c in children if c.i in roots and roots[c.i].role in ("SC", "OC") and c.pos_ == "ADJ"]:
+        for g in r.children:
+            if g.dep_ == "prep" and g.i > r.i and g.i not in roots:
+                roots[g.i] = Spec("M", function=adjective_pp_function(r, g), clause=index)
 
     # 虛主詞 It：It is hard to learn English → to learn English 是真主詞
     subj = subjects[0] if subjects else None
@@ -421,11 +496,25 @@ def expand_noun_modifiers(roots, tokens, owner_of):
                     else:
                         roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause)
                     changed = True
+                elif g.dep_ in ("relcl", "acl") and any(t.lower_ in ("so", "such") for t in tok.subtree if t.i < tok.i) \
+                        and any(t.lower_ == "that" and t.i < g.i + 1 for t in g.subtree) \
+                        and not any(t.lower_ == "that" and t.dep_ in ("nsubj", "dobj", "nsubjpass") for t in g.children):
+                    # such good coffee that I had another cup：that 子句表結果（Azar 19-4）
+                    roots[g.i] = Spec("M", function="副詞子句・表結果", clause=spec.clause, kind="advcl", inner_verb=g)
+                    changed = True
                 elif g.dep_ == "relcl":
                     roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause, kind="relcl", inner_verb=g)
                     changed = True
                 elif g.dep_ == "acl":
                     roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause, kind="acl")
+                    changed = True
+                elif g.dep_ == "appos":
+                    # Paris, the capital of France：同位語（Azar 13-15）
+                    roots[g.i] = Spec("M", function="同位語・說明", modifies=tok, clause=spec.clause, kind="appos")
+                    changed = True
+                elif g.dep_ == "amod" and len(list(g.subtree)) > 1:
+                    # the woman responsible for the error：名詞後面的形容詞片語
+                    roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause, kind="post_adj")
                     changed = True
 
 
@@ -564,7 +653,7 @@ def to_chunks(sent, roots, clause_infos, text, base, flags, vars_, tokens=None, 
         heads = [h for h in heads if sp[0] <= h.idx - base < sp[1]]
         inner = []
         if with_inner and spec.inner_verb is not None:
-            inner = inner_chunks(sent, spec.inner_verb, text, base)
+            inner = inner_chunks(sent, spec.inner_verb, text, base, top=root)
         modifies = None
         if spec.modifies is not None:
             m = spec.modifies
@@ -581,18 +670,29 @@ def to_chunks(sent, roots, clause_infos, text, base, flags, vars_, tokens=None, 
     return chunks
 
 
-def inner_chunks(sent, verb, text, base):
-    """可以展開的子句（形容詞子句、副詞子句）內部的拆解"""
+def inner_chunks(sent, verb, text, base, top=None):
+    """可以展開的子句（形容詞子句、副詞子句）內部的拆解；top 是整個片段的根（連接詞可能掛在子句外面）"""
     roots = {}
     info = assign_clause(verb, roots, 0, sent)
-    opener = clause_opener(verb)
-    if opener is not None:
-        roots[opener.i] = Spec("conj")
-    roots = {i: s for i, s in roots.items() if sent.doc[i] in set(verb.subtree)}
-    sub = list(verb.subtree)
+    for t in opener_tokens(verb)[0]:
+        roots[t.i] = Spec("conj")
+    scope = set(verb.subtree)
+    if top is not None and top.i != verb.i:
+        for t in top.subtree:
+            if t not in scope and not t.is_punct:
+                roots[t.i] = Spec("conj")
+                scope.add(t)
+    roots = {i: s for i, s in roots.items() if sent.doc[i] in scope}
+    sub = sorted(scope, key=lambda t: t.i)
     out = to_chunks(sent, roots, {0: info}, text, base, set(), {}, tokens=sub, with_inner=False)
-    result = []
+    merged = []
     for c in out:
+        if merged and merged[-1]["role"] == "conj" and c["role"] == "conj" and text[merged[-1]["end"]:c["start"]].strip() == "":
+            prev = merged.pop()
+            c = dict(prev, end=c["end"], text=text[prev["start"]:c["end"]])
+        merged.append(c)
+    result = []
+    for c in merged:
         c.pop("_root"), c.pop("_spec")
         c["heads"], c["inner"], c["clause"] = [], [], 0
         if c["role"] == "M" and not c["function"]:
@@ -607,7 +707,7 @@ CARD_ORDER = [
     "yes_no_question", "dummy_it", "gerund_subject", "coordinating_conj",
     "subordinating_conj", "relative_pronoun", "causative_perception", "dative_verbs",
     "linking_verbs", "to_v_or_ving_object", "quantifier_of", "unit_of",
-    "verb_multiple_patterns", "modifier_position",
+    "verb_multiple_patterns", "parallel_structure", "participle_phrase", "appositive", "so_such_that", "modifier_position",
 ]
 MAX_CARDS = 3
 
@@ -695,9 +795,8 @@ def analyze_sentence(text: str) -> SentenceResult:
             for c in root.children:
                 if c.dep_ == "cc":
                     roots[c.i] = Spec("conj", clause=0)
-            kind = "compound"
-            flags.add("coordinating_conj")
-            flags.add("shared_subject")
+            # 動詞 ＋ and ＋ 動詞 是同一個句子裡的平行結構，不是兩個子句（Azar 16-1）
+            flags.add("parallel_structure")
         else:
             for c in root.children:
                 if c.dep_ in ("conj", "cc"):
@@ -735,6 +834,10 @@ def analyze_sentence(text: str) -> SentenceResult:
     # 修飾語位置：形容詞修飾語放在名詞後面
     if any(c["_spec"].modifies is not None and c["_spec"].modifies.i < c["_root"].i for c in raw):
         flags.add("modifier_position")
+    if any(c["_spec"].function == "副詞子句・表結果" for c in raw):
+        flags.add("so_such_that")
+    if any(c["_spec"].kind == "appos" for c in raw):
+        flags.add("appositive")
     if any(c["_spec"].kind == "relcl" and any(t.tag_ in ("WDT", "WP", "WP$") or t.lower_ == "that"
                                               for t in c["_root"].subtree) for c in raw):
         flags.add("relative_pronoun")
@@ -798,15 +901,18 @@ def analyze_sentence(text: str) -> SentenceResult:
     chunks = []
     for i, c in enumerate(raw):
         c["id"] = i
-        c["note"] = chunk_note(c, infos, stext)
+        c["note"] = chunk_note(c, infos, stext, compound=(kind == "compound"))
         c.pop("_root", None)
         c.pop("_spec", None)
         chunks.append(Chunk(**c))
 
-    clauses = [
-        Clause(index=i, pattern=info.pattern, passive=info.passive, formula=formula(info, chunks))
-        for i, info in infos.items()
-    ]
+    if "parallel_structure" in flags and kind != "compound":
+        clauses = parallel_clauses(infos, chunks)
+    else:
+        clauses = [
+            Clause(index=i, pattern=info.pattern, passive=info.passive, formula=formula(info, chunks))
+            for i, info in infos.items()
+        ]
     cards = [CardRef(id=f, vars=vars_.get(f, {})) for f in CARD_ORDER if f in flags][:MAX_CARDS]
     return SentenceResult(text=stext, status=status, message=message, kind=kind, clauses=clauses, chunks=chunks, cards=cards)
 
@@ -831,6 +937,25 @@ def analyze_text(text: str) -> list[SentenceResult]:
         results.append(SentenceResult(text=rest, status="failed", clauses=[], chunks=[],
                                       message=f"文章太長了，只分析前 {MAX_SENTENCES} 句，後面的 {len(parts) - MAX_SENTENCES} 句沒有分析。"))
     return results
+
+
+COUNT = {2: "兩", 3: "三", 4: "四"}
+
+
+def parallel_clauses(infos, chunks):
+    """平行結構的標題：句型相同 → 句型二：S + Vt + O（兩組 Vt + O 並列）；不同 → 各自列出，後面的主詞加括號"""
+    items = [infos[i] for i in sorted(infos)]
+    first = items[0]
+    if all(x.pattern == first.pattern and x.passive == first.passive for x in items):
+        f = formula(first, chunks)
+        rest = f.split("S + ", 1)[1]
+        n = COUNT.get(len(items), str(len(items)))
+        return [Clause(index=0, pattern=first.pattern, passive=first.passive, formula=f"{f}（{n}組 {rest} 並列）")]
+    out = []
+    for i, x in enumerate(items):
+        f = formula(x, chunks)
+        out.append(Clause(index=i, pattern=x.pattern, passive=x.passive, formula=f if i == 0 else f.replace("S + ", "（S）+ ", 1)))
+    return out
 
 
 FORMULA = {1: "S + Vi", 2: "S + Vt + O", 3: "S + V + SC", 4: "S + Vt + IO + DO", 5: "S + Vt + O + OC"}

@@ -1056,10 +1056,366 @@
   - role: V
     text: were
   - role: SC
-    text: so excited about the school trip
+    text: so excited
     head:
     - excited
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: about the school trip
   - role: M
     function: 副詞子句・表結果
     modifies: null
     text: that they could not sleep the night before
+- id: '60'
+  sentence: She stayed at home and read a book.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: stayed
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at home
+  - role: conj
+    text: and
+  - role: Vt
+    text: read
+  - role: O
+    text: a book
+    head:
+    - book
+- id: '61'
+  sentence: Paris, the capital of France, is a beautiful city.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Paris
+  - role: M
+    function: 同位語・說明Paris
+    modifies: null
+    text: the capital of France
+  - role: V
+    text: is
+  - role: SC
+    text: a beautiful city
+    head:
+    - city
+- id: '62'
+  sentence: My friend Tom lives in Tainan.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: My friend
+    head:
+    - friend
+  - role: M
+    function: 同位語・說明friend
+    modifies: null
+    text: Tom
+  - role: Vi
+    text: lives
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in Tainan
+- id: '63'
+  sentence: Ann is the woman responsible for the error.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Ann
+  - role: V
+    text: is
+  - role: SC
+    text: the woman
+    head:
+    - woman
+  - role: M
+    function: 形容詞・修飾
+    modifies: woman
+    text: responsible for the error
+- id: '64'
+  sentence: Walking to school, I saw a cat.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・分詞構句
+    modifies: null
+    text: Walking to school
+  - role: S
+    text: I
+  - role: Vt
+    text: saw
+  - role: O
+    text: a cat
+    head:
+    - cat
+- id: '65'
+  sentence: While walking to class, I ran into an old friend.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: While walking to class
+  - role: S
+    text: I
+  - role: Vi
+    text: ran
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: into an old friend
+- id: '66'
+  sentence: After finishing his homework, Peter went to bed.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: After finishing his homework
+  - role: S
+    text: Peter
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to bed
+- id: '67'
+  sentence: As soon as I got home, I called my mother.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: As soon as I got home
+  - role: S
+    text: I
+  - role: Vt
+    text: called
+  - role: O
+    text: my mother
+    head:
+    - mother
+- id: '68'
+  sentence: Even though it was raining, we went out.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Even though it was raining
+  - role: S
+    text: we
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: out
+- id: '69'
+  sentence: Now that you are here, we can start the meeting.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: Now that you are here
+  - role: S
+    text: we
+  - role: aux
+    text: can
+  - role: Vt
+    text: start
+  - role: O
+    text: the meeting
+    head:
+    - meeting
+- id: '70'
+  sentence: Since I came here, I have learned a lot of English.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: Since I came here
+  - role: S
+    text: I
+  - role: aux
+    text: have
+  - role: Vt
+    text: learned
+  - role: O
+    text: a lot of English
+- id: '71'
+  sentence: Since it is raining, we will stay home.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: Since it is raining
+  - role: S
+    text: we
+  - role: aux
+    text: will
+  - role: Vi
+    text: stay
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: home
+- id: '72'
+  sentence: It was such good coffee that I had another cup.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: was
+  - role: SC
+    text: such good coffee
+    head:
+    - coffee
+  - role: M
+    function: 副詞子句・表結果
+    modifies: null
+    text: that I had another cup
+- id: '73'
+  sentence: She speaks so fast that I cannot understand her.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: speaks
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: so fast
+  - role: M
+    function: 副詞子句・表結果
+    modifies: null
+    text: that I cannot understand her
+- id: '74'
+  sentence: Night markets are popular with tourists from other countries.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Night markets
+    head:
+    - markets
+  - role: V
+    text: are
+  - role: SC
+    text: popular
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: with tourists
+  - role: M
+    function: 形容詞・修飾
+    modifies: tourists
+    text: from other countries
+- id: '75'
+  sentence: I am interested in Chinese art.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: V
+    text: am
+  - role: SC
+    text: interested
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: in Chinese art
+- id: '76'
+  sentence: This table is made of wood.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: This table
+    head:
+    - table
+  - role: V
+    text: is
+  - role: SC
+    text: made
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: of wood
+- id: '77'
+  sentence: I am at school.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vi
+    text: am
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at school
+- id: '78'
+  sentence: I left my keys at school.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: left
+  - role: O
+    text: my keys
+    head:
+    - keys
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at school
+- id: '79'
+  sentence: Please put the book on the table.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Please
+  - role: S
+    text: (You)
+  - role: Vt
+    text: put
+  - role: O
+    text: the book
+    head:
+    - book
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: on the table

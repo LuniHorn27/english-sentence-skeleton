@@ -1,0 +1,40 @@
+id: participle_phrase
+title: 分詞構句
+brief: 副詞子句省略主詞、動詞改成 V-ing，變成比較簡潔的副詞片語。
+trigger: 句首或句尾有沒有主詞的 V-ing／p.p. 片語，用來修飾主要句子
+blocks:
+- type: formula
+  text: （連接詞）＋ V-ing …, 主要句子
+- type: heading
+  text: 怎麼來的
+- type: examples
+  examples:
+  - en: <b>While I was walking</b> to school, I saw a cat.
+    zh: 副詞子句
+    mark: none
+  - en: <b>While walking</b> to school, I saw a cat.
+    zh: 省略主詞和 be 動詞
+    mark: none
+  - en: <b>Walking</b> to school, I saw a cat.
+    zh: 連接詞也省略
+    mark: none
+- type: heading
+  text: 常見的意思
+- type: list
+  items:
+  - 同時：一邊……一邊……
+  - 原因：因為……
+  - 時間：……之後（After finishing…）
+- type: tip
+  text: 只有「副詞子句的主詞」和「主要句子的主詞」相同時，才能這樣省略。
+- type: warn
+  text: 主詞不同時不能省略，否則意思會變得很奇怪。
+  examples:
+  - en: Walking home, a dog followed me.
+    zh: （看起來像是狗在走路回家）
+    mark: 'no'
+  - en: Walking home, I was followed by a dog.
+    zh: ''
+    mark: ok
+see_also:
+- subordinating_conj

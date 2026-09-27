@@ -18,6 +18,7 @@ ADVERB_NOTE = {
     "副詞子句・表目的": "副詞子句：說明「為了什麼」。它不能單獨成句。",
     "副詞子句・表地點": "副詞子句：說明「在哪裡」。它不能單獨成句。",
     "副詞子句・表結果": "so／such … that 的 that 子句：說明「所以導致什麼結果」。",
+    "副詞子句・表對比": "副詞子句：和主要句子形成對比（whereas、while）。它不能單獨成句。",
 }
 
 
@@ -26,13 +27,13 @@ def _head(c):
     return "、".join(h.text for h in heads)
 
 
-def chunk_note(c, infos, text) -> str:
+def chunk_note(c, infos, text, compound=None) -> str:
     role = c["role"]
     spec = c.get("_spec")
     root = c.get("_root")
     info = infos.get(c.get("clause", 0))
     head = _head(c)
-    compound = len(infos) > 1
+    compound = len(infos) > 1 if compound is None else compound
     prefix = f"子句{'一二三四'[c.get('clause', 0)]}的" if compound and role not in ("M", "conj") else ""
 
     if role == "S":
@@ -101,9 +102,16 @@ def chunk_note(c, infos, text) -> str:
         word = c["text"].lower()
         if compound:
             return f"對等連接詞 {word}，連接兩個完整的句子。它不屬於任何一個子句，所以不算進公式。"
+        if len(infos) > 1:
+            return f"對等連接詞 {word}，連接兩個動詞（平行結構）：主詞只出現一次，兩個動詞共用同一個主詞。"
         return f"連接詞 {word}，帶出後面的子句。"
     if role == "M":
         f = c.get("function") or ""
+        if f == "同位語・說明":
+            target = c["modifies"].text if c.get("modifies") else ""
+            return f"同位語：緊接在 {target} 後面，換個說法補充說明 {target} 是誰或是什麼，兩者指的是同一個人事物。"
+        if f == "副詞・分詞構句":
+            return "分詞構句：由副詞子句省略主詞、動詞改成 V-ing（或 p.p.）變來的，主詞和主要句子相同。常表示「同時」或「原因」。"
         if f == "引導詞":
             return "There 在這裡不是「那裡」，只是用來引出主詞的引導詞。看下方文法重點。"
         if f == "形容詞・修飾":
@@ -117,6 +125,10 @@ def chunk_note(c, infos, text) -> str:
                 note += f"也可以理解成說明動作發生的地點（副詞），意思差不多。"
             return note
         base = ADVERB_NOTE.get(f, "")
+        if f.startswith("副詞・表") and root is not None and root.dep_ == "advcl" and root.tag_ in ("VBG", "VBN"):
+            base = f"由副詞子句縮減而來的副詞片語（省略主詞、動詞改成 V-ing），{base}"
+        if f == "副詞・表地點" and root is not None and root.head.lemma_ in ("be", "live", "put", "place", "lay", "set", "stay"):
+            base += "這裡的地點是動詞必需的，拿掉之後句子意思就不完整。"
         if spec is not None and spec.kind == "ambiguous_place":
             base += "也可以理解成修飾前面的名詞（例如「花園裡的花」），意思差不多。"
         if c.get("inner"):

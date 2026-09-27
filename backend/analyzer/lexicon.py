@@ -107,6 +107,7 @@ SUBORDINATORS = {
     "once": "表時間", "whenever": "表時間",
     "because": "表原因",
     "where": "表地點", "wherever": "表地點",
+    "whereas": "表對比",
     "if": "表條件", "unless": "表條件",
     "although": "表讓步", "though": "表讓步",
     "so": "表目的",
@@ -130,6 +131,8 @@ VERB_PREP_OBJECT = {
     ("smile", "at"), ("point", "at"), ("stare", "at"), ("agree", "with"), ("worry", "about"),
     ("dream", "of"), ("dream", "about"), ("hear", "of"), ("hear", "about"), ("speak", "to"),
     ("reply", "to"), ("ask", "for"), ("pay", "for"), ("search", "for"), ("apply", "for"),
+    ("run", "into"), ("bump", "into"), ("come", "across"), ("look", "into"), ("deal", "with"),
+    ("take", "care"), ("get", "along"), ("take", "after"),
 }
 
 # 看起來像被動、其實當形容詞用的過去分詞（is crowded → 句型三 S + V + SC）
@@ -143,3 +146,39 @@ ADJ_PARTICIPLES = {
 
 # 名詞 ＋ to（the door to success、the way to school）：to 片語修飾前面的名詞
 NOUNS_TAKING_TO = {"door", "way", "key", "road", "path", "answer", "solution", "entrance", "gate", "access", "trip", "visit", "invitation", "journey", "route"}
+
+# 多字的從屬連接詞（Azar 17-1）
+MULTI_SUBORDINATORS = {
+    "as soon as": "表時間", "by the time": "表時間", "every time": "表時間",
+    "the first time": "表時間", "the last time": "表時間", "the next time": "表時間",
+    "as long as": "表條件", "so long as": "表條件", "in case": "表條件", "only if": "表條件",
+    "even if": "表讓步", "even though": "表讓步",
+    "now that": "表原因",
+    "so that": "表目的", "in order that": "表目的",
+}
+
+# 狀態被動：過去分詞 ＋ 固定介系詞（Azar 11-5、11-6），當形容詞用
+STATIVE_PAIRS = {
+    ("made", "of"), ("made", "from"), ("known", "for"), ("known", "as"), ("covered", "with"),
+    ("filled", "with"), ("located", "in"), ("located", "on"), ("located", "at"), ("located", "near"),
+    ("interested", "in"), ("satisfied", "with"), ("married", "to"), ("done", "with"),
+    ("finished", "with"), ("related", "to"), ("involved", "in"), ("dressed", "in"),
+    ("composed", "of"), ("qualified", "for"), ("prepared", "for"), ("opposed", "to"),
+    ("devoted", "to"), ("accustomed", "to"), ("used", "to"), ("scared", "of"), ("tired", "of"),
+    ("excited", "about"), ("worried", "about"), ("pleased", "with"), ("disappointed", "in"),
+    ("disappointed", "with"), ("surprised", "at"), ("surprised", "by"), ("crowded", "with"),
+}
+
+# 需要地點才完整的動詞（七大句型的 SVA、SVOA）：地點修飾語不能省略
+PLACE_REQUIRED_VERBS = {"be", "live", "put", "place", "lay", "set", "stay"}
+
+# 形容詞 ＋ 固定介系詞：後面的介系詞片語是「對象」（interested in art、good at math）
+ADJ_PREPS = {
+    ("interested", "in"), ("good", "at"), ("bad", "at"), ("afraid", "of"), ("proud", "of"),
+    ("famous", "for"), ("full", "of"), ("different", "from"), ("similar", "to"), ("kind", "to"),
+    ("responsible", "for"), ("popular", "with"), ("excited", "about"), ("worried", "about"),
+    ("angry", "with"), ("angry", "at"), ("sorry", "about"), ("sorry", "for"), ("aware", "of"),
+    ("fond", "of"), ("tired", "of"), ("busy", "with"), ("familiar", "with"), ("careful", "with"),
+    ("happy", "with"), ("happy", "about"), ("ready", "for"), ("late", "for"), ("good", "for"),
+    ("bad", "for"), ("close", "to"), ("far", "from"), ("nice", "to"), ("polite", "to"),
+}

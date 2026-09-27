@@ -1,0 +1,34 @@
+id: parallel_structure
+title: 平行結構
+brief: 一個主詞後面接兩個（或更多）動詞，用 and、or、but 連起來，主詞只寫一次。
+trigger: 主要動詞後面用 and／or／but 連接另一個動詞，而且第二個動詞沒有自己的主詞
+blocks:
+- type: formula
+  text: S ＋ 動詞一 … ＋ and ＋ 動詞二 …
+- type: examples
+  examples:
+  - en: You should <b>read</b> books <b>and practice</b> writing.
+    zh: 兩個動詞共用主詞 you
+    mark: none
+  - en: She <b>raised</b> her hand, <b>snapped</b> her fingers, <b>and asked</b> a question.
+    zh: 三個以上用逗號隔開
+    mark: none
+- type: heading
+  text: 和對等句的差別
+- type: list
+  items:
+  - 平行結構：主詞只出現一次，是<b>一個句子</b>裡的兩組動詞。
+  - 對等句：and／but 前後<b>各有自己的主詞</b>，是兩個完整的句子（I like tea, but <b>she</b> likes coffee.）。
+- type: tip
+  text: 平行的部分要用相同的形式：動詞配動詞、名詞配名詞、不定詞配不定詞。
+- type: warn
+  text: 連接的部分形式要一致。
+  examples:
+  - en: She likes swimming and to run.
+    zh: ''
+    mark: 'no'
+  - en: She likes swimming and running.
+    zh: ''
+    mark: ok
+see_also:
+- coordinating_conj
