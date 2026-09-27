@@ -130,7 +130,6 @@ if FEEDBACK_DATASET and os.environ.get("HF_TOKEN"):
 
 class Feedback(BaseModel):
     kind: Literal["error", "suggestion"]
-    topic: Optional[Literal["praise", "improve", "idea"]] = Field(None, description="建議的類型：覺得好用／需要改進／想要新功能")
     sentence: str = Field("", max_length=2000)
     part: str = Field("", max_length=300, description="使用者選的片段或項目")
     current: str = Field("", max_length=300, description="目前的分析結果")
@@ -159,7 +158,7 @@ def _send_to_sheet(record: dict):
     def post():
         import urllib.request
 
-        data = json.dumps({k: record.get(k) for k in ("time", "kind", "topic", "sentence", "part", "current", "message")}, ensure_ascii=False)
+        data = json.dumps({k: record.get(k) for k in ("time", "kind", "sentence", "part", "current", "message")}, ensure_ascii=False)
         req = urllib.request.Request(url, data=data.encode("utf-8"), headers={"Content-Type": "application/json"})
         try:
             urllib.request.urlopen(req, timeout=15).read()
@@ -169,14 +168,11 @@ def _send_to_sheet(record: dict):
     threading.Thread(target=post, daemon=True).start()
 
 
-TOPIC_NAME = {"praise": "👍 有人覺得好用", "improve": "🛠️ 有人覺得需要改進", "idea": "💡 有人想要新功能"}
-
-
 def _notify_mac(item: "Feedback"):
     """網站在自己的 Mac 上執行時，有新回饋就跳出系統通知（只在這台 Mac 上，不送到外部服務）"""
     if sys.platform != "darwin" or os.environ.get("FEEDBACK_NOTIFY") == "0":
         return
-    title = "新的回報錯誤" if item.kind == "error" else TOPIC_NAME.get(item.topic or "", "新的回饋")
+    title = "新的回報錯誤" if item.kind == "error" else "新的回饋"
     body = " ".join(item.message.split())[:80]
     script = 'on run argv\ndisplay notification (item 2 of argv) with title "英文句子骨架分析" subtitle (item 1 of argv) sound name "Glass"\nend run'
     try:
@@ -220,7 +216,7 @@ def feedback_list(request: Request):
     rows = []
     for r in records:
         local = datetime.fromisoformat(r["time"]).astimezone().strftime("%Y-%m-%d %H:%M")
-        kind = "🐞 回報錯誤" if r.get("kind") == "error" else {"praise": "👍 覺得好用", "improve": "🛠️ 需要改進", "idea": "💡 想要新功能"}.get(r.get("topic"), "💬 建議")
+        kind = "🐞 回報錯誤" if r.get("kind") == "error" else "💬 一起讓它更好"
         where = f"{esc(r.get('part', ''))}（目前：{esc(r.get('current') or '—')}）" if r.get("part") else ""
         rows.append(f"<tr><td>{local}</td><td>{kind}</td><td>{esc(r.get('sentence', ''))}</td><td>{where}</td><td>{esc(r.get('message', ''))}</td></tr>")
     body = "".join(rows) or '<tr><td colspan="5">目前還沒有回饋。</td></tr>'
