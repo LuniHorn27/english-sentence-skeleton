@@ -325,7 +325,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         elif d == "acomp":
             roots[c.i] = Spec("OC" if (info.passive or has_obj) else "SC", clause=index)
         elif d == "oprd":
-            roots[c.i] = Spec("OC", clause=index)
+            # He seems happy.、The door swung open.：沒有受詞時是主詞補語
+            roots[c.i] = Spec("OC" if (has_obj or info.passive) else "SC", clause=index)
         elif d in ("xcomp", "ccomp"):
             assign_complement(c, v, roots, index, info, has_obj)
         elif d == "prep" and c.lower_ == "to" and any(
@@ -341,6 +342,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         elif d in ("prep", "agent", "advmod", "npadvmod", "intj"):
             roots[c.i] = Spec("M", function=adverb_function(c), clause=index,
                               kind="npadv" if d == "npadvmod" else "")
+        elif d == "advcl" and c.pos_ == "ADJ" and c.i == v.i + 1 and not has_obj and not list(c.children):
+            roots[c.i] = Spec("SC", clause=index)  # The door flew open.
         elif d == "advcl":
             f = advcl_function(c)
             if f:
@@ -355,6 +358,14 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             continue  # 標點不分配；片語動詞的介副詞留在動詞裡；對等連接由外層處理
         else:
             roots[c.i] = Spec("unknown", clause=index)
+
+    # 賴世雄：turned him into a good student、regard him as a genius → into／as 片語是受詞補語
+    if has_obj or info.passive:
+        for c in children:
+            if c.dep_ == "prep" and (v.lemma_.lower(), c.lower_) in L.OC_PREP_VERBS \
+                    and any(g.dep_ == "pobj" for g in c.children) \
+                    and (info.passive or any(o.dep_ == "dobj" and o.i < c.i for o in children)):
+                roots[c.i] = Spec("OC", clause=index)
 
     if dative_fix:
         roots[dative_fix[0].i] = Spec("IO", clause=index)
@@ -431,6 +442,9 @@ def assign_complement(c, v, roots, index, info, has_obj):
             info.flags.add("verb_obj_to_v")
         if v.lemma_.lower() in L.CAUSATIVE_PERCEPTION:
             info.flags.add("causative_perception")
+    elif c.dep_ == "xcomp" and has_to and not has_obj and v.lemma_.lower() in L.SEEM_VERBS:
+        # 賴世雄：He seems to know it.、He seems to be a nice man. → 不定詞是主詞補語
+        roots[c.i] = Spec("SC", clause=index)
     else:
         opener = clause_opener(c)
         roots[c.i] = Spec("O", clause=index, inner_verb=c if opener is not None and c.dep_ == "ccomp" else None)

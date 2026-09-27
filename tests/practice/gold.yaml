@@ -1419,3 +1419,105 @@
     function: 副詞・表地點
     modifies: null
     text: on the table
+- id: '80'
+  sentence: He seems happy.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: V
+    text: seems
+  - role: SC
+    text: happy
+- id: '81'
+  sentence: The door swung open.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The door
+    head:
+    - door
+  - role: V
+    text: swung
+  - role: SC
+    text: open
+- id: '82'
+  sentence: He seems to know the answer.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: V
+    text: seems
+  - role: SC
+    text: to know the answer
+- id: '83'
+  sentence: She seems to be a kind person.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: seems
+  - role: SC
+    text: to be a kind person
+- id: '84'
+  sentence: The experience turned him into a good student.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The experience
+    head:
+    - experience
+  - role: Vt
+    text: turned
+  - role: O
+    text: him
+  - role: OC
+    text: into a good student
+- id: '85'
+  sentence: We regard him as a genius.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: regard
+  - role: O
+    text: him
+  - role: OC
+    text: as a genius
+- id: '86'
+  sentence: Many people see Taipei 101 as a symbol of Taiwan.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Many people
+    head:
+    - people
+  - role: Vt
+    text: see
+  - role: O
+    text: Taipei 101
+  - role: OC
+    text: as a symbol of Taiwan
+- id: '87'
+  sentence: He is regarded as a great leader.
+  pattern: 5
+  passive: true
+  chunks:
+  - role: S
+    text: He
+  - role: aux
+    text: is
+  - role: Vt
+    text: regarded
+  - role: OC
+    text: as a great leader

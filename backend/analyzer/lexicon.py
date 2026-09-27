@@ -25,6 +25,18 @@ DATIVE_VERBS = {
     "build", "bake", "draw", "fetch", "order",
 }
 
+# seem ＋ 不定詞：不定詞是主詞補語（賴世雄 p.32）
+SEEM_VERBS = {"seem", "appear"}
+
+# 動詞 ＋ 受詞 ＋ into／as 片語：片語是受詞補語（賴世雄 p.54、p.58）
+#   take … for 也在書上，但 take the dog for a walk 的 for 是表目的，容易混淆，先不收
+OC_PREP_VERBS = {
+    ("turn", "into"), ("change", "into"), ("make", "into"), ("transform", "into"), ("convert", "into"),
+    ("regard", "as"), ("view", "as"), ("see", "as"), ("treat", "as"), ("describe", "as"),
+    ("consider", "as"), ("accept", "as"), ("recognize", "as"), ("define", "as"),
+    ("elect", "as"), ("appoint", "as"), ("choose", "as"),
+}
+
 # 使役動詞、感官動詞：＋ 受詞 ＋ 原形動詞
 CAUSATIVE_PERCEPTION = {"make", "let", "have", "help", "see", "hear", "watch", "feel", "notice"}
 
