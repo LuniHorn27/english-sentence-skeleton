@@ -6,7 +6,8 @@ WORKDIR /home/app/site
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt \
- && python -m spacy download en_core_web_trf
+ && python -m spacy download en_core_web_trf \
+ && python -c "from kokoro import KPipeline; KPipeline(lang_code='a', repo_id='hexgrad/Kokoro-82M')"
 
 COPY backend backend
 COPY frontend frontend

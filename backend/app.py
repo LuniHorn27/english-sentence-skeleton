@@ -14,11 +14,12 @@ from typing import Literal, Optional
 
 import yaml
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from backend.analyzer.engine import analyze_text, get_nlp
+from backend import tts
 from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -30,7 +31,17 @@ log = logging.getLogger("uvicorn.error")
 async def lifespan(_app):
     get_nlp()  # 啟動時先載入分析程式，第一次分析才不會等很久
     log.info("分析程式載入完成")
+    # 朗讀模型在背景載入，不拖慢網站啟動
+    threading.Thread(target=_warm_tts, daemon=True).start()
     yield
+
+
+def _warm_tts():
+    try:
+        tts.get_pipeline()
+        log.info("朗讀模型載入完成")
+    except Exception:
+        log.exception("朗讀模型載入失敗，網頁會改用瀏覽器內建語音")
 
 
 app = FastAPI(title="英文句子骨架分析", lifespan=lifespan)
@@ -99,6 +110,24 @@ def feedback(item: Feedback, request: Request):
         with FEEDBACK_FILE.open("a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
     return {"ok": True}
+
+
+# ---------- 朗讀（Kokoro） ----------
+class SpeakRequest(BaseModel):
+    text: str = Field(min_length=1, max_length=tts.MAX_CHARS)
+    speed: Literal["normal", "slow"] = "normal"
+
+
+@app.post("/api/tts")
+def speak(req: SpeakRequest, request: Request):
+    # 用 POST 而不是把句子放在網址裡，句子才不會出現在伺服器的存取紀錄中
+    check_rate(request, "tts", 60, 60, "朗讀次數太多了，請等一分鐘後再試")
+    try:
+        audio = tts.synthesize(req.text, req.speed)
+    except Exception:
+        log.exception("朗讀失敗（輸入長度 %d 字元）", len(req.text))
+        raise HTTPException(503, "朗讀暫時無法使用")
+    return Response(content=audio, media_type="audio/wav", headers={"Cache-Control": "private, max-age=86400"})
 
 
 @app.get("/api/cards/{card_id}", response_model=Card)

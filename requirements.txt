@@ -9,9 +9,14 @@ spacy-curated-transformers==0.3.1
 torch==2.14.0
 transformers==4.57.6
 
+# 朗讀（Kokoro-82M，Apache 2.0）
+kokoro==0.9.4
+soundfile==0.14.0
+
 # 第 0 階段比較分析程式時用的（正式網站不需要）：
 #   stanza==1.14.0
 #   benepar==0.2.0
 
 # 模型（另外下載）：
 #   python -m spacy download en_core_web_trf
+#   Kokoro 模型第一次使用時會自動從 Hugging Face（hexgrad/Kokoro-82M）下載，約 330 MB
