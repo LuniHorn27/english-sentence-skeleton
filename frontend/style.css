@@ -203,6 +203,8 @@ textarea {
 @media (max-width: 480px) {
   .tx { font-size: 18px; white-space: normal; }
   .row { gap: 10px; }
+  .result-actions .ra-hint { flex-basis: 100%; text-align: center; }
+  .result-actions button { flex: 1 1 0; padding: 8px 10px; }
 }
 
 /* ---------- 五大句型介紹頁 ---------- */

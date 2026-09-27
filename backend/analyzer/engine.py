@@ -19,6 +19,7 @@ from . import lexicon as L
 from .notes import chunk_note
 from .phrases import find_phrases
 from .schema import CardRef, Chunk, Clause, SentenceResult, Span
+from .verb_check import check as verb_check
 
 NOMINAL = {"S", "O", "IO", "DO", "SC", "OC", "RS"}
 VERB_ROLE = "VERB"  # 動詞種類（Vt／Vi／V）等句型決定後再填
@@ -928,9 +929,17 @@ def analyze_sentence(text: str) -> SentenceResult:
             Clause(index=i, pattern=info.pattern, passive=info.passive, formula=formula(info, chunks))
             for i, info in infos.items()
         ]
+    for cl in clauses:
+        info = infos.get(cl.index)
+        if info is not None and info.verb_token is not None:
+            cl.verb = info.verb_token.lemma_.lower()
+            cl.doubt = verb_check(cl.verb, cl.pattern)
+    phrases = find_phrases(sent)
+    if any(p.kind == "慣用語" and " of " in f" {p.words} " for p in phrases):
+        flags = flags - {"unit_of", "quantifier_of"}  # a piece of cake 是慣用語，不是「一塊」蛋糕
     cards = [CardRef(id=f, vars=vars_.get(f, {})) for f in CARD_ORDER if f in flags][:MAX_CARDS]
     return SentenceResult(text=stext, status=status, message=message, kind=kind, clauses=clauses, chunks=chunks, cards=cards,
-                          phrases=find_phrases(sent))
+                          phrases=phrases)
 
 
 MAX_SENTENCES = 30
