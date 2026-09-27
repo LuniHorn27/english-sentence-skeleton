@@ -156,12 +156,21 @@ def _send_to_sheet(record: dict):
         return
 
     def post():
+        import urllib.error
         import urllib.request
 
         data = json.dumps({k: record.get(k) for k in ("time", "kind", "sentence", "part", "current", "message")}, ensure_ascii=False)
         req = urllib.request.Request(url, data=data.encode("utf-8"), headers={"Content-Type": "application/json"})
+
+        class NoRedirect(urllib.request.HTTPRedirectHandler):
+            def redirect_request(self, *args, **kwargs):
+                return None  # Google 寫完後會轉到結果頁，不用跟過去
+
         try:
-            urllib.request.urlopen(req, timeout=15).read()
+            urllib.request.build_opener(NoRedirect).open(req, timeout=15).read()
+        except urllib.error.HTTPError as e:
+            if e.code != 302:  # 302 代表 Google 已經寫進試算表
+                log.warning("回饋送到試算表失敗：HTTP %s（本機檔案已保存）", e.code)
         except Exception:  # 送不到試算表時，本機檔案裡還有一份
             log.warning("回饋送到試算表失敗（本機檔案已保存）")
 
