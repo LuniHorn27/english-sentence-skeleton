@@ -1,0 +1,20 @@
+{
+  "name": "five-patterns-video",
+  "private": true,
+  "description": "五大句型教學影片（Remotion）",
+  "scripts": {
+    "studio": "remotion studio",
+    "sample": "remotion render Sample out/sample.mp4",
+    "render": "remotion render FivePatterns out/五大句型.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}
