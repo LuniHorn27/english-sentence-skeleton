@@ -1,7 +1,8 @@
 # 動詞句型字典（草稿，由 tools/build_verb_dict.py 產生，請勿手動修改；要改請改程式或審核清單）
 # 每個動詞列出可以用的句型，以及是哪些來源說的：
 #   VerbNet＝VerbNet 3.4 換算、VerbNet?＝換算時有疑問、ECDICT＝字典標 vt./vi.、
-#   賴世雄＝《教你學英語語法》上冊、字表＝lexicon.py、題庫＝練習題標準答案
+#   賴世雄＝《教你學英語語法》上冊、字表＝lexicon.py、題庫＝練習題標準答案、
+#   補充＝文法書常見動詞表（build_verb_dict.py 的 SUPPLEMENT）
 # 句型代號：SV 句型一 S+Vi、SVC 句型二 S+V+SC、SVO 句型三 S+Vt+O、
 #           SVOC 句型四 S+Vt+O+OC、SVOO 句型五 S+Vt+IO+DO
 # common: true＝常用動詞（牛津 3000、中國中考／高考字表、或其他來源提到）
@@ -9,7 +10,8 @@
 # 本檔部分內容衍生自 VerbNet 3.4。
 # VerbNet 3.0 (or 3.X) Copyright 2009 by University of Colorado. All rights reserved.
 # 依其授權條款使用（含免責聲明），條款全文見 backend/analyzer/LICENSE-VerbNet.txt。
-# 例句（examples）取自 VerbNet。及物／不及物資訊取自 ECDICT（MIT 授權）。
+# 例句（examples）取自 VerbNet。及物／不及物資訊取自 ECDICT（MIT 授權，Copyright (c) 2025 Linwei，
+# 條款全文見 backend/analyzer/LICENSE-ECDICT.txt）。
 - verb: December
   common: false
   patterns:
@@ -56,12 +58,15 @@
 - verb: abash
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: abate
@@ -521,10 +526,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The computer connected well to the network.
     SVO: Herman added a computer to the network.
 - verb: addict
   common: false
@@ -689,7 +696,7 @@
     SVOO:
     - VerbNet
   examples:
-    SV: GDP increased.
+    SV: GDP increased easily.
     SVO: Lawmakers cut the budget by 10% from $1.46 million to $1.3 million.
     SVOO: I promised somebody my time.
 - verb: advantage
@@ -727,6 +734,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
     SVOO:
     - VerbNet
   examples:
@@ -741,12 +750,15 @@
 - verb: affect
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: affiliate
@@ -759,7 +771,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: affirm
   common: false
@@ -774,23 +786,29 @@
 - verb: affix
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
     SVOC: Linda taped the box shut.
 - verb: afflict
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: afford
@@ -798,15 +816,19 @@
   patterns:
     SVO:
     - ECDICT
+    - 補充
 - verb: affront
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: africanize
@@ -843,20 +865,25 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: aggravate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: aggregate
@@ -872,12 +899,15 @@
 - verb: aggrieve
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: agitate
@@ -885,12 +915,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: agonize
@@ -905,7 +937,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: agree
@@ -914,9 +946,11 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
   examples:
     SV: They agreed.
     SVO: We agreed what to do.
@@ -981,12 +1015,15 @@
 - verb: alarm
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: alcoholize
@@ -1011,12 +1048,15 @@
 - verb: alienate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: alkalify
@@ -1091,8 +1131,11 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
     SVOO:
     - VerbNet
+    - 補充
   examples:
     SVO: She admitted us.
     SVOO: They allowed us to smoke.
@@ -1139,7 +1182,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: amalgamate
   common: false
@@ -1149,7 +1192,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Ice cream integrates with desserts.
+    SV: The folk songs alternated well with pop songs.
     SVO: We incorporated cranberries into our salad.
 - verb: amass
   common: false
@@ -1165,12 +1208,15 @@
 - verb: amaze
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: amble
@@ -1253,12 +1299,15 @@
 - verb: amuse
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: analyse
@@ -1280,12 +1329,15 @@
 - verb: anchor
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: anesthetize
@@ -1308,7 +1360,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: angle
@@ -1388,12 +1440,15 @@
 - verb: annoy
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: annul
@@ -1432,12 +1487,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: anticipate
@@ -1477,12 +1534,15 @@
 - verb: appall
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: appeal
@@ -1514,12 +1574,15 @@
 - verb: appease
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: applaud
@@ -1544,6 +1607,7 @@
   patterns:
     SV:
     - ECDICT
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -1730,12 +1794,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: arrange
@@ -1743,6 +1809,7 @@
   patterns:
     SVO:
     - VerbNet
+    - 補充
     SVOO:
     - VerbNet
   examples:
@@ -1809,11 +1876,13 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet?
+    - 補充
     - 賴世雄
     - 題庫
     SVOO:
@@ -1964,17 +2033,20 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: assuage
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: assume
@@ -2004,23 +2076,29 @@
 - verb: astonish
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: astound
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: atomize
@@ -2049,10 +2127,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: attack
   common: true
@@ -2085,6 +2165,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
   examples:
     SVO: I tried apologizing.
 - verb: attend
@@ -2256,12 +2337,15 @@
 - verb: awe
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: baa
@@ -2352,12 +2436,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: bag
@@ -2449,7 +2535,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: GDP increased.
+    SV: GDP increased easily.
     SVO: Lawmakers cut the budget by 10% from $1.46 million to $1.3 million.
     SVOC: James rickshawed his legs off.
 - verb: bamboozle
@@ -2471,11 +2557,14 @@
 - verb: band
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
     SVOC: Linda taped the box shut.
 - verb: bandage
@@ -2617,6 +2706,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -2695,7 +2785,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Paint sprayed onto the wall.
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: bat
   common: true
@@ -2938,12 +3028,15 @@
 - verb: befuddle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: beg
@@ -2953,6 +3046,9 @@
     - VerbNet
     SVO:
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SV: I begged for release.
     SVO: I begged to be dismissed.
@@ -2988,12 +3084,15 @@
 - verb: beguile
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: behave
@@ -3042,6 +3141,8 @@
 - verb: believe
   common: true
   patterns:
+    SV:
+    - 補充
     SVO:
     - VerbNet
     - 題庫
@@ -3093,6 +3194,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
   examples:
     SV: I go to the University of Colorado.
 - verb: belt
@@ -3258,23 +3360,29 @@
 - verb: bewilder
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: bewitch
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: bias
@@ -3390,10 +3498,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: The employees staffed the store.
 - verb: birch
   common: false
@@ -3986,12 +4096,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: boil
@@ -4063,12 +4175,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
     SVOC: Linda taped the box shut.
 - verb: bone
@@ -4180,7 +4294,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: borrow
@@ -4223,7 +4337,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: bottle
@@ -4336,12 +4450,15 @@
 - verb: bracket
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: The curator classified the artifacts.
     SVOC: Linda taped the box shut.
 - verb: brag
@@ -4654,12 +4771,15 @@
 - verb: browbeat
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: brown
@@ -4682,7 +4802,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: brunch
   common: false
@@ -4740,12 +4860,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: bud
@@ -4788,12 +4910,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: build
@@ -4864,6 +4988,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -4878,10 +5003,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: bungle
   common: false
@@ -5115,12 +5242,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: buttonhole
@@ -5195,6 +5324,7 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
@@ -5203,6 +5333,7 @@
     SVOO:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Heather cabled the news.
     SVOC: Linda taped the box shut.
     SVOO: Heather cabled Sara the news.
@@ -5314,12 +5445,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: calumniate
@@ -5518,12 +5651,15 @@
 - verb: captivate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: capture
@@ -5589,6 +5725,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -5768,6 +5905,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
     SVOO:
     - VerbNet
   examples:
@@ -5776,10 +5915,13 @@
 - verb: categorize
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The new tractors repaired easily.
     SVO: The curator classified the artifacts.
 - verb: caterwaul
   common: false
@@ -5823,6 +5965,10 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
+    SVOO:
+    - 補充
   examples:
     SV: This remark led to further arguments amongst guests.
     SVO: They carried out the deed.
@@ -5914,12 +6060,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: censure
@@ -5988,23 +6136,29 @@
 - verb: chagrin
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: chain
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: chair
@@ -6030,6 +6184,8 @@
     - ECDICT
     SVO:
     - ECDICT
+    SVOC:
+    - 補充
 - verb: chamber
   common: true
   patterns:
@@ -6168,6 +6324,7 @@
     - VerbNet
     SVOO:
     - VerbNet
+    - 補充
   examples:
     SV: John attacked.
     SVO: John attacked Simon.
@@ -6190,12 +6347,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: chart
@@ -6325,7 +6484,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: cherish
@@ -6367,7 +6526,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The clothes dried.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: chime
@@ -6506,6 +6665,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
     - 題庫
     SVOO:
     - VerbNet
@@ -6524,7 +6684,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The chisel carves well.
+    SV: The marble carved easily.
     SVO: Carol carved the stone.
     SVOC: Carol cut the envelop open.
 - verb: choreograph
@@ -6649,12 +6809,15 @@
 - verb: cinch
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: circle
@@ -6750,6 +6913,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
   examples:
     SVO: Ellen said a few words.
 - verb: clam
@@ -6773,12 +6937,15 @@
 - verb: clamp
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: clang
@@ -6842,11 +7009,14 @@
 - verb: clasp
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: She held the rail.
     SVOC: Linda taped the box shut.
 - verb: class
@@ -7155,12 +7325,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: club
@@ -7277,7 +7449,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Ice cream integrates with desserts.
+    SV: The folk songs alternated well with pop songs.
     SVO: We incorporated cranberries into our salad.
 - verb: coarsen
   common: false
@@ -7423,7 +7595,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: coldcream
   common: false
@@ -7466,10 +7638,13 @@
 - verb: collate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: collect
   common: true
@@ -7573,6 +7748,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVC:
     - VerbNet
     - 字表
@@ -7582,12 +7758,15 @@
 - verb: comfort
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: command
@@ -7595,6 +7774,9 @@
   patterns:
     SVO:
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: He ordered that she should come immediately.
 - verb: commandeer
@@ -7748,7 +7930,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: compass
   common: true
@@ -7763,6 +7945,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 補充
     - 賴世雄
   examples:
     SVO: I forced him into coming.
@@ -7909,10 +8092,13 @@
 - verb: concatenate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: conceal
   common: false
@@ -7958,12 +8144,15 @@
 - verb: concern
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: concert
@@ -8055,7 +8244,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: confer
   common: false
@@ -8134,7 +8323,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: conflict
   common: true
@@ -8156,12 +8345,15 @@
 - verb: confound
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: confront
@@ -8183,7 +8375,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
     SVOC: That movie bored me silly.
 - verb: conga
@@ -8246,7 +8438,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: conjure
   common: false
@@ -8288,7 +8480,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: My computer connected to his computer.
+    SV: The computer connected well to the network.
     SVO: Herman added a computer to the network.
     SVOC: Linda taped the box shut.
 - verb: conquer
@@ -8313,13 +8505,14 @@
     SVO: The captain baptized the ship.
     SVOC: The captain named the ship Seafarer.
 - verb: consent
-  common: false
+  common: true
   patterns:
     SV:
     - ECDICT
     - VerbNet
     SVO:
     - VerbNet
+    - 補充
   examples:
     SV: The enemy soldiers yielded.
     SVO: The king acquiesced to be in the same room with the paupers
@@ -8342,12 +8535,15 @@
 - verb: console
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: consolidate
@@ -8360,7 +8556,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Ice cream integrates with desserts.
+    SV: The folk songs alternated well with pop songs.
     SVO: We incorporated cranberries into our salad.
 - verb: conspire
   common: false
@@ -8534,12 +8730,15 @@
 - verb: content
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: contest
@@ -8613,7 +8812,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: contribute
   common: true
@@ -8704,12 +8903,16 @@
 - verb: convince
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: convulse
@@ -8872,7 +9075,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: correspond
   common: true
@@ -8949,6 +9152,7 @@
     SVOO:
     - VerbNet
     - 字表
+    - 補充
   examples:
     SVO: The book cost $10.
     SVOO: The bill cost them 500 million dollars.
@@ -9022,7 +9226,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Ice cream integrates with desserts.
+    SV: The folk songs alternated well with pop songs.
     SVO: We incorporated cranberries into our salad.
 - verb: court
   common: true
@@ -9056,12 +9260,15 @@
 - verb: cow
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: cower
@@ -9392,7 +9599,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: criticize
   common: true
@@ -9453,7 +9660,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The chisel carves well.
+    SV: The marble carved easily.
     SVO: Celia brushed the baby's hair.
 - verb: cross
   common: true
@@ -9538,7 +9745,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Lora buttered the toast.
 - verb: crumble
   common: false
@@ -9590,7 +9797,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The window broke.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: crust
@@ -9644,7 +9851,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: cuckold
   common: false
@@ -9840,7 +10047,7 @@
     SVOO:
     - VerbNet
   examples:
-    SV: $100,000 builds a house out of sticks.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
     SVOO: Martha carved the baby a toy out of a piece of wood.
@@ -9962,6 +10169,9 @@
   patterns:
     SVO:
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: I urged him.
 - verb: darken
@@ -10031,12 +10241,15 @@
 - verb: daunt
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: dawdle
@@ -10075,22 +10288,28 @@
 - verb: daze
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: dazzle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: deaccent
@@ -10127,6 +10346,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -10270,6 +10490,7 @@
     - VerbNet
     SVO:
     - VerbNet
+    - 補充
   examples:
     SV: They agreed.
     SVO: We agreed what to do.
@@ -10390,7 +10611,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: GDP increased.
+    SV: GDP increased easily.
     SVO: Lawmakers cut the budget by 10% from $1.46 million to $1.3 million.
 - verb: decree
   common: false
@@ -10809,12 +11030,15 @@
 - verb: deject
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: delay
@@ -10857,7 +11081,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: delineate
@@ -10944,6 +11168,7 @@
   patterns:
     SVO:
     - VerbNet
+    - 補充
   examples:
     SVO: He ordered that she should come immediately.
 - verb: demast
@@ -10990,12 +11215,15 @@
 - verb: demolish
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: demonstrate
@@ -11013,12 +11241,15 @@
 - verb: demoralize
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: denigrate
@@ -11055,7 +11286,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: denude
   common: false
@@ -11072,6 +11303,8 @@
     - VerbNet
     SVOC:
     - VerbNet
+    SVOO:
+    - 補充
   examples:
     SVO: The populace felt that the RIAA had too much power.
     SVOC: He knew the choice to be a bad one.
@@ -11092,6 +11325,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
   examples:
     SV: She relies on it.
 - verb: depict
@@ -11179,12 +11413,15 @@
 - verb: depress
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: depressurize
@@ -11347,6 +11584,7 @@
     - ECDICT
     SVO:
     - ECDICT
+    - 補充
 - verb: desex
   common: false
   patterns:
@@ -11480,10 +11718,13 @@
 - verb: detach
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: detail
   common: true
@@ -11588,12 +11829,15 @@
 - verb: devastate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: devein
@@ -11724,7 +11968,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: dicker
   common: false
@@ -11883,7 +12127,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: GDP increased.
+    SV: GDP increased easily.
     SVO: Lawmakers cut the budget by 10% from $1.46 million to $1.3 million.
 - verb: dine
   common: true
@@ -11990,21 +12234,26 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: disassemble
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: disassociate
   common: false
@@ -12095,34 +12344,43 @@
 - verb: discombobulate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: discomfit
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: disconcert
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: disconnect
@@ -12135,7 +12393,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The yolk and the white separated.
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: discontinue
   common: false
@@ -12157,12 +12415,15 @@
 - verb: discourage
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: discover
@@ -12173,6 +12434,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
   examples:
     SVO: I discovered how she did it.
 - verb: discriminate
@@ -12281,23 +12544,29 @@
 - verb: disgrace
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: disgruntle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: disguise
@@ -12313,23 +12582,28 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: dishearten
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: dishevel
@@ -12343,23 +12617,29 @@
 - verb: dishonour
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: disillusion
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: disinfect
@@ -12418,20 +12698,26 @@
 - verb: dismantle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: dismay
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: dismiss
@@ -12447,9 +12733,12 @@
 - verb: dismount
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: disorganize
   common: false
@@ -12498,12 +12787,15 @@
 - verb: dispirit
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: display
@@ -12517,11 +12809,14 @@
 - verb: displease
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: dispose
@@ -12567,12 +12862,15 @@
 - verb: disquiet
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: disregard
@@ -12598,12 +12896,15 @@
 - verb: dissatisfy
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: disseminate
@@ -12739,23 +13040,29 @@
 - verb: distract
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: distress
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: distribute
@@ -12780,12 +13087,15 @@
 - verb: disturb
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: dither
@@ -12834,12 +13144,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: divest
@@ -12893,6 +13205,8 @@
     - VerbNet
     SVO:
     - VerbNet
+    SVOO:
+    - 補充
   examples:
     SV: No one acted.
     SVO: They carried out the deed.
@@ -12972,10 +13286,13 @@
 - verb: domesticate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The new tractors repaired easily.
     SVO: Bill repaired the tractor.
 - verb: dominate
   common: true
@@ -13207,6 +13524,7 @@
   patterns:
     SV:
     - VerbNet
+    - 字表
     SVO:
     - VerbNet
     SVOC:
@@ -13282,7 +13600,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: The antique hand drill drilled well.
+    SV: The marble drilled easily.
     SVO: Carol drilled the stone.
 - verb: drink
   common: true
@@ -13504,12 +13822,15 @@
 - verb: dumbfound
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: dump
@@ -13770,12 +14091,15 @@
 - verb: elate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: elbow
@@ -13806,12 +14130,15 @@
 - verb: electrify
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: electrocute
@@ -13910,12 +14237,15 @@
 - verb: embarrass
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: embed
@@ -13961,12 +14291,15 @@
 - verb: embolden
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: emboss
@@ -14110,6 +14443,8 @@
   patterns:
     SVO:
     - ECDICT
+    SVOC:
+    - 補充
 - verb: enact
   common: false
   patterns:
@@ -14135,12 +14470,15 @@
 - verb: enchant
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: encircle
@@ -14180,14 +14518,18 @@
 - verb: encourage
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
     SVOO:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: I accepted how you did it.
     SVOC: That movie bored me silly.
     SVOO: Earl warned Helen that the party would be tonight.
@@ -14261,22 +14603,28 @@
 - verb: enervate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: enflame
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: enforce
@@ -14299,7 +14647,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: John and Mary are engaged.
+    SV: The folk songs alternated well with pop songs.
     SVO: John opposed the two ideas.
     SVOC: That movie bored me silly.
 - verb: engender
@@ -14336,12 +14684,15 @@
 - verb: engross
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: engulf
@@ -14387,12 +14738,15 @@
 - verb: enlighten
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: enlist
@@ -14413,12 +14767,15 @@
 - verb: enliven
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: enquire
@@ -14437,23 +14794,29 @@
 - verb: enrage
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: enrapture
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: enrich
@@ -14528,7 +14891,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: enter
   common: true
@@ -14547,23 +14910,28 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: enthrall
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: enthuse
@@ -14578,12 +14946,14 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: entice
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
@@ -14591,6 +14961,7 @@
     - VerbNet
     - 賴世雄
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: entitle
@@ -14601,12 +14972,15 @@
 - verb: entrance
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: entrap
@@ -14643,7 +15017,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: enunciate
   common: false
@@ -14691,16 +15065,21 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOO:
+    - 補充
   examples:
     SVO: The tourists admired the paintings.
 - verb: epoxy
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: equal
@@ -15080,12 +15459,15 @@
 - verb: exasperate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: excavate
@@ -15144,12 +15526,15 @@
 - verb: excite
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: exclaim
@@ -15248,12 +15633,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: exhibit
@@ -15269,12 +15656,15 @@
 - verb: exhilarate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: exhort
@@ -15358,6 +15748,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
     SVO: The populace felt that the RIAA had too much power.
     SVOC: He knew the choice to be a bad one.
@@ -15549,10 +15940,13 @@
 - verb: extinguish
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The new tractors repaired easily.
     SVO: Bill repaired the tractor.
 - verb: extirpate
   common: false
@@ -15676,6 +16070,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
   examples:
     SV: I lost.
     SVO: I disregarded the message.
@@ -15784,12 +16179,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: fashion
@@ -15813,12 +16210,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
     SVOC: Linda taped the box shut.
 - verb: father
@@ -15847,12 +16246,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: fatten
@@ -15911,12 +16312,15 @@
 - verb: faze
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: fear
@@ -16011,6 +16415,7 @@
     SVOC:
     - VerbNet
     - 字表
+    - 補充
     - 賴世雄
   examples:
     SV: I hunted for game in the woods.
@@ -16124,12 +16529,15 @@
 - verb: fetter
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: feud
@@ -16185,7 +16593,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: She relies on it.
+    SV: The folk songs alternated well with pop songs.
     SVO: John opposed the two ideas.
 - verb: filch
   common: false
@@ -16207,7 +16615,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The antique hand drill drilled well.
+    SV: The marble drilled easily.
     SVO: Celia brushed the baby's hair.
     SVOC: Carla shoveled the walk clean.
 - verb: fill
@@ -16231,7 +16639,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: film
   common: true
@@ -16276,6 +16684,7 @@
     - 題庫
     SVOC:
     - VerbNet
+    - 補充
     - 賴世雄
     - 題庫
     SVOO:
@@ -16296,6 +16705,7 @@
     - VerbNet
     SVOO:
     - VerbNet
+    - 補充
   examples:
     SVO: The phone company billed me.
     SVOO: The phone company billed me $10.
@@ -16383,12 +16793,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOO:
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Donna fixed a sandwich.
     SVOO: Donna fixed me a sandwich.
 - verb: fixate
@@ -16463,7 +16875,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: flame
   common: true
@@ -16531,17 +16943,20 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: flatter
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: flaunt
@@ -16870,12 +17285,15 @@
 - verb: flummox
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: fluoresce
@@ -17084,6 +17502,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
   examples:
     SVO: The rules forbade us from smoking.
 - verb: force
@@ -17094,6 +17514,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 補充
     - 賴世雄
   examples:
     SVO: I urged him.
@@ -17189,12 +17610,15 @@
     - ECDICT
     SVO:
     - ECDICT
+    - 補充
 - verb: forgive
   common: true
   patterns:
     SVO:
     - ECDICT
     - VerbNet
+    SVOO:
+    - 補充
   examples:
     SVO: They praised the volunteers.
 - verb: forgo
@@ -17301,12 +17725,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: foxtrot
@@ -17439,12 +17865,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: frisk
@@ -17533,12 +17961,15 @@
 - verb: frustrate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: fry
@@ -17562,12 +17993,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: fuel
@@ -17753,12 +18186,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: gallivant
@@ -17784,12 +18219,15 @@
 - verb: galvanize
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: gamble
@@ -17904,7 +18342,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: gasify
   common: false
@@ -18077,6 +18515,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVC:
     - VerbNet
     - 字表
@@ -18087,6 +18526,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
     - 賴世雄
     SVOO:
     - VerbNet
@@ -18188,7 +18628,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: glance
@@ -18361,10 +18801,13 @@
 - verb: glom
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: glorify
   common: false
@@ -18415,12 +18858,15 @@
 - verb: glue
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: glutenize
@@ -18552,7 +18998,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: govern
   common: true
@@ -18614,9 +19060,12 @@
 - verb: graft
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: grant
   common: true
@@ -18626,6 +19075,7 @@
     - VerbNet
     SVOO:
     - VerbNet
+    - 補充
   examples:
     SVO: We offered our paycheck to her.
     SVOO: I promised somebody my time.
@@ -18685,12 +19135,15 @@
 - verb: gratify
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: graupel
@@ -18767,7 +19220,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: grill
@@ -18816,7 +19269,7 @@
     SVOO:
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Martha carved a toy.
     SVOO: Martha carved the baby a toy out of a piece of wood.
 - verb: grip
@@ -19237,10 +19690,13 @@
 - verb: halve
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The new tractors repaired easily.
     SVO: Bill repaired the tractor.
 - verb: hammer
   common: true
@@ -19283,12 +19739,15 @@
 - verb: handcuff
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: handdeliver
@@ -19372,12 +19831,15 @@
 - verb: harass
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: hardboil
@@ -19408,12 +19870,15 @@
 - verb: harm
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: harmonize
@@ -19426,17 +19891,20 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: harness
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Lora buttered the toast.
     SVOC: Linda taped the box shut.
 - verb: harry
@@ -19487,6 +19955,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: The tourists admired the paintings.
 - verb: haul
@@ -19504,12 +19975,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: have
@@ -19520,6 +19993,7 @@
     - VerbNet
     SVOC:
     - 字表
+    - 補充
     - 賴世雄
   examples:
     SVO: My wife had twins.
@@ -19599,11 +20073,13 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - 字表
+    - 補充
     - 賴世雄
   examples:
     SV: Rhoda learned from an old book.
@@ -19618,12 +20094,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: heat
@@ -19739,6 +20217,7 @@
     SVOC:
     - VerbNet?
     - 字表
+    - 補充
     - 賴世雄
   examples:
     SV: I helped with the homework.
@@ -19801,6 +20280,8 @@
     SV:
     - ECDICT
     - VerbNet
+    SVO:
+    - 補充
   examples:
     SV: Sasha dawdled in the museum.
 - verb: hew
@@ -19897,12 +20378,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: hint
@@ -19927,6 +20410,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
     SVOO:
     - VerbNet
   examples:
@@ -19968,12 +20452,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: hitchhike
@@ -20107,10 +20593,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The new tractors repaired easily.
     SVO: Bill repaired the tractor.
 - verb: honey
   common: true
@@ -20233,6 +20721,7 @@
     - VerbNet
     SVO:
     - VerbNet
+    - 補充
   examples:
     SV: Danny longs for a sunny day.
     SVO: John hankered to move up the corporate ladder.
@@ -20251,12 +20740,15 @@
 - verb: horrify
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: horse
@@ -20423,12 +20915,15 @@
 - verb: humble
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: humidify
@@ -20442,12 +20937,15 @@
 - verb: humiliate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: humour
@@ -20526,7 +21024,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: hurtle
@@ -20645,12 +21143,15 @@
 - verb: hypnotize
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: ice
@@ -20686,7 +21187,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: idolize
   common: false
@@ -20754,6 +21255,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
     SVO: He characterized him as smart.
     SVOC: He characterized him to be smart.
@@ -20823,12 +21325,15 @@
 - verb: impair
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: impale
@@ -20965,12 +21470,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: imprint
@@ -21048,12 +21555,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: inch
@@ -21125,7 +21634,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Ice cream integrates with desserts.
+    SV: The folk songs alternated well with pop songs.
     SVO: We incorporated cranberries into our salad.
 - verb: increase
   common: true
@@ -21137,7 +21646,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: GDP increased.
+    SV: GDP increased easily.
     SVO: Lawmakers cut the budget by 10% from $1.46 million to $1.3 million.
 - verb: incriminate
   common: false
@@ -21235,12 +21744,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: inflate
@@ -21282,12 +21793,15 @@
 - verb: infuriate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: ingest
@@ -21487,12 +22001,15 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: inspissate
@@ -21551,6 +22068,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
     SVOO:
     - VerbNet
   examples:
@@ -21568,12 +22087,15 @@
 - verb: insult
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: insure
@@ -21599,7 +22121,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Ice cream integrates with desserts.
+    SV: The folk songs alternated well with pop songs.
     SVO: We incorporated cranberries into our salad.
 - verb: intend
   common: true
@@ -21609,6 +22131,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
     SVO: I meant to say 'green'.
     SVOC: I wished him to be nice.
@@ -21650,7 +22173,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: interconnect
   common: false
@@ -21661,17 +22184,20 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: interest
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: interject
@@ -21692,7 +22218,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: interlard
   common: false
@@ -21719,7 +22245,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: interlock
   common: false
@@ -21729,8 +22255,16 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
+- verb: intermarry
+  common: false
+  patterns:
+    SV:
+    - ECDICT
+    - VerbNet
+  examples:
+    SV: The folk songs alternated well with pop songs.
 - verb: intermingle
   common: false
   patterns:
@@ -21741,7 +22275,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Ice cream integrates with desserts.
+    SV: The folk songs alternated well with pop songs.
     SVO: We incorporated cranberries into our salad.
 - verb: intermix
   common: false
@@ -21802,7 +22336,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: interrogate
   common: false
@@ -21842,7 +22376,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: intertwine
   common: false
@@ -21852,7 +22386,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: interview
   common: true
@@ -21870,7 +22404,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: intimate
   common: false
@@ -21883,12 +22417,15 @@
 - verb: intimidate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: intone
@@ -21904,12 +22441,15 @@
 - verb: intoxicate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: intrigue
@@ -21917,21 +22457,26 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: introduce
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The folk songs alternated well with pop songs.
     SVO: John opposed the two ideas.
 - verb: intrude
   common: false
@@ -22008,12 +22553,15 @@
 - verb: invigorate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: invite
@@ -22022,6 +22570,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: We promoted the cause.
 - verb: invoice
@@ -22065,12 +22616,15 @@
 - verb: irk
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: iron
@@ -22103,12 +22657,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: irrupt
@@ -22189,11 +22745,14 @@
 - verb: jade
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: jail
@@ -22241,12 +22800,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: jazz
@@ -22452,12 +23013,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: jolt
@@ -22465,12 +23028,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: jostle
@@ -22565,10 +23130,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: jump
   common: true
@@ -22657,6 +23224,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
     - 賴世雄
     - 題庫
   examples:
@@ -22718,7 +23286,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: My eyes were itching.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: kindle
@@ -22875,11 +23443,14 @@
 - verb: knot
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: know
@@ -22889,6 +23460,7 @@
     - VerbNet
     SVO:
     - VerbNet
+    - 題庫
   examples:
     SV: I understand.
     SVO: I understood how she did it.
@@ -22941,12 +23513,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: lack
@@ -23057,7 +23631,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The antique hand drill drilled well.
+    SV: The marble drilled easily.
     SVO: Carol drilled the stone.
 - verb: land
   common: true
@@ -23150,12 +23724,15 @@
 - verb: lasso
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: last
@@ -23176,12 +23753,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: lather
@@ -23209,6 +23788,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -23285,6 +23865,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SV: This remark led to further arguments amongst guests.
     SVO: Jackie accompanied Rose.
@@ -23342,6 +23925,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
     - 題庫
   examples:
     SV: Rhoda learned from an old book.
@@ -23363,12 +23947,15 @@
 - verb: leash
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Lora buttered the toast.
     SVOC: Linda taped the box shut.
 - verb: leather
@@ -23390,6 +23977,7 @@
     - 題庫
     SVOC:
     - VerbNet
+    - 補充
     - 賴世雄
     SVOO:
     - VerbNet
@@ -23609,10 +24197,13 @@
 - verb: ligate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: light
   common: true
@@ -23632,10 +24223,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The new tractors repaired easily.
     SVO: Bill repaired the tractor.
 - verb: lightning
   common: true
@@ -23666,6 +24259,7 @@
     - 題庫
     SVOC:
     - VerbNet
+    - 補充
   examples:
     SVO: The tourists admired the paintings.
     SVOC: She wanted the meat red.
@@ -23727,7 +24321,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: My computer connected to his computer.
+    SV: The computer connected well to the network.
     SVO: Herman added a computer to the network.
     SVOC: Linda taped the box shut.
 - verb: lint
@@ -23802,6 +24396,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
   examples:
     SV: We peered at the baby.
 - verb: litter
@@ -23917,12 +24512,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: lodge
@@ -24004,6 +24601,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVC:
     - VerbNet
     - 字表
@@ -24143,6 +24741,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: The tourists admired the paintings.
 - verb: low
@@ -24166,7 +24767,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: GDP increased.
+    SV: GDP increased easily.
     SVO: Lawmakers cut the budget by 10% from $1.46 million to $1.3 million.
 - verb: lubricate
   common: false
@@ -24195,12 +24796,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: lumber
@@ -24218,10 +24821,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: The curator classified the artifacts.
 - verb: lunch
   common: false
@@ -24329,7 +24934,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: magnetize
@@ -24337,20 +24942,24 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The new tractors repaired easily.
     SVO: Bill repaired the tractor.
 - verb: magnify
   common: false
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The new tractors repaired easily.
     SVO: He overstated the position.
 - verb: mail
   common: true
@@ -24438,12 +25047,15 @@
 - verb: manacle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: manage
@@ -24455,6 +25067,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
   examples:
     SV: He managed with climbing the slope.
     SVO: Jared looked after the children.
@@ -24475,7 +25088,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The antique hand drill drilled well.
+    SV: The marble drilled easily.
     SVO: Carol drilled the stone.
 - verb: manicure
   common: false
@@ -24596,7 +25209,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: John and Mary married.
+    SV: The folk songs alternated well with pop songs.
     SVO: John opposed the two ideas.
 - verb: martyr
   common: false
@@ -24625,7 +25238,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: mask
   common: true
@@ -24705,7 +25318,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Ice cream integrates with desserts.
+    SV: The folk songs alternated well with pop songs.
     SVO: We incorporated cranberries into our salad.
 - verb: mate
   common: true
@@ -24717,7 +25330,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: materialize
   common: false
@@ -24774,6 +25387,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
   examples:
     SVO: I meant to say 'green'.
 - verb: meander
@@ -24892,11 +25507,14 @@
 - verb: menace
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: mend
@@ -24940,12 +25558,15 @@
 - verb: mesmerize
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: mess
@@ -25061,12 +25682,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: militarize
@@ -25097,7 +25720,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The antique hand drill drilled well.
+    SV: The marble drilled easily.
     SVO: Carol drilled the stone.
 - verb: mince
   common: false
@@ -25109,7 +25732,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: mind
   common: true
@@ -25228,12 +25851,15 @@
 - verb: misguide
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: mishandle
@@ -25540,23 +26166,29 @@
 - verb: molest
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: mollify
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: molt
@@ -25697,12 +26329,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: mosey
@@ -25725,11 +26359,14 @@
     SV: Her cousin clerked for Judge Davis.
     SVO: My wife had twins.
 - verb: motivate
-  common: false
+  common: true
   patterns:
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: I forced him into coming.
 - verb: motor
@@ -25870,7 +26507,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The chisel carves well.
+    SV: The marble carved easily.
     SVO: Carol carved the stone.
 - verb: mud
   common: true
@@ -25889,7 +26526,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
     SVOC: That movie bored me silly.
 - verb: muddy
@@ -26059,23 +26696,29 @@
 - verb: muzzle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Lora buttered the toast.
     SVOC: Linda taped the box shut.
 - verb: mystify
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: nab
@@ -26099,12 +26742,15 @@
 - verb: nail
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: name
@@ -26212,12 +26858,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: navigate
@@ -26270,6 +26918,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
     SVO: Success requires hard work.
     SVOC: She wanted the meat red.
@@ -26380,12 +27029,15 @@
 - verb: nettle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: network
@@ -26396,7 +27048,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: My computer connected to his computer.
+    SV: The computer connected well to the network.
     SVO: Herman added a computer to the network.
 - verb: neutralize
   common: false
@@ -26432,7 +27084,7 @@
     SVOO:
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
     SVOO: The thief stole Mary some paint.
 - verb: nickel
@@ -26525,12 +27177,15 @@
 - verb: nonplus
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: normalize
@@ -26578,7 +27233,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: note
   common: true
@@ -26598,6 +27253,7 @@
     - VerbNet
     SVOC:
     - 字表
+    - 補充
   examples:
     SVO: I saw that you were excited.
 - verb: notify
@@ -26646,12 +27302,15 @@
 - verb: numb
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: number
@@ -26758,13 +27417,16 @@
   examples:
     SVO: I forced him into coming.
 - verb: oblige
-  common: false
+  common: true
   patterns:
     SV:
     - ECDICT
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: I forced him into coming.
 - verb: obliterate
@@ -26792,6 +27454,7 @@
     - ECDICT
     - VerbNet
     SVOC:
+    - 補充
     - 賴世雄
   examples:
     SVO: He followed the tenets of Buddhism.
@@ -26806,7 +27469,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: obstruct
@@ -26857,12 +27520,15 @@
 - verb: occupy
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: occur
@@ -26886,11 +27552,14 @@
 - verb: offend
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: offer
@@ -26901,6 +27570,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
     SVOO:
     - VerbNet
     - 字表
@@ -27018,10 +27688,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The folk songs alternated well with pop songs.
     SVO: John opposed the two ideas.
 - verb: orbit
   common: true
@@ -27054,6 +27726,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
     SVOO:
     - VerbNet
     - 字表
@@ -27225,12 +27900,15 @@
 - verb: outrage
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: outshine
@@ -27283,12 +27961,15 @@
 - verb: overawe
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: overbake
@@ -27414,7 +28095,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Ice cream integrates with desserts.
+    SV: The folk songs alternated well with pop songs.
     SVO: We incorporated cranberries into our salad.
 - verb: overleap
   common: false
@@ -27519,12 +28200,15 @@
 - verb: overwhelm
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: owe
@@ -27592,12 +28276,15 @@
 - verb: pacify
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: pack
@@ -27615,10 +28302,13 @@
 - verb: package
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: packet
   common: true
@@ -27655,11 +28345,14 @@
 - verb: padlock
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: page
@@ -27684,7 +28377,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: My eyes were itching.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: paint
@@ -27714,7 +28407,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: palaver
   common: false
@@ -27881,10 +28574,13 @@
 - verb: pare
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: park
   common: true
@@ -27935,10 +28631,13 @@
 - verb: partition
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: partner
   common: true
@@ -27979,12 +28678,15 @@
 - verb: paste
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: pasteurize
@@ -28120,9 +28822,12 @@
   patterns:
     SV:
     - ECDICT
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
     SVOO:
     - VerbNet
     - 字表
@@ -28268,11 +28973,14 @@
 - verb: peeve
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: peg
@@ -28280,12 +28988,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: He characterized him as smart.
     SVOC: He characterized him to be smart.
 - verb: pelt
@@ -28425,7 +29135,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: perform
   common: true
@@ -28485,6 +29195,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
     SVOO:
     - VerbNet
   examples:
@@ -28501,12 +29213,15 @@
 - verb: perplex
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: persecute
@@ -28551,6 +29266,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: I forced him into coming.
 - verb: pertain
@@ -28564,12 +29282,15 @@
 - verb: perturb
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: peruse
@@ -28583,12 +29304,15 @@
 - verb: pester
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: pet
@@ -28718,6 +29442,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
     SVO: He characterized him as smart.
     SVOC: He characterized him to be smart.
@@ -28800,12 +29525,15 @@
 - verb: pin
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: pinch
@@ -28860,7 +29588,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The chisel carves well.
+    SV: The marble carved easily.
     SVO: Carol carved the stone.
     SVOC: Paul kicked the door open.
 - verb: pioneer
@@ -28903,12 +29631,15 @@
 - verb: pique
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: pirate
@@ -28994,12 +29725,15 @@
 - verb: placate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: place
@@ -29022,12 +29756,15 @@
 - verb: plague
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: plait
@@ -29046,6 +29783,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
     SVOC:
     - VerbNet
   examples:
@@ -29129,12 +29867,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: pledge
@@ -29380,6 +30120,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -29532,7 +30273,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: My computer connected to his computer.
+    SV: The computer connected well to the network.
     SVO: Herman added a computer to the network.
 - verb: pootle
   common: false
@@ -29905,6 +30646,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
     SVO: The tourists admired the paintings.
     SVOC: She wanted the meat red.
@@ -29941,12 +30683,15 @@
 - verb: preoccupy
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: prepare
@@ -29959,6 +30704,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
     SVOO:
     - VerbNet
   examples:
@@ -30027,6 +30773,11 @@
   examples:
     SVO: The populace felt that the RIAA had too much power.
     SVOC: He knew the choice to be a bad one.
+- verb: pretend
+  common: true
+  patterns:
+    SVO:
+    - 補充
 - verb: prettify
   common: false
   patterns:
@@ -30367,9 +31118,11 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
     SVOO:
     - VerbNet
     - 字表
+    - 題庫
   examples:
     SVO: We offered our paycheck to her.
     SVOO: I promised somebody my time.
@@ -30578,12 +31331,15 @@
 - verb: provoke
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: prowl
@@ -30608,7 +31364,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The chisel carves well.
+    SV: The marble carved easily.
     SVO: Carol carved the stone.
 - verb: pry
   common: false
@@ -30744,7 +31500,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: pummel
   common: false
@@ -30781,7 +31537,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The chisel carves well.
+    SV: The marble carved easily.
     SVO: Carol carved the stone.
     SVOC: Paula sliced the bag open.
 - verb: punctuate
@@ -30995,7 +31751,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: quack
@@ -31102,7 +31858,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: quash
   common: false
@@ -31144,12 +31900,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: quest
@@ -31366,12 +32124,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: rage
@@ -31497,12 +32257,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: ransack
@@ -31632,12 +32394,15 @@
 - verb: ravish
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: raw
@@ -31886,12 +32651,15 @@
 - verb: reassure
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: rebel
@@ -31994,12 +32762,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: reciprocate
@@ -32406,11 +33176,14 @@
 - verb: reeve
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: refashion
@@ -32520,12 +33293,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: refund
@@ -32551,6 +33326,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
+    SVOO:
+    - 補充
   examples:
     SVO: I turned down the offer.
 - verb: regain
@@ -32582,6 +33360,7 @@
     SVOC:
     - VerbNet
     - 賴世雄
+    - 題庫
   examples:
     SVO: The inspector analyzed the building.
     SVOC: He characterized him to be smart.
@@ -32603,6 +33382,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
   examples:
     SVO: The tourists admired the paintings.
 - verb: regroup
@@ -32751,19 +33531,21 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: My computer connected to his computer.
+    SV: The computer connected well to the network.
     SVO: Herman added a computer to the network.
 - verb: rejuvenate
   common: false
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: rekindle
@@ -32795,12 +33577,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: relay
@@ -32841,12 +33625,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: relinquish
@@ -32921,7 +33707,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: John and Mary married.
+    SV: The folk songs alternated well with pop songs.
     SVO: John opposed the two ideas.
 - verb: remaster
   common: false
@@ -32947,6 +33733,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
     SVOC:
     - VerbNet
   examples:
@@ -32958,6 +33745,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
     SVOO:
     - VerbNet
   examples:
@@ -33123,7 +33912,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: repaint
   common: false
@@ -33172,12 +33961,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: replace
@@ -33232,6 +34023,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -33339,12 +34131,15 @@
 - verb: repulse
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: repute
@@ -33364,6 +34159,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: I begged to be dismissed.
 - verb: require
@@ -33372,6 +34170,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
   examples:
     SVO: He ordered that she should come immediately.
 - verb: rerelease
@@ -33801,12 +34602,15 @@
 - verb: revitalize
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: revive
@@ -33826,12 +34630,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: revolve
@@ -33892,7 +34698,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: rice
   common: true
@@ -33990,12 +34796,15 @@
 - verb: rile
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: rim
@@ -34128,12 +34937,15 @@
 - verb: rivet
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: roam
@@ -34228,7 +35040,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The beer foamed.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: roll
@@ -34317,12 +35129,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: rose
@@ -34483,12 +35297,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: ruin
@@ -34581,6 +35397,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     - 題庫
     SVO:
     - ECDICT
@@ -34681,7 +35498,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: saddle
@@ -34717,6 +35534,11 @@
     - ECDICT
   examples:
     SV: John slouched.
+- verb: said
+  common: true
+  patterns:
+    SVO:
+    - 題庫
 - verb: sail
   common: true
   patterns:
@@ -34832,7 +35654,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The antique hand drill drilled well.
+    SV: The marble drilled easily.
     SVO: Lora buttered the toast.
 - verb: sandbag
   common: false
@@ -34930,12 +35752,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: saturate
@@ -34989,6 +35813,7 @@
     SVOO:
     - VerbNet
     - 字表
+    - 補充
   examples:
     SVO: Carmen bought a dress.
     SVOO: The phone company billed me $10.
@@ -35087,12 +35912,15 @@
 - verb: scandalize
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: scar
@@ -35112,12 +35940,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: scarf
@@ -35178,6 +36008,8 @@
   patterns:
     SVO:
     - ECDICT
+    SVOC:
+    - 補充
 - verb: scheme
   common: true
   patterns:
@@ -35468,12 +36300,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: scribble
@@ -35643,6 +36477,7 @@
   patterns:
     SV:
     - VerbNet
+    - 字表
     SVO:
     - VerbNet
   examples:
@@ -35711,12 +36546,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOO:
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: His mistakes guaranteed his failure.
     SVOO: Our exertions ensured us a good outcome.
 - verb: seduce
@@ -35742,6 +36579,7 @@
     SVOC:
     - VerbNet?
     - 字表
+    - 補充
     - 賴世雄
     - 題庫
   examples:
@@ -35781,6 +36619,7 @@
     - VerbNet
     - 字表
     - 賴世雄
+    - 題庫
     SVO:
     - VerbNet
   examples:
@@ -35832,7 +36671,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The yolk and the white separated.
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: seize
   common: true
@@ -35994,6 +36833,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
     - 賴世雄
     SVOO:
     - VerbNet
@@ -36038,7 +36878,7 @@
     SVOO:
     - VerbNet
   examples:
-    SV: Paint sprayed onto the wall.
+    SV: The sticks bundled easily.
     SVO: Martha carved a toy.
     SVOO: Martha carved the baby a toy out of a piece of wood.
 - verb: sex
@@ -36049,12 +36889,15 @@
 - verb: shackle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: shade
@@ -36091,7 +36934,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: Sharon shivered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: shamble
@@ -36105,12 +36948,15 @@
 - verb: shame
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: shampoo
@@ -36313,7 +37159,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: GDP increased.
+    SV: GDP increased easily.
     SVO: Lawmakers cut the budget by 10% from $1.46 million to $1.3 million.
 - verb: shimmer
   common: false
@@ -36412,12 +37258,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: shoe
@@ -36532,6 +37380,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -36809,7 +37658,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: Sharon fainted.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: side
@@ -36842,10 +37691,13 @@
 - verb: sieve
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: sift
   common: false
@@ -36857,7 +37709,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: I searched in the cave for treasure.
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: sigh
   common: true
@@ -37194,12 +38046,15 @@
 - verb: skewer
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Lydia pocketed the change.
     SVOC: Linda taped the box shut.
 - verb: ski
@@ -37563,7 +38418,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
     SVOC: Carol cut the envelop open.
 - verb: slide
@@ -37667,7 +38522,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: slither
   common: false
@@ -37899,6 +38754,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
   examples:
     SV: The onions reeked.
     SVC: He appeared crazy.
@@ -37909,6 +38766,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     - 題庫
     SVO:
     - ECDICT
@@ -37932,12 +38790,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: smoke
@@ -38398,7 +39258,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The clothes dried.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: sock
@@ -38471,22 +39331,28 @@
 - verb: solace
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: solder
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: soldier
@@ -38538,12 +39404,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: sop
@@ -38718,6 +39586,7 @@
     - ECDICT
     SVOO:
     - VerbNet
+    - 補充
   examples:
     SVOO: The phone company billed me $10.
 - verb: spark
@@ -38780,6 +39649,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     - 題庫
     SVO:
     - ECDICT
@@ -38797,7 +39667,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The antique hand drill drilled well.
+    SV: The marble drilled easily.
     SVO: Carol drilled the stone.
 - verb: spearhead
   common: false
@@ -38869,12 +39739,15 @@
 - verb: spellbind
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: spend
@@ -39032,10 +39905,13 @@
 - verb: splice
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: splinter
   common: false
@@ -39135,12 +40011,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: spool
@@ -39186,6 +40064,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
   examples:
     SV: It's raining.
     SVO: The employees staffed the store.
@@ -39569,7 +40449,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: stab
   common: false
@@ -39655,7 +40535,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The horse ran.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: stagnate
@@ -39764,12 +40644,15 @@
 - verb: staple
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: star
@@ -39801,6 +40684,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
   examples:
@@ -39823,12 +40707,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: stash
@@ -40094,12 +40980,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: sting
@@ -40114,7 +41002,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: My heart pounded.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: stink
@@ -40150,12 +41038,14 @@
     SVOC:
     - VerbNet
   examples:
-    SV: A flag fluttered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: stitch
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
@@ -40163,6 +41053,7 @@
     SVOO:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Martha carved a toy.
     SVOC: Linda taped the box shut.
     SVOO: Martha carved the baby a toy out of a piece of wood.
@@ -40352,12 +41243,15 @@
 - verb: strap
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Paula socked the mugger.
     SVOC: They knifed him dead.
 - verb: stratify
@@ -40492,7 +41386,7 @@
     - VerbNet
     - 賴世雄
   examples:
-    SV: John attacked.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: string
@@ -40551,6 +41445,9 @@
     SV:
     - ECDICT
     - VerbNet
+    SVO:
+    - VerbNet?
+    - 補充
   examples:
     SV: Sparta battled with Athens.
 - verb: strut
@@ -40633,29 +41530,35 @@
     SVOC:
     - VerbNet
   examples:
-    SV: The horse ran.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: stun
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: stupefy
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: stutter
@@ -41027,9 +41930,12 @@
 - verb: sunder
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: sup
   common: false
@@ -41192,12 +42098,15 @@
 - verb: surprise
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: surrender
@@ -41283,12 +42192,15 @@
 - verb: suture
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: swab
@@ -41425,6 +42337,7 @@
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
     SVOC:
     - VerbNet
   examples:
@@ -41542,6 +42455,7 @@
     - VerbNet
     SVC:
     - VerbNet
+    - 題庫
     SVO:
     - ECDICT
     - VerbNet
@@ -41750,6 +42664,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -41778,6 +42693,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -41851,12 +42767,15 @@
 - verb: tantalize
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: tap
@@ -41893,12 +42812,15 @@
 - verb: tape
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: taper
@@ -42074,6 +42996,9 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - VerbNet?
+    - 補充
     SVOO:
     - VerbNet
     - 字表
@@ -42092,7 +43017,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: tear
   common: true
@@ -42221,6 +43146,7 @@
     - 題庫
     SVOC:
     - VerbNet?
+    - 補充
     - 賴世雄
     SVOO:
     - VerbNet
@@ -42241,12 +43167,15 @@
 - verb: tempt
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: tend
@@ -42320,12 +43249,15 @@
 - verb: terrify
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: terrorize
@@ -42333,12 +43265,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: test
@@ -42364,12 +43298,15 @@
 - verb: tether
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: thank
@@ -42454,6 +43391,7 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
@@ -42494,12 +43432,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: threaten
@@ -42507,12 +43447,15 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
+    - 補充
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: thrill
@@ -42527,7 +43470,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: thrive
@@ -42582,6 +43525,7 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
@@ -42591,6 +43535,7 @@
     - VerbNet
     - 字表
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
     SVOO: Steve tossed John the ball.
@@ -42649,11 +43594,14 @@
 - verb: thumbtack
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: thump
@@ -42733,7 +43681,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: My heart pounded.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: tidy
@@ -42748,12 +43696,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The computer connected well to the network.
     SVO: Herman added a computer to the network.
     SVOC: Linda taped the box shut.
 - verb: tighten
@@ -42901,7 +43851,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: tisk
@@ -42930,12 +43880,15 @@
 - verb: titillate
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: title
@@ -43001,10 +43954,13 @@
 - verb: toggle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman gathered the students into a group.
 - verb: toil
   common: false
@@ -43075,7 +44031,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The antique hand drill drilled well.
+    SV: The marble drilled easily.
     SVO: Carol drilled the stone.
 - verb: toot
   common: false
@@ -43133,23 +44089,29 @@
 - verb: torment
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: torture
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: toss
@@ -43175,7 +44137,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: tote
   common: false
@@ -43208,7 +44170,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: Italy and France touch.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: toughen
@@ -43354,6 +44316,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
     SVO: I hired two secretaries.
     SVOC: He trained them to be blacksmiths.
@@ -43386,12 +44349,15 @@
 - verb: trammel
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: tramp
@@ -43446,12 +44412,15 @@
 - verb: transfix
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: transform
@@ -43518,20 +44487,25 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: The new tractors repaired easily.
     SVO: Bill repaired the tractor.
 - verb: transport
   common: true
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: transship
@@ -43604,7 +44578,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: The chisel carves well.
+    SV: The marble carved easily.
     SVO: Carol carved the stone.
 - verb: treasure
   common: true
@@ -43679,7 +44653,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: That hammer crushes well.
+    SV: The ice crushed easily.
     SVO: Carol crushed the ice.
 - verb: trend
   common: true
@@ -43842,12 +44816,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: trounce
@@ -43934,12 +44910,15 @@
 - verb: truss
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: trust
@@ -43952,6 +44931,7 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
   examples:
     SVO: The tourists admired the paintings.
     SVOC: He knew the choice to be a bad one.
@@ -43960,12 +44940,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: tube
@@ -44052,6 +45034,7 @@
     SVOC:
     - VerbNet
     - 賴世雄
+    - 題庫
   examples:
     SV: He converted to Buddhism.
     SVC: The belt came undone.
@@ -44310,20 +45293,25 @@
 - verb: unbolt
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unbuckle
   common: false
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unburden
   common: false
@@ -44338,41 +45326,55 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unchain
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unclamp
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unclasp
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unclip
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unclothe
   common: false
@@ -44535,10 +45537,13 @@
 - verb: unfasten
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unfit
   common: true
@@ -44548,10 +45553,13 @@
 - verb: unfix
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unfold
   common: true
@@ -44586,34 +45594,46 @@
 - verb: unglue
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unhinge
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unhitch
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unhook
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unify
   common: false
@@ -44623,7 +45643,7 @@
     SVO:
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: unionize
   common: false
@@ -44646,33 +45666,41 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: Company A associated with Company B.
+    SV: The folk songs alternated well with pop songs.
     SVO: The merger associated company A with company B.
 - verb: unlace
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unlatch
   common: false
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unleash
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unload
   common: true
@@ -44689,10 +45717,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unmake
   common: false
@@ -44705,29 +45735,38 @@
 - verb: unnerve
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: unpeg
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unpin
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unroll
   common: false
@@ -44746,17 +45785,23 @@
 - verb: unscrew
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unseal
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unseat
   common: false
@@ -44771,28 +45816,36 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: unshackle
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unstaple
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unsteady
   common: true
@@ -44802,20 +45855,25 @@
 - verb: unstitch
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: untie
   common: false
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: unwind
   common: false
@@ -44836,10 +45894,12 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
   examples:
+    SV: That new handle unscrewed easily.
     SVO: I unscrewed the handle.
 - verb: upbraid
   common: false
@@ -44878,12 +45938,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: upload
@@ -44909,12 +45971,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: urbanize
@@ -44935,6 +45999,7 @@
     - VerbNet
     SVOC:
     - VerbNet?
+    - 補充
     - 賴世雄
     SVOO:
     - VerbNet
@@ -45115,7 +46180,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: GDP increased.
+    SV: GDP increased easily.
     SVO: Lawmakers cut the budget by 10% from $1.46 million to $1.3 million.
 - verb: vaticinate
   common: false
@@ -45237,12 +46302,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: vibrate
@@ -45423,6 +46490,7 @@
     - VerbNet
     SVO:
     - VerbNet
+    - 補充
   examples:
     SV: Her cousin clerked for Judge Davis.
     SVO: Ellen said a few words.
@@ -45591,9 +46659,11 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     - 題庫
     SVO:
     - ECDICT
+    - 補充
   examples:
     SV: Elvis lives.
 - verb: wake
@@ -45724,6 +46794,7 @@
     - 題庫
     SVOC:
     - VerbNet
+    - 補充
     - 賴世雄
   examples:
     SVO: We elected him as governor.
@@ -45780,6 +46851,8 @@
     SVO:
     - ECDICT
     - VerbNet
+    SVOC:
+    - 補充
     SVOO:
     - VerbNet
   examples:
@@ -45837,6 +46910,7 @@
     - VerbNet
     SVOC:
     - 字表
+    - 補充
     - 賴世雄
   examples:
     SV: I searched in the cave for treasure.
@@ -45936,7 +47010,7 @@
     SVOC:
     - VerbNet
   examples:
-    SV: I suffered.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: weather
@@ -45978,7 +47052,7 @@
     - ECDICT
     - VerbNet
   examples:
-    SV: John and Mary married.
+    SV: The folk songs alternated well with pop songs.
     SVO: John opposed the two ideas.
 - verb: wedge
   common: false
@@ -46052,6 +47126,7 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
@@ -46060,6 +47135,7 @@
     SVOO:
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Donna grilled steaks.
     SVOC: Linda taped the box shut.
     SVOO: Donna grilled me steaks.
@@ -46331,12 +47407,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The sticks bundled easily.
     SVO: Herman whipped sugar with the cream.
     SVOC: They knifed him dead.
 - verb: whisper
@@ -46646,6 +47724,7 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
@@ -46654,6 +47733,7 @@
     SVOO:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Heather cabled the news.
     SVOC: Linda taped the box shut.
     SVOO: Heather cabled Sara the news.
@@ -46685,7 +47765,10 @@
     - VerbNet
     SVOC:
     - VerbNet
+    - 補充
     - 賴世雄
+    SVOO:
+    - 補充
   examples:
     SV: Danny longs for a sunny day.
     SVO: John hankered to move up the corporate ladder.
@@ -46846,13 +47929,14 @@
     SV:
     - ECDICT
     - VerbNet
+    - 字表
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
-    SV: He didn't care.
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: worsen
@@ -46882,22 +47966,27 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: wow
   common: false
   patterns:
+    SV:
+    - VerbNet
     SVO:
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The little children amused easily.
     SVO: The clown amused the children.
     SVOC: That movie bored me silly.
 - verb: wrack
@@ -47220,12 +48309,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Lora buttered the toast.
     SVOC: Linda taped the box shut.
 - verb: yowl
@@ -47294,12 +48385,14 @@
   patterns:
     SV:
     - ECDICT
+    - VerbNet
     SVO:
     - ECDICT
     - VerbNet
     SVOC:
     - VerbNet
   examples:
+    SV: The labels taped easily to that kind of cover.
     SVO: Linda taped the picture.
     SVOC: Linda taped the box shut.
 - verb: zipcode

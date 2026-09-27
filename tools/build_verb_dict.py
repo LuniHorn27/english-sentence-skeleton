@@ -70,6 +70,36 @@ LAI = {
     },
 }
 
+# ── 補充：文法書常見的動詞表（試跑時發現字典漏收，2026-09-27） ──
+SUPPLEMENT = {
+    "SVOC": {
+        # 動詞 ＋ 受詞 ＋ 不定詞（advise him to go、persuaded me not to travel）
+        "advise", "allow", "ask", "beg", "cause", "challenge", "command", "compel", "convince", "dare",
+        "enable", "encourage", "expect", "forbid", "force", "get", "help", "hire", "inspire", "instruct",
+        "intend", "invite", "lead", "like", "love", "hate", "mean", "motivate", "need", "oblige", "order",
+        "pay", "permit", "persuade", "prefer", "prepare", "remind", "request", "require", "schedule",
+        "teach", "tell", "train", "trust", "urge", "want", "warn", "wish",
+        # 動詞 ＋ 受詞 ＋ V-ing（caught the man stealing、spotted her walking）
+        "see", "watch", "hear", "feel", "notice", "observe", "smell", "catch", "find", "keep", "leave",
+        "spot", "discover", "imagine", "picture", "have", "set",
+    },
+    "SVO": {
+        # 動詞 ＋ 不定詞當受詞（hesitate to ask）
+        "afford", "agree", "arrange", "attempt", "choose", "claim", "consent", "decide", "demand",
+        "deserve", "fail", "forget", "hesitate", "hope", "learn", "manage", "offer", "plan", "pretend",
+        "promise", "refuse", "regret", "remember", "struggle", "swear", "threaten", "volunteer", "wait",
+    },
+    "SVOO": {
+        # do me a favor、wish you luck、cause me trouble
+        "do", "wish", "cause", "cost", "save", "spare", "deny", "envy", "forgive", "grant", "refuse",
+        "charge", "fine", "allow",
+    },
+    "SV": {
+        # 動詞 ＋ 介系詞片語（believe in、depend on）：動詞本身是不及物
+        "believe",
+    },
+}
+
 # ── 我們自己的字表 ──
 LEXICON = {
     "SVC": set(L.LINKING_VERBS),
@@ -129,8 +159,10 @@ def has_prep_after_verb(frame):
 def classify(frame):
     """把一個 VerbNet 句子結構換算成五大句型；回傳 (代號, 是否有疑問) 或 None（略過）"""
     primary = frame.find("DESCRIPTION").get("primary").strip()
-    if primary == "Passive" or "S-Quote" in primary or "Middle" in primary:
-        return None  # 被動、直接引述、中間語態（The bread cuts easily）不列入
+    if primary == "Passive" or "S-Quote" in primary:
+        return None  # 被動、直接引述不列入
+    if "Middle" in primary:
+        return "SV", False  # 中間語態：The bread cuts easily.、The children amused easily.
     toks = primary.split()
     if "V" not in toks:
         return None
@@ -288,7 +320,7 @@ def build():
     ec, lemma_of = load_ecdict()
     gold = gold_verbs(lemma_of)
 
-    lai_verbs = set().union(*LAI.values())
+    lai_verbs = set().union(*LAI.values(), *SUPPLEMENT.values())
     lex_verbs = set().union(*LEXICON.values())
     common = {w for w, i in (ec or {}).items() if i["common"]}
     # 字典收錄範圍：常用動詞 ＋ 其他來源提到的動詞；VerbNet 裡的其他動詞也收，但標成不常用
@@ -318,6 +350,11 @@ def build():
         for code, verbs in LEXICON.items():
             if verb in verbs:
                 src[code].add("字表")
+        for code, verbs in SUPPLEMENT.items():
+            if verb in verbs:
+                src[code].add("補充")
+        if any(verb == a for a, _ in L.VERB_PREP_OBJECT):
+            src["SV"].add("字表")  # look at、listen to：動詞本身不及物
         for code, _id in gold.get(verb, ()):
             src[code].add("題庫")
         for code in doubtful & set(src):
@@ -341,7 +378,7 @@ def build():
     return entries, review, vn_stats, ec is not None
 
 
-TRUSTED = {"賴世雄", "字表", "題庫"}
+TRUSTED = {"賴世雄", "字表", "題庫", "補充"}
 
 
 def flag_review(verb, src, ec, review):
@@ -367,7 +404,8 @@ def write_yaml(entries):
         "# 動詞句型字典（草稿，由 tools/build_verb_dict.py 產生，請勿手動修改；要改請改程式或審核清單）\n"
         "# 每個動詞列出可以用的句型，以及是哪些來源說的：\n"
         "#   VerbNet＝VerbNet 3.4 換算、VerbNet?＝換算時有疑問、ECDICT＝字典標 vt./vi.、\n"
-        "#   賴世雄＝《教你學英語語法》上冊、字表＝lexicon.py、題庫＝練習題標準答案\n"
+        "#   賴世雄＝《教你學英語語法》上冊、字表＝lexicon.py、題庫＝練習題標準答案、\n"
+        "#   補充＝文法書常見動詞表（build_verb_dict.py 的 SUPPLEMENT）\n"
         "# 句型代號：SV 句型一 S+Vi、SVC 句型二 S+V+SC、SVO 句型三 S+Vt+O、\n"
         "#           SVOC 句型四 S+Vt+O+OC、SVOO 句型五 S+Vt+IO+DO\n"
         "# common: true＝常用動詞（牛津 3000、中國中考／高考字表、或其他來源提到）\n"
@@ -375,7 +413,8 @@ def write_yaml(entries):
         "# 本檔部分內容衍生自 VerbNet 3.4。\n"
         "# VerbNet 3.0 (or 3.X) Copyright 2009 by University of Colorado. All rights reserved.\n"
         "# 依其授權條款使用（含免責聲明），條款全文見 backend/analyzer/LICENSE-VerbNet.txt。\n"
-        "# 例句（examples）取自 VerbNet。及物／不及物資訊取自 ECDICT（MIT 授權）。\n"
+        "# 例句（examples）取自 VerbNet。及物／不及物資訊取自 ECDICT（MIT 授權，Copyright (c) 2025 Linwei，\n"
+        "# 條款全文見 backend/analyzer/LICENSE-ECDICT.txt）。\n"
     )
     body = yaml.safe_dump(entries, allow_unicode=True, sort_keys=False, width=120)
     OUT_YAML.write_text(header + body, encoding="utf-8")
@@ -397,7 +436,7 @@ def write_review(review, entries, vn_stats, has_ecdict):
         "## 概況",
         "",
         f"- 收錄動詞 {len(entries)} 個，其中常用 {n_common} 個",
-        f"- VerbNet 句子結構 {vn_stats['frames']} 個，略過 {vn_stats['skipped']} 個（被動、直接引述、中間語態）",
+        f"- VerbNet 句子結構 {vn_stats['frames']} 個，略過 {vn_stats['skipped']} 個（被動、直接引述）",
         f"- ECDICT：{'已使用' if has_ecdict else '⚠️ 尚未下載，這一版沒有及物／不及物資訊'}",
         "- 換算時有疑問、又沒有其他來源支持的句型，不收進字典",
         "",
