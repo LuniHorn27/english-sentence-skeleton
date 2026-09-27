@@ -1,3 +1,16 @@
+---
+title: English Sentence Skeleton
+emoji: 📝
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+short_description: 英文句子骨架分析：主詞、動詞、受詞、補語與五大句型
+---
+
+<!-- 上面這段是 Hugging Face Spaces 的設定（用 Docker 執行、網站在 7860 埠），不要刪 -->
+
 # 英文句子骨架分析
 
 幫助台灣學生和英文學習者看懂英文句子的工具：輸入一個英文句子，
