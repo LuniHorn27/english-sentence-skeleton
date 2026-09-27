@@ -113,6 +113,9 @@ textarea {
 .tag { font-size: 12px; color: var(--text-2); border: 1px solid var(--border-strong); padding: 1px 8px; border-radius: 6px; }
 .banner { font-size: 14px; background: var(--tip-bg); color: var(--tip); border-radius: 8px; padding: 8px 12px; margin-top: 10px; }
 .banner.fail { background: var(--danger-bg); color: var(--danger); }
+/* 動詞句型字典檢查不通過的提示 */
+button.doubt { font-size: 12px; padding: 2px 10px; background: var(--tip-bg); color: var(--tip); border-color: transparent; }
+button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
 
 .row { display: flex; flex-wrap: wrap; gap: 12px 12px; align-items: flex-end; margin: 14px 0 10px; }
 .clause { display: inline-flex; flex-direction: column; gap: 6px; border: 1px solid var(--border-strong); border-radius: 10px; padding: 6px 12px 2px; }
@@ -275,7 +278,7 @@ a.pattern:hover { text-decoration: underline; }
   :root { --bg: #fff; --surface: #fff; --text: #000; }
   body { background: #fff; }
   main { max-width: none; padding: 0; }
-  .ask, .toolbar, .result-actions, .history, .foot, .s-tools, .card-toggle, .feedback, .explain, .toast, .top .hint, .top-links { display: none !important; }
+  .ask, .toolbar, .result-actions, .history, .foot, .s-tools, .card-toggle, .feedback, .explain, .toast, .top .hint, .top-links, .doubt, .doubt-note { display: none !important; }
   .top h1::after { content: "　英文句子骨架分析講義"; font-size: 14px; font-weight: 400; }
   .sentence { break-inside: avoid; padding: 10px 0; }
   .lb, .pattern, .card-tag, .callout { -webkit-print-color-adjust: exact; print-color-adjust: exact; }

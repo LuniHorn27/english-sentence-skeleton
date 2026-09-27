@@ -415,6 +415,18 @@ function renderSentence(sIdx) {
     link.title = "看這個句型的說明";
     head.append(link);
   }
+  // 動詞句型字典檢查不通過：提醒這句可能分析錯了（點開看原因）
+  const doubts = sentence.clauses.map((c) => c.doubt).filter(Boolean);
+  if (doubts.length) {
+    const flag = el("button", "doubt", "⚠️ 這句可能分析錯了");
+    flag.type = "button";
+    flag.setAttribute("aria-expanded", String(Boolean(view.doubtOpen)));
+    flag.addEventListener("click", () => {
+      view.doubtOpen = !view.doubtOpen;
+      renderSentence(sIdx);
+    });
+    head.append(flag);
+  }
   const tools = el("span", "s-tools");
   if (window.Speech?.available && sentence.status !== "failed") {
     tools.append(speakButton(sentence.text, "朗讀"));
@@ -429,6 +441,9 @@ function renderSentence(sIdx) {
   tools.append(report);
   head.append(tools);
   box.append(head);
+  if (doubts.length && view.doubtOpen) {
+    box.append(el("div", "banner doubt-note", `${doubts.join(" ")}如果你知道正確答案，歡迎按「回報錯誤」告訴我們。`));
+  }
 
   if (sentence.status === "failed" && sentences.length > 1) box.append(el("p", "failed-text", sentence.text));
   if (sentence.status !== "ok" && sentence.message) {
