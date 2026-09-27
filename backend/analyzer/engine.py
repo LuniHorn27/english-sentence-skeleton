@@ -206,6 +206,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     children = [c for c in v.children]
     deps = {c.dep_ for c in children}
     info.passive = bool(deps & {"nsubjpass", "auxpass", "csubjpass"})
+    if info.passive and v.lemma_ in ("become", "be") and "agent" not in deps:
+        info.passive = False  # It's become popular.、It's been a long time：'s 是 has，不是被動
     info.existential = "expl" in deps and v.lemma_ == "be"
 
     # 分析程式把 enjoy 之類的主要動詞誤判成助動詞：enjoy 才是動詞，後面的 playing 是受詞
@@ -284,7 +286,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             if g is not None and c.pos_ == "NOUN" and g.pos_ in ("NOUN", "PRON", "PROPN") and g.i < c.i:
                 dative_fix = (g, c)
 
-    that_clause = next((c for c in children if c.dep_ == "ccomp" and clause_opener(c) is not None and c.i > v.i), None)
+    that_clause = next((c for c in children if c.dep_ == "ccomp" and c.i > v.i and (
+        clause_opener(c) is not None or any(g.dep_ in ("nsubj", "nsubjpass") for g in c.children))), None)
     dobj = next((c for c in children if c.dep_ == "dobj"), None)
     if dative_fix is None and dobj is not None and that_clause is not None and v.lemma_.lower() in L.DATIVE_VERBS | {"remind", "inform", "promise", "teach", "warn", "assure"}:
         dative_fix = (dobj, that_clause)  # told [everyone] [that the company would move]
@@ -403,7 +406,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         for r in [v] + [c for c in children if c.i in roots and roots[c.i].role == "SC"]:
             for g in r.children:
                 if g.dep_ in ("xcomp", "ccomp") and (g.i not in roots or roots[g.i].role in ("O", "unknown")):
-                    if any(x.lower_ == "to" or x.dep_ == "mark" for x in g.children):
+                    if any(x.lower_ == "to" or x.dep_ in ("mark", "nsubj", "nsubjpass") for x in g.children):
                         roots[g.i] = Spec("RS", clause=index)
                         info.flags.add("dummy_it")
                         info.flags.discard("to_v_or_ving_object")
@@ -429,7 +432,10 @@ def assign_complement(c, v, roots, index, info, has_obj):
     small_subj = [g for g in c.children if g.dep_ == "nsubj"]
     has_mark = any(g.dep_ == "mark" for g in c.children)
     has_to = any(g.dep_ == "aux" and g.lower_ == "to" for g in c.children)
-    if small_subj and not has_mark and not has_to and c.tag_ in ("VB", "JJ", "NN", "NNS", "NNP", "VBN", "VBG", "RB"):
+    has_helper = any(g.dep_ in ("aux", "auxpass") for g in c.children)
+    if small_subj and not has_mark and not has_to and not has_helper and small_subj[0].tag_ != "PRP$" \
+            and c.tag_ in ("VB", "JJ", "NN", "NNS", "NNP", "VBN", "VBG", "RB"):
+        # 有助動詞的是完整子句（She said she didn't know…），不是小子句
         # 小子句：made [us] [clean the classroom]、found [the game] [very fun]
         roots[small_subj[0].i] = Spec("O", clause=index)
         roots[c.i] = Spec("OC", clause=index)

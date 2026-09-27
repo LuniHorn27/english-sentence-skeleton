@@ -1521,3 +1521,92 @@
     text: regarded
   - role: OC
     text: as a great leader
+- id: '88'
+  sentence: She said she was tired.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: said
+  - role: O
+    text: she was tired
+- id: '89'
+  sentence: I know where you will go.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: know
+  - role: O
+    text: where you will go
+- id: '90'
+  sentence: I think he is right.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: think
+  - role: O
+    text: he is right
+- id: '91'
+  sentence: Mary promised me she would help.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: Mary
+  - role: Vt
+    text: promised
+  - role: IO
+    text: me
+  - role: DO
+    text: she would help
+- id: '92'
+  sentence: It is possible we might find a better way.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: possible
+  - role: RS
+    text: we might find a better way
+- id: '93'
+  sentence: It has become very popular.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: aux
+    text: has
+  - role: V
+    text: become
+  - role: SC
+    text: very popular
+    head:
+    - popular
+- id: '94'
+  sentence: It's become very popular.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: aux
+    text: '''s'
+  - role: V
+    text: become
+  - role: SC
+    text: very popular
+    head:
+    - popular
