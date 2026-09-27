@@ -2,5 +2,5 @@
 window.SITE_CONFIG = {
   // Buy Me a Coffee 頁面網址，例如 "https://buymeacoffee.com/你的帳號"。
   // 留空時「請我喝杯咖啡」卡片不會出現。
-  coffeeUrl: "",
+  coffeeUrl: "https://buymeacoffee.com/a21420000d",
 };

@@ -6,8 +6,6 @@ import html
 import json
 import logging
 import os
-import subprocess
-import sys
 import uuid
 import threading
 import time
@@ -137,7 +135,7 @@ class Feedback(BaseModel):
     analysis: Optional[dict] = None
 
 
-# 回饋同時送到 Google 試算表（設定方式見 docs/回饋試算表設定.md）
+# 回饋送到 Google 試算表，並由試算表寄 email 通知（設定方式見 docs/回饋試算表設定.md）
 #   網址放在環境變數 FEEDBACK_SHEET_URL，或 data/feedback_sheet.json 的 {"url": "..."}（data/ 不會上傳到 GitHub）
 def _sheet_url():
     url = os.environ.get("FEEDBACK_SHEET_URL")
@@ -150,56 +148,49 @@ def _sheet_url():
     return url if url and url.startswith("https://script.google.com/") else None
 
 
-def _send_to_sheet(record: dict):
-    url = _sheet_url()
-    if not url:
-        return
+def _send_to_sheet(url: str, record: dict):
+    """背景送到試算表；失敗時隔幾秒重送，最多 3 次（使用者要求不留本機備份）"""
 
     def post():
+        import time
         import urllib.error
         import urllib.request
 
         data = json.dumps({k: record.get(k) for k in ("time", "kind", "sentence", "part", "current", "message")}, ensure_ascii=False)
-        req = urllib.request.Request(url, data=data.encode("utf-8"), headers={"Content-Type": "application/json"})
 
         class NoRedirect(urllib.request.HTTPRedirectHandler):
             def redirect_request(self, *args, **kwargs):
                 return None  # Google 寫完後會轉到結果頁，不用跟過去
 
-        try:
-            urllib.request.build_opener(NoRedirect).open(req, timeout=15).read()
-        except urllib.error.HTTPError as e:
-            if e.code != 302:  # 302 代表 Google 已經寫進試算表
-                log.warning("回饋送到試算表失敗：HTTP %s（本機檔案已保存）", e.code)
-        except Exception:  # 送不到試算表時，本機檔案裡還有一份
-            log.warning("回饋送到試算表失敗（本機檔案已保存）")
+        for attempt in range(3):
+            req = urllib.request.Request(url, data=data.encode("utf-8"), headers={"Content-Type": "application/json"})
+            try:
+                urllib.request.build_opener(NoRedirect).open(req, timeout=20).read()
+                return
+            except urllib.error.HTTPError as e:
+                if e.code == 302:  # 302 代表 Google 已經寫進試算表
+                    return
+                reason = f"HTTP {e.code}"
+            except Exception as e:
+                reason = type(e).__name__
+            time.sleep(5 * (attempt + 1))
+        log.warning("回饋送到試算表失敗（重試 3 次）：%s", reason)  # 不記錄內容（隱私）
 
     threading.Thread(target=post, daemon=True).start()
-
-
-def _notify_mac(item: "Feedback"):
-    """網站在自己的 Mac 上執行時，有新回饋就跳出系統通知（只在這台 Mac 上，不送到外部服務）"""
-    if sys.platform != "darwin" or os.environ.get("FEEDBACK_NOTIFY") == "0":
-        return
-    title = "新的回報錯誤" if item.kind == "error" else "新的回饋"
-    body = " ".join(item.message.split())[:80]
-    script = 'on run argv\ndisplay notification (item 2 of argv) with title "英文句子骨架分析" subtitle (item 1 of argv) sound name "Glass"\nend run'
-    try:
-        subprocess.Popen(["osascript", "-e", script, title, body], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except OSError:
-        pass
 
 
 @app.post("/api/feedback")
 def feedback(item: Feedback, request: Request):
     check_rate(request, "feedback", FEEDBACK_LIMIT, 3600, "回饋次數太多了，請稍後再試")
-    with _feedback_lock:
+    record = {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), **item.model_dump()}
+    url = _sheet_url()
+    if url:  # 有設定試算表：只送到試算表（試算表那邊會寄 email 通知），不在主機上留備份
+        _send_to_sheet(url, record)
+        return {"ok": True}
+    with _feedback_lock:  # 沒設定試算表（例如開發測試）：存在主機上的檔案
         FEEDBACK_FILE.parent.mkdir(parents=True, exist_ok=True)
-        record = {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), **item.model_dump()}
         with FEEDBACK_FILE.open("a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
-    _send_to_sheet(record)
-    _notify_mac(item)
     return {"ok": True}
 
 
