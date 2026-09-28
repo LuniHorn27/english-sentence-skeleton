@@ -2114,3 +2114,91 @@
     text: a pity
   - role: RS
     text: that you can't come
+- id: '153'
+  sentence: I find it hard to wake up early.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: find
+  - role: O
+    text: it
+  - role: OC
+    text: hard
+  - role: RO
+    text: to wake up early
+- id: '154'
+  sentence: She made it a rule to exercise every day.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: made
+  - role: O
+    text: it
+  - role: OC
+    text: a rule
+  - role: RO
+    text: to exercise every day
+- id: '155'
+  sentence: I think it important that we tell the truth.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: think
+  - role: O
+    text: it
+  - role: OC
+    text: important
+  - role: RO
+    text: that we tell the truth
+- id: '156'
+  sentence: They made it clear that they would not come.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: Vt
+    text: made
+  - role: O
+    text: it
+  - role: OC
+    text: clear
+  - role: RO
+    text: that they would not come
+- id: '157'
+  sentence: Children take it for granted that their parents pay for everything.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Children
+  - role: Vt
+    text: take
+  - role: O
+    text: it
+  - role: OC
+    text: for granted
+  - role: RO
+    text: that their parents pay for everything
+- id: '158'
+  sentence: You make it look easy.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: Vt
+    text: make
+  - role: O
+    text: it
+  - role: OC
+    text: look easy

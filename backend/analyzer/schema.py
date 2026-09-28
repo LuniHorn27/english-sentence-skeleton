@@ -14,6 +14,7 @@ from pydantic import BaseModel, Field, computed_field, model_validator
 Role = Literal[
     "S", "Vt", "Vi", "V", "aux", "O", "IO", "DO", "SC", "OC",
     "RS",       # 真主詞（虛主詞 It 句型）
+    "RO",       # 真受詞（虛受詞 it 句型）
     "conj",     # 連接詞
     "M",        # 修飾語（含引導詞 There）
     "unknown",  # 未分析

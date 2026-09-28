@@ -9,7 +9,7 @@ const GROUP = { S: "S", Vt: "V", Vi: "V", V: "V", aux: "V", O: "O", IO: "O", DO:
 const CORE = new Set(["S", "Vt", "Vi", "V", "O", "IO", "DO", "SC", "OC"]);
 const ROLE_NAME = {
   S: "主詞", Vt: "動詞", Vi: "動詞", V: "動詞", O: "受詞", IO: "間接受詞", DO: "直接受詞",
-  SC: "主詞補語", OC: "受詞補語", M: "修飾語", aux: "助動詞", RS: "真主詞",
+  SC: "主詞補語", OC: "受詞補語", M: "修飾語", aux: "助動詞", RS: "真主詞", RO: "真受詞",
 };
 // [內部代號, 顯示編號, 公式]，依賴世雄的編號排列
 const PATTERNS = [
@@ -73,7 +73,7 @@ function answerRow(item, revealAll = true) {
   const row = el("div", "row");
   for (const c of item.chunks) {
     const core = c.role !== "M";
-    const ck = el("span", `ck ${core ? `${c.role === "aux" || c.role === "RS" ? "soft" : "core"} r-${GROUP[c.role] || "S"}` : "m"}`);
+    const ck = el("span", `ck ${core ? `${c.role === "aux" || c.role === "RS" || c.role === "RO" ? "soft" : "core"} r-${GROUP[c.role] || "S"}` : "m"}`);
     const label = core ? (c.role === "aux" ? "aux." : c.role) : c.function || "修飾語";
     ck.append(el("span", "lb", revealAll ? label : ""), el("span", "tx", c.text));
     row.append(ck);

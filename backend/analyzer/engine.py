@@ -21,7 +21,7 @@ from .phrases import find_phrases, phrasal_object
 from .schema import CardRef, Chunk, Clause, SentenceResult, Span
 from .verb_check import check as verb_check
 
-NOMINAL = {"S", "O", "IO", "DO", "SC", "OC", "RS"}
+NOMINAL = {"S", "O", "IO", "DO", "SC", "OC", "RS", "RO"}
 VERB_ROLE = "VERB"  # 動詞種類（Vt／Vi／V）等句型決定後再填
 
 _nlp = None
@@ -546,6 +546,33 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                         roots[g.i] = Spec("RS", clause=index)
                         info.flags.add("dummy_it")
                         info.flags.discard("to_v_or_ving_object")
+
+    # 虛受詞 it：I find it hard to wake up early、made it a rule to exercise → 句尾的 to V／that 子句是真受詞
+    granted = next((c for c in children if (c.dep_ == "prep" and c.lower_ == "for" and any(g.lower_ == "granted" for g in c.children))
+                    or (c.lower_ == "granted" and any(g.lower_ == "for" for g in c.children))), None) if v.lemma_ == "take" else None
+    if granted is not None:  # take it for granted that…：for granted 是受詞補語（視為理所當然）
+        for c in children:
+            if c.i in roots and roots[c.i].role in ("IO", "DO", "O") and c.i < granted.i:
+                roots[c.i] = Spec("O", clause=index)
+        roots[granted.i] = Spec("OC", clause=index)
+        for g in children:
+            if g.dep_ in ("ccomp", "advcl", "dep") and g.i > granted.i and g.pos_ in ("VERB", "AUX"):
+                roots[g.i] = Spec("O", clause=index, inner_verb=g)
+    it_obj = next((c for c in v.subtree if c.i in roots and roots[c.i].role == "O" and roots[c.i].clause == index
+                   and c.lower_ == "it" and c.i > v.i), None)
+    comp = next((c for c in v.subtree if c.i in roots and roots[c.i].role == "OC" and roots[c.i].clause == index), None)
+    if it_obj is not None and comp is not None and it_obj.i < comp.i:
+        for g in list(comp.children) + list(v.children):
+            if g.i <= comp.i or g.pos_ not in ("VERB", "AUX") or g.dep_ not in ("xcomp", "ccomp", "advcl", "dep"):
+                continue
+            if g.i in roots and roots[g.i].role not in ("O", "unknown"):
+                continue
+            to_v = any(x.dep_ == "aux" and x.lower_ == "to" for x in g.children)
+            that = any(x.dep_ == "mark" and x.lower_ == "that" for x in g.children)
+            if to_v or that:
+                roots[g.i] = Spec("RO", clause=index, inner_verb=g if that else None)
+                info.flags.add("dummy_object")
+                info.flags.discard("to_v_or_ving_object")
 
     # There is 句型：掛在真正主詞底下的介系詞片語，當成表地點的副詞
     if info.existential:

@@ -106,7 +106,7 @@ def evaluate(items):
                     per_role[role][0] += 1
                 elif p is not None or got is not None:
                     errs.append(f"{label} 角色：答案 {role}，程式 {got}")
-            elif role in ("conj", "RS"):
+            elif role in ("conj", "RS", "RO"):
                 ok = p is not None and p.role == role
                 stats["主幹角色"][1] += 1
                 stats["主幹角色"][0] += ok

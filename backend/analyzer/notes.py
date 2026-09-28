@@ -53,6 +53,8 @@ def chunk_note(c, infos, text, compound=None) -> str:
         return f"{prefix}主詞{'，核心字是 ' + head if head else ''}。"
     if role == "RS":
         return "真正的主詞，因為太長，所以移到句尾，用 It 代替。不算進公式（虛線）。"
+    if role == "RO":
+        return "真正的受詞，因為太長，所以移到句尾，受詞的位置先用 it 代替。不算進公式（虛線）。"
     if role == "Vt":
         if info and info.passive:
             return "被動語態的主要動詞（過去分詞 p.p.）。它本來是及物動詞，主詞是動作的承受者。"
@@ -83,6 +85,8 @@ def chunk_note(c, infos, text, compound=None) -> str:
             return "助動詞，移到主詞前面就變成疑問句。它幫主要動詞表達語氣或時態，不算進公式（虛線）。"
         return "助動詞，幫主要動詞表達時態或語氣，不算進公式（虛線）。"
     if role == "O":
+        if info and "dummy_object" in info.flags and c.get("text", "").lower() == "it":
+            return "虛受詞（形式受詞），本身沒有意思，只是先佔住受詞的位置，真正的受詞在句尾。"
         s = c.get("structure")
         if s in ("不定詞片語", "動名詞片語", "動名詞"):
             return f"受詞：{s}當名詞用，是動作的對象。"
