@@ -943,12 +943,13 @@ def analyze_sentence(text: str) -> SentenceResult:
     owner_of = make_owner_fn(roots)
     expand_noun_modifiers(roots, list(sent), owner_of)
 
-    # wh- 疑問句還沒有規則
+    # wh- 疑問句：簡單的（Where did you buy…?、Who broke…?）已經能正確分析；
+    # 分析結果出現「未分析」的片段時，才提醒使用者結果僅供參考（見下方 raw 產生後的檢查）
     first = sent[0]
-    if stext.endswith("?") and first.tag_ in ("WDT", "WP", "WP$", "WRB"):
-        status, message = "partial", "wh- 疑問句（what、where、how…）目前還沒辦法完整分析，結果僅供參考。"
+    wh_question = stext.endswith("?") and first.tag_ in ("WDT", "WP", "WP$", "WRB")
+    if wh_question:
         for info in infos.values():
-            info.question = False
+            info.question = False  # 不顯示 Yes／No 問句的文法重點卡
 
     for info in infos.values():
         tense_flags(info, roots, doc, flags)
@@ -968,6 +969,15 @@ def analyze_sentence(text: str) -> SentenceResult:
         flags |= info.flags
 
     raw = to_chunks(sent, roots, infos, stext, base, flags, vars_)
+    if wh_question and status == "ok" and any(c["role"] == "unknown" for c in raw):
+        status, message = "partial", "這種 wh- 疑問句（what、where、how…）目前還沒辦法完整分析，結果僅供參考。"
+    # 不可能的結果：同一個子句有兩個主詞、兩個受詞或兩個補語 → 一定有地方分析錯了，提醒使用者
+    #   （平行結構的兩組 Vt ＋ O 除外）
+    if status == "ok" and "parallel_structure" not in flags:
+        from collections import Counter
+        counts = Counter((c["_spec"].clause, c["role"]) for c in raw if c["role"] in ("S", "O", "IO", "DO", "SC", "OC"))
+        if any(n > 1 for n in counts.values()):
+            status, message = "partial", "這句的結構比較複雜，分析結果可能有錯，僅供參考。"
 
     # 修飾語位置：形容詞修飾語放在名詞後面
     if any(c["_spec"].modifies is not None and c["_spec"].modifies.i < c["_root"].i for c in raw):

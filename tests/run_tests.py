@@ -3,6 +3,7 @@
 用法：
   python tests/run_tests.py            # 練習題
   python tests/run_tests.py --exam     # 考試題（1-9 才用）
+  python tests/run_tests.py --probe    # 體檢題（題庫以外的回歸測試，tests/probe/）
 
 報告同時存成 tests/report_practice.md（或 report_exam.md）。
 """
@@ -131,11 +132,11 @@ def evaluate(items):
 
 def main():
     exam = "--exam" in sys.argv
-    name = "exam" if exam else "practice"
+    name = "exam" if exam else ("probe" if "--probe" in sys.argv else "practice")
     items = yaml.safe_load((ROOT / "tests" / name / "gold.yaml").read_text(encoding="utf-8"))
     stats, per_role, lines, secs = evaluate(items)
     pct = lambda a, b: f"{a}/{b}（{100 * a / b:.0f}%）" if b else "—"
-    out = [f"# 測試報告：{'考試題' if exam else '練習題'}（{len(items)} 句，{secs:.1f} 秒）", "",
+    out = [f"# 測試報告：{ {'exam': '考試題', 'probe': '體檢題'}.get(name, '練習題') }（{len(items)} 句，{secs:.1f} 秒）", "",
            "| 項目 | 正確率 |", "|---|---|"]
     for k in ["主幹角色", "句型", "修飾語功能", "片段範圍", "核心字"]:
         out.append(f"| {k} | {pct(*stats[k])} |")
