@@ -659,7 +659,7 @@ def assign_complement(c, v, roots, index, info, has_obj):
     has_helper = any(g.dep_ in ("aux", "auxpass") for g in c.children)
     subjunctive = v.lemma_.lower() in L.SUBJUNCTIVE_VERBS and c.tag_ == "VB" and c.dep_ == "ccomp"
     if small_subj and not has_mark and not has_to and not has_helper and small_subj[0].tag_ != "PRP$" and not subjunctive \
-            and c.tag_ in ("VB", "JJ", "NN", "NNS", "NNP", "VBN", "VBG", "RB"):
+            and c.tag_ in ("VB", "JJ", "JJR", "JJS", "NN", "NNS", "NNP", "VBN", "VBG", "RB"):  # makes you happier
         # 有助動詞的是完整子句（She said she didn't know…），不是小子句
         # 小子句：made [us] [clean the classroom]、found [the game] [very fun]
         roots[small_subj[0].i] = Spec("O", clause=index)
@@ -858,8 +858,9 @@ def heads_for(root, spec, toks, flags, vars_):
     pobj = next((c for c in of.children if c.dep_ == "pobj"), None) if of is not None else None
     the_number = lemma == "number" and any(c.dep_ == "det" and c.lower_ == "the" for c in root.children)
     if of is not None and pobj is not None and lemma in L.QUANTIFIERS and not the_number:
-        flags.add("quantifier_of")
-        vars_.setdefault("quantifier_of", {"noun": pobj.text})
+        if spec.role == "S":  # 卡片講的是主詞和動詞的單複數，補語、受詞（is one of the biggest problems）不附
+            flags.add("quantifier_of")
+            vars_.setdefault("quantifier_of", {"noun": pobj.text})
         return []
     if of is not None and pobj is not None and lemma in L.UNIT_NOUNS:
         flags.add("unit_of")

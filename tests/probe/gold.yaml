@@ -3910,3 +3910,465 @@
     text: looking forward to
   - role: O
     text: meeting you
+- id: '275'
+  sentence: Every year, thousands of tourists visit Taiwan to enjoy its beautiful scenery and delicious food.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: Every year
+  - role: S
+    text: thousands of tourists
+  - role: Vt
+    text: visit
+  - role: O
+    text: Taiwan
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: to enjoy its beautiful scenery and delicious food
+- id: '276'
+  sentence: Night markets are an important part of Taiwanese culture.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Night markets
+  - role: V
+    text: are
+  - role: SC
+    text: an important part of Taiwanese culture
+- id: '277'
+  sentence: Many students feel stressed because they have too many tests.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Many students
+  - role: V
+    text: feel
+  - role: SC
+    text: stressed
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because they have too many tests
+- id: '278'
+  sentence: Scientists say that eating vegetables is good for our health.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Scientists
+  - role: Vt
+    text: say
+  - role: O
+    text: that eating vegetables is good for our health
+- id: '279'
+  sentence: When I was a child, my grandmother often told me stories about her hometown.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: When I was a child
+  - role: S
+    text: my grandmother
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: often
+  - role: Vt
+    text: told
+  - role: IO
+    text: me
+  - role: DO
+    text: stories
+  - role: M
+    function: 形容詞・修飾
+    modifies: stories
+    text: about her hometown
+- id: '280'
+  sentence: The Internet has changed the way people communicate with each other.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The Internet
+  - role: aux
+    text: has
+  - role: Vt
+    text: changed
+  - role: O
+    text: the way
+  - role: M
+    function: 形容詞・修飾
+    modifies: way
+    text: people communicate with each other
+- id: '281'
+  sentence: Although smartphones are convenient, they can also cause problems.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Although smartphones are convenient
+  - role: S
+    text: they
+  - role: aux
+    text: can
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: also
+  - role: Vt
+    text: cause
+  - role: O
+    text: problems
+- id: '282'
+  sentence: People who exercise regularly usually live longer.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: People
+  - role: M
+    function: 形容詞・修飾
+    modifies: People
+    text: who exercise regularly
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: usually
+  - role: Vi
+    text: live
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: longer
+- id: '283'
+  sentence: The festival, which takes place every spring, attracts visitors from all over the world.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The festival
+  - role: M
+    function: 形容詞・修飾
+    modifies: festival
+    text: which takes place every spring
+  - role: Vt
+    text: attracts
+  - role: O
+    text: visitors
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: from all over the world
+- id: '284'
+  sentence: Learning a foreign language takes time and patience.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Learning a foreign language
+  - role: Vt
+    text: takes
+  - role: O
+    text: time and patience
+- id: '285'
+  sentence: My dream is to become a doctor and help people in need.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: My dream
+  - role: V
+    text: is
+  - role: SC
+    text: to become a doctor and help people
+  - role: M
+    function: 形容詞・修飾
+    modifies: people
+    text: in need
+- id: '286'
+  sentence: Plastic bags are harmful to the environment because they take hundreds of years to break down.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Plastic bags
+  - role: V
+    text: are
+  - role: SC
+    text: harmful
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to the environment
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because they take hundreds of years to break down
+- id: '287'
+  sentence: The more books you read, the more you will learn.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The more books you read
+  - role: O
+    text: the more
+  - role: S
+    text: you
+  - role: aux
+    text: will
+  - role: Vt
+    text: learn
+- id: '288'
+  sentence: Some people think that money is the key to happiness.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Some people
+  - role: Vt
+    text: think
+  - role: O
+    text: that money is the key to happiness
+- id: '289'
+  sentence: We should turn off the lights when we leave the room.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: should
+  - role: Vt
+    text: turn off
+  - role: O
+    text: the lights
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when we leave the room
+- id: '290'
+  sentence: Being kind to others makes you happier.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Being kind to others
+  - role: Vt
+    text: makes
+  - role: O
+    text: you
+  - role: OC
+    text: happier
+- id: '291'
+  sentence: I was so excited that I couldn't sleep.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: V
+    text: was
+  - role: SC
+    text: so excited
+  - role: M
+    function: 副詞子句・表結果
+    modifies: null
+    text: that I couldn't sleep
+- id: '292'
+  sentence: The number of people using public transportation has increased.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: The number of people
+  - role: M
+    function: 形容詞・修飾
+    modifies: people
+    text: using public transportation
+  - role: aux
+    text: has
+  - role: Vi
+    text: increased
+- id: '293'
+  sentence: Climate change is one of the biggest problems that the world is facing today.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Climate change
+  - role: V
+    text: is
+  - role: SC
+    text: one of the biggest problems
+  - role: M
+    function: 形容詞・修飾
+    modifies: problems
+    text: that the world is facing today
+- id: '294'
+  sentence: He apologized for being late.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: apologized for
+  - role: O
+    text: being late
+- id: '295'
+  sentence: The teacher encouraged us to ask questions.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The teacher
+  - role: Vt
+    text: encouraged
+  - role: O
+    text: us
+  - role: OC
+    text: to ask questions
+- id: '296'
+  sentence: To keep healthy, you should eat a balanced diet.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: To keep healthy
+  - role: S
+    text: you
+  - role: aux
+    text: should
+  - role: Vt
+    text: eat
+  - role: O
+    text: a balanced diet
+- id: '297'
+  sentence: It was raining heavily, so the game was canceled.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: aux
+    text: was
+  - role: Vi
+    text: raining
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: heavily
+  - role: conj
+    text: so
+  - role: S
+    text: the game
+  - role: aux
+    text: was
+  - role: Vt
+    text: canceled
+- id: '298'
+  sentence: Not only did he pass the exam, but he also got the highest score.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: conj
+    text: Not only
+  - role: aux
+    text: did
+  - role: S
+    text: he
+  - role: Vt
+    text: pass
+  - role: O
+    text: the exam
+  - role: conj
+    text: but
+  - role: S
+    text: he
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: also
+  - role: Vt
+    text: got
+  - role: O
+    text: the highest score
+- id: '299'
+  sentence: There are many reasons why people move to big cities.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 引導詞
+    modifies: null
+    text: There
+  - role: Vi
+    text: are
+  - role: S
+    text: many reasons
+  - role: M
+    function: 形容詞・修飾
+    modifies: reasons
+    text: why people move to big cities
+- id: '300'
+  sentence: Reading helps us understand the world better.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Reading
+  - role: Vt
+    text: helps
+  - role: O
+    text: us
+  - role: OC
+    text: understand the world better
+- id: '301'
+  sentence: What surprised me most was his honesty.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: What surprised me most
+  - role: V
+    text: was
+  - role: SC
+    text: his honesty
+- id: '302'
+  sentence: Parents should spend more time with their children.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Parents
+  - role: aux
+    text: should
+  - role: Vt
+    text: spend
+  - role: O
+    text: more time
+  - role: M
+    function: 副詞・表伴隨
+    modifies: null
+    text: with their children
+- id: '303'
+  sentence: It is important for teenagers to get enough sleep.
+  expect: partial
+- id: '304'
+  sentence: She spends most of her free time reading novels.
+  expect: partial
