@@ -691,6 +691,13 @@ def structure_of(root, spec, toks):
         return "分詞片語"
     if any(c.dep_ == "mark" and c.lower_ in ("that", "whether", "if") for c in root.children) and root.pos_ in ("VERB", "AUX"):
         return "名詞子句"
+    # 疑問詞開頭（why the TV stopped…）或省略 that（she said she was tired）的名詞子句：
+    # 這一段裡面有自己的主詞。主詞在這一段外面的不算（made us clean the room 的 clean the room）
+    inside = {t.i for t in toks}
+    if root.pos_ in ("VERB", "AUX") and spec.role not in (VERB_ROLE, "aux") and any(
+        c.dep_ in ("nsubj", "nsubjpass", "expl") and c.i in inside for c in root.children
+    ):
+        return "名詞子句"
     if root.pos_ in ("VERB", "AUX") and spec.role not in (VERB_ROLE, "aux"):
         if any(c.dep_ == "aux" and c.lower_ == "to" for c in root.children):
             return "不定詞片語"
