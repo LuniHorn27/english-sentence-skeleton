@@ -214,6 +214,10 @@ def advcl_function(tok) -> Optional[str]:
         # 沒有主詞的（While walking to class）是縮減後的副詞片語，不是完整的子句（Azar 18-1）
         infinitive = any(c.dep_ == "aux" and c.lower_ == "to" for c in tok.children)  # so as to pass the exam
         return f"副詞・{f}" if no_subject and (tok.tag_ in ("VBG", "VBN") or infinitive) else f"副詞子句・{f}"
+    first = min((t for t in tok.subtree if not t.is_punct), key=lambda t: t.i)
+    if first.lower_ in ("had", "were", "should") and (first is tok or first.dep_ in ("aux", "auxpass")) \
+            and any(c.dep_ in ("nsubj", "nsubjpass") and c.i > first.i for c in tok.children):
+        return "副詞子句・表條件"  # 省略 if 的假設語氣：Had I known…、Were I you…、Should you need help…
     if any(c.dep_ == "aux" and c.lower_ == "to" for c in tok.children):
         return "副詞・表目的"  # 不定詞表目的：to buy milk
     if no_subject and tok.tag_ in ("VBG", "VBN"):
@@ -957,6 +961,37 @@ CARD_ORDER = [
 MAX_CARDS = 3
 
 
+def comparative_correlative(sent, v, roots, info):
+    """The more you practice, the better you get.（越…就越…）
+    前半「the ＋ 比較級 …」整塊是副詞子句（表條件）；後半是主要子句，the ＋ 比較級是被移到前面的補語或受詞：
+    the better you get → you get better（句型二：S + V + SC）。沒把握的部分留給「未分析」。"""
+    toks = [t for t in sent if not t.is_space]
+    if len(toks) < 4 or toks[0].lower_ != "the" or not (toks[1].tag_ in ("JJR", "RBR") or toks[1].lower_ in ("more", "less", "fewer")):
+        return False
+    comma = next((t for t in toks if t.lower_ == ","), None)
+    if comma is None or comma.i >= v.i:
+        return False
+    first = next((c for c in v.children if c.i < comma.i and min(x.i for x in c.subtree) == toks[0].i), None)
+    if first is None:
+        return False
+    for t in first.subtree:
+        if t.i != first.i:
+            roots.pop(t.i, None)
+    roots[first.i] = Spec("M", function="副詞子句・表條件", clause=info.index)
+    info.flags.discard("participle_phrase")
+    info.flags.add("comparative_correlative")
+    # 後半：the ＋ 比較級
+    for c in v.children:
+        if not (comma.i < c.i < v.i) or not any(g.lower_ == "the" for g in c.children):
+            continue
+        if c.tag_ in ("JJR", "JJ") and c.dep_ in ("amod", "acomp", "oprd", "advmod", "attr") and v.lemma_ in L.LINKING_VERBS:
+            roots[c.i] = Spec("SC", clause=info.index)  # the better you get → you get better
+        elif c.dep_ == "dobj":
+            roots[c.i] = Spec("O", clause=info.index)  # the more you forget → you forget more
+    info.pattern = clause_pattern(roots, info.index, info)
+    return True
+
+
 def tense_flags(info, roots, doc, flags):
     v = info.verb_token
     auxes = [doc[i] for i, s in roots.items() if s.role == "aux" and s.clause == info.index and s.kind != "neg"]
@@ -966,8 +1001,9 @@ def tense_flags(info, roots, doc, flags):
     elif v.tag_ == "VBG" and "be" in lemmas:
         if any(a.lower_ in ("am", "is", "are", "'m", "'s", "'re") for a in auxes):
             flags.add("present_progressive")
-    elif v.tag_ == "VBN" and any(a.lower_ in ("have", "has", "'ve") for a in auxes):
-        flags.add("present_perfect")
+    elif v.tag_ == "VBN" and any(a.lower_ in ("have", "has", "'ve") for a in auxes) \
+            and not any(a.tag_ == "MD" or a.lower_ == "to" for a in auxes):
+        flags.add("present_perfect")  # would／should／must have ＋ p.p. 不是現在完成式
 
 
 def tag_question_main(root, sent):
@@ -1066,6 +1102,8 @@ def analyze_sentence(text: str) -> SentenceResult:
                 if c.dep_ in ("conj", "cc"):
                     roots[c.i] = Spec("unknown", clause=0)
 
+    if kind == "simple":
+        comparative_correlative(sent, root, roots, infos[0])
     owner_of = make_owner_fn(roots)
     expand_noun_modifiers(roots, list(sent), owner_of)
 

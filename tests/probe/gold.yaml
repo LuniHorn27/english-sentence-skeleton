@@ -2202,3 +2202,120 @@
     text: it
   - role: OC
     text: look easy
+- id: '159'
+  sentence: Had I known, I would have told you.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: Had I known
+  - role: S
+    text: I
+  - role: aux
+    text: would
+  - role: aux
+    text: have
+  - role: Vt
+    text: told
+  - role: O
+    text: you
+- id: '160'
+  sentence: Were I you, I would accept the offer.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: Were I you
+  - role: S
+    text: I
+  - role: aux
+    text: would
+  - role: Vt
+    text: accept
+  - role: O
+    text: the offer
+- id: '161'
+  sentence: Should you need help, please call me.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: Should you need help
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: please
+  - role: Vt
+    text: call
+  - role: O
+    text: me
+- id: '162'
+  sentence: The more you practice, the better you will become.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The more you practice
+  - role: SC
+    text: the better
+  - role: S
+    text: you
+  - role: aux
+    text: will
+  - role: V
+    text: become
+- id: '163'
+  sentence: The older he grew, the wiser he became.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The older he grew
+  - role: SC
+    text: the wiser
+  - role: S
+    text: he
+  - role: V
+    text: became
+- id: '164'
+  sentence: The harder you work, the more money you will earn.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The harder you work
+  - role: O
+    text: the more money
+  - role: S
+    text: you
+  - role: aux
+    text: will
+  - role: Vt
+    text: earn
+- id: '165'
+  sentence: The higher we climbed, the colder it became.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The higher we climbed
+  - role: SC
+    text: the colder
+  - role: S
+    text: it
+  - role: V
+    text: became
