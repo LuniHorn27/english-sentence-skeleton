@@ -134,7 +134,7 @@ def adverb_function(tok) -> str:
             return "副詞・表時間"
         return "副詞・表方式"
     # advmod、intj 等
-    if lemma in ("hardly", "scarcely", "barely"):
+    if lemma in ("hardly", "scarcely", "barely") or (lemma == "little" and tok.i == tok.sent.start):
         return "副詞・表否定"  # Hardly had he arrived…（幾乎不）
     if tok.tag_ == "WRB" or lemma in ("where", "when", "why"):  # 疑問詞 Where did you…?、Why is…?
         return {"where": "副詞・表地點", "when": "副詞・表時間", "why": "副詞・表原因"}.get(lemma, "副詞・表方式")
@@ -175,6 +175,8 @@ def adjective_pp_function(adj, prep):
     pair = (adj.lower_, prep.lower_)
     if prep.lower_ == "than":
         return "副詞・表比較"  # taller than her sister、more interesting than that one
+    if prep.lower_ == "as" and any(c.lower_ == "as" and c.i < adj.i for c in adj.children):
+        return "副詞・表比較"  # as tall as her brother
     if pair in L.ADJ_PREPS or pair in L.STATIVE_PAIRS:
         return "副詞・表對象"
     obj = next((c for c in prep.children if c.dep_ == "pobj"), None)
@@ -332,7 +334,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[t.i] = Spec("aux", clause=index)
         inner.pattern = clause_pattern(roots, index, inner)
         inner.question = any(c.dep_ == "aux" and c.i < v.i for c in children) and any(
-            c.dep_ == "nsubj" and c.i < v.i and any(a.dep_ == "aux" and a.i < c.i for a in children) for c in children)
+            c.dep_ == "nsubj" and c.i < v.i and any(a.dep_ == "aux" and a.i < c.i for a in children) for c in children) \
+            and (sent.text.rstrip().endswith("?") or sent[0].pos_ == "AUX" or sent[0].tag_ == "MD")
         return inner
 
     be_aux = next((c for c in children if c.dep_ == "auxpass" and c.lemma_ == "be"), None)
@@ -368,7 +371,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     auxes = [c for c in children if c.dep_ in ("aux", "auxpass")]
     info.question = bool(subjects) and (
         any(a.i < subjects[0].i for a in auxes) or (v.i < subjects[0].i and v.lemma_ == "be" and not info.existential)
-    )
+    ) and (sent.text.rstrip().endswith("?") or sent[0].pos_ == "AUX" or sent[0].tag_ == "MD")  # Never have I…、Only then did I… 是倒裝
     info.imperative = not shared_subject and not subjects and v.tag_ == "VB" and not info.existential and not any(
         a.lower_ in ("to",) for a in auxes
     )
@@ -666,7 +669,7 @@ def assign_complement(c, v, roots, index, info, has_obj):
     else:
         opener = clause_opener(c)
         roots[c.i] = Spec("O", clause=index, inner_verb=c if opener is not None and c.dep_ == "ccomp" else None)
-        if c.tag_ == "VBG" or has_to:
+        if (c.tag_ == "VBG" and not small_subj) or has_to:
             info.flags.add("to_v_or_ving_object")
 
 
@@ -821,7 +824,8 @@ def heads_for(root, spec, toks, flags, vars_):
     lemma = root.lemma_.lower()
     of = next((c for c in root.children if c.dep_ == "prep" and c.lower_ == "of"), None)
     pobj = next((c for c in of.children if c.dep_ == "pobj"), None) if of is not None else None
-    if of is not None and pobj is not None and lemma in L.QUANTIFIERS:
+    the_number = lemma == "number" and any(c.dep_ == "det" and c.lower_ == "the" for c in root.children)
+    if of is not None and pobj is not None and lemma in L.QUANTIFIERS and not the_number:
         flags.add("quantifier_of")
         vars_.setdefault("quantifier_of", {"noun": pobj.text})
         return []
