@@ -108,6 +108,8 @@ def adverb_function(tok) -> str:
             return "副詞・表對象"  # shout at me、talk to the teacher
         if any(c.dep_ == "npadvmod" and c.lemma_ == "way" for c in tok.children):
             return "副詞・表路程"  # all the way to school
+        if lemma in ("in", "from") and olemma in ("opinion", "view", "perspective", "experience"):
+            return "副詞・表語氣"  # In my opinion,…（依我看）
         if lemma in L.TIME_PREPS:
             return "副詞・表時間"
         if obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME")):
@@ -136,6 +138,13 @@ def adverb_function(tok) -> str:
     # advmod、intj 等
     if lemma in ("hardly", "scarcely", "barely") or (lemma == "little" and tok.i == tok.sent.start):
         return "副詞・表否定"  # Hardly had he arrived…（幾乎不）
+    if lemma == "how" or (tok.tag_ in ("JJ", "RB") and any(c.lower_ == "how" for c in tok.children)):
+        nxt = tok if lemma != "how" else None
+        word = nxt.lower_ if nxt is not None else ""
+        if word in ("long", "often", "soon", "late", "early"):
+            return "副詞・表時間"  # How long have you lived here?
+        if word == "far":
+            return "副詞・表路程"
     if tok.tag_ == "WRB" or lemma in ("where", "when", "why"):  # 疑問詞 Where did you…?、Why is…?
         return {"where": "副詞・表地點", "when": "副詞・表時間", "why": "副詞・表原因"}.get(lemma, "副詞・表方式")
     if lemma in L.TONE_ADVERBS or lemma == "please":
@@ -280,7 +289,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         roots[main.i] = Spec(VERB_ROLE, clause=index)
         roots[v.i] = Spec("O", clause=index)
         info.verb_token = main
-        for c in children:
+        for c in children + list(main.children):
             if c.dep_ in ("nsubj", "nsubjpass"):
                 roots[c.i] = Spec("S", clause=index)
             elif c.dep_ in ("aux", "auxpass", "neg") and c is not main:
@@ -332,6 +341,17 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         for t in have_to.children:
             if t.dep_ == "aux" and t.lower_ == "to":
                 roots[t.i] = Spec("aux", clause=index)
+        expl = next((c for c in children if c.dep_ == "expl"), None)
+        if expl is not None and have_to.lemma_ == "be":
+            # There used to be a tree here.：There 標引導詞，a tree 是真正的主詞，be 是 Vi
+            roots[expl.i] = Spec("M", function="引導詞", clause=index)
+            roots[have_to.i] = Spec("Vi", clause=index)
+            for g in have_to.children:
+                if g.dep_ == "attr":
+                    roots[g.i] = Spec("S", clause=index, kind="real_subject")
+                elif g.dep_ == "prep":
+                    roots[g.i] = Spec("M", function=adverb_function(g), clause=index)
+            inner.existential = True
         inner.pattern = clause_pattern(roots, index, inner)
         inner.question = any(c.dep_ == "aux" and c.i < v.i for c in children) and any(
             c.dep_ == "nsubj" and c.i < v.i and any(a.dep_ == "aux" and a.i < c.i for a in children) for c in children) \
@@ -495,6 +515,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                     info.flags.add("participle_phrase")
             else:
                 roots[c.i] = Spec("unknown", clause=index)
+        elif d == "preconj":
+            roots[c.i] = Spec("conj", clause=index)  # You can either stay here or go…
         elif d in ("punct", "prt", "cc", "conj", "mark"):
             continue  # 標點不分配；片語動詞的介副詞留在動詞裡；對等連接由外層處理
         else:
@@ -620,8 +642,14 @@ def cleft_clause(v, subj, children):
 
 
 def adverb_function_prep_like(tok):
-    tmp = tok
-    return adverb_function(tmp) if tmp.dep_ == "prep" else ("副詞・表地點" if tok.lemma_ == "to" else "副詞・表目的")
+    if tok.dep_ == "prep":
+        return adverb_function(tok)
+    if tok.lemma_ == "to":
+        obj = next((c for c in tok.children if c.dep_ == "pobj"), None)
+        if obj is not None and (obj.pos_ == "PRON" or obj.lemma_.lower() in L.PERSON_NOUNS or obj.ent_type_ == "PERSON"):
+            return "副詞・表對象"  # A prize was given to him.、sent a letter to her mother
+        return "副詞・表地點"
+    return "副詞・表目的"
 
 
 def assign_complement(c, v, roots, index, info, has_obj):
@@ -708,6 +736,10 @@ def expand_noun_modifiers(roots, tokens, owner_of):
                 continue  # that people who sleep … are：子句裡的修飾語留在子句裡，不要把子句切成兩半
             if spec.role == "M" and spec.function and not spec.function.startswith(("副詞・表", "形容詞")):
                 continue
+            # a lot of homework to do：修飾的是 of 後面的 homework，不是數量詞 lot
+            of = next((c for c in tok.children if c.dep_ == "prep" and c.lower_ == "of"), None)
+            of_obj = next((c for c in of.children if c.dep_ == "pobj"), None) if of is not None else None
+            target = of_obj if of_obj is not None and tok.lemma_.lower() in L.QUANTIFIERS | L.UNIT_NOUNS else tok
             for g in tok.children:
                 if g.i in roots or g.i < tok.i:
                     continue
@@ -732,7 +764,7 @@ def expand_noun_modifiers(roots, tokens, owner_of):
                         roots[g.i] = Spec("M", function="副詞・表地點", clause=spec.clause, kind="reattached", modifies=None)
                         roots[g.i].kind = "ambiguous_place"
                     else:
-                        roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause)
+                        roots[g.i] = Spec("M", function="形容詞・修飾", modifies=target, clause=spec.clause)
                     changed = True
                 elif g.dep_ in ("relcl", "acl") and any(t.lower_ in ("so", "such") for t in tok.subtree if t.i < tok.i) \
                         and any(t.lower_ == "that" and t.i < g.i + 1 for t in g.subtree) \
@@ -746,10 +778,10 @@ def expand_noun_modifiers(roots, tokens, owner_of):
                     roots[g.i] = Spec("M", function="同位語・說明", modifies=tok, clause=spec.clause, kind="appos", inner_verb=g)
                     changed = True
                 elif g.dep_ == "relcl":
-                    roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause, kind="relcl", inner_verb=g)
+                    roots[g.i] = Spec("M", function="形容詞・修飾", modifies=target, clause=spec.clause, kind="relcl", inner_verb=g)
                     changed = True
                 elif g.dep_ == "acl":
-                    roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause, kind="acl")
+                    roots[g.i] = Spec("M", function="形容詞・修飾", modifies=target, clause=spec.clause, kind="acl")
                     changed = True
                 elif g.dep_ == "appos":
                     # Paris, the capital of France：同位語（Azar 13-15）
