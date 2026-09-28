@@ -180,6 +180,13 @@ ADJ_PARTICIPLES = {
 NOUNS_TAKING_TO = {"door", "way", "key", "road", "path", "answer", "solution", "entrance", "gate", "access", "trip", "visit", "invitation", "journey", "route"}
 
 # 多字的從屬連接詞（Azar 17-1）
+# 後面常接同位語子句（that ＋ 完整句子）的名詞：the fact that…、the news that…
+APPOSITIVE_NOUNS = {
+    "fact", "news", "idea", "belief", "hope", "rumor", "rumour", "feeling", "thought", "possibility",
+    "chance", "truth", "evidence", "promise", "fear", "doubt", "question", "suggestion", "opinion",
+    "information", "report", "message", "sign", "view", "theory", "claim", "conclusion", "decision",
+}
+
 MULTI_SUBORDINATORS = {
     "as soon as": "表時間", "by the time": "表時間", "every time": "表時間",
     "the first time": "表時間", "the last time": "表時間", "the next time": "表時間",
@@ -187,6 +194,7 @@ MULTI_SUBORDINATORS = {
     "even if": "表讓步", "even though": "表讓步",
     "now that": "表原因",
     "so that": "表目的", "in order that": "表目的",
+    "as if": "表方式", "as though": "表方式",  # He talks as if he knew everything.
 }
 
 # 狀態被動：過去分詞 ＋ 固定介系詞（Azar 11-5、11-6），當形容詞用

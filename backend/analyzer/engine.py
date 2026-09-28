@@ -79,6 +79,22 @@ def adverb_function(tok) -> str:
         return "副詞・表執行者"
     if dep in ("prep",) and lemma == "than":
         return "副詞・表比較"  # taller than her sister
+    head = tok.head.lemma_.lower()
+    if dep == "prep" and (head, lemma) == ("prefer", "to"):
+        return "副詞・表比較"  # prefer tea to coffee
+    if dep == "prep" and lemma == "for" and head in ("thank", "apologize", "blame", "praise", "punish", "forgive"):
+        return "副詞・表原因"  # Thank you for your help.
+    if dep == "prep" and lemma == "of":
+        return "副詞・表對象"  # reminded me of my mother、think of you
+    if dep == "prep" and lemma == "with":
+        pobj = next((c for c in tok.children if c.dep_ == "pobj"), None)
+        small_clause = any(c.dep_ == "pcomp" and any(g.dep_ == "nsubj" for g in c.children) for c in tok.children)
+        if small_clause or pobj is not None and any(
+                c.i > pobj.i and (c.tag_ in ("VBN", "VBG") or c.dep_ in ("acl", "amod") and c.pos_ in ("ADJ", "VERB"))
+                for c in pobj.children):
+            return "副詞・表狀況"  # 附帶狀況：with his eyes closed、with the door open
+    if dep == "advmod" and " ".join(t.lower_ for t in sorted(tok.subtree, key=lambda t: t.i)[:2]) == "no matter":
+        return "副詞子句・表讓步"  # No matter what happens, …
     if dep in ("prep",):
         obj = next((c for c in tok.children if c.dep_ == "pobj"), None)
         olemma = obj.lemma_.lower() if obj is not None else ""
@@ -188,7 +204,8 @@ def advcl_function(tok) -> Optional[str]:
         if not f:
             return None
         # 沒有主詞的（While walking to class）是縮減後的副詞片語，不是完整的子句（Azar 18-1）
-        return f"副詞・{f}" if no_subject and tok.tag_ in ("VBG", "VBN") else f"副詞子句・{f}"
+        infinitive = any(c.dep_ == "aux" and c.lower_ == "to" for c in tok.children)  # so as to pass the exam
+        return f"副詞・{f}" if no_subject and (tok.tag_ in ("VBG", "VBN") or infinitive) else f"副詞子句・{f}"
     if any(c.dep_ == "aux" and c.lower_ == "to" for c in tok.children):
         return "副詞・表目的"  # 不定詞表目的：to buy milk
     if no_subject and tok.tag_ in ("VBG", "VBN"):
@@ -257,7 +274,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     have_to = next((c for c in children if c.dep_ == "xcomp" and c.pos_ in ("VERB", "AUX") and any(
         g.dep_ == "aux" and g.lower_ == "to" and g.i == v.i + 1 for g in c.children)), None)
     going_to = v.lower_ == "going" and any(c.dep_ == "aux" and c.lemma_ == "be" for c in children)
-    if (v.lemma_ == "have" or going_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
+    used_to = v.lower_ in ("used", "use") and v.lemma_ == "use"  # I used to play…（過去的習慣）
+    if (v.lemma_ == "have" or going_to or used_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
         roots[v.i] = Spec("aux", clause=index)
         inner = assign_clause(have_to, roots, index, sent, shared_subject=True)
         for c in children:
@@ -375,6 +393,9 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             roots[c.i] = Spec("M", function="引導詞", clause=index)
         elif d in ("aux", "auxpass"):
             roots[c.i] = Spec("aux", clause=index)
+        elif d == "advmod" and c.lower_ in ("better", "rather") and c.i < v.i and c.i > 0 \
+                and sent.doc[c.i - 1].lower_ in ("had", "'d", "would"):
+            roots[c.i] = Spec("aux", clause=index)  # had better、would rather 整組當助動詞
         elif d == "neg":
             prev = sent.doc[c.i - 1] if c.i > 0 else None
             if prev is not None and prev.i in roots and roots[prev.i].role == "aux" and c.lower_ in ("not", "n't"):
@@ -613,6 +634,11 @@ def expand_noun_modifiers(roots, tokens, owner_of):
                         and not any(t.lower_ == "that" and t.dep_ in ("nsubj", "dobj", "nsubjpass") for t in g.children):
                     # such good coffee that I had another cup：that 子句表結果（Azar 19-4）
                     roots[g.i] = Spec("M", function="副詞子句・表結果", clause=spec.clause, kind="advcl", inner_verb=g)
+                    changed = True
+                elif g.dep_ in ("relcl", "acl", "ccomp") and tok.lemma_.lower() in L.APPOSITIVE_NOUNS \
+                        and any(t.lower_ == "that" and t.dep_ == "mark" for t in g.children):
+                    # The fact that he lied：that 在子句裡不當主詞也不當受詞 → 同位語子句，說明 fact 的內容
+                    roots[g.i] = Spec("M", function="同位語・說明", modifies=tok, clause=spec.clause, kind="appos", inner_verb=g)
                     changed = True
                 elif g.dep_ == "relcl":
                     roots[g.i] = Spec("M", function="形容詞・修飾", modifies=tok, clause=spec.clause, kind="relcl", inner_verb=g)
@@ -1021,8 +1047,9 @@ def analyze_sentence(text: str) -> SentenceResult:
         prev_text = joined[-1]["text"].lower() if joined else ""
         if joined and joined[-1]["role"] == "aux" and c["role"] == "aux" and stext[joined[-1]["end"]:c["start"]].strip() == "" \
                 and (c["text"].lower() in ("n't", "not")
-                     or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had") or prev_text.endswith("going")))
-                     or c["text"].lower() == "going"):
+                     or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had", "used", "use") or prev_text.endswith("going")))
+                     or c["text"].lower() == "going"
+                     or (c["text"].lower() in ("better", "rather") and prev_text in ("had", "'d", "would"))):
             prev = joined.pop()
             c = dict(prev, end=c["end"], text=stext[prev["start"]:c["end"]])
         joined.append(c)
@@ -1036,6 +1063,10 @@ def analyze_sentence(text: str) -> SentenceResult:
                 and stext[merged[-1]["end"]:c["start"]].strip() == "":
             prev = merged.pop()
             c = dict(c, start=prev["start"], text=stext[prev["start"]:c["end"]])
+        elif merged and merged[-1]["role"] == "M" and c["role"] == "M" and merged[-1]["text"].lower() in ("in order", "so as") \
+                and c["text"].lower().startswith("to ") and stext[merged[-1]["end"]:c["start"]].strip() == "":
+            prev = merged.pop()  # in order to catch the first train：整組是表目的
+            c = dict(prev, end=c["end"], text=stext[prev["start"]:c["end"]], function="副詞・表目的", modifies=None, structure="不定詞片語")
         merged.append(c)
     raw = merged
 

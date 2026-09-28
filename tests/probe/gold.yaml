@@ -1339,3 +1339,420 @@
     text: believe
   - role: O
     text: that learning a second language can help children develop better thinking skills
+- id: '96'
+  sentence: I used to play basketball after school.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: used to
+  - role: Vt
+    text: play
+  - role: O
+    text: basketball
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: after school
+- id: '97'
+  sentence: You had better see a doctor.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: aux
+    text: had better
+  - role: Vt
+    text: see
+  - role: O
+    text: a doctor
+- id: '98'
+  sentence: I would rather stay at home.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: would rather
+  - role: Vi
+    text: stay
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at home
+- id: '99'
+  sentence: It cost me five hundred dollars to fix the bike.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vt
+    text: cost
+  - role: IO
+    text: me
+  - role: DO
+    text: five hundred dollars
+  - role: RS
+    text: to fix the bike
+- id: '100'
+  sentence: She got up early in order to catch the first train.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: got up
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: early
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: in order to catch the first train
+- id: '101'
+  sentence: Not only Tom but also his sister likes swimming.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Not only Tom but also his sister
+  - role: Vt
+    text: likes
+  - role: O
+    text: swimming
+- id: '102'
+  sentence: Either you or I am wrong.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Either you or I
+  - role: V
+    text: am
+  - role: SC
+    text: wrong
+- id: '103'
+  sentence: Both my father and my mother are teachers.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Both my father and my mother
+  - role: V
+    text: are
+  - role: SC
+    text: teachers
+- id: '104'
+  sentence: He talks as if he knew everything.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: talks
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: as if he knew everything
+- id: '105'
+  sentence: No matter what happens, I will support you.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: No matter what happens
+  - role: S
+    text: I
+  - role: aux
+    text: will
+  - role: Vt
+    text: support
+  - role: O
+    text: you
+- id: '106'
+  sentence: It is time to go to bed.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: time
+  - role: M
+    function: 形容詞・修飾
+    modifies: time
+    text: to go to bed
+- id: '107'
+  sentence: The fact that he lied made me angry.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The fact
+  - role: M
+    function: 同位語・說明fact
+    modifies: null
+    text: that he lied
+  - role: Vt
+    text: made
+  - role: O
+    text: me
+  - role: OC
+    text: angry
+- id: '108'
+  sentence: The boy I met yesterday is my classmate.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The boy
+  - role: M
+    function: 形容詞・修飾
+    modifies: boy
+    text: I met yesterday
+  - role: V
+    text: is
+  - role: SC
+    text: my classmate
+- id: '109'
+  sentence: This is the house in which I grew up.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: This
+  - role: V
+    text: is
+  - role: SC
+    text: the house
+  - role: M
+    function: 形容詞・修飾
+    modifies: house
+    text: in which I grew up
+- id: '110'
+  sentence: One of my friends lives in Japan.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: One of my friends
+  - role: Vi
+    text: lives
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in Japan
+- id: '111'
+  sentence: She is the tallest girl in our class.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: is
+  - role: SC
+    text: the tallest girl
+  - role: M
+    function: 形容詞・修飾
+    modifies: girl
+    text: in our class
+- id: '112'
+  sentence: I prefer tea to coffee.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: prefer
+  - role: O
+    text: tea
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: to coffee
+- id: '113'
+  sentence: Whether he will come is still unknown.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Whether he will come
+  - role: V
+    text: is
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: still
+  - role: SC
+    text: unknown
+- id: '114'
+  sentence: He sat on the sofa with his eyes closed.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: sat
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: on the sofa
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: with his eyes closed
+- id: '115'
+  sentence: Swimming in the sea is fun.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Swimming in the sea
+  - role: V
+    text: is
+  - role: SC
+    text: fun
+- id: '116'
+  sentence: To learn a new language takes time.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: To learn a new language
+  - role: Vt
+    text: takes
+  - role: O
+    text: time
+- id: '117'
+  sentence: She reminded me of my mother.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: reminded
+  - role: O
+    text: me
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: of my mother
+- id: '118'
+  sentence: The teacher explained the rule to us.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The teacher
+  - role: Vt
+    text: explained
+  - role: O
+    text: the rule
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to us
+- id: '119'
+  sentence: I am good at cooking.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: V
+    text: am
+  - role: SC
+    text: good
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: at cooking
+- id: '120'
+  sentence: They are afraid of the dark.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: V
+    text: are
+  - role: SC
+    text: afraid
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: of the dark
+- id: '121'
+  sentence: We should protect the environment.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: should
+  - role: Vt
+    text: protect
+  - role: O
+    text: the environment
+- id: '122'
+  sentence: She has been waiting for you for an hour.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: has
+  - role: aux
+    text: been
+  - role: Vt
+    text: waiting for
+  - role: O
+    text: you
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: for an hour
+- id: '123'
+  sentence: The book is worth reading.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The book
+  - role: V
+    text: is
+  - role: SC
+    text: worth reading
+- id: '124'
+  sentence: I have difficulty remembering names.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: have
+  - role: O
+    text: difficulty
+  - role: M
+    function: 形容詞・修飾
+    modifies: difficulty
+    text: remembering names
