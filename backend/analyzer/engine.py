@@ -17,7 +17,7 @@ from typing import Optional
 
 from . import lexicon as L
 from .notes import chunk_note
-from .phrases import find_phrases
+from .phrases import find_phrases, phrasal_object
 from .schema import CardRef, Chunk, Clause, SentenceResult, Span
 from .verb_check import check as verb_check
 
@@ -77,6 +77,8 @@ def adverb_function(tok) -> str:
     dep = tok.dep_
     if dep == "agent":
         return "副詞・表執行者"
+    if dep in ("prep",) and lemma == "than":
+        return "副詞・表比較"  # taller than her sister
     if dep in ("prep",):
         obj = next((c for c in tok.children if c.dep_ == "pobj"), None)
         olemma = obj.lemma_.lower() if obj is not None else ""
@@ -110,6 +112,8 @@ def adverb_function(tok) -> str:
             return "副詞・表時間"
         return "副詞・表方式"
     # advmod、intj 等
+    if tok.tag_ == "WRB" or lemma in ("where", "when", "why"):  # 疑問詞 Where did you…?、Why is…?
+        return {"where": "副詞・表地點", "when": "副詞・表時間", "why": "副詞・表原因"}.get(lemma, "副詞・表方式")
     if lemma in L.TONE_ADVERBS or lemma == "please":
         return "副詞・表語氣"
     if lemma in L.TIME_ADVERBS:
@@ -145,6 +149,8 @@ def opener_tokens(tok):
 def adjective_pp_function(adj, prep):
     """形容詞後面的介系詞片語：固定搭配是「表對象」，時間、場所才標時間、地點"""
     pair = (adj.lower_, prep.lower_)
+    if prep.lower_ == "than":
+        return "副詞・表比較"  # taller than her sister、more interesting than that one
     if pair in L.ADJ_PREPS or pair in L.STATIVE_PAIRS:
         return "副詞・表對象"
     obj = next((c for c in prep.children if c.dep_ == "pobj"), None)
@@ -247,9 +253,11 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         return info
 
     # have to／has to／had to ＋ 原形動詞：have to 當助動詞，後面的動詞才是主要動詞（It has to be done.）
+    # be going to ＋ 原形動詞（未來式）也一樣：are going to 整組當助動詞（We are going to visit…）
     have_to = next((c for c in children if c.dep_ == "xcomp" and c.pos_ in ("VERB", "AUX") and any(
         g.dep_ == "aux" and g.lower_ == "to" and g.i == v.i + 1 for g in c.children)), None)
-    if v.lemma_ == "have" and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
+    going_to = v.lower_ == "going" and any(c.dep_ == "aux" and c.lemma_ == "be" for c in children)
+    if (v.lemma_ == "have" or going_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
         roots[v.i] = Spec("aux", clause=index)
         inner = assign_clause(have_to, roots, index, sent, shared_subject=True)
         for c in children:
@@ -307,6 +315,15 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         a.lower_ in ("to",) for a in auxes
     )
 
+    # 片語動詞：look after [her brother]、ran out of [milk] → 動詞＋介系詞整組當 Vt，介系詞的受詞當 O
+    phrasal = None
+    if v.pos_ == "VERB" and not any(c.dep_ in ("dobj", "dative") for c in children):
+        phrasal = phrasal_object(v)
+    phrasal_parts = {t.i for t in phrasal[0]} if phrasal else set()
+    if phrasal and phrasal[1] is not None:
+        roots[phrasal[1].i] = Spec("O", clause=index)
+        info.flags.add("phrasal_verb")
+
     # 受詞候選（依位置排序），處理雙受詞
     objects = [c for c in children if c.dep_ in ("dobj", "dative")]
     nominal_after = sorted(
@@ -340,10 +357,12 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         dative_fix = (dobj, that_clause)  # told [everyone] [that the company would move]
 
     has_dative = any(c.dep_ == "dative" and c.pos_ != "ADP" for c in children) or dative_fix is not None
-    has_obj = bool(objects) or dative_fix is not None
+    has_obj = bool(objects) or dative_fix is not None or (phrasal is not None and phrasal[1] is not None)
 
     for c in children:
         d = c.dep_
+        if c.i in phrasal_parts:
+            continue  # 片語動詞的介系詞、副詞留在動詞裡（looks after、ran out of）
         if dative_fix and c is dative_fix[0]:
             roots[c.i] = Spec("IO", clause=index)
         elif dative_fix and c is dative_fix[1]:
@@ -358,7 +377,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             roots[c.i] = Spec("aux", clause=index)
         elif d == "neg":
             prev = sent.doc[c.i - 1] if c.i > 0 else None
-            if prev is not None and prev.i in roots and roots[prev.i].role == "aux":
+            if prev is not None and prev.i in roots and roots[prev.i].role == "aux" and c.lower_ in ("not", "n't"):
                 roots[c.i] = Spec("aux", clause=index, kind="neg")
             else:
                 roots[c.i] = Spec("M", function="副詞・表否定", clause=index)  # not、never（沒有跟在助動詞後面時）
@@ -394,6 +413,9 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         elif d in ("prep", "agent", "advmod", "npadvmod", "intj"):
             roots[c.i] = Spec("M", function=adverb_function(c), clause=index,
                               kind="npadv" if d == "npadvmod" else "")
+        elif d == "advcl" and c.pos_ == "ADJ" and c.i < v.i:
+            roots[c.i] = Spec("M", function="副詞・分詞構句", clause=index)  # (Being) Tired after work, he went to bed.
+            info.flags.add("participle_phrase")
         elif d == "advcl" and c.pos_ == "ADJ" and c.i == v.i + 1 and not has_obj and not list(c.children):
             if c.lower_ in L.ADVERBIAL_ADJS and v.lemma_.lower() not in L.LINKING_VERBS:
                 roots[c.i] = Spec("M", function="副詞・表方式", clause=index)  # He lives alone.
@@ -516,6 +538,11 @@ def assign_complement(c, v, roots, index, info, has_obj):
     elif c.dep_ == "xcomp" and has_to and not has_obj and v.lemma_.lower() in L.SEEM_VERBS:
         # 賴世雄：He seems to know it.、He seems to be a nice man. → 不定詞是主詞補語
         roots[c.i] = Spec("SC", clause=index)
+    elif v.lemma_ == "be" and not has_obj and not info.passive and c.i > v.i and (c.dep_ == "ccomp" or has_to) \
+            and not any(g.dep_ in ("nsubj", "nsubjpass") and g.lower_ == "it" for g in v.children):  # It is … to／that 交給虛主詞規則
+        # The problem is [that we have no money]、My dream is [to become a doctor] → be 是連綴動詞，子句是主詞補語
+        opener = clause_opener(c)
+        roots[c.i] = Spec("SC", clause=index, inner_verb=c if opener is not None and c.dep_ == "ccomp" else None)
     else:
         opener = clause_opener(c)
         roots[c.i] = Spec("O", clause=index, inner_verb=c if opener is not None and c.dep_ == "ccomp" else None)
@@ -977,13 +1004,15 @@ def analyze_sentence(text: str) -> SentenceResult:
                             function=None, modifies=None, heads=[], structure=None, clause=info.index,
                             inner=[], _root=None, _spec=Spec("S", kind="implicit")))
 
-    # 否定：Do ＋ n't、is ＋ not 合成一個 aux 片段；have ＋ to 合成 have to
+    # 否定：Do ＋ n't、is ＋ not 合成一個 aux 片段；have ＋ to 合成 have to；be ＋ going ＋ to 合成 are going to
     raw.sort(key=lambda c: (c["start"], 0 if c.get("implicit") else 1))
     joined = []
     for c in raw:
+        prev_text = joined[-1]["text"].lower() if joined else ""
         if joined and joined[-1]["role"] == "aux" and c["role"] == "aux" and stext[joined[-1]["end"]:c["start"]].strip() == "" \
                 and (c["text"].lower() in ("n't", "not")
-                     or (c["text"].lower() == "to" and joined[-1]["text"].lower() in ("have", "has", "had"))):
+                     or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had") or prev_text.endswith("going")))
+                     or c["text"].lower() == "going"):
             prev = joined.pop()
             c = dict(prev, end=c["end"], text=stext[prev["start"]:c["end"]])
         joined.append(c)

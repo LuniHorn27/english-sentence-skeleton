@@ -1160,7 +1160,7 @@
     - cat
 - id: '65'
   sentence: While walking to class, I ran into an old friend.
-  pattern: 1
+  pattern: 2
   passive: false
   chunks:
   - role: M
@@ -1169,12 +1169,10 @@
     text: While walking to class
   - role: S
     text: I
-  - role: Vi
-    text: ran
-  - role: M
-    function: 副詞・表對象
-    modifies: null
-    text: into an old friend
+  - role: Vt
+    text: ran into
+  - role: O
+    text: an old friend
 - id: '66'
   sentence: After finishing his homework, Peter went to bed.
   pattern: 1

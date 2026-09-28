@@ -80,6 +80,32 @@ def _match_head(sent, entry):
             yield found
 
 
+def phrasal_object(verb):
+    """動詞如果是片語清單上的「介系詞動詞」（look after、run out of、look forward to），
+    而且最後一個字是後面接名詞的介系詞，回傳 (片語裡除了動詞以外的字, 介系詞的受詞)；不是就回傳 None。
+    分析時把「動詞＋介系詞」整組當 Vt、介系詞的受詞當 O（台灣課本「片語動詞當及物動詞」的教法）。"""
+    best = None
+    for entry in load_phrases():
+        if entry.get("kind") != "動詞片語" or entry.get("head") != verb.lemma_.lower():
+            continue
+        found = [verb]
+        for part in entry["parts"]:
+            anchors = {t.i for t in found}
+            nxt = next((c for c in verb.sent[found[-1].i - verb.sent.start + 1:]
+                        if c.lower_ == part and c.head.i in anchors and _close_enough(found[-1], c)), None)
+            if nxt is None:
+                break
+            found.append(nxt)
+        else:
+            last = found[-1]
+            pobj = next((c for c in last.children if c.dep_ in ("pobj", "pcomp")), None)
+            passive = any(c.dep_ in ("auxpass", "nsubjpass") for c in verb.children)
+            # 被動句的介系詞後面沒有名詞（The baby was looked after.）：介系詞一樣併進動詞，沒有受詞
+            if last.dep_ == "prep" and (pobj is not None or passive) and (best is None or len(found) > len(best[0]) + 1):
+                best = (found[1:], pobj)
+    return best
+
+
 # ---------- seq ----------
 def _is_possessive(tokens) -> bool:
     if len(tokens) == 1:
