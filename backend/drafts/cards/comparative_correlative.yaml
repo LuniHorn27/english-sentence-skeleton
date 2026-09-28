@@ -1,0 +1,26 @@
+id: comparative_correlative
+title: The ＋ 比較級, the ＋ 比較級（越…就越…）
+brief: 前半是條件，後半是結果；兩個 the 都不是冠詞。
+trigger: 句子以 The ＋ 比較級開頭，逗號後面又是 the ＋ 比較級
+blocks:
+- type: formula
+  text: The ＋ 比較級 ＋ S ＋ V, the ＋ 比較級 ＋ S ＋ V
+- type: examples
+  examples:
+  - en: <b>The more</b> you practice, <b>the better</b> you get.
+    zh: 你練習得越多，就變得越好。
+    mark: none
+  - en: <b>The sooner</b>, <b>the better</b>.
+    zh: 越快越好。（動詞省略了）
+    mark: none
+- type: tip
+  text: 看後半的句型要先還原：the better you get → you get better，better 是主詞補語，所以是句型二：S ＋ V ＋ SC。
+- type: warn
+  text: 後半用未來式時，前半用現在式代替未來。
+  examples:
+  - en: The harder you work, the more you will learn.
+    zh: 正確
+    mark: ok
+  - en: The harder you will work, the more you will learn.
+    zh: 前半不用 will
+    mark: "no"

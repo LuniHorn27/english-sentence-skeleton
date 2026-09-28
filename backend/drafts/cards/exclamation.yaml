@@ -1,0 +1,28 @@
+id: exclamation
+title: 感嘆句
+brief: What 強調名詞，How 強調形容詞或副詞；後面的主詞和動詞常省略。
+trigger: What a／How 開頭，句尾是驚嘆號
+blocks:
+- type: formula
+  text: What ＋ a／an ＋（形容詞）＋ 名詞 ＋（S ＋ V）！
+- type: formula
+  text: How ＋ 形容詞／副詞 ＋（S ＋ V）！
+- type: examples
+  examples:
+  - en: <b>What a beautiful day</b> (it is)!
+    zh: 還原：It is a beautiful day.（What a beautiful day 是 SC，句型二）
+    mark: none
+  - en: <b>How fast</b> he runs!
+    zh: 還原：He runs fast.（How fast 是修飾語，句型一）
+    mark: none
+- type: tip
+  text: 分辨 What 和 How：後面有名詞用 What，沒有名詞（直接接形容詞、副詞）用 How。
+- type: warn
+  text: What 後面的單數名詞要加 a／an。
+  examples:
+  - en: What a nice day!
+    zh: 正確
+    mark: ok
+  - en: What nice day!
+    zh: 少了 a
+    mark: "no"

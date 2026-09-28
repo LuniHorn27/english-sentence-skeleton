@@ -1,0 +1,39 @@
+id: inversion
+title: 倒裝句
+brief: 倒裝只是換順序，每個字的角色沒有變，還原後再判斷句型。
+trigger: 否定詞、only、地方副詞、so／neither 放在句首，助動詞或動詞跑到主詞前面
+blocks:
+- type: heading
+  text: 部分倒裝：助動詞移到主詞前面（像疑問句）
+- type: examples
+  examples:
+  - en: <b>Never have I</b> seen such a beautiful sunset.
+    zh: 還原：I have never seen such a beautiful sunset.
+    mark: none
+  - en: <b>Only then did I</b> understand.
+    zh: 還原：I understood only then.
+    mark: none
+  - en: <b>So do I.</b>
+    zh: 我也是。（附和前面的話）
+    mark: none
+- type: heading
+  text: 全部倒裝：整個動詞移到主詞前面
+- type: examples
+  examples:
+  - en: <b>Here comes</b> the bus.
+    zh: 還原：The bus comes here.（句型一：S ＋ Vi）
+    mark: none
+  - en: <b>On the hill stands</b> an old castle.
+    zh: 還原：An old castle stands on the hill.
+    mark: none
+- type: warn
+  text: 主詞是代名詞時，Here／There 句不倒裝。
+  examples:
+  - en: Here she comes.
+    zh: 正確
+    mark: ok
+  - en: Here comes she.
+    zh: 錯誤
+    mark: "no"
+see_also:
+- yes_no_question

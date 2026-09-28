@@ -1,0 +1,33 @@
+id: subjunctive
+title: 假設語氣
+brief: 說「不是事實」的事，動詞要往過去退一格。
+trigger: if 子句用過去式／had ＋ p.p.，主要子句用 would／could（have）
+blocks:
+- type: formula
+  text: 與現在事實相反：If ＋ S ＋ 過去式（be 用 were），S ＋ would ＋ 原形
+- type: formula
+  text: 與過去事實相反：If ＋ S ＋ had ＋ p.p.，S ＋ would have ＋ p.p.
+- type: examples
+  examples:
+  - en: If I <b>were</b> you, I <b>would take</b> the job.
+    zh: 如果我是你，我會接受這份工作。（但我不是你）
+    mark: none
+  - en: If I <b>had known</b>, I <b>would have told</b> you.
+    zh: 如果我當時知道，就會告訴你了。（但我當時不知道）
+    mark: none
+  - en: <b>Had I known</b>, I would have told you.
+    zh: 省略 if，把 had 移到主詞前面，意思一樣
+    mark: none
+- type: tip
+  text: 句型要看主要子句；if 子句整塊是「副詞子句・表條件」。假設語氣是動詞的形態，不會改變句型。
+- type: warn
+  text: 假設語氣的 be 動詞一律用 were。
+  examples:
+  - en: If I were you, …
+    zh: 正確（正式寫作）
+    mark: ok
+  - en: If I was you, …
+    zh: 口語常聽到，但考試要用 were
+    mark: "no"
+see_also:
+- subordinating_conj

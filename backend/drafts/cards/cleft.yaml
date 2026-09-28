@@ -1,0 +1,44 @@
+id: cleft
+title: 強調句 It is … that …
+brief: 把想強調的部分放在 It is／was 和 that 中間。
+trigger: It ＋ be ＋ 被強調的部分 ＋ that／who ＋ 句子其餘部分
+blocks:
+- type: formula
+  text: It is／was ＋ 被強調的部分 ＋ that（人可以用 who）＋ 其餘部分
+- type: examples
+  examples:
+  - en: John broke the window.
+    zh: 原句：約翰打破了窗戶。
+    mark: none
+  - en: It was <b>John</b> who broke the window.
+    zh: 強調主詞：是約翰打破窗戶的。
+    mark: none
+  - en: It was <b>the window</b> that John broke.
+    zh: 強調受詞：約翰打破的是窗戶。
+    mark: none
+  - en: It was <b>yesterday</b> that John broke the window.
+    zh: 強調時間：約翰是昨天打破窗戶的。
+    mark: none
+- type: heading
+  text: 和虛主詞 It 怎麼分？
+- type: tip
+  text: 把 It is／was 和 that 拿掉，剩下的如果還是完整的句子，就是強調句；不完整，就是虛主詞句。
+- type: examples
+  examples:
+  - en: It was John who broke the window.
+    zh: 拿掉後 John broke the window. → 完整 → 強調句
+    mark: none
+  - en: It is true that he left.
+    zh: 拿掉後 true he left → 不完整 → 虛主詞句
+    mark: none
+- type: warn
+  text: 被強調的是「物」時不能用 who，只能用 that。
+  examples:
+  - en: It was the book that I lost.
+    zh: 正確
+    mark: ok
+  - en: It was the book who I lost.
+    zh: book 是物，不能用 who
+    mark: "no"
+see_also:
+- dummy_it

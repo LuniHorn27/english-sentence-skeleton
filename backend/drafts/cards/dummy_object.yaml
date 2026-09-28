@@ -1,0 +1,32 @@
+id: dummy_object
+title: 虛受詞 it
+brief: it 只是佔受詞的位子，真正的受詞在句子最後面。
+trigger: find／make／think／consider ＋ it ＋ 補語 ＋ to V／that 子句
+blocks:
+- type: formula
+  text: S ＋ Vt ＋ it ＋ OC ＋ to V／that 子句（句型四：S ＋ Vt ＋ O ＋ OC）
+- type: heading
+  text: 還原測試
+- type: examples
+  examples:
+  - en: I find <b>it</b> hard <b>to wake up early</b>.
+    zh: 常見說法：我覺得早起很難。
+    mark: none
+  - en: I find <b>to wake up early</b> hard.
+    zh: 還原後：受詞太長，讀起來很卡，所以英文不這樣說
+    mark: none
+- type: tip
+  text: 受詞很長、後面又有補語時，先用 it 佔住受詞的位置，把長的受詞放到句尾。常見動詞：find、make、think、consider、believe。
+- type: info
+  text: 常見固定說法：make it a rule to…（養成…的習慣）、take it for granted that…（把…視為理所當然）、make it clear that…（清楚表明）。
+- type: warn
+  text: 不要漏掉 it。
+  examples:
+  - en: I find it hard to wake up early.
+    zh: 正確
+    mark: ok
+  - en: I find hard to wake up early.
+    zh: 少了 it，find 後面沒有受詞
+    mark: "no"
+see_also:
+- dummy_it
