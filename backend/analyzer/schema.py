@@ -94,7 +94,7 @@ class PhraseHit(BaseModel):
 
     id: str
     phrase: str = Field(description="字典形式，例如 give up、rain cats and dogs")
-    kind: Literal["動詞片語", "形容詞片語", "介系詞片語", "副詞片語", "慣用語"]
+    kind: Literal["動詞片語", "形容詞片語", "介系詞片語", "副詞片語", "慣用語", "諺語"]
     meaning: str
     literal: Optional[str] = Field(None, description="慣用語的字面意思")
     note: Optional[str] = None

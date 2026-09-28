@@ -3,11 +3,16 @@
 # 收錄範圍參考（只參考「收哪些片語」，意思和說明都自己寫，不照抄）：
 #   《高中贏家 升大學英文應考好幫手：片語篇》動詞片語部分
 #   PREPEDU〈英文片語大全〉https://prepedu.com/zh-hant/blog/phrases-in-english（不收粗俗用語）
+#   CP English〈歷屆學測、指考片語整理〉https://hackmd.io/@CPEnglish/BkThjMZWu（2026-09-29 夜間新增）
+#   engVid〈50 Common Proverbs in English〉https://www.engvid.com/english-resource/50-common-proverbs-sayings/
+#   ESL Info〈60 Most Common Idioms for ESL Students〉https://eslinfo.com/60-most-common-idioms-for-esl-students/
+#   新增時刻意不收：字面意思常用、容易找錯的（go by bus、live on the third floor、sleep in the bed、run for an hour、
+#   see red flowers、under the table），以及 look at、listen to 這類「動詞＋固定介系詞」（待審核清單第 69 項）
 #
 # 欄位：
 #   id       代號（英文小寫加底線，不可重複）
 #   phrase   顯示的樣子（字典形式）
-#   kind     動詞片語／形容詞片語／介系詞片語／副詞片語／慣用語
+#   kind     動詞片語／形容詞片語／介系詞片語／副詞片語／慣用語／諺語
 #   meaning  意思（多個意思用「；」隔開）
 #   literal  （慣用語才有）字面上的意思，讓學生知道不能照字面翻
 #   note     （選填）補充，例如可以拆開、容易誤會的地方
@@ -201,6 +206,167 @@
 - {id: prepare_for, phrase: prepare for, kind: 動詞片語, meaning: 為…做準備, head: prepare, parts: [for]}
 - {id: succeed_in, phrase: succeed in, kind: 動詞片語, meaning: 成功做到, head: succeed, parts: [in], note: 後面接 V-ing：succeed in passing the exam。}
 
+# （2026-09-29 夜間新增：學測、指考考過的片語和常用動詞片語）
+- {id: "account_for", phrase: "account for", kind: "動詞片語", meaning: "說明；解釋；佔（多少比例）", head: "account", parts: ["for"]}
+- {id: "add_up", phrase: "add up", kind: "動詞片語", meaning: "加起來；說得通", head: "add", parts: ["up"]}
+- {id: "approve_of", phrase: "approve of", kind: "動詞片語", meaning: "贊成；認可", head: "approve", parts: ["of"]}
+- {id: "back_up", phrase: "back up", kind: "動詞片語", meaning: "支持；備份；倒車", head: "back", parts: ["up"]}
+- {id: "bring_out", phrase: "bring out", kind: "動詞片語", meaning: "使顯現出來；推出（產品）", head: "bring", parts: ["out"]}
+- {id: "burst_into", phrase: "burst into", kind: "動詞片語", meaning: "突然（哭、笑、唱）起來；闖入", head: "burst", parts: ["into"]}
+- {id: "burst_out", phrase: "burst out", kind: "動詞片語", meaning: "突然（哭、笑）出來；突然大聲說", head: "burst", parts: ["out"]}
+- {id: "calm_down", phrase: "calm down", kind: "動詞片語", meaning: "冷靜下來；使平靜", head: "calm", parts: ["down"]}
+- {id: "catch_on", phrase: "catch on", kind: "動詞片語", meaning: "流行起來；理解", head: "catch", parts: ["on"]}
+- {id: "check_in", phrase: "check in", kind: "動詞片語", meaning: "（旅館、機場）登記入住；報到", head: "check", parts: ["in"]}
+- {id: "check_out", phrase: "check out", kind: "動詞片語", meaning: "退房；看看、查看；（圖書館）借出", head: "check", parts: ["out"]}
+- {id: "clean_up", phrase: "clean up", kind: "動詞片語", meaning: "打掃乾淨；清理", head: "clean", parts: ["up"]}
+- {id: "come_down_with", phrase: "come down with", kind: "動詞片語", meaning: "染上（小病）", head: "come", parts: ["down", "with"]}
+- {id: "come_up", phrase: "come up", kind: "動詞片語", meaning: "被提出；即將發生；（太陽）升起", head: "come", parts: ["up"]}
+- {id: "cross_out", phrase: "cross out", kind: "動詞片語", meaning: "劃掉；刪去", head: "cross", parts: ["out"]}
+- {id: "die_out", phrase: "die out", kind: "動詞片語", meaning: "滅絕；逐漸消失", head: "die", parts: ["out"]}
+- {id: "do_away_with", phrase: "do away with", kind: "動詞片語", meaning: "廢除；去掉", head: "do", parts: ["away", "with"]}
+- {id: "drop_off", phrase: "drop off", kind: "動詞片語", meaning: "讓（某人）下車；放下（東西）；打瞌睡", head: "drop", parts: ["off"]}
+- {id: "fall_apart", phrase: "fall apart", kind: "動詞片語", meaning: "散掉；崩潰；瓦解", head: "fall", parts: ["apart"]}
+- {id: "fall_for", phrase: "fall for", kind: "動詞片語", meaning: "愛上；上（…的）當", head: "fall", parts: ["for"]}
+- {id: "get_away_with", phrase: "get away with", kind: "動詞片語", meaning: "（做壞事）逃過懲罰", head: "get", parts: ["away", "with"]}
+- {id: "get_down_to", phrase: "get down to", kind: "動詞片語", meaning: "開始認真處理", head: "get", parts: ["down", "to"]}
+- {id: "get_through", phrase: "get through", kind: "動詞片語", meaning: "度過（難關）；打通（電話）；通過；完成", head: "get", parts: ["through"]}
+- {id: "give_off", phrase: "give off", kind: "動詞片語", meaning: "發出（氣味、光、熱）", head: "give", parts: ["off"]}
+- {id: "go_ahead", phrase: "go ahead", kind: "動詞片語", meaning: "開始做吧；進行；請便", head: "go", parts: ["ahead"]}
+- {id: "go_along_with", phrase: "go along with", kind: "動詞片語", meaning: "同意；配合", head: "go", parts: ["along", "with"]}
+- {id: "go_out", phrase: "go out", kind: "動詞片語", meaning: "出去（玩）；（燈、火）熄滅；約會", head: "go", parts: ["out"]}
+- {id: "go_without", phrase: "go without", kind: "動詞片語", meaning: "沒有…也行；忍受缺少", head: "go", parts: ["without"]}
+- {id: "grow_out_of", phrase: "grow out of", kind: "動詞片語", meaning: "長大後不再（有某習慣）；長大穿不下；源自", head: "grow", parts: ["out", "of"]}
+- {id: "hand_down", phrase: "hand down", kind: "動詞片語", meaning: "（把東西、傳統）傳下去", head: "hand", parts: ["down"]}
+- {id: "hand_over", phrase: "hand over", kind: "動詞片語", meaning: "交出；移交", head: "hand", parts: ["over"]}
+- {id: "head_for", phrase: "head for", kind: "動詞片語", meaning: "前往；朝…走去", head: "head", parts: ["for"]}
+- {id: "hold_back", phrase: "hold back", kind: "動詞片語", meaning: "忍住（眼淚）；阻止；隱瞞", head: "hold", parts: ["back"]}
+- {id: "hold_on_to", phrase: "hold on to", kind: "動詞片語", meaning: "抓緊；保住；堅持", head: "hold", parts: ["on", "to"]}
+- {id: "identify_with", phrase: "identify with", kind: "動詞片語", meaning: "認同；對…產生共鳴", head: "identify", parts: ["with"]}
+- {id: "keep_off", phrase: "keep off", kind: "動詞片語", meaning: "不接近；不碰", head: "keep", parts: ["off"]}
+- {id: "keep_out", phrase: "keep out", kind: "動詞片語", meaning: "不讓進入；待在外面", head: "keep", parts: ["out"]}
+- {id: "keep_up", phrase: "keep up", kind: "動詞片語", meaning: "保持；繼續；跟上", head: "keep", parts: ["up"]}
+- {id: "kick_off", phrase: "kick off", kind: "動詞片語", meaning: "開始；（足球）開球", head: "kick", parts: ["off"]}
+- {id: "lay_off", phrase: "lay off", kind: "動詞片語", meaning: "裁員；解僱", head: "lay", parts: ["off"]}
+- {id: "lead_to", phrase: "lead to", kind: "動詞片語", meaning: "導致；通往", head: "lead", parts: ["to"]}
+- {id: "leave_behind", phrase: "leave behind", kind: "動詞片語", meaning: "留下；遺忘；把…拋在後面", head: "leave", parts: ["behind"]}
+- {id: "live_up_to", phrase: "live up to", kind: "動詞片語", meaning: "達到（期望、標準）", head: "live", parts: ["up", "to"]}
+- {id: "look_back_on", phrase: "look back on", kind: "動詞片語", meaning: "回顧；回想", head: "look", parts: ["back", "on"]}
+- {id: "look_out_for", phrase: "look out for", kind: "動詞片語", meaning: "留意；提防；照顧", head: "look", parts: ["out", "for"]}
+- {id: "mix_up", phrase: "mix up", kind: "動詞片語", meaning: "搞混；弄亂", head: "mix", parts: ["up"]}
+- {id: "name_after", phrase: "name after", kind: "動詞片語", meaning: "以…的名字命名", head: "name", parts: ["after"]}
+- {id: "object_to", phrase: "object to", kind: "動詞片語", meaning: "反對（後面接名詞或 V-ing）", head: "object", parts: ["to"]}
+- {id: "pass_by", phrase: "pass by", kind: "動詞片語", meaning: "經過", head: "pass", parts: ["by"]}
+- {id: "pass_on", phrase: "pass on", kind: "動詞片語", meaning: "傳遞；轉告", head: "pass", parts: ["on"]}
+- {id: "pay_off", phrase: "pay off", kind: "動詞片語", meaning: "有回報；還清（債務）", head: "pay", parts: ["off"]}
+- {id: "persist_in", phrase: "persist in", kind: "動詞片語", meaning: "堅持（做）", head: "persist", parts: ["in"]}
+- {id: "pick_on", phrase: "pick on", kind: "動詞片語", meaning: "找麻煩；欺負", head: "pick", parts: ["on"]}
+- {id: "pull_over", phrase: "pull over", kind: "動詞片語", meaning: "把車停到路邊", head: "pull", parts: ["over"]}
+- {id: "put_aside", phrase: "put aside", kind: "動詞片語", meaning: "存（錢、時間）；把…放一邊", head: "put", parts: ["aside"]}
+- {id: "put_down", phrase: "put down", kind: "動詞片語", meaning: "放下；寫下；鎮壓；貶低", head: "put", parts: ["down"]}
+- {id: "put_forward", phrase: "put forward", kind: "動詞片語", meaning: "提出（意見、計畫）", head: "put", parts: ["forward"]}
+- {id: "put_together", phrase: "put together", kind: "動詞片語", meaning: "組裝；整理；彙整", head: "put", parts: ["together"]}
+- {id: "put_up", phrase: "put up", kind: "動詞片語", meaning: "搭建；張貼；讓（某人）借住", head: "put", parts: ["up"]}
+- {id: "reach_out", phrase: "reach out", kind: "動詞片語", meaning: "伸出手；主動聯繫、幫助", head: "reach", parts: ["out"]}
+- {id: "refer_to", phrase: "refer to", kind: "動詞片語", meaning: "提到；指的是；參考", head: "refer", parts: ["to"]}
+- {id: "rely_on", phrase: "rely on", kind: "動詞片語", meaning: "依靠；信賴", head: "rely", parts: ["on"]}
+- {id: "run_after", phrase: "run after", kind: "動詞片語", meaning: "追趕", head: "run", parts: ["after"]}
+- {id: "sell_out", phrase: "sell out", kind: "動詞片語", meaning: "賣光", head: "sell", parts: ["out"]}
+- {id: "send_for", phrase: "send for", kind: "動詞片語", meaning: "派人去請（醫生等）", head: "send", parts: ["for"]}
+- {id: "set_aside", phrase: "set aside", kind: "動詞片語", meaning: "撥出（時間、錢）；把…放一邊", head: "set", parts: ["aside"]}
+- {id: "settle_down", phrase: "settle down", kind: "動詞片語", meaning: "安頓下來；定居；平靜下來", head: "settle", parts: ["down"]}
+- {id: "show_around", phrase: "show around", kind: "動詞片語", meaning: "帶（某人）參觀", head: "show", parts: ["around"]}
+- {id: "sign_up", phrase: "sign up", kind: "動詞片語", meaning: "報名；註冊", head: "sign", parts: ["up"]}
+- {id: "slow_down", phrase: "slow down", kind: "動詞片語", meaning: "放慢速度", head: "slow", parts: ["down"]}
+- {id: "sort_out", phrase: "sort out", kind: "動詞片語", meaning: "解決（問題）；整理", head: "sort", parts: ["out"]}
+- {id: "speak_up", phrase: "speak up", kind: "動詞片語", meaning: "大聲一點說；勇敢說出意見", head: "speak", parts: ["up"]}
+- {id: "stand_up_for", phrase: "stand up for", kind: "動詞片語", meaning: "支持；捍衛", head: "stand", parts: ["up", "for"]}
+- {id: "stay_away_from", phrase: "stay away from", kind: "動詞片語", meaning: "遠離", head: "stay", parts: ["away", "from"]}
+- {id: "stem_from", phrase: "stem from", kind: "動詞片語", meaning: "源自；由…引起", head: "stem", parts: ["from"]}
+- {id: "step_down", phrase: "step down", kind: "動詞片語", meaning: "辭職；下台", head: "step", parts: ["down"]}
+- {id: "stick_to", phrase: "stick to", kind: "動詞片語", meaning: "堅持（計畫、原則）；黏在", head: "stick", parts: ["to"]}
+- {id: "take_apart", phrase: "take apart", kind: "動詞片語", meaning: "拆開", head: "take", parts: ["apart"]}
+- {id: "take_back", phrase: "take back", kind: "動詞片語", meaning: "收回（說過的話）；退還", head: "take", parts: ["back"]}
+- {id: "take_down", phrase: "take down", kind: "動詞片語", meaning: "記下；拆除", head: "take", parts: ["down"]}
+- {id: "take_in", phrase: "take in", kind: "動詞片語", meaning: "理解、吸收（資訊）；收留；欺騙", head: "take", parts: ["in"]}
+- {id: "take_on", phrase: "take on", kind: "動詞片語", meaning: "承擔（工作、責任）；雇用；呈現", head: "take", parts: ["on"]}
+- {id: "take_out", phrase: "take out", kind: "動詞片語", meaning: "拿出；帶（某人）出去；外帶", head: "take", parts: ["out"]}
+- {id: "talk_into", phrase: "talk into", kind: "動詞片語", meaning: "說服（某人）做", head: "talk", parts: ["into"]}
+- {id: "tear_down", phrase: "tear down", kind: "動詞片語", meaning: "拆除", head: "tear", parts: ["down"]}
+- {id: "tear_up", phrase: "tear up", kind: "動詞片語", meaning: "撕碎", head: "tear", parts: ["up"]}
+- {id: "think_over", phrase: "think over", kind: "動詞片語", meaning: "仔細考慮", head: "think", parts: ["over"]}
+- {id: "throw_up", phrase: "throw up", kind: "動詞片語", meaning: "嘔吐", head: "throw", parts: ["up"]}
+- {id: "try_out", phrase: "try out", kind: "動詞片語", meaning: "試用；參加選拔", head: "try", parts: ["out"]}
+- {id: "turn_around", phrase: "turn around", kind: "動詞片語", meaning: "轉身；好轉", head: "turn", parts: ["around"]}
+- {id: "use_up", phrase: "use up", kind: "動詞片語", meaning: "用完", head: "use", parts: ["up"]}
+- {id: "wear_out", phrase: "wear out", kind: "動詞片語", meaning: "穿破；用壞；使筋疲力盡", head: "wear", parts: ["out"]}
+- {id: "wipe_out", phrase: "wipe out", kind: "動詞片語", meaning: "消滅；徹底摧毀", head: "wipe", parts: ["out"]}
+- {id: "warm_up", phrase: "warm up", kind: "動詞片語", meaning: "暖身；加熱", head: "warm", parts: ["up"]}
+- {id: "watch_out", phrase: "watch out", kind: "動詞片語", meaning: "小心；注意", head: "watch", parts: ["out"]}
+- {id: "break_off", phrase: "break off", kind: "動詞片語", meaning: "中斷；折斷；斷絕（關係）", head: "break", parts: ["off"]}
+- {id: "build_on", phrase: "build on", kind: "動詞片語", meaning: "以…為基礎", head: "build", parts: ["on"]}
+- {id: "cater_to", phrase: "cater to", kind: "動詞片語", meaning: "迎合；滿足（需要）", head: "cater", parts: ["to"]}
+- {id: "crack_down_on", phrase: "crack down on", kind: "動詞片語", meaning: "嚴厲取締", head: "crack", parts: ["down", "on"]}
+- {id: "engage_in", phrase: "engage in", kind: "動詞片語", meaning: "從事；參與", head: "engage", parts: ["in"]}
+- {id: "answer_for", phrase: "answer for", kind: "動詞片語", meaning: "為…負責", head: "answer", parts: ["for"]}
+- {id: "compete_for", phrase: "compete for", kind: "動詞片語", meaning: "爭奪", head: "compete", parts: ["for"]}
+- {id: "apologize_for", phrase: "apologize for", kind: "動詞片語", meaning: "為…道歉", head: "apologize", parts: ["for"]}
+- {id: "complain_about", phrase: "complain about", kind: "動詞片語", meaning: "抱怨", head: "complain", parts: ["about"]}
+- {id: "specialize_in", phrase: "specialize in", kind: "動詞片語", meaning: "專攻；專門從事", head: "specialize", parts: ["in"]}
+- {id: "contribute_to", phrase: "contribute to", kind: "動詞片語", meaning: "促成；貢獻；捐助", head: "contribute", parts: ["to"]}
+- {id: "concentrate_on", phrase: "concentrate on", kind: "動詞片語", meaning: "專心於", head: "concentrate", parts: ["on"]}
+- {id: "focus_on", phrase: "focus on", kind: "動詞片語", meaning: "專注於；集中在", head: "focus", parts: ["on"]}
+- {id: "participate_in", phrase: "participate in", kind: "動詞片語", meaning: "參加", head: "participate", parts: ["in"]}
+- {id: "dispose_of", phrase: "dispose of", kind: "動詞片語", meaning: "處理掉；丟棄", head: "dispose", parts: ["of"]}
+- {id: "give_way_to", phrase: "give way to", kind: "動詞片語", meaning: "讓步；被…取代", head: "give", parts: ["way", "to"]}
+- {id: "take_advantage_of", phrase: "take advantage of", kind: "動詞片語", meaning: "利用；佔…便宜", seq: "take advantage of"}
+- {id: "take_into_account", phrase: "take into account", kind: "動詞片語", meaning: "考慮到", seq: "take into account"}
+- {id: "take_sth_into_account", phrase: "take something into account", kind: "動詞片語", meaning: "把…考慮進去", seq: "take [something] into account"}
+- {id: "make_use_of", phrase: "make use of", kind: "動詞片語", meaning: "利用", seq: "make (good) use of"}
+- {id: "make_sense", phrase: "make sense", kind: "動詞片語", meaning: "有道理；說得通", seq: "make sense"}
+- {id: "make_a_difference", phrase: "make a difference", kind: "動詞片語", meaning: "有影響；帶來改變", seq: "make a difference"}
+- {id: "make_an_effort", phrase: "make an effort", kind: "動詞片語", meaning: "努力", seq: "make an effort"}
+- {id: "make_room_for", phrase: "make room for", kind: "動詞片語", meaning: "騰出空間給", seq: "make room for"}
+- {id: "make_the_most_of", phrase: "make the most of", kind: "動詞片語", meaning: "充分利用", seq: "make the most of"}
+- {id: "take_turns", phrase: "take turns", kind: "動詞片語", meaning: "輪流", seq: "take turns"}
+- {id: "take_notes", phrase: "take notes", kind: "動詞片語", meaning: "做筆記", seq: "take notes"}
+- {id: "take_charge_of", phrase: "take charge of", kind: "動詞片語", meaning: "負責；掌管", seq: "take charge of"}
+- {id: "take_pride_in", phrase: "take pride in", kind: "動詞片語", meaning: "以…為傲", seq: "take pride in"}
+- {id: "take_sth_for_granted", phrase: "take something for granted", kind: "動詞片語", meaning: "把…視為理所當然", seq: "take [something] for granted"}
+- {id: "keep_in_touch", phrase: "keep in touch (with)", kind: "動詞片語", meaning: "保持聯絡", seq: "keep in touch"}
+- {id: "get_in_touch_with", phrase: "get in touch with", kind: "動詞片語", meaning: "跟…聯絡", seq: "get in touch with"}
+- {id: "lose_touch_with", phrase: "lose touch with", kind: "動詞片語", meaning: "跟…失去聯絡", seq: "lose touch with"}
+- {id: "catch_sight_of", phrase: "catch sight of", kind: "動詞片語", meaning: "突然看見", seq: "catch sight of"}
+- {id: "lose_sight_of", phrase: "lose sight of", kind: "動詞片語", meaning: "看不見；忽略、忘記（目標）", seq: "lose sight of"}
+- {id: "come_to_an_end", phrase: "come to an end", kind: "動詞片語", meaning: "結束", seq: "come to an end"}
+- {id: "get_used_to", phrase: "get used to", kind: "動詞片語", meaning: "逐漸習慣（後面接名詞或 V-ing）", seq: "get used to"}
+- {id: "go_to_great_lengths", phrase: "go to great lengths", kind: "動詞片語", meaning: "竭盡全力", seq: "go to great lengths"}
+- {id: "run_the_risk_of", phrase: "run the risk of", kind: "動詞片語", meaning: "冒…的風險", seq: "run the risk of"}
+- {id: "set_an_example", phrase: "set an example", kind: "動詞片語", meaning: "樹立榜樣", seq: "set an (good) example"}
+- {id: "keep_one_s_word", phrase: "keep one's word", kind: "動詞片語", meaning: "遵守諾言", seq: "keep [one's] word"}
+- {id: "break_one_s_promise", phrase: "break one's promise", kind: "動詞片語", meaning: "違背諾言", seq: "break [one's] promise"}
+- {id: "give_rise_to", phrase: "give rise to", kind: "動詞片語", meaning: "引起；造成", seq: "give rise to"}
+- {id: "put_into_practice", phrase: "put into practice", kind: "動詞片語", meaning: "實行；付諸實踐", seq: "put [something] into practice"}
+- {id: "pay_a_visit", phrase: "pay a visit (to)", kind: "動詞片語", meaning: "拜訪", seq: "pay a visit"}
+- {id: "have_nothing_to_do_with", phrase: "have nothing to do with", kind: "動詞片語", meaning: "和…沒有關係", seq: "have nothing to do with"}
+- {id: "have_something_to_do_with", phrase: "have something to do with", kind: "動詞片語", meaning: "和…有關", seq: "have something to do with"}
+- {id: "can_t_help", phrase: "can't help V-ing", kind: "動詞片語", meaning: "忍不住（做）", seq: "can not help"}
+- {id: "can_t_afford", phrase: "can't afford", kind: "動詞片語", meaning: "負擔不起", seq: "can not afford"}
+- {id: "feel_free_to", phrase: "feel free to", kind: "動詞片語", meaning: "儘管、隨時可以（做）", seq: "feel free to"}
+- {id: "take_a_look", phrase: "take a look (at)", kind: "動詞片語", meaning: "看一看", seq: "take a look"}
+- {id: "have_a_look", phrase: "have a look (at)", kind: "動詞片語", meaning: "看一看", seq: "have a look"}
+- {id: "make_a_living", phrase: "make a living", kind: "動詞片語", meaning: "謀生", seq: "make a living"}
+- {id: "make_money", phrase: "make money", kind: "動詞片語", meaning: "賺錢", seq: "make money"}
+- {id: "make_a_wish", phrase: "make a wish", kind: "動詞片語", meaning: "許願", seq: "make a wish"}
+- {id: "do_someone_a_favor", phrase: "do someone a favor", kind: "動詞片語", meaning: "幫某人一個忙", seq: "do [someone] a favor"}
+- {id: "ask_a_favor", phrase: "ask a favor (of someone)", kind: "動詞片語", meaning: "請（某人）幫忙", seq: "ask a favor"}
+- {id: "take_a_seat", phrase: "take a seat", kind: "動詞片語", meaning: "請坐；就座", seq: "take a seat"}
+- {id: "take_responsibility_for", phrase: "take responsibility for", kind: "動詞片語", meaning: "為…負責", seq: "take responsibility for"}
+- {id: "come_into_effect", phrase: "come into effect", kind: "動詞片語", meaning: "生效", seq: "come into effect"}
+- {id: "put_an_end_to", phrase: "put an end to", kind: "動詞片語", meaning: "結束；終止", seq: "put an end to"}
+- {id: "make_up_for_lost_time", phrase: "make up for lost time", kind: "動詞片語", meaning: "把失去的時間補回來", seq: "make up for lost time"}
+- {id: "feel_like", phrase: "feel like", kind: "動詞片語", meaning: "想要（做某事，後面接 V-ing）；感覺像", seq: "feel like"}
+- {id: "serve_as", phrase: "serve as", kind: "動詞片語", meaning: "充當；作為", seq: "serve as"}
+
 # ---------- 形容詞片語（be＋形容詞＋介系詞） ----------
 - {id: be_afraid_of, phrase: be afraid of, kind: 形容詞片語, meaning: 害怕, head: afraid, parts: [of]}
 - {id: be_good_at, phrase: be good at, kind: 形容詞片語, meaning: 擅長, head: good, parts: [at]}
@@ -228,6 +394,69 @@
 - {id: be_eager_to, phrase: be eager to, kind: 形容詞片語, meaning: 渴望（做某事）, seq: be eager to}
 - {id: be_supposed_to, phrase: be supposed to, kind: 形容詞片語, meaning: 應該（照規定或安排）, seq: be supposed to}
 - {id: be_about_to, phrase: be about to, kind: 形容詞片語, meaning: 正要；即將, seq: be about to}
+
+# （2026-09-29 夜間新增：常用形容詞片語）
+- {id: "be_accustomed_to", phrase: "be accustomed to", kind: "形容詞片語", meaning: "習慣於（後面接名詞或 V-ing）", head: "accustomed", parts: ["to"]}
+- {id: "be_ashamed_of", phrase: "be ashamed of", kind: "形容詞片語", meaning: "以…為恥；對…感到慚愧", head: "ashamed", parts: ["of"]}
+- {id: "be_anxious_about", phrase: "be anxious about", kind: "形容詞片語", meaning: "為…擔心、焦慮", head: "anxious", parts: ["about"]}
+- {id: "be_based_on", phrase: "be based on", kind: "形容詞片語", meaning: "以…為根據", head: "based", parts: ["on"]}
+- {id: "be_bored_with", phrase: "be bored with", kind: "形容詞片語", meaning: "對…感到厭煩", head: "bored", parts: ["with"]}
+- {id: "be_concerned_about", phrase: "be concerned about", kind: "形容詞片語", meaning: "擔心；關心", head: "concerned", parts: ["about"]}
+- {id: "be_composed_of", phrase: "be composed of", kind: "形容詞片語", meaning: "由…組成", head: "composed", parts: ["of"]}
+- {id: "be_covered_with", phrase: "be covered with", kind: "形容詞片語", meaning: "被…覆蓋", head: "covered", parts: ["with"]}
+- {id: "be_devoted_to", phrase: "be devoted to", kind: "形容詞片語", meaning: "致力於；對…很投入", head: "devoted", parts: ["to"]}
+- {id: "be_engaged_in", phrase: "be engaged in", kind: "形容詞片語", meaning: "從事；忙於", head: "engaged", parts: ["in"]}
+- {id: "be_filled_with", phrase: "be filled with", kind: "形容詞片語", meaning: "充滿", head: "filled", parts: ["with"]}
+- {id: "be_free_from", phrase: "be free from", kind: "形容詞片語", meaning: "沒有…（不好的東西）；免於", head: "free", parts: ["from"]}
+- {id: "be_free_of", phrase: "be free of", kind: "形容詞片語", meaning: "沒有…；免除", head: "free", parts: ["of"]}
+- {id: "be_grateful_for", phrase: "be grateful for", kind: "形容詞片語", meaning: "感謝（某事）", head: "grateful", parts: ["for"]}
+- {id: "be_grateful_to", phrase: "be grateful to", kind: "形容詞片語", meaning: "感謝（某人）", head: "grateful", parts: ["to"]}
+- {id: "be_guilty_of", phrase: "be guilty of", kind: "形容詞片語", meaning: "犯了（罪、錯）", head: "guilty", parts: ["of"]}
+- {id: "be_jealous_of", phrase: "be jealous of", kind: "形容詞片語", meaning: "嫉妒", head: "jealous", parts: ["of"]}
+- {id: "be_made_of", phrase: "be made of", kind: "形容詞片語", meaning: "由…製成（看得出原料）", head: "made", parts: ["of"]}
+- {id: "be_made_from", phrase: "be made from", kind: "形容詞片語", meaning: "由…製成（看不出原料）", head: "made", parts: ["from"]}
+- {id: "be_made_up_of", phrase: "be made up of", kind: "形容詞片語", meaning: "由…組成", head: "made", parts: ["up", "of"]}
+- {id: "be_married_to", phrase: "be married to", kind: "形容詞片語", meaning: "和…結婚", head: "married", parts: ["to"]}
+- {id: "be_opposed_to", phrase: "be opposed to", kind: "形容詞片語", meaning: "反對", head: "opposed", parts: ["to"]}
+- {id: "be_pleased_with", phrase: "be pleased with", kind: "形容詞片語", meaning: "對…感到滿意", head: "pleased", parts: ["with"]}
+- {id: "be_popular_with", phrase: "be popular with", kind: "形容詞片語", meaning: "受…歡迎", head: "popular", parts: ["with"]}
+- {id: "be_related_to", phrase: "be related to", kind: "形容詞片語", meaning: "和…有關；和…有親戚關係", head: "related", parts: ["to"]}
+- {id: "be_scared_of", phrase: "be scared of", kind: "形容詞片語", meaning: "害怕", head: "scared", parts: ["of"]}
+- {id: "be_sick_of", phrase: "be sick of", kind: "形容詞片語", meaning: "對…感到厭煩", head: "sick", parts: ["of"]}
+- {id: "be_short_of", phrase: "be short of", kind: "形容詞片語", meaning: "缺少", head: "short", parts: ["of"]}
+- {id: "be_sure_of", phrase: "be sure of", kind: "形容詞片語", meaning: "確信", head: "sure", parts: ["of"]}
+- {id: "be_suitable_for", phrase: "be suitable for", kind: "形容詞片語", meaning: "適合", head: "suitable", parts: ["for"]}
+- {id: "be_surprised_at", phrase: "be surprised at", kind: "形容詞片語", meaning: "對…感到驚訝", head: "surprised", parts: ["at"]}
+- {id: "be_sensitive_to", phrase: "be sensitive to", kind: "形容詞片語", meaning: "對…敏感", head: "sensitive", parts: ["to"]}
+- {id: "be_involved_in", phrase: "be involved in", kind: "形容詞片語", meaning: "參與；牽涉在內", head: "involved", parts: ["in"]}
+- {id: "be_absorbed_in", phrase: "be absorbed in", kind: "形容詞片語", meaning: "專心於；沉迷於", head: "absorbed", parts: ["in"]}
+- {id: "be_addicted_to", phrase: "be addicted to", kind: "形容詞片語", meaning: "對…上癮", head: "addicted", parts: ["to"]}
+- {id: "be_qualified_for", phrase: "be qualified for", kind: "形容詞片語", meaning: "有資格；能勝任", head: "qualified", parts: ["for"]}
+- {id: "be_keen_on", phrase: "be keen on", kind: "形容詞片語", meaning: "熱衷於；很喜歡", head: "keen", parts: ["on"]}
+- {id: "be_equal_to", phrase: "be equal to", kind: "形容詞片語", meaning: "等於；能勝任", head: "equal", parts: ["to"]}
+- {id: "be_superior_to", phrase: "be superior to", kind: "形容詞片語", meaning: "比…優秀（不用 than）", head: "superior", parts: ["to"]}
+- {id: "be_inferior_to", phrase: "be inferior to", kind: "形容詞片語", meaning: "比…差（不用 than）", head: "inferior", parts: ["to"]}
+- {id: "be_dressed_in", phrase: "be dressed in", kind: "形容詞片語", meaning: "穿著", head: "dressed", parts: ["in"]}
+- {id: "be_located_in", phrase: "be located in", kind: "形容詞片語", meaning: "位於", head: "located", parts: ["in"]}
+- {id: "be_known_as", phrase: "be known as", kind: "形容詞片語", meaning: "以…的身分、名稱為人所知", head: "known", parts: ["as"]}
+- {id: "be_independent_of", phrase: "be independent of", kind: "形容詞片語", meaning: "不依賴；獨立於", head: "independent", parts: ["of"]}
+- {id: "be_dependent_on", phrase: "be dependent on", kind: "形容詞片語", meaning: "依賴", head: "dependent", parts: ["on"]}
+- {id: "be_typical_of", phrase: "be typical of", kind: "形容詞片語", meaning: "是…的典型；…的特色", head: "typical", parts: ["of"]}
+- {id: "be_crowded_with", phrase: "be crowded with", kind: "形容詞片語", meaning: "擠滿了", head: "crowded", parts: ["with"]}
+- {id: "be_curious_about", phrase: "be curious about", kind: "形容詞片語", meaning: "對…好奇", head: "curious", parts: ["about"]}
+- {id: "be_nervous_about", phrase: "be nervous about", kind: "形容詞片語", meaning: "對…感到緊張", head: "nervous", parts: ["about"]}
+- {id: "be_confident_of", phrase: "be confident of", kind: "形容詞片語", meaning: "對…有信心", head: "confident", parts: ["of"]}
+- {id: "be_harmful_to", phrase: "be harmful to", kind: "形容詞片語", meaning: "對…有害", head: "harmful", parts: ["to"]}
+- {id: "be_friendly_to", phrase: "be friendly to", kind: "形容詞片語", meaning: "對…友善", head: "friendly", parts: ["to"]}
+- {id: "be_generous_with", phrase: "be generous with", kind: "形容詞片語", meaning: "對…很大方", head: "generous", parts: ["with"]}
+- {id: "be_strict_with", phrase: "be strict with", kind: "形容詞片語", meaning: "對（某人）很嚴格", head: "strict", parts: ["with"]}
+- {id: "be_true_of", phrase: "be true of", kind: "形容詞片語", meaning: "適用於", head: "true", parts: ["of"]}
+- {id: "be_likely_to", phrase: "be likely to", kind: "形容詞片語", meaning: "可能會", seq: "likely to"}
+- {id: "be_willing_to", phrase: "be willing to", kind: "形容詞片語", meaning: "願意", seq: "willing to"}
+- {id: "be_unable_to", phrase: "be unable to", kind: "形容詞片語", meaning: "不能；無法", seq: "unable to"}
+- {id: "be_bound_to", phrase: "be bound to", kind: "形容詞片語", meaning: "一定會", seq: "bound to"}
+- {id: "be_subject_to", phrase: "be subject to", kind: "形容詞片語", meaning: "容易受到；取決於", seq: "subject to"}
+- {id: "be_sure_to", phrase: "be sure to", kind: "形容詞片語", meaning: "一定要；一定會", seq: "be sure to"}
 
 # ---------- 介系詞片語、副詞片語 ----------
 - {id: in_front_of, phrase: in front of, kind: 介系詞片語, meaning: 在…前面, seq: in front of}
@@ -273,6 +502,110 @@
 - {id: no_longer, phrase: no longer, kind: 副詞片語, meaning: 不再, seq: no longer}
 - {id: needless_to_say, phrase: needless to say, kind: 副詞片語, meaning: 不用說, seq: needless to say}
 
+# （2026-09-29 夜間新增：學測、指考考過的介系詞片語、副詞片語）
+- {id: "in_no_time", phrase: "in no time", kind: "介系詞片語", meaning: "馬上；很快", seq: "in no time"}
+- {id: "by_all_means", phrase: "by all means", kind: "介系詞片語", meaning: "當然可以；務必", seq: "by all means"}
+- {id: "by_no_means", phrase: "by no means", kind: "介系詞片語", meaning: "絕不；一點也不", seq: "by no means"}
+- {id: "above_all", phrase: "above all", kind: "介系詞片語", meaning: "最重要的是", seq: "above all"}
+- {id: "as_a_result", phrase: "as a result", kind: "介系詞片語", meaning: "結果；因此", seq: "as a result"}
+- {id: "as_a_result_of", phrase: "as a result of", kind: "介系詞片語", meaning: "因為；由於", seq: "as a result of"}
+- {id: "as_for", phrase: "as for", kind: "介系詞片語", meaning: "至於", seq: "as for"}
+- {id: "as_usual", phrase: "as usual", kind: "介系詞片語", meaning: "像往常一樣", seq: "as usual"}
+- {id: "at_most", phrase: "at most", kind: "介系詞片語", meaning: "最多；頂多", seq: "at most"}
+- {id: "at_best", phrase: "at best", kind: "介系詞片語", meaning: "最好的情況也只是", seq: "at best"}
+- {id: "at_the_same_time", phrase: "at the same time", kind: "介系詞片語", meaning: "同時；然而", seq: "at the same time"}
+- {id: "at_the_moment", phrase: "at the moment", kind: "介系詞片語", meaning: "此刻；目前", seq: "at the moment"}
+- {id: "at_present", phrase: "at present", kind: "介系詞片語", meaning: "目前", seq: "at present"}
+- {id: "at_all", phrase: "at all", kind: "介系詞片語", meaning: "（否定句）一點也；（疑問句）到底", seq: "at all"}
+- {id: "at_all_times", phrase: "at all times", kind: "介系詞片語", meaning: "隨時；一直", seq: "at all times"}
+- {id: "all_in_all", phrase: "all in all", kind: "副詞片語", meaning: "總而言之", seq: "all in all"}
+- {id: "as_a_matter_of_fact", phrase: "as a matter of fact", kind: "介系詞片語", meaning: "事實上", seq: "as a matter of fact"}
+- {id: "by_and_large", phrase: "by and large", kind: "副詞片語", meaning: "大體上", seq: "by and large"}
+- {id: "by_chance", phrase: "by chance", kind: "介系詞片語", meaning: "碰巧；偶然", seq: "by chance"}
+- {id: "by_far", phrase: "by far", kind: "介系詞片語", meaning: "（修飾最高級）遠遠地；顯然", seq: "by far"}
+- {id: "due_to", phrase: "due to", kind: "介系詞片語", meaning: "因為；由於", seq: "due to"}
+- {id: "except_for", phrase: "except for", kind: "介系詞片語", meaning: "除了…之外（其他都…）", seq: "except for"}
+- {id: "for_the_sake_of", phrase: "for the sake of", kind: "介系詞片語", meaning: "為了…（的利益）", seq: "for the sake of"}
+- {id: "for_the_time_being", phrase: "for the time being", kind: "介系詞片語", meaning: "暫時", seq: "for the time being"}
+- {id: "in_advance", phrase: "in advance", kind: "介系詞片語", meaning: "事先；預先", seq: "in advance"}
+- {id: "in_charge_of", phrase: "in charge of", kind: "介系詞片語", meaning: "負責；掌管", seq: "in charge of"}
+- {id: "in_common", phrase: "in common", kind: "介系詞片語", meaning: "共同（的地方）", seq: "in common"}
+- {id: "in_contrast", phrase: "in contrast (to)", kind: "介系詞片語", meaning: "相較之下；和…形成對比", seq: "in contrast"}
+- {id: "by_contrast", phrase: "by contrast", kind: "介系詞片語", meaning: "相較之下", seq: "by contrast"}
+- {id: "in_case_of", phrase: "in case of", kind: "介系詞片語", meaning: "萬一；如果發生", seq: "in case of"}
+- {id: "in_other_words", phrase: "in other words", kind: "介系詞片語", meaning: "換句話說", seq: "in other words"}
+- {id: "in_short", phrase: "in short", kind: "介系詞片語", meaning: "總之；簡單說", seq: "in short"}
+- {id: "in_terms_of", phrase: "in terms of", kind: "介系詞片語", meaning: "就…而言；從…方面來說", seq: "in terms of"}
+- {id: "in_the_meantime", phrase: "in the meantime", kind: "介系詞片語", meaning: "同時；在這期間", seq: "in the meantime"}
+- {id: "in_public", phrase: "in public", kind: "介系詞片語", meaning: "公開地；在大家面前", seq: "in public"}
+- {id: "in_private", phrase: "in private", kind: "介系詞片語", meaning: "私下", seq: "in private"}
+- {id: "in_person", phrase: "in person", kind: "介系詞片語", meaning: "親自", seq: "in person"}
+- {id: "in_place_of", phrase: "in place of", kind: "介系詞片語", meaning: "代替", seq: "in place of"}
+- {id: "in_return", phrase: "in return", kind: "介系詞片語", meaning: "作為回報", seq: "in return"}
+- {id: "in_vain", phrase: "in vain", kind: "介系詞片語", meaning: "徒勞；白費", seq: "in vain"}
+- {id: "in_the_middle_of", phrase: "in the middle of", kind: "介系詞片語", meaning: "在…的中間；正在…的時候", seq: "in the middle of"}
+- {id: "on_behalf_of", phrase: "on behalf of", kind: "介系詞片語", meaning: "代表", seq: "on behalf of"}
+- {id: "on_the_whole", phrase: "on the whole", kind: "介系詞片語", meaning: "整體來說", seq: "on the whole"}
+- {id: "on_one_s_own", phrase: "on one's own", kind: "介系詞片語", meaning: "獨自；靠自己", seq: "on [one's] own"}
+- {id: "on_the_spot", phrase: "on the spot", kind: "介系詞片語", meaning: "當場；立刻", seq: "on the spot"}
+- {id: "out_of_order", phrase: "out of order", kind: "介系詞片語", meaning: "故障", seq: "out of order"}
+- {id: "out_of_date", phrase: "out of date", kind: "介系詞片語", meaning: "過時的", seq: "out of date"}
+- {id: "out_of_control", phrase: "out of control", kind: "介系詞片語", meaning: "失去控制", seq: "out of control"}
+- {id: "under_control", phrase: "under control", kind: "介系詞片語", meaning: "在控制之下", seq: "under control"}
+- {id: "out_of_the_question", phrase: "out of the question", kind: "介系詞片語", meaning: "不可能；不用考慮", seq: "out of the question"}
+- {id: "up_to_date", phrase: "up to date", kind: "介系詞片語", meaning: "最新的；跟得上時代", seq: "up to date"}
+- {id: "with_the_help_of", phrase: "with the help of", kind: "介系詞片語", meaning: "在…的幫助下", seq: "with the help of"}
+- {id: "with_regard_to", phrase: "with regard to", kind: "介系詞片語", meaning: "關於", seq: "with regard to"}
+- {id: "regardless_of", phrase: "regardless of", kind: "介系詞片語", meaning: "不管；不論", seq: "regardless of"}
+- {id: "let_alone", phrase: "let alone", kind: "副詞片語", meaning: "更不用說", seq: "let alone"}
+- {id: "other_than", phrase: "other than", kind: "介系詞片語", meaning: "除了；不同於", seq: "other than"}
+- {id: "aside_from", phrase: "aside from", kind: "介系詞片語", meaning: "除了…以外", seq: "aside from"}
+- {id: "apart_from", phrase: "apart from", kind: "介系詞片語", meaning: "除了…以外", seq: "apart from"}
+- {id: "nothing_but", phrase: "nothing but", kind: "副詞片語", meaning: "只是；只有", seq: "nothing but"}
+- {id: "rather_than", phrase: "rather than", kind: "副詞片語", meaning: "而不是", seq: "rather than"}
+- {id: "not_to_mention", phrase: "not to mention", kind: "副詞片語", meaning: "更不用說", seq: "not to mention"}
+- {id: "now_and_then", phrase: "(every) now and then", kind: "副詞片語", meaning: "有時候；偶爾", seq: "now and then"}
+- {id: "again_and_again", phrase: "again and again", kind: "副詞片語", meaning: "一再地", seq: "again and again"}
+- {id: "over_and_over", phrase: "over and over (again)", kind: "副詞片語", meaning: "一再地；反覆", seq: "over and over"}
+- {id: "little_by_little", phrase: "little by little", kind: "副詞片語", meaning: "逐漸地；一點一點", seq: "little by little"}
+- {id: "step_by_step", phrase: "step by step", kind: "副詞片語", meaning: "一步一步地", seq: "step by step"}
+- {id: "day_by_day", phrase: "day by day", kind: "副詞片語", meaning: "一天天地", seq: "day by day"}
+- {id: "one_by_one", phrase: "one by one", kind: "副詞片語", meaning: "一個接一個", seq: "one by one"}
+- {id: "side_by_side", phrase: "side by side", kind: "副詞片語", meaning: "並肩地", seq: "side by side"}
+- {id: "face_to_face", phrase: "face to face", kind: "副詞片語", meaning: "面對面", seq: "face to face"}
+- {id: "hand_in_hand", phrase: "hand in hand", kind: "副詞片語", meaning: "手牽手；密切相關", seq: "hand in hand"}
+- {id: "back_and_forth", phrase: "back and forth", kind: "副詞片語", meaning: "來回地", seq: "back and forth"}
+- {id: "so_far", phrase: "so far", kind: "副詞片語", meaning: "到目前為止", seq: "so far"}
+- {id: "first_of_all", phrase: "first of all", kind: "副詞片語", meaning: "首先", seq: "first of all"}
+- {id: "last_but_not_least", phrase: "last but not least", kind: "副詞片語", meaning: "最後但同樣重要的是", seq: "last but not least"}
+- {id: "in_the_first_place", phrase: "in the first place", kind: "介系詞片語", meaning: "首先；當初", seq: "in the first place"}
+- {id: "from_time_to_time", phrase: "from time to time", kind: "介系詞片語", meaning: "有時候；偶爾", seq: "from time to time"}
+- {id: "to_tell_the_truth", phrase: "to tell the truth", kind: "副詞片語", meaning: "說實話", seq: "to tell the truth"}
+- {id: "in_a_word", phrase: "in a word", kind: "介系詞片語", meaning: "總之；一句話", seq: "in a word"}
+- {id: "all_at_once", phrase: "all at once", kind: "副詞片語", meaning: "突然；同時", seq: "all at once"}
+- {id: "at_a_loss", phrase: "at a loss", kind: "介系詞片語", meaning: "不知所措", seq: "at a loss"}
+- {id: "at_risk", phrase: "at risk", kind: "介系詞片語", meaning: "處於危險中", seq: "at risk"}
+- {id: "in_need", phrase: "in need", kind: "介系詞片語", meaning: "在困難中；需要幫助的", seq: "in need"}
+- {id: "in_trouble", phrase: "in trouble", kind: "介系詞片語", meaning: "陷入麻煩", seq: "in trouble"}
+- {id: "on_duty", phrase: "on duty", kind: "介系詞片語", meaning: "值班", seq: "on duty"}
+- {id: "off_duty", phrase: "off duty", kind: "介系詞片語", meaning: "下班；不值班", seq: "off duty"}
+- {id: "on_sale", phrase: "on sale", kind: "介系詞片語", meaning: "特價中；上市", seq: "on sale"}
+- {id: "for_sale", phrase: "for sale", kind: "介系詞片語", meaning: "出售中", seq: "for sale"}
+- {id: "for_free", phrase: "for free", kind: "介系詞片語", meaning: "免費", seq: "for free"}
+- {id: "in_tears", phrase: "in tears", kind: "介系詞片語", meaning: "哭著；含淚", seq: "in tears"}
+- {id: "in_a_row", phrase: "in a row", kind: "介系詞片語", meaning: "連續；排成一排", seq: "in a row"}
+- {id: "on_average", phrase: "on average", kind: "介系詞片語", meaning: "平均", seq: "on average"}
+- {id: "on_the_way", phrase: "on the way", kind: "介系詞片語", meaning: "在路上；即將到來", seq: "on the way"}
+- {id: "to_a_certain_extent", phrase: "to a certain extent", kind: "介系詞片語", meaning: "在某種程度上", seq: "to a certain extent"}
+- {id: "by_the_end_of", phrase: "by the end of", kind: "介系詞片語", meaning: "在…結束之前", seq: "by the end of"}
+- {id: "at_the_end_of", phrase: "at the end of", kind: "介系詞片語", meaning: "在…的最後", seq: "at the end of"}
+- {id: "as_far_as_i_know", phrase: "as far as I know", kind: "副詞片語", meaning: "據我所知", seq: "as far as i know"}
+- {id: "in_the_dark", phrase: "in the dark", kind: "介系詞片語", meaning: "在黑暗中；被蒙在鼓裡", seq: "in the dark"}
+- {id: "on_top_of", phrase: "on top of", kind: "介系詞片語", meaning: "在…上面；除了…還", seq: "on top of"}
+- {id: "in_the_presence_of", phrase: "in the presence of", kind: "介系詞片語", meaning: "在…面前", seq: "in the presence of"}
+- {id: "more_or_less", phrase: "more or less", kind: "副詞片語", meaning: "或多或少；大約", seq: "more or less"}
+- {id: "no_more_than", phrase: "no more than", kind: "副詞片語", meaning: "只有；不超過", seq: "no more than"}
+
 # ---------- 慣用語（不能照字面翻） ----------
 - {id: rain_cats_and_dogs, phrase: rain cats and dogs, kind: 慣用語, meaning: 下傾盆大雨, literal: 下貓下狗, seq: rain cats and dogs}
 - {id: break_a_leg, phrase: break a leg, kind: 慣用語, meaning: 祝你好運（常用在表演、比賽前）, literal: 摔斷一條腿, seq: break a leg}
@@ -308,10 +641,10 @@
 - {id: between_a_rock_and_a_hard_place, phrase: between a rock and a hard place, kind: 慣用語, meaning: 進退兩難, literal: 夾在岩石和硬地之間, seq: between a rock and a hard place}
 - {id: the_last_straw, phrase: the last straw, kind: 慣用語, meaning: 讓人終於受不了的最後一件事, literal: 最後一根稻草, seq: the last straw}
 - {id: a_blessing_in_disguise, phrase: a blessing in disguise, kind: 慣用語, meaning: 因禍得福；塞翁失馬, literal: 偽裝起來的祝福, seq: a blessing in disguise}
-- {id: better_late_than_never, phrase: better late than never, kind: 慣用語, meaning: 晚做總比不做好, literal: 晚總比從不好, seq: better late than never}
-- {id: practice_makes_perfect, phrase: practice makes perfect, kind: 慣用語, meaning: 熟能生巧, literal: 練習讓人完美, seq: practice makes perfect}
-- {id: time_flies, phrase: time flies, kind: 慣用語, meaning: 時間過得真快；光陰似箭, literal: 時間會飛, seq: time flies}
-- {id: easier_said_than_done, phrase: easier said than done, kind: 慣用語, meaning: 說起來容易做起來難, literal: 說比做容易, seq: easier said than done}
+- {id: better_late_than_never, phrase: better late than never, kind: 諺語, meaning: 晚做總比不做好, literal: 晚總比從不好, seq: better late than never}
+- {id: practice_makes_perfect, phrase: practice makes perfect, kind: 諺語, meaning: 熟能生巧, literal: 練習讓人完美, seq: practice makes perfect}
+- {id: time_flies, phrase: time flies, kind: 諺語, meaning: 時間過得真快；光陰似箭, literal: 時間會飛, seq: time flies}
+- {id: easier_said_than_done, phrase: easier said than done, kind: 諺語, meaning: 說起來容易做起來難, literal: 說比做容易, seq: easier said than done}
 - {id: long_time_no_see, phrase: long time no see, kind: 慣用語, meaning: 好久不見, literal: 很久時間沒有見, seq: long time no see}
 - {id: give_me_a_break, phrase: give me a break, kind: 慣用語, meaning: 饒了我吧；別鬧了；讓我喘口氣, literal: 給我休息一下, seq: give me a break}
 - {id: you_can_say_that_again, phrase: you can say that again, kind: 慣用語, meaning: 你說得一點都沒錯（完全同意）, literal: 你可以再說一次, seq: you can say that again}
@@ -326,3 +659,175 @@
 - {id: out_of_this_world, phrase: out of this world, kind: 慣用語, meaning: 好得不得了, literal: 在這個世界之外, seq: out of this world}
 - {id: when_pigs_fly, phrase: when pigs fly, kind: 慣用語, meaning: 不可能發生；等到太陽打西邊出來, literal: 等豬會飛的時候, seq: when pigs fly}
 - {id: a_couch_potato, phrase: a couch potato, kind: 慣用語, meaning: 整天窩在沙發上看電視的人, literal: 沙發上的馬鈴薯, seq: couch potato}
+# （2026-09-29 夜間新增：常見慣用語）
+- {id: "break_the_ice", phrase: "break the ice", kind: "慣用語", meaning: "打破僵局；讓氣氛輕鬆起來", literal: "打破冰", seq: "break the ice"}
+- {id: "cut_corners", phrase: "cut corners", kind: "慣用語", meaning: "偷工減料；走捷徑", literal: "切掉角落", seq: "cut corners"}
+- {id: "burn_the_midnight_oil", phrase: "burn the midnight oil", kind: "慣用語", meaning: "熬夜（讀書、工作）", literal: "燒半夜的油", seq: "burn the midnight oil"}
+- {id: "hold_your_horses", phrase: "hold your horses", kind: "慣用語", meaning: "等一下；別急", literal: "拉住你的馬", seq: "hold your horses"}
+- {id: "go_the_extra_mile", phrase: "go the extra mile", kind: "慣用語", meaning: "多做一點；格外努力", literal: "多走一英里", seq: "go the extra mile"}
+- {id: "hit_the_nail_on_the_head", phrase: "hit the nail on the head", kind: "慣用語", meaning: "說到重點；一針見血", literal: "打中釘子的頭", seq: "hit the nail on the head"}
+- {id: "bite_one_s_tongue", phrase: "bite one's tongue", kind: "慣用語", meaning: "忍住不說", literal: "咬舌頭", seq: "bite [one's] tongue"}
+- {id: "break_the_bank", phrase: "break the bank", kind: "慣用語", meaning: "花很多錢（常用否定：不會太貴）", literal: "打破銀行", seq: "break the bank"}
+- {id: "call_it_a_day", phrase: "call it a day", kind: "慣用語", meaning: "今天就做到這裡；收工", literal: "稱它為一天", seq: "call it a day"}
+- {id: "throw_in_the_towel", phrase: "throw in the towel", kind: "慣用語", meaning: "認輸；放棄", literal: "丟毛巾", seq: "throw in the towel"}
+- {id: "jump_the_gun", phrase: "jump the gun", kind: "慣用語", meaning: "操之過急；搶先行動", literal: "在槍響前起跑", seq: "jump the gun"}
+- {id: "get_the_ball_rolling", phrase: "get the ball rolling", kind: "慣用語", meaning: "開始（做某事）", literal: "讓球滾起來", seq: "get the ball rolling"}
+- {id: "on_the_same_page", phrase: "on the same page", kind: "慣用語", meaning: "想法一致；有共識", literal: "在同一頁", seq: "on the same page"}
+- {id: "in_a_nutshell", phrase: "in a nutshell", kind: "慣用語", meaning: "簡單來說", literal: "在堅果殼裡", seq: "in a nutshell"}
+- {id: "in_someone_s_shoes", phrase: "in someone's shoes", kind: "慣用語", meaning: "站在某人的立場", literal: "在某人的鞋子裡", seq: "in [one's] shoes"}
+- {id: "add_fuel_to_the_fire", phrase: "add fuel to the fire", kind: "慣用語", meaning: "火上加油；使情況更糟", literal: "在火上加燃料", seq: "add fuel to the fire"}
+- {id: "bark_up_the_wrong_tree", phrase: "bark up the wrong tree", kind: "慣用語", meaning: "找錯對象；搞錯方向", literal: "對著錯的樹吠", seq: "bark up the wrong tree"}
+- {id: "burn_one_s_bridges", phrase: "burn one's bridges", kind: "慣用語", meaning: "斷了自己的後路", literal: "燒掉自己的橋", seq: "burn [one's] bridges"}
+- {id: "caught_red_handed", phrase: "caught red-handed", kind: "慣用語", meaning: "當場被抓到", literal: "手紅紅的被抓到", seq: "red - handed"}
+- {id: "face_the_music", phrase: "face the music", kind: "慣用語", meaning: "面對後果；承擔責任", literal: "面對音樂", seq: "face the music"}
+- {id: "go_with_the_flow", phrase: "go with the flow", kind: "慣用語", meaning: "順其自然", literal: "隨著水流走", seq: "go with the flow"}
+- {id: "hit_the_jackpot", phrase: "hit the jackpot", kind: "慣用語", meaning: "中大獎；運氣大好", literal: "中了累積獎金", seq: "hit the jackpot"}
+- {id: "keep_one_s_fingers_crossed", phrase: "keep one's fingers crossed", kind: "慣用語", meaning: "祈求好運", literal: "把手指交叉", seq: "[one's] fingers crossed"}
+- {id: "make_a_mountain_out_of_a_molehill", phrase: "make a mountain out of a molehill", kind: "慣用語", meaning: "小題大作", literal: "把鼴鼠丘變成一座山", seq: "make a mountain out of a molehill"}
+- {id: "rain_on_one_s_parade", phrase: "rain on someone's parade", kind: "慣用語", meaning: "掃興；潑冷水", literal: "在某人的遊行上下雨", seq: "rain on [one's] parade"}
+- {id: "take_with_a_grain_of_salt", phrase: "take something with a grain of salt", kind: "慣用語", meaning: "對（說法）半信半疑", literal: "配一粒鹽吃", seq: "with a grain of salt"}
+- {id: "a_penny_for_your_thoughts", phrase: "a penny for your thoughts", kind: "慣用語", meaning: "你在想什麼呢？", literal: "給你一分錢買你的想法", seq: "a penny for your thoughts"}
+- {id: "bite_off_more_than", phrase: "bite off more than one can chew", kind: "慣用語", meaning: "貪多嚼不爛；做超過能力的事", literal: "咬下超過能嚼的量", seq: "bite off more than"}
+- {id: "get_off_one_s_chest", phrase: "get something off one's chest", kind: "慣用語", meaning: "把心裡話說出來", literal: "把東西從胸口拿開", seq: "off [one's] chest"}
+- {id: "butterflies_in_stomach", phrase: "have butterflies in one's stomach", kind: "慣用語", meaning: "緊張；心裡七上八下", literal: "肚子裡有蝴蝶", seq: "butterflies in [one's] stomach"}
+- {id: "bull_in_a_china_shop", phrase: "a bull in a china shop", kind: "慣用語", meaning: "笨手笨腳、莽撞的人", literal: "瓷器店裡的公牛", seq: "a bull in a china shop"}
+- {id: "make_ends_meet", phrase: "make ends meet", kind: "慣用語", meaning: "勉強維持生計；收支平衡", literal: "讓兩端碰在一起", seq: "make ends meet"}
+- {id: "play_it_by_ear", phrase: "play it by ear", kind: "慣用語", meaning: "見機行事；臨場決定", literal: "憑耳朵演奏", seq: "play it by ear"}
+- {id: "beat_around_the_bush", phrase: "beat around the bush", kind: "慣用語", meaning: "拐彎抹角；不直說", literal: "在樹叢周圍拍打", seq: "beat around the bush"}
+- {id: "cry_wolf", phrase: "cry wolf", kind: "慣用語", meaning: "謊報危險；放羊的孩子", literal: "喊狼來了", seq: "cry wolf"}
+- {id: "get_out_of_hand", phrase: "get out of hand", kind: "慣用語", meaning: "失去控制", literal: "脫離手", seq: "out of hand"}
+- {id: "give_the_cold_shoulder", phrase: "give someone the cold shoulder", kind: "慣用語", meaning: "冷落某人", literal: "給某人冷肩膀", seq: "the cold shoulder"}
+- {id: "hit_the_hay", phrase: "hit the hay", kind: "慣用語", meaning: "上床睡覺", literal: "打乾草", seq: "hit the hay"}
+- {id: "let_off_steam", phrase: "let off steam", kind: "慣用語", meaning: "發洩情緒", literal: "放出蒸氣", seq: "let off steam"}
+- {id: "miss_the_boat", phrase: "miss the boat", kind: "慣用語", meaning: "錯過機會", literal: "錯過船", seq: "miss the boat"}
+- {id: "on_thin_ice", phrase: "on thin ice", kind: "慣用語", meaning: "處境危險；如履薄冰", literal: "在薄冰上", seq: "on thin ice"}
+- {id: "out_of_the_blue", phrase: "out of the blue", kind: "慣用語", meaning: "突然；出乎意料", literal: "從藍天裡", seq: "out of the blue"}
+- {id: "steal_the_show", phrase: "steal the show", kind: "慣用語", meaning: "搶盡風頭", literal: "偷走表演", seq: "steal the show"}
+- {id: "take_the_bull_by_the_horns", phrase: "take the bull by the horns", kind: "慣用語", meaning: "勇敢面對困難", literal: "抓住公牛的角", seq: "take the bull by the horns"}
+- {id: "tip_of_the_iceberg", phrase: "the tip of the iceberg", kind: "慣用語", meaning: "冰山一角", literal: "冰山的尖端", seq: "the tip of the iceberg"}
+- {id: "through_thick_and_thin", phrase: "through thick and thin", kind: "慣用語", meaning: "同甘共苦；不論順境逆境", literal: "穿過厚的和薄的", seq: "through thick and thin"}
+- {id: "up_in_the_air", phrase: "up in the air", kind: "慣用語", meaning: "（計畫）懸而未決、還沒確定；在空中", literal: "在空中", seq: "up in the air"}
+- {id: "white_lie", phrase: "a white lie", kind: "慣用語", meaning: "善意的謊言", literal: "白色的謊言", seq: "white lie"}
+- {id: "black_sheep", phrase: "the black sheep", kind: "慣用語", meaning: "害群之馬；家裡的異類", literal: "黑羊", seq: "black sheep"}
+- {id: "green_with_envy", phrase: "green with envy", kind: "慣用語", meaning: "非常羨慕、嫉妒", literal: "因為嫉妒而變綠", seq: "green with envy"}
+- {id: "a_green_thumb", phrase: "have a green thumb", kind: "慣用語", meaning: "很會種植物", literal: "綠色的大拇指", seq: "a green thumb"}
+- {id: "a_dime_a_dozen", phrase: "a dime a dozen", kind: "慣用語", meaning: "多得是；很普通", literal: "一角錢一打", seq: "a dime a dozen"}
+- {id: "a_drop_in_the_ocean", phrase: "a drop in the ocean", kind: "慣用語", meaning: "杯水車薪；微不足道", literal: "海洋裡的一滴水", seq: "a drop in the ocean"}
+- {id: "a_drop_in_the_bucket", phrase: "a drop in the bucket", kind: "慣用語", meaning: "杯水車薪；微不足道", literal: "水桶裡的一滴水", seq: "a drop in the bucket"}
+- {id: "back_to_square_one", phrase: "back to square one", kind: "慣用語", meaning: "回到原點；從頭開始", literal: "回到第一格", seq: "back to square one"}
+- {id: "behind_one_s_back", phrase: "behind someone's back", kind: "慣用語", meaning: "背著某人（說壞話、做事）；在某人背後", literal: "在某人的背後", seq: "behind [one's] back"}
+- {id: "by_the_skin_of_one_s_teeth", phrase: "by the skin of one's teeth", kind: "慣用語", meaning: "好不容易才；險些沒", literal: "靠牙齒的皮", seq: "by the skin of [one's] teeth"}
+- {id: "call_the_shots", phrase: "call the shots", kind: "慣用語", meaning: "做主；發號施令", literal: "決定射擊", seq: "call the shots"}
+- {id: "catch_one_s_eye", phrase: "catch someone's eye", kind: "慣用語", meaning: "吸引某人注意", literal: "抓住某人的眼睛", seq: "catch [one's] eye"}
+- {id: "cross_one_s_mind", phrase: "cross one's mind", kind: "慣用語", meaning: "（想法）突然閃過腦海", literal: "越過某人的心", seq: "cross [one's] mind"}
+- {id: "down_to_earth", phrase: "down to earth", kind: "慣用語", meaning: "務實的；平易近人的", literal: "落到地上", seq: "down to earth"}
+- {id: "from_scratch", phrase: "from scratch", kind: "慣用語", meaning: "從零開始；從頭做起", literal: "從起跑線", seq: "from scratch"}
+- {id: "get_on_one_s_nerves", phrase: "get on someone's nerves", kind: "慣用語", meaning: "讓某人心煩", literal: "爬到某人的神經上", seq: "on [one's] nerves"}
+- {id: "go_dutch", phrase: "go Dutch", kind: "慣用語", meaning: "各付各的", literal: "像荷蘭人一樣", seq: "go dutch"}
+- {id: "sweet_tooth", phrase: "have a sweet tooth", kind: "慣用語", meaning: "愛吃甜食", literal: "有一顆甜的牙齒", seq: "a sweet tooth"}
+- {id: "hit_it_off", phrase: "hit it off", kind: "慣用語", meaning: "一見如故；很合得來", literal: "打中它", seq: "hit it off"}
+- {id: "in_the_nick_of_time", phrase: "in the nick of time", kind: "慣用語", meaning: "及時；在最後一刻", literal: "在時間的刻痕上", seq: "in the nick of time"}
+- {id: "know_the_ropes", phrase: "know the ropes", kind: "慣用語", meaning: "懂得竅門；熟悉門路", literal: "認得繩子", seq: "know the ropes"}
+- {id: "off_the_top_of_one_s_head", phrase: "off the top of one's head", kind: "慣用語", meaning: "不假思索地；憑印象", literal: "從頭頂上", seq: "off the top of [one's] head"}
+- {id: "on_the_tip_of_one_s_tongue", phrase: "on the tip of one's tongue", kind: "慣用語", meaning: "話到嘴邊卻想不起來", literal: "在舌尖上", seq: "on the tip of [one's] tongue"}
+- {id: "once_and_for_all", phrase: "once and for all", kind: "慣用語", meaning: "一勞永逸地；徹底", literal: "一次並為了全部", seq: "once and for all"}
+- {id: "pain_in_the_neck", phrase: "a pain in the neck", kind: "慣用語", meaning: "討厭的人或事", literal: "脖子痛", seq: "a pain in the neck"}
+- {id: "play_with_fire", phrase: "play with fire", kind: "慣用語", meaning: "玩火；冒險", literal: "玩火", seq: "play with fire"}
+- {id: "rule_of_thumb", phrase: "rule of thumb", kind: "慣用語", meaning: "經驗法則", literal: "大拇指的規則", seq: "rule of thumb"}
+- {id: "sleep_on_it", phrase: "sleep on it", kind: "慣用語", meaning: "考慮一晚再決定", literal: "睡在上面", seq: "sleep on it"}
+- {id: "speak_of_the_devil", phrase: "speak of the devil", kind: "慣用語", meaning: "說曹操曹操就到", literal: "說到魔鬼", seq: "speak of the devil"}
+- {id: "take_a_rain_check", phrase: "take a rain check", kind: "慣用語", meaning: "改天吧；下次再說", literal: "拿一張雨天憑證", seq: "a rain check"}
+- {id: "icing_on_the_cake", phrase: "the icing on the cake", kind: "慣用語", meaning: "錦上添花", literal: "蛋糕上的糖霜", seq: "the icing on the cake"}
+- {id: "turn_a_blind_eye", phrase: "turn a blind eye (to)", kind: "慣用語", meaning: "假裝沒看見；睜一隻眼閉一隻眼", literal: "轉過一隻瞎眼", seq: "turn a blind eye"}
+- {id: "turn_over_a_new_leaf", phrase: "turn over a new leaf", kind: "慣用語", meaning: "改過自新；重新開始", literal: "翻開新的一頁", seq: "turn over a new leaf"}
+- {id: "twist_one_s_arm", phrase: "twist someone's arm", kind: "慣用語", meaning: "說服、勉強某人", literal: "扭某人的手臂", seq: "twist [one's] arm"}
+- {id: "with_flying_colors", phrase: "with flying colors", kind: "慣用語", meaning: "（考試）高分通過；非常成功", literal: "旗幟飄揚地", seq: "with flying colors"}
+- {id: "word_of_mouth", phrase: "word of mouth", kind: "慣用語", meaning: "口耳相傳", literal: "嘴巴的話", seq: "word of mouth"}
+- {id: "the_last_minute", phrase: "at the last minute", kind: "慣用語", meaning: "在最後一刻", literal: "在最後一分鐘", seq: "at the last minute"}
+- {id: "better_half", phrase: "one's better half", kind: "慣用語", meaning: "另一半（配偶）", literal: "較好的那一半", seq: "better half"}
+- {id: "hands_are_tied", phrase: "one's hands are tied", kind: "慣用語", meaning: "無能為力；身不由己", literal: "手被綁住", seq: "hands are tied"}
+- {id: "piece_of_mind", phrase: "give someone a piece of one's mind", kind: "慣用語", meaning: "把某人罵一頓", literal: "給某人一片心", seq: "a piece of [one's] mind"}
+- {id: "apple_of_discord", phrase: "the apple of discord", kind: "慣用語", meaning: "爭端的根源", literal: "不和的蘋果", seq: "the apple of discord"}
+- {id: "cat_got_your_tongue", phrase: "cat got your tongue", kind: "慣用語", meaning: "怎麼不說話了", literal: "貓咬住你的舌頭了", seq: "cat got your tongue"}
+
+# ---------- 諺語（有完整意思的一句話，常有對應的中文成語） ----------
+- {id: "actions_speak_louder", phrase: "Actions speak louder than words.", kind: "諺語", meaning: "行動勝於言語。", seq: "actions speak louder than words"}
+- {id: "friend_in_need", phrase: "A friend in need is a friend indeed.", kind: "諺語", meaning: "患難見真情。", seq: "a friend in need is a friend indeed"}
+- {id: "all_roads_lead_to_rome", phrase: "All roads lead to Rome.", kind: "諺語", meaning: "條條大路通羅馬（達成目標的方法很多）。", seq: "all roads lead to rome"}
+- {id: "rome_not_built_in_a_day", phrase: "Rome wasn't built in a day.", kind: "諺語", meaning: "羅馬不是一天造成的（大事要慢慢來）。", seq: "rome be not built in a day"}
+- {id: "when_in_rome", phrase: "When in Rome, do as the Romans do.", kind: "諺語", meaning: "入境隨俗。", seq: "when in rome"}
+- {id: "where_there_is_a_will", phrase: "Where there's a will, there's a way.", kind: "諺語", meaning: "有志者事竟成。", seq: "where there be a will"}
+- {id: "no_pain_no_gain", phrase: "No pain, no gain.", kind: "諺語", meaning: "不勞則無獲；要有收穫就得付出。", seq: "no pain , no gain"}
+- {id: "early_bird_catches", phrase: "The early bird catches the worm.", kind: "諺語", meaning: "早起的鳥兒有蟲吃（先下手的人占優勢）。", seq: "early bird catch the worm"}
+- {id: "early_bird_gets", phrase: "The early bird gets the worm.", kind: "諺語", meaning: "早起的鳥兒有蟲吃（先下手的人占優勢）。", seq: "early bird get the worm"}
+- {id: "honesty_best_policy", phrase: "Honesty is the best policy.", kind: "諺語", meaning: "誠實為上策。", seq: "honesty be the best policy"}
+- {id: "knowledge_is_power", phrase: "Knowledge is power.", kind: "諺語", meaning: "知識就是力量。", seq: "knowledge be power"}
+- {id: "time_is_money", phrase: "Time is money.", kind: "諺語", meaning: "時間就是金錢。", seq: "time be money"}
+- {id: "time_and_tide", phrase: "Time and tide wait for no man.", kind: "諺語", meaning: "歲月不待人。", seq: "time and tide wait for no"}
+- {id: "like_father_like_son", phrase: "Like father, like son.", kind: "諺語", meaning: "有其父必有其子。", seq: "like father , like son"}
+- {id: "birds_of_a_feather", phrase: "Birds of a feather flock together.", kind: "諺語", meaning: "物以類聚。", seq: "birds of a feather"}
+- {id: "dont_judge_a_book", phrase: "Don't judge a book by its cover.", kind: "諺語", meaning: "不要以貌取人（不能只看外表）。", seq: "judge a book by its cover"}
+- {id: "eggs_in_one_basket", phrase: "Don't put all your eggs in one basket.", kind: "諺語", meaning: "不要孤注一擲（要分散風險）。", seq: "all [one's] eggs in one basket"}
+- {id: "count_chickens", phrase: "Don't count your chickens before they hatch.", kind: "諺語", meaning: "別打如意算盤；事情還沒成功先別高興。", seq: "count [one's] chickens before they hatch"}
+- {id: "silver_lining", phrase: "Every cloud has a silver lining.", kind: "諺語", meaning: "黑暗中總有一線希望。", seq: "every cloud have a silver lining"}
+- {id: "easy_come_easy_go", phrase: "Easy come, easy go.", kind: "諺語", meaning: "來得容易，去得也快。", seq: "easy come , easy go"}
+- {id: "two_heads", phrase: "Two heads are better than one.", kind: "諺語", meaning: "三個臭皮匠，勝過一個諸葛亮。", seq: "two heads be better than one"}
+- {id: "seeing_is_believing", phrase: "Seeing is believing.", kind: "諺語", meaning: "眼見為憑。", seq: "seeing be believing"}
+- {id: "look_before_you_leap", phrase: "Look before you leap.", kind: "諺語", meaning: "三思而後行。", seq: "look before you leap"}
+- {id: "haste_makes_waste", phrase: "Haste makes waste.", kind: "諺語", meaning: "欲速則不達。", seq: "haste make waste"}
+- {id: "great_minds", phrase: "Great minds think alike.", kind: "諺語", meaning: "英雄所見略同。", seq: "great minds think alike"}
+- {id: "never_rains_but_pours", phrase: "It never rains but it pours.", kind: "諺語", meaning: "禍不單行。", seq: "never rain but it pour"}
+- {id: "laughter_best_medicine", phrase: "Laughter is the best medicine.", kind: "諺語", meaning: "笑是最好的良藥。", seq: "laughter be the best medicine"}
+- {id: "apple_a_day", phrase: "An apple a day keeps the doctor away.", kind: "諺語", meaning: "一天一蘋果，醫生遠離我。", seq: "an apple a day"}
+- {id: "picture_thousand_words", phrase: "A picture is worth a thousand words.", kind: "諺語", meaning: "一圖勝千言。", seq: "a picture be worth a thousand words"}
+- {id: "beauty_eye_beholder", phrase: "Beauty is in the eye of the beholder.", kind: "諺語", meaning: "情人眼裡出西施（美是主觀的）。", seq: "beauty be in the eye of the beholder"}
+- {id: "better_safe_than_sorry", phrase: "Better safe than sorry.", kind: "諺語", meaning: "小心駛得萬年船；寧可小心一點。", seq: "better safe than sorry"}
+- {id: "curiosity_killed_the_cat", phrase: "Curiosity killed the cat.", kind: "諺語", meaning: "好奇心會惹禍。", seq: "curiosity kill the cat"}
+- {id: "cry_over_spilt_milk", phrase: "Don't cry over spilt milk.", kind: "諺語", meaning: "覆水難收；後悔也沒用。", seq: "cry over spilt milk"}
+- {id: "cry_over_spilled_milk", phrase: "Don't cry over spilt milk.", kind: "諺語", meaning: "覆水難收；後悔也沒用。", seq: "cry over spill milk"}
+- {id: "out_of_sight", phrase: "Out of sight, out of mind.", kind: "諺語", meaning: "眼不見，心不念（久不見面就淡忘）。", seq: "out of sight , out of mind"}
+- {id: "absence_makes_heart", phrase: "Absence makes the heart grow fonder.", kind: "諺語", meaning: "小別勝新婚；分開後更加思念。", seq: "absence make the heart grow fonder"}
+- {id: "all_that_glitters", phrase: "All that glitters is not gold.", kind: "諺語", meaning: "發亮的不一定都是金子（不要只看外表）。", seq: "all that glitter be not gold"}
+- {id: "journey_of_a_thousand_miles", phrase: "A journey of a thousand miles begins with a single step.", kind: "諺語", meaning: "千里之行，始於足下。", seq: "a journey of a thousand miles"}
+- {id: "grass_is_greener", phrase: "The grass is always greener on the other side.", kind: "諺語", meaning: "這山望著那山高（別人的總是比較好）。", seq: "grass be always greener"}
+- {id: "no_place_like_home", phrase: "There's no place like home.", kind: "諺語", meaning: "金窩銀窩，不如自己的狗窩。", seq: "there be no place like home"}
+- {id: "no_news_good_news", phrase: "No news is good news.", kind: "諺語", meaning: "沒有消息就是好消息。", seq: "no news be good news"}
+- {id: "many_hands", phrase: "Many hands make light work.", kind: "諺語", meaning: "人多好辦事。", seq: "many hands make light work"}
+- {id: "too_many_cooks", phrase: "Too many cooks spoil the broth.", kind: "諺語", meaning: "人多手雜，反而壞事。", seq: "too many cooks spoil the broth"}
+- {id: "strike_while_iron_hot", phrase: "Strike while the iron is hot.", kind: "諺語", meaning: "打鐵趁熱；把握時機。", seq: "strike while the iron be hot"}
+- {id: "no_smoke_without_fire", phrase: "Where there's smoke, there's fire.", kind: "諺語", meaning: "無風不起浪。", seq: "where there be smoke"}
+- {id: "two_wrongs", phrase: "Two wrongs don't make a right.", kind: "諺語", meaning: "以錯制錯不會變成對的。", seq: "two wrongs do not make a right"}
+- {id: "have_your_cake", phrase: "You can't have your cake and eat it too.", kind: "諺語", meaning: "魚與熊掌不可兼得。", seq: "have [one's] cake and eat it"}
+- {id: "bite_the_hand", phrase: "Don't bite the hand that feeds you.", kind: "諺語", meaning: "不要恩將仇報。", seq: "bite the hand that feed"}
+- {id: "god_helps_those", phrase: "God helps those who help themselves.", kind: "諺語", meaning: "天助自助者。", seq: "god help those who help themselves"}
+- {id: "bird_in_the_hand", phrase: "A bird in the hand is worth two in the bush.", kind: "諺語", meaning: "一鳥在手勝過二鳥在林（把握已有的）。", seq: "a bird in the hand"}
+- {id: "blood_thicker_than_water", phrase: "Blood is thicker than water.", kind: "諺語", meaning: "血濃於水。", seq: "blood be thicker than water"}
+- {id: "every_dog_has_its_day", phrase: "Every dog has its day.", kind: "諺語", meaning: "人人都有得意的時候。", seq: "every dog have its day"}
+- {id: "failure_mother_of_success", phrase: "Failure is the mother of success.", kind: "諺語", meaning: "失敗為成功之母。", seq: "failure be the mother of success"}
+- {id: "health_is_wealth", phrase: "Health is wealth.", kind: "諺語", meaning: "健康就是財富。", seq: "health be wealth"}
+- {id: "live_and_learn", phrase: "Live and learn.", kind: "諺語", meaning: "活到老，學到老（從經驗中學習）。", seq: "live and learn"}
+- {id: "money_talks", phrase: "Money talks.", kind: "諺語", meaning: "有錢能使鬼推磨。", seq: "money talk"}
+- {id: "necessity_mother_of_invention", phrase: "Necessity is the mother of invention.", kind: "諺語", meaning: "需要為發明之母。", seq: "necessity be the mother of invention"}
+- {id: "slow_and_steady", phrase: "Slow and steady wins the race.", kind: "諺語", meaning: "穩紮穩打才會贏。", seq: "slow and steady win the race"}
+- {id: "pen_mightier", phrase: "The pen is mightier than the sword.", kind: "諺語", meaning: "文字的力量勝過武力。", seq: "pen be mightier than the sword"}
+- {id: "no_free_lunch", phrase: "There's no such thing as a free lunch.", kind: "諺語", meaning: "天下沒有白吃的午餐。", seq: "no such thing as a free lunch"}
+- {id: "no_time_like_present", phrase: "There's no time like the present.", kind: "諺語", meaning: "要做就趁現在。", seq: "no time like the present"}
+- {id: "walls_have_ears", phrase: "Walls have ears.", kind: "諺語", meaning: "隔牆有耳。", seq: "walls have ears"}
+- {id: "what_goes_around", phrase: "What goes around comes around.", kind: "諺語", meaning: "善有善報，惡有惡報；自作自受。", seq: "what go around come around"}
+- {id: "never_too_old_to_learn", phrase: "You're never too old to learn.", kind: "諺語", meaning: "活到老，學到老。", seq: "never too old to learn"}
+- {id: "never_too_late_to_learn", phrase: "It's never too late to learn.", kind: "諺語", meaning: "學習永遠不嫌晚。", seq: "never too late to learn"}
+- {id: "love_me_love_my_dog", phrase: "Love me, love my dog.", kind: "諺語", meaning: "愛屋及烏。", seq: "love me , love my dog"}
+- {id: "misfortunes_never_come_singly", phrase: "Misfortunes never come singly.", kind: "諺語", meaning: "禍不單行。", seq: "misfortunes never come singly"}
+- {id: "well_begun_half_done", phrase: "Well begun is half done.", kind: "諺語", meaning: "好的開始是成功的一半。", seq: "well begun be half done"}
+- {id: "leopard_spots", phrase: "A leopard can't change its spots.", kind: "諺語", meaning: "江山易改，本性難移。", seq: "change its spots"}
+- {id: "hope_for_the_best", phrase: "Hope for the best, prepare for the worst.", kind: "諺語", meaning: "抱最好的希望，做最壞的打算。", seq: "hope for the best"}
+- {id: "practice_what_you_preach", phrase: "Practice what you preach.", kind: "諺語", meaning: "以身作則；說到做到。", seq: "practice what you preach"}
+- {id: "you_are_what_you_eat", phrase: "You are what you eat.", kind: "諺語", meaning: "吃什麼就像什麼（飲食影響健康）。", seq: "you be what you eat"}
+- {id: "teach_old_dog", phrase: "You can't teach an old dog new tricks.", kind: "諺語", meaning: "老狗學不會新把戲（年紀大了很難改變）。", seq: "teach an old dog new tricks"}
+- {id: "the_more_the_merrier", phrase: "The more, the merrier.", kind: "諺語", meaning: "人越多越熱鬧；多多益善。", seq: "the more , the merrier"}
+- {id: "the_sooner_the_better", phrase: "The sooner, the better.", kind: "諺語", meaning: "越快越好。", seq: "the sooner , the better"}
+- {id: "first_come_first_served", phrase: "First come, first served.", kind: "諺語", meaning: "先到先得。", seq: "first come , first serve"}
+- {id: "no_use_crying", phrase: "It's no use crying over spilt milk.", kind: "諺語", meaning: "覆水難收；後悔也沒用。", seq: "no use crying over"}
+- {id: "lead_a_horse_to_water", phrase: "You can lead a horse to water, but you can't make it drink.", kind: "諺語", meaning: "你可以給人機會，但不能強迫他接受。", seq: "lead a horse to water"}
+- {id: "when_the_going_gets_tough", phrase: "When the going gets tough, the tough get going.", kind: "諺語", meaning: "越困難時，強者越會挺身而出。", seq: "when the going get tough"}
+- {id: "if_it_aint_broke", phrase: "If it ain't broke, don't fix it.", kind: "諺語", meaning: "東西沒壞就不要亂修（別多此一舉）。", seq: "if it ai n't broke"}

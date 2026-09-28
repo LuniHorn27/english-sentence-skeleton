@@ -13,7 +13,7 @@ import yaml
 from .schema import PhraseHit
 
 PHRASE_FILE = Path(__file__).with_name("phrases.yaml")
-KINDS = {"動詞片語", "形容詞片語", "介系詞片語", "副詞片語", "慣用語"}
+KINDS = {"動詞片語", "形容詞片語", "介系詞片語", "副詞片語", "慣用語", "諺語"}
 POSSESSIVES = {"my", "your", "his", "her", "its", "our", "their"}
 MAX_GAP = 6
 FALLBACK_DEPS = {"prt", "prep", "advmod", "dative", "agent"}
@@ -59,9 +59,12 @@ def _close_enough(prev, tok) -> bool:
 
 def _match_head(sent, entry):
     head_word, parts = entry["head"], entry["parts"]
+    verb_phrase = entry.get("kind") == "動詞片語"
     for tok in sent:
         if not _word_ok(tok, head_word):
             continue
+        if verb_phrase and tok.pos_ not in ("VERB", "AUX"):
+            continue  # put his hand over… 的 hand 是名詞，不是 hand over（交出）
         found = [tok]
         for part in parts:
             anchors = {t.i for t in found}
@@ -199,10 +202,12 @@ def _runs(toks):
 
 
 def translation_hints(phrase_ids: list[str]) -> str:
-    """給翻譯模型的提示：只給慣用語（模型最容易照字面翻錯的）"""
+    """給翻譯模型的提示：只給慣用語和諺語（模型最容易照字面翻錯的）"""
     lines = []
     for pid in phrase_ids[:10]:
         p = by_id(pid)
         if p and p["kind"] == "慣用語":
             lines.append(f"「{p['phrase']}」是慣用語，意思是「{p['meaning']}」，不是字面上的「{p['literal']}」。")
+        elif p and p["kind"] == "諺語":
+            lines.append(f"「{p['phrase']}」是諺語，意思是「{p['meaning']}」。")
     return "".join(lines)

@@ -1243,7 +1243,8 @@ def analyze_sentence(text: str) -> SentenceResult:
         info = infos.get(cl.index)
         if info is not None and info.verb_token is not None and not info.elliptic:
             cl.verb = info.verb_token.lemma_.lower()
-            cl.doubt = verb_check(cl.verb, cl.pattern)
+            # 片語動詞（depend on、belong to）整組當 Vt，動詞本身在字典裡是 Vi 很正常，不提醒
+            cl.doubt = None if "phrasal_verb" in info.flags else verb_check(cl.verb, cl.pattern)
     phrases = find_phrases(sent)
     if any(p.kind == "慣用語" and " of " in f" {p.words} " for p in phrases):
         flags = flags - {"unit_of", "quantifier_of"}  # a piece of cake 是慣用語，不是「一塊」蛋糕
