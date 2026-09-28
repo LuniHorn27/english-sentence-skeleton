@@ -1,0 +1,122 @@
+# 分析體檢句（依文法主題分類；Claude 自己寫的，不是題庫、不拿來調規則以外的用途）
+## 疑問句
+Where did you buy this bag?
+What are you doing now?
+Who broke the window?
+How many books did she read last month?
+Is your brother a doctor?
+Can you help me with my homework?
+Why is the sky blue?
+## 否定與助動詞
+I don't like spicy food.
+She has never been to Japan.
+You should not eat too much candy.
+He didn't go to school yesterday.
+## 時態與進行、完成
+They have lived here for ten years.
+The baby was crying when I got home.
+I will call you tomorrow.
+We are going to visit our grandparents this weekend.
+## 被動
+The window was broken by the boy.
+English is spoken in many countries.
+The cake has been eaten.
+He was given a prize.
+The room is cleaned every day.
+## 感官、使役
+I heard someone calling my name.
+She watched the children play in the park.
+My father had his car washed.
+The teacher let us leave early.
+I saw him cross the street.
+## 動詞＋to V／V-ing
+She stopped talking.
+He stopped to talk to me.
+I remember locking the door.
+Don't forget to bring your umbrella.
+They decided to stay at home.
+I enjoy reading novels.
+## 動詞＋受詞＋to V
+My mother asked me to clean my room.
+I want you to be happy.
+The doctor advised him to rest.
+## 連綴動詞
+The milk tastes sour.
+She seems tired today.
+He got angry.
+The leaves turned yellow.
+It is getting dark.
+The story sounds interesting.
+She became a famous singer.
+## 句型四（受詞補語）
+They made him captain of the team.
+I found the movie boring.
+Please keep the room clean.
+We call him Big Brother.
+The news made everyone happy.
+## 句型五（雙受詞）
+She told me a secret.
+Could you pass me the salt?
+My uncle bought me a watch.
+He showed the visitors the new library.
+## 虛主詞、It 句型
+It is important to learn English.
+It takes three hours to get there.
+It is said that he is rich.
+It was John who broke the window.
+## There is
+There are many students in the classroom.
+There was a big storm last night.
+## 名詞子句
+What he said is true.
+I don't know whether he will come.
+The problem is that we have no money.
+I wonder where she lives.
+## 關係子句
+The man who lives next door is a teacher.
+This is the book that I bought yesterday.
+I have a friend whose father is a pilot.
+The house where I was born is very old.
+The girl sitting next to me is my cousin.
+The letter written by my grandfather is very old.
+## 副詞子句
+If it rains tomorrow, we will stay at home.
+Although he is rich, he is not happy.
+When I was young, I lived in Tainan.
+She studied hard so that she could pass the exam.
+I will wait here until you come back.
+## 比較
+She is taller than her sister.
+This book is more interesting than that one.
+He runs as fast as his brother.
+The more you practice, the better you will become.
+## too／enough／so that
+He is too young to drive.
+She is old enough to vote.
+It was so hot that we stayed inside.
+## 倒裝、強調
+Never have I seen such a beautiful place.
+Here comes the bus.
+I do love you.
+## 祈使、感嘆
+Be quiet!
+Let's go to the park.
+What a beautiful day it is!
+How fast he runs!
+## 片語動詞與介系詞動詞
+She looks after her little brother.
+He turned off the light.
+I am looking forward to the trip.
+We ran out of milk.
+The plane took off on time.
+## 平行、對等
+I like apples, but my sister likes bananas.
+He opened the door and walked in.
+You can take the bus or ride a bike.
+## 分詞構句
+Hearing the news, she started to cry.
+Tired after work, he went to bed early.
+## 長句
+The students who had finished their projects early were allowed to go home before the bell rang.
+Although it was raining heavily, the players continued the game because they did not want to disappoint their fans.
+Many people believe that learning a second language can help children develop better thinking skills.
