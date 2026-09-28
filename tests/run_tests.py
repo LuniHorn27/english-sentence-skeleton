@@ -60,6 +60,14 @@ def evaluate(items):
             else:
                 pred[norm_span(s, c.start, c.end)] = c
         errs = []
+        if item.get("expect") == "partial":
+            ok = res.status == "partial"
+            stats["部分分析"][0] += ok
+            stats["部分分析"][1] += 1
+            if not ok:
+                lines.append(f"\n**#{item['id']}** {s}")
+                lines.append(f"- 應該標成部分分析，程式是 {res.status}")
+            continue
 
         # 句型
         ppat = res.clauses[0].pattern if res.clauses else None
@@ -138,7 +146,7 @@ def main():
     pct = lambda a, b: f"{a}/{b}（{100 * a / b:.0f}%）" if b else "—"
     out = [f"# 測試報告：{ {'exam': '考試題', 'probe': '體檢題'}.get(name, '練習題') }（{len(items)} 句，{secs:.1f} 秒）", "",
            "| 項目 | 正確率 |", "|---|---|"]
-    for k in ["主幹角色", "句型", "修飾語功能", "片段範圍", "核心字"]:
+    for k in ["主幹角色", "句型", "修飾語功能", "片段範圍", "核心字", "部分分析"]:
         out.append(f"| {k} | {pct(*stats[k])} |")
     roles = ["S", "Vt", "Vi", "V", "aux", "O", "IO", "DO", "SC", "OC"]
     out += ["", "| " + " | ".join(roles) + " |", "|" + "---|" * len(roles),

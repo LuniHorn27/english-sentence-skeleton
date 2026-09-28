@@ -2073,3 +2073,44 @@
     text: show
   - role: O
     text: that they can improve problem-solving skills
+- id: '146'
+  sentence: It was John who broke the window.
+  expect: partial
+- id: '147'
+  sentence: It was in the park that I met her.
+  expect: partial
+- id: '148'
+  sentence: It is you that I love.
+  expect: partial
+- id: '149'
+  sentence: It was not until midnight that he came home.
+  expect: partial
+- id: '150'
+  sentence: It is because he is honest that we trust him.
+  expect: partial
+- id: '151'
+  sentence: It is true that he left.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: 'true'
+  - role: RS
+    text: that he left
+- id: '152'
+  sentence: It is a pity that you can't come.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: a pity
+  - role: RS
+    text: that you can't come

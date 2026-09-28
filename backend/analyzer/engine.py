@@ -531,7 +531,13 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
 
     # 虛主詞 It：It is hard to learn English → to learn English 是真主詞
     subj = subjects[0] if subjects else None
-    if subj is not None and subj.lower_ == "it":
+    cleft = cleft_clause(v, subj, children)
+    if cleft is not None:
+        # 強調句 It was John who broke the window：後面的子句不是真主詞（拿掉 It was…who 還是完整句子）
+        # 怎麼標還沒決定（待審核清單第 72、80 項），先整句標部分分析，不給可能錯的答案
+        roots[cleft.i] = Spec("unknown", clause=index)
+        info.flags.add("cleft")
+    elif subj is not None and subj.lower_ == "it":
         for r in [v] + [c for c in children if c.i in roots and roots[c.i].role == "SC"]:
             for g in r.children:
                 if g.dep_ in ("xcomp", "ccomp") and (g.i not in roots or roots[g.i].role in ("O", "unknown")
@@ -551,6 +557,31 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
 
     info.pattern = clause_pattern(roots, index, info)
     return info
+
+
+def cleft_clause(v, subj, children):
+    """強調句 It is／was ＋ 被強調的部分 ＋ that／who ＋ 其餘 → 回傳 that／who 子句的動詞；不是就回傳 None。
+    只認有把握的：被強調的是人名、代名詞、介系詞片語、副詞、副詞子句；普通名詞後面接 who／which
+    或當關係代名詞的 that 也算（兩種讀法都不是真主詞）。形容詞（It is true that…）是虛主詞句。"""
+    if subj is None or subj.lower_ != "it" or v.lemma_ != "be":
+        return None
+    for c in children:
+        if c.dep_ not in ("ccomp", "relcl", "advcl") or c.i < v.i or c.pos_ not in ("VERB", "AUX"):
+            continue
+        opener = min(c.subtree, key=lambda t: t.i)
+        if opener.lower_ not in ("that", "who", "whom", "which"):
+            continue
+        focus = [x for x in children if v.i < x.i < opener.i and x.dep_ not in ("neg", "punct")
+                 and not (x.dep_ == "advmod" and x.lower_ in ("only", "just", "really", "also"))]
+        if not focus or any(x.dep_ == "acomp" or x.pos_ == "ADJ" for x in focus):
+            continue
+        f = focus[0]
+        relative = opener.lower_ != "that" or opener.dep_ != "mark"
+        if f.pos_ in ("PROPN", "PRON") or f.dep_ in ("prep", "advmod", "npadvmod", "advcl"):
+            return c
+        if f.dep_ == "attr" and f.pos_ == "NOUN" and relative:
+            return c
+    return None
 
 
 def adverb_function_prep_like(tok):
@@ -1138,6 +1169,8 @@ def analyze_sentence(text: str) -> SentenceResult:
             Clause(index=i, pattern=info.pattern, passive=info.passive, formula=formula(info, chunks), elliptic=info.elliptic)
             for i, info in infos.items()
         ]
+    if "cleft" in flags:
+        clauses = []  # 強調句要不要套五大句型還沒決定，先不顯示句型
     for cl in clauses:
         info = infos.get(cl.index)
         if info is not None and info.verb_token is not None and not info.elliptic:

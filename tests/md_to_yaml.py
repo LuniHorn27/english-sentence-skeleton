@@ -50,6 +50,10 @@ def convert(md_text):
         if not row:
             continue
         num, sentence, chunks_md, note = row.groups()
+        if chunks_md.strip() == "部分分析":
+            # 還沒決定怎麼標的句型：只檢查程式有沒有標成部分分析（不給可能錯的答案）
+            items.append({"id": num, "sentence": sentence.strip(), "expect": "partial"})
+            continue
         explicit = re.search(r"句型([一二三四五])", note)
         pattern = CN_NUM[explicit.group(1)] if explicit else section_pattern
         items.append(
