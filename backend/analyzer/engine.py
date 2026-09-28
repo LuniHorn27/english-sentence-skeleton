@@ -546,7 +546,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             for g in r.children:
                 if g.dep_ in ("xcomp", "ccomp") and (g.i not in roots or roots[g.i].role in ("O", "unknown")
                                                      or (roots[g.i].role == "OC" and v.lemma_ in ("take", "cost"))):
-                    if any(x.lower_ == "to" or x.dep_ in ("mark", "nsubj", "nsubjpass") for x in g.children):
+                    gerund = g.tag_ == "VBG" and g.dep_ == "xcomp" and v.lemma_ == "be"  # It is no use crying…
+                    if gerund or any(x.lower_ == "to" or x.dep_ in ("mark", "nsubj", "nsubjpass") for x in g.children):
                         roots[g.i] = Spec("RS", clause=index)
                         info.flags.add("dummy_it")
                         info.flags.discard("to_v_or_ving_object")
@@ -1139,8 +1140,10 @@ def analyze_sentence(text: str) -> SentenceResult:
     #   （平行結構的兩組 Vt ＋ O 除外）
     if status == "ok" and "parallel_structure" not in flags:
         from collections import Counter
-        counts = Counter((c["_spec"].clause, c["role"]) for c in raw if c["role"] in ("S", "O", "IO", "DO", "SC", "OC"))
-        if any(n > 1 for n in counts.values()):
+        counts = Counter((c["_spec"].clause, c["role"]) for c in raw if c["role"] in ("S", "O", "IO", "DO", "SC", "OC", "V"))
+        # 連綴動詞 V 後面不會有受詞（It is no use crying… 的 crying 如果被標成 O，一定是看錯了）
+        linking_obj = any(counts[(k, "V")] and counts[(k, "O")] for k, _ in list(counts))
+        if linking_obj or any(n > 1 for (k, r), n in counts.items() if r != "V"):
             status, message = "partial", "這句的結構比較複雜，分析結果可能有錯，僅供參考。"
 
     # 修飾語位置：形容詞修飾語放在名詞後面

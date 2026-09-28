@@ -2319,3 +2319,29 @@
     text: it
   - role: V
     text: became
+- id: '166'
+  sentence: It is no use crying over spilt milk.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: no use
+  - role: RS
+    text: crying over spilt milk
+- id: '167'
+  sentence: It is fun playing with you.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: fun
+  - role: RS
+    text: playing with you
