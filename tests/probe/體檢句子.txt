@@ -157,3 +157,28 @@ We should protect the environment.
 She has been waiting for you for an hour.
 The book is worth reading.
 I have difficulty remembering names.
+## 第三批：假設、間接問句、特殊動詞
+If I were you, I would take the job.
+I wish I could fly.
+He said that he was busy.
+She asked me where I lived.
+It seems that he is right.
+There seems to be a problem.
+So do I.
+Neither can she.
+You are supposed to finish it today.
+She was able to swim across the river.
+You need to be careful.
+I have been told the news.
+She got her hair cut yesterday.
+He could make himself understood in English.
+I am interested in learning Japanese.
+We look forward to hearing from you.
+The movie was so boring that I fell asleep.
+Hardly had he arrived when it started to rain.
+## 第三批：閱讀文章風格的長句
+Scientists have found that people who sleep less than six hours a night are more likely to catch a cold.
+When the students finished the test, the teacher collected the papers and gave them some candy.
+The city, which is famous for its night markets, attracts millions of tourists every year.
+Instead of taking the bus, she decided to walk to school because the weather was nice.
+Although many people think that video games are harmful, some studies show that they can improve problem-solving skills.

@@ -84,6 +84,12 @@ def adverb_function(tok) -> str:
         return "副詞・表比較"  # prefer tea to coffee
     if dep == "prep" and lemma == "for" and head in ("thank", "apologize", "blame", "praise", "punish", "forgive"):
         return "副詞・表原因"  # Thank you for your help.
+    if dep == "prep" and lemma == "of" and any(c.lower_ == "instead" for c in tok.children):
+        return "副詞・表方式"  # Instead of taking the bus（代替）
+    if dep == "prep" and lemma == "because":
+        return "副詞・表原因"  # because of the rain
+    if dep == "prep" and any(c.dep_ == "pobj" and c.lemma_.lower() == "spite" for c in tok.children):
+        return "副詞・表讓步"  # in spite of the rain
     if dep == "prep" and lemma == "of":
         return "副詞・表對象"  # reminded me of my mother、think of you
     if dep == "prep" and lemma == "with":
@@ -128,6 +134,8 @@ def adverb_function(tok) -> str:
             return "副詞・表時間"
         return "副詞・表方式"
     # advmod、intj 等
+    if lemma in ("hardly", "scarcely", "barely"):
+        return "副詞・表否定"  # Hardly had he arrived…（幾乎不）
     if tok.tag_ == "WRB" or lemma in ("where", "when", "why"):  # 疑問詞 Where did you…?、Why is…?
         return {"where": "副詞・表地點", "when": "副詞・表時間", "why": "副詞・表原因"}.get(lemma, "副詞・表方式")
     if lemma in L.TONE_ADVERBS or lemma == "please":
@@ -239,8 +247,9 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         info.passive = False  # It's become popular.、It's been a long time：'s 是 has，不是被動
     info.existential = "expl" in deps and v.lemma_ == "be"
 
-    # 省略句：I can't.、Yes, I will.、I did.（只有助動詞，後面的動詞省略了）
-    if (v.tag_ == "MD" or (v.lemma_ == "do" and v.pos_ == "AUX")) and not any(
+    # 省略句：I can't.、Yes, I will.、I did.（只有助動詞，後面的動詞省略了）；So do I.、Neither can she.
+    agree = sent[0].lower_ in ("so", "neither", "nor") and (v.lemma_ in ("do", "be", "have") or v.tag_ == "MD")
+    if (v.tag_ == "MD" or (v.lemma_ == "do" and v.pos_ == "AUX") or agree) and not any(
             c.dep_ in ("xcomp", "ccomp", "acomp", "attr", "dobj", "oprd", "dative", "advcl", "prep") for c in children):
         info.elliptic = True
         info.pattern = 1
@@ -248,8 +257,12 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         for c in children:
             if c.dep_ in ("nsubj", "nsubjpass"):
                 roots[c.i] = Spec("S", clause=index)
+            elif c.dep_ == "neg" and c.lower_ in ("neither", "nor"):
+                roots[c.i] = Spec("M", function="副詞・表否定", clause=index)  # Neither can she.（她也不行）
             elif c.dep_ == "neg":
                 roots[c.i] = Spec("aux", clause=index, kind="neg")
+            elif c.dep_ == "advmod" and c.lower_ == "so" and c.i == sent.start:
+                roots[c.i] = Spec("M", function="副詞・表語氣", clause=index)  # So do I.（我也是）
             elif c.dep_ in ("advmod", "npadvmod", "intj"):
                 roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
         return info
@@ -275,7 +288,30 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         g.dep_ == "aux" and g.lower_ == "to" and g.i == v.i + 1 for g in c.children)), None)
     going_to = v.lower_ == "going" and any(c.dep_ == "aux" and c.lemma_ == "be" for c in children)
     used_to = v.lower_ in ("used", "use") and v.lemma_ == "use"  # I used to play…（過去的習慣）
-    if (v.lemma_ == "have" or going_to or used_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
+    supposed_to = v.lower_ == "supposed" and any(c.dep_ in ("aux", "auxpass") and c.lemma_ == "be" for c in children)  # 應該
+    # be able to ＋ 原形動詞（能夠）：able 掛在 be 底下，後面的動詞掛在 able 底下
+    able = next((c for c in children if c.dep_ == "acomp" and c.lower_ == "able"), None) if v.lemma_ == "be" else None
+    able_to = next((g for g in able.children if g.dep_ == "xcomp" and g.pos_ in ("VERB", "AUX") and any(
+        x.dep_ == "aux" and x.lower_ == "to" and x.i == able.i + 1 for x in g.children)), None) if able is not None else None
+    if able_to is not None:
+        roots[v.i] = Spec("aux", clause=index)
+        roots[able.i] = Spec("aux", clause=index)
+        inner = assign_clause(able_to, roots, index, sent, shared_subject=True)
+        for c in children:
+            if c is able or c.dep_ == "punct":
+                continue
+            if c.dep_ in ("nsubj", "nsubjpass", "csubj"):
+                roots[c.i] = Spec("S", clause=index)
+            elif c.dep_ in ("aux", "auxpass") or (c.dep_ == "neg" and c.lower_ in ("not", "n't")):
+                roots[c.i] = Spec("aux", clause=index, kind="neg" if c.dep_ == "neg" else "")
+            elif c.dep_ in ("advmod", "npadvmod", "prep", "neg"):
+                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+        for t in able_to.children:
+            if t.dep_ == "aux" and t.lower_ == "to":
+                roots[t.i] = Spec("aux", clause=index)
+        inner.pattern = clause_pattern(roots, index, inner)
+        return inner
+    if (v.lemma_ == "have" or going_to or used_to or supposed_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
         roots[v.i] = Spec("aux", clause=index)
         inner = assign_clause(have_to, roots, index, sent, shared_subject=True)
         for c in children:
@@ -601,6 +637,9 @@ def expand_noun_modifiers(roots, tokens, owner_of):
             spec = roots[own.i]
             if spec.role not in NOMINAL | {"M"}:
                 continue
+            if spec.role in NOMINAL and own.pos_ in ("VERB", "AUX") and own.i != tok.i \
+                    and any(c.dep_ in ("nsubj", "nsubjpass", "mark") for c in own.children):
+                continue  # that people who sleep … are：子句裡的修飾語留在子句裡，不要把子句切成兩半
             if spec.role == "M" and spec.function and not spec.function.startswith(("副詞・表", "形容詞")):
                 continue
             for g in tok.children:
@@ -694,6 +733,9 @@ def span_of(toks, text, base):
         return None
     start = toks[0].idx - base
     end = toks[-1].idx + len(toks[-1].text) - base
+    last = toks[-1]
+    if len(last.text) > 1 and last.text.endswith(".") and last.text[:-1].isalpha() and last.i == last.sent.end - 1:
+        end -= 1  # So do I.：分析程式把「I.」當成一個字
     return start, end
 
 
@@ -1047,8 +1089,9 @@ def analyze_sentence(text: str) -> SentenceResult:
         prev_text = joined[-1]["text"].lower() if joined else ""
         if joined and joined[-1]["role"] == "aux" and c["role"] == "aux" and stext[joined[-1]["end"]:c["start"]].strip() == "" \
                 and (c["text"].lower() in ("n't", "not")
-                     or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had", "used", "use") or prev_text.endswith("going")))
-                     or c["text"].lower() == "going"
+                     or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had", "used", "use")
+                                                         or prev_text.endswith(("going", "supposed", "able"))))
+                     or c["text"].lower() in ("going", "supposed", "able")
                      or (c["text"].lower() in ("better", "rather") and prev_text in ("had", "'d", "would"))):
             prev = joined.pop()
             c = dict(prev, end=c["end"], text=stext[prev["start"]:c["end"]])

@@ -1756,3 +1756,320 @@
     function: 形容詞・修飾
     modifies: difficulty
     text: remembering names
+- id: '125'
+  sentence: If I were you, I would take the job.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If I were you
+  - role: S
+    text: I
+  - role: aux
+    text: would
+  - role: Vt
+    text: take
+  - role: O
+    text: the job
+- id: '126'
+  sentence: I wish I could fly.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: wish
+  - role: O
+    text: I could fly
+- id: '127'
+  sentence: He said that he was busy.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: said
+  - role: O
+    text: that he was busy
+- id: '128'
+  sentence: She asked me where I lived.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: asked
+  - role: IO
+    text: me
+  - role: DO
+    text: where I lived
+- id: '129'
+  sentence: So do I.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: So
+  - role: aux
+    text: do
+  - role: S
+    text: I
+- id: '130'
+  sentence: Neither can she.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: Neither
+  - role: aux
+    text: can
+  - role: S
+    text: she
+- id: '131'
+  sentence: You are supposed to finish it today.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: aux
+    text: are supposed to
+  - role: Vt
+    text: finish
+  - role: O
+    text: it
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: today
+- id: '132'
+  sentence: She was able to swim across the river.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: was able to
+  - role: Vi
+    text: swim
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: across the river
+- id: '133'
+  sentence: You need to be careful.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: Vt
+    text: need
+  - role: O
+    text: to be careful
+- id: '134'
+  sentence: I have been told the news.
+  pattern: 4
+  passive: true
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: have
+  - role: aux
+    text: been
+  - role: Vt
+    text: told
+  - role: DO
+    text: the news
+- id: '135'
+  sentence: She got her hair cut yesterday.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: got
+  - role: O
+    text: her hair
+  - role: OC
+    text: cut
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: yesterday
+- id: '136'
+  sentence: He could make himself understood in English.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: aux
+    text: could
+  - role: Vt
+    text: make
+  - role: O
+    text: himself
+  - role: OC
+    text: understood in English
+- id: '137'
+  sentence: I am interested in learning Japanese.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: V
+    text: am
+  - role: SC
+    text: interested
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: in learning Japanese
+- id: '138'
+  sentence: We look forward to hearing from you.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: look forward to
+  - role: O
+    text: hearing from you
+- id: '139'
+  sentence: The movie was so boring that I fell asleep.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The movie
+  - role: V
+    text: was
+  - role: SC
+    text: so boring
+  - role: M
+    function: 副詞子句・表結果
+    modifies: null
+    text: that I fell asleep
+- id: '140'
+  sentence: Hardly had he arrived when it started to rain.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: Hardly
+  - role: aux
+    text: had
+  - role: S
+    text: he
+  - role: Vi
+    text: arrived
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when it started to rain
+- id: '141'
+  sentence: Scientists have found that people who sleep less than six hours a night are more likely to catch a cold.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Scientists
+  - role: aux
+    text: have
+  - role: Vt
+    text: found
+  - role: O
+    text: that people who sleep less than six hours a night are more likely to catch a cold
+- id: '142'
+  sentence: When the students finished the test, the teacher collected the papers and gave them some candy.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: When the students finished the test
+  - role: S
+    text: the teacher
+  - role: Vt
+    text: collected
+  - role: O
+    text: the papers
+  - role: conj
+    text: and
+  - role: Vt
+    text: gave
+  - role: IO
+    text: them
+  - role: DO
+    text: some candy
+- id: '143'
+  sentence: The city, which is famous for its night markets, attracts millions of tourists every year.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The city
+  - role: M
+    function: 形容詞・修飾
+    modifies: city
+    text: which is famous for its night markets
+  - role: Vt
+    text: attracts
+  - role: O
+    text: millions of tourists
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every year
+- id: '144'
+  sentence: Instead of taking the bus, she decided to walk to school because the weather was nice.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: Instead of taking the bus
+  - role: S
+    text: she
+  - role: Vt
+    text: decided
+  - role: O
+    text: to walk to school
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because the weather was nice
+- id: '145'
+  sentence: Although many people think that video games are harmful, some studies show that they can improve problem-solving skills.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Although many people think that video games are harmful
+  - role: S
+    text: some studies
+  - role: Vt
+    text: show
+  - role: O
+    text: that they can improve problem-solving skills
