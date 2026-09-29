@@ -1,6 +1,6 @@
 id: imperative
 title: 祈使句
-brief: 主詞 You 被省略，用來命令、請求或提醒。
+brief: 用來命令、請求、提醒或提議；一般的祈使句省略主詞 You，Let's 的主詞是 's（us）。
 trigger: 沒有主詞，而且動詞用原形
 blocks:
 - type: formula
