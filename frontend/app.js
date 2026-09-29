@@ -3,11 +3,11 @@
 
 const MAX_CHARS = 2000;
 const GROUP = { S: "S", RS: "S", RO: "O", Vt: "V", Vi: "V", V: "V", aux: "V", O: "O", IO: "O", DO: "O", SC: "C", OC: "C" };
-const LABEL = { aux: "aux.", RS: "真主詞", RO: "真受詞", conj: "conj.", unknown: "未分析" };
+const LABEL = { aux: "aux.", RS: "真主詞", RO: "真受詞", EF: "強調框架", conj: "conj.", unknown: "未分析" };
 const ROLE_NAME = {
   S: "主詞", RS: "真主詞", RO: "真受詞", Vt: "及物動詞", Vi: "不及物動詞", V: "動詞", aux: "助動詞",
   O: "受詞", IO: "間接受詞", DO: "直接受詞", SC: "主詞補語", OC: "受詞補語",
-  conj: "連接詞", unknown: "未分析",
+  EF: "強調句框架", conj: "連接詞", unknown: "未分析",
 };
 const CLAUSE_NAME = ["子句一", "子句二", "子句三", "子句四"];
 const CALLOUT = {
@@ -85,6 +85,7 @@ function chunkText(chunk) {
     pos = h.end;
   }
   if (pos < chunk.end) tx.append(chunk.text.slice(pos - chunk.start));
+  if (chunk.suffix) tx.append(el("span", "suffix", chunk.suffix)); // Let's 的 's（us）
   return tx;
 }
 
@@ -97,7 +98,7 @@ function labelText(chunk) {
 
 function roleClass(chunk) {
   if (chunk.role === "M") return "m";
-  if (chunk.role === "conj") return "conj";
+  if (chunk.role === "conj" || chunk.role === "EF") return "conj";
   if (chunk.role === "unknown") return "unk";
   const style = chunk.role === "aux" || chunk.role === "RS" || chunk.role === "RO" ? "soft" : "core";
   return `${style} r-${GROUP[chunk.role]}`;
@@ -105,7 +106,7 @@ function roleClass(chunk) {
 
 function miniChunk(chunk) {
   const node = el("span", `ck ${roleClass(chunk)}`);
-  node.append(el("span", "lb", labelText(chunk)), el("span", "tx", chunk.text));
+  node.append(el("span", "lb", labelText(chunk)), el("span", "tx", chunk.text + (chunk.suffix || "")));
   return node;
 }
 

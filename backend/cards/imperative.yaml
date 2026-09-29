@@ -14,10 +14,19 @@ blocks:
   - 動詞用原形：<b>Keep</b>…、<b>Be</b> quiet!
   - 否定用 Don't：<b>Don't</b> open the door.
   - 強調時可以說出 You：<b>You</b> be quiet!
-  - Let's 表示「我們一起」：<b>Let's</b> go.
+  - Let's 表示提議「我們一起…吧」：<b>Let's</b> go.（'s＝us，是主詞；句型看後面的 go，句型一：S ＋ Vi）
   - 加上 please 語氣比較客氣：<b>Please</b> sit down.
 - type: tip
   text: 怎麼證明主詞是 you？加上附加問句：Keep the door open, will <b>you</b>?
+- type: warn
+  text: Let's 的 's 是 us（我們），不是 is。
+  examples:
+  - en: Let's go.
+    zh: ＝ Let us go.（我們走吧）
+    mark: ok
+  - en: Let is go.
+    zh: 錯誤：'s 在這裡不是 is
+    mark: "no"
 - type: warn
   text: 叫對方的名字不是主詞。
   examples:

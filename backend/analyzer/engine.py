@@ -68,6 +68,7 @@ class ClauseInfo:
     flags: set = field(default_factory=set)
     verb_token: object = None  # 真正要標 Vt／Vi／V 的字
     elliptic: bool = False  # 省略句：I can't.、I will.（只有助動詞）
+    lets: bool = False  # Let's ＋ 原形動詞（提議）：Let 標 aux.，'s（＝us）標 S
 
 
 # ---------- 修飾語功能 ----------
@@ -261,6 +262,25 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     if info.passive and v.lemma_ in ("become", "be") and "agent" not in deps:
         info.passive = False  # It's become popular.、It's been a long time：'s 是 has，不是被動
     info.existential = "expl" in deps and v.lemma_ == "be"
+
+    # Let's go to the park.（使用者決定 2026-09-29）：祈使句，Let 表示提議、標 aux.（不算進公式），
+    # 's（＝us）是主詞 S，句型看後面的動詞（go＝Vi → 句型一）。Let me／Let him 照使役動詞（句型四）
+    after = sent.doc[v.i + 1] if v.i + 1 < len(sent.doc) else None
+    if v.lemma_ == "let" and after is not None and after.lower_ in ("'s", "’s") and not shared_subject:
+        main = next((c for c in children if c.dep_ in ("ccomp", "xcomp") and c.pos_ in ("VERB", "AUX")), None)
+        if main is None and after.head.pos_ in ("VERB", "AUX") and after.head.i > v.i:
+            main = after.head
+        if main is not None:
+            inner = assign_clause(main, roots, index, sent, shared_subject=True)
+            roots[v.i] = Spec("aux", clause=index, kind="lets")
+            roots[after.i] = Spec("S", clause=index, kind="lets_us")  # 's＝us，是主詞（使用者決定）
+            for c in main.children:
+                if c.dep_ == "neg" and c.i == after.i + 1:
+                    roots[c.i] = Spec("aux", clause=index, kind="neg")  # Let's not argue.
+            inner.lets = True
+            inner.flags.add("imperative")
+            inner.pattern = clause_pattern(roots, index, inner)
+            return inner
 
     # 省略句：I can't.、Yes, I will.、I did.（只有助動詞，後面的動詞省略了）；So do I.、Neither can she.
     agree = sent[0].lower_ in ("so", "neither", "nor") and (v.lemma_ in ("do", "be", "have") or v.tag_ == "MD")
@@ -562,14 +582,13 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     subj = subjects[0] if subjects else None
     cleft = cleft_clause(v, subj, children)
     if cleft is not None:
-        # 強調句 It was John who broke the window：後面的子句不是真主詞（拿掉 It was…who 還是完整句子）
-        # 怎麼標還沒決定（待審核清單第 72、80 項），先整句標部分分析，不給可能錯的答案
-        roots[cleft.i] = Spec("unknown", clause=index)
-        info.flags.add("cleft")
+        return cleft_analysis(v, subj, cleft, roots, index, sent)
     elif subj is not None and subj.lower_ == "it":
         for r in [v] + [c for c in children if c.i in roots and roots[c.i].role == "SC"]:
             for g in r.children:
-                if g.dep_ in ("xcomp", "ccomp") and (g.i not in roots or roots[g.i].role in ("O", "unknown")
+                # It is hard for me to learn English：for me to learn English 整塊是真主詞（使用者決定 2026-09-29）
+                for_to = g.dep_ == "advcl" and any(x.dep_ == "mark" and x.lower_ == "for" for x in g.children)
+                if (g.dep_ in ("xcomp", "ccomp") or for_to) and (g.i not in roots or roots[g.i].role in ("O", "unknown")
                                                      or (roots[g.i].role == "OC" and v.lemma_ in ("take", "cost"))):
                     gerund = g.tag_ == "VBG" and g.dep_ == "xcomp" and v.lemma_ == "be"  # It is no use crying…
                     if gerund or any(x.lower_ == "to" or x.dep_ in ("mark", "nsubj", "nsubjpass") for x in g.children):
@@ -628,7 +647,7 @@ def cleft_clause(v, subj, children):
         opener = min(c.subtree, key=lambda t: t.i)
         if opener.lower_ not in ("that", "who", "whom", "which"):
             continue
-        focus = [x for x in children if v.i < x.i < opener.i and x.dep_ not in ("neg", "punct")
+        focus = [x for x in children if v.i < x.i < opener.i and x.dep_ not in ("neg", "punct", "nsubj", "expl")
                  and not (x.dep_ == "advmod" and x.lower_ in ("only", "just", "really", "also"))]
         if not focus or any(x.dep_ == "acomp" or x.pos_ == "ADJ" for x in focus):
             continue
@@ -639,6 +658,43 @@ def cleft_clause(v, subj, children):
         if f.dep_ == "attr" and f.pos_ == "NOUN" and relative:
             return c
     return None
+
+
+def cleft_analysis(v, subj, c, roots, index, sent):
+    """強調句（使用者決定 2026-09-29）：照「還原句」標句型。
+    It was John who broke the window → John broke the window → 句型三：S + Vt + O
+    It、was、who／that 標「強調句框架」（EF，不算進公式）；被強調的部分標它在還原句裡的角色，說明寫「被強調的部分」。"""
+    opener = min(c.subtree, key=lambda t: t.i)
+    focus = next((x for x in v.children if v.i < x.i < opener.i and x.dep_ not in ("neg", "punct", "nsubj", "expl")
+                  and not (x.dep_ == "advmod" and x.lower_ in ("only", "just", "really", "also"))), None)
+    inner = assign_clause(c, roots, index, sent, shared_subject=True)
+    inner.flags.add("cleft")
+    gap = roots.get(opener.i).role if opener.i in roots else None  # who／that 在子句裡的角色，就是被強調部分的角色
+    roots[subj.i] = Spec("EF", clause=index)
+    roots[v.i] = Spec("EF", clause=index)
+    roots[opener.i] = Spec("EF", clause=index)
+    for x in v.children:
+        if x.dep_ == "neg":
+            roots[x.i] = Spec("M", function="副詞・表否定", clause=index)  # It was not until midnight that…
+    if focus is not None:
+        nominal = focus.pos_ in ("PROPN", "PRON", "NOUN", "NUM") and focus.dep_ in ("attr", "npadvmod", "nsubj", "dobj")
+        if nominal and (focus.lemma_.lower() in L.TIME_NOUNS or focus.ent_type_ in ("DATE", "TIME")):
+            roots[focus.i] = Spec("M", function="副詞・表時間", clause=index, kind="cleft_focus")  # It was yesterday that…
+        elif nominal:
+            if gap not in ("S", "O", "IO", "DO", "SC", "OC"):
+                # that 是連接詞時（It was Mary that called），看子句缺什麼：沒有主詞就是主詞
+                has_subj = any(g.dep_ in ("nsubj", "nsubjpass") and g.i != opener.i for g in c.children)
+                has_obj = any(g.dep_ == "dobj" and g.i != opener.i for g in c.children)
+                gap = "S" if not has_subj else ("O" if not has_obj else "unknown")
+            roots[focus.i] = Spec(gap, clause=index, kind="cleft_focus")
+        elif focus.i in roots:
+            spec = roots[focus.i]
+            roots[focus.i] = Spec(spec.role, function=spec.function or (adverb_function(focus) if spec.role == "M" else None),
+                                  clause=index, kind="cleft_focus", inner_verb=spec.inner_verb)
+        else:
+            roots[focus.i] = Spec("M", function=adverb_function(focus), clause=index, kind="cleft_focus")
+    inner.pattern = clause_pattern(roots, index, inner)
+    return inner
 
 
 def adverb_function_prep_like(tok):
@@ -994,7 +1050,7 @@ CARD_ORDER = [
     "yes_no_question", "dummy_it", "gerund_subject", "coordinating_conj",
     "subordinating_conj", "relative_pronoun", "causative_perception", "dative_verbs",
     "linking_verbs", "to_v_or_ving_object", "quantifier_of", "unit_of",
-    "verb_multiple_patterns", "parallel_structure", "participle_phrase", "appositive", "so_such_that", "modifier_position",
+    "cleft", "verb_multiple_patterns", "parallel_structure", "participle_phrase", "appositive", "so_such_that", "modifier_position",
 ]
 MAX_CARDS = 3
 
@@ -1238,7 +1294,10 @@ def analyze_sentence(text: str) -> SentenceResult:
     raw.sort(key=lambda c: (c["start"], 0 if c.get("implicit") else 1))
     merged = []
     for c in raw:
-        if merged and merged[-1]["role"] == "M" and c["role"] == "M" and merged[-1]["text"].lower() in ("even", "only", "just", "right") \
+        if merged and merged[-1]["role"] == "EF" and c["role"] == "EF" and stext[merged[-1]["end"]:c["start"]].strip() == "":
+            prev = merged.pop()  # 強調句框架 It ＋ was 合成一塊
+            c = dict(prev, end=c["end"], text=stext[prev["start"]:c["end"]])
+        elif merged and merged[-1]["role"] == "M" and c["role"] == "M" and merged[-1]["text"].lower() in ("even", "only", "just", "right") \
                 and stext[merged[-1]["end"]:c["start"]].strip() == "":
             prev = merged.pop()
             c = dict(c, start=prev["start"], text=stext[prev["start"]:c["end"]])
@@ -1263,6 +1322,8 @@ def analyze_sentence(text: str) -> SentenceResult:
     for i, c in enumerate(raw):
         c["id"] = i
         c["note"] = chunk_note(c, infos, stext, compound=(kind == "compound"))
+        if c.get("_spec") is not None and c["_spec"].kind == "lets_us":
+            c["suffix"] = "（us）"  # 使用者要求：畫面上直接看得到 's 就是 us
         c.pop("_root", None)
         c.pop("_spec", None)
         chunks.append(Chunk(**c))
@@ -1274,8 +1335,6 @@ def analyze_sentence(text: str) -> SentenceResult:
             Clause(index=i, pattern=info.pattern, passive=info.passive, formula=formula(info, chunks), elliptic=info.elliptic)
             for i, info in infos.items()
         ]
-    if "cleft" in flags:
-        clauses = []  # 強調句要不要套五大句型還沒決定，先不顯示句型
     for cl in clauses:
         info = infos.get(cl.index)
         if info is not None and info.verb_token is not None and not info.elliptic:

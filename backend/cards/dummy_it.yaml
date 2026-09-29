@@ -4,26 +4,43 @@ brief: It 只是佔位子，真正的主詞在句子後面。
 trigger: It ＋ be ＋ 形容詞 ＋ to V／that 子句
 blocks:
 - type: formula
-  text: It ＋ be ＋ 形容詞 ＋ to V …
+  text: It ＋ be ＋ 形容詞／名詞 ＋（for 人）＋ to V …／that 子句
 - type: heading
   text: 還原測試
 - type: examples
   examples:
   - en: <b>It</b> is hard <b>to learn English</b>.
-    zh: 常見說法
+    zh: 常見說法：學英文很難。
     mark: none
   - en: <b>To learn English</b> is hard.
-    zh: 還原後：S + V + SC
+    zh: 還原後：S ＋ V ＋ SC（句型二）
     mark: none
 - type: tip
-  text: 主詞太長時，英文習慣先用 It 佔位，把長的主詞放到句尾，讀起來比較輕鬆。
+  text: 主詞太長時，英文習慣先用 It 佔位，把長的主詞放到句尾，讀起來比較輕鬆。真正的主詞可以是 to V、that 子句，也可以是 V-ing（It is no use crying over spilt milk.）。
+- type: heading
+  text: for 人 還是 of 人？
+- type: list
+  items:
+  - 用 <b>for</b>：形容詞在說「這件事」怎麼樣（難、重要、危險、容易）。for ＋ 人 說明「誰」去做這件事，和後面的 to V 一起算真主詞。
+  - 用 <b>of</b>：形容詞在稱讚或批評「這個人」的個性（kind、nice、wise、polite、stupid、careless）。
+- type: examples
+  examples:
+  - en: It is hard <b>for me</b> to learn English.
+    zh: 學英文這件事很難（hard 說的是事情）
+    mark: none
+  - en: It is wise <b>of you</b> to stay home.
+    zh: 你待在家裡，你真明智（wise 說的是人）
+    mark: none
+- type: tip
+  text: 分辨小技巧：把「人」當主詞改寫看看。You are wise.（通）→ 用 of；I am hard.（不通，意思不對）→ 用 for。
 - type: info
   text: 和 There is 的差別：There is 的 There 是引導詞，真正的主詞標 S；It 句型的 It 標 S，真正的主詞標「真主詞」。
 - type: warn
-  text: 很多人看到後面的 to learn，就以為是 S + V + O。
+  text: 很多人看到後面的 to learn，就以為是 S ＋ Vt ＋ O。
   examples:
   - en: It is hard to learn English.
-    zh: 句型二（S + V + SC），hard 才是補語
+    zh: 句型二（S ＋ V ＋ SC），hard 才是補語
     mark: none
 see_also:
 - there_be
+- cleft

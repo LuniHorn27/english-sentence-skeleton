@@ -1,6 +1,6 @@
 id: cleft
 title: 強調句 It is … that …
-brief: 把想強調的部分放在 It is／was 和 that 中間。
+brief: 把想強調的部分放在 It is／was 和 that 中間；拿掉框架，句型照原本的句子判斷。
 trigger: It ＋ be ＋ 被強調的部分 ＋ that／who ＋ 句子其餘部分
 blocks:
 - type: formula
@@ -8,7 +8,7 @@ blocks:
 - type: examples
   examples:
   - en: John broke the window.
-    zh: 原句：約翰打破了窗戶。
+    zh: 原句：約翰打破了窗戶。（句型三：S ＋ Vt ＋ O）
     mark: none
   - en: It was <b>John</b> who broke the window.
     zh: 強調主詞：是約翰打破窗戶的。
@@ -19,9 +19,11 @@ blocks:
   - en: It was <b>yesterday</b> that John broke the window.
     zh: 強調時間：約翰是昨天打破窗戶的。
     mark: none
+- type: tip
+  text: 判斷句型時，先把 It is／was 和 that／who 拿掉，還原成原本的句子。上面四句還原後都是 John broke the window.，所以都是句型三：S ＋ Vt ＋ O。
 - type: heading
   text: 和虛主詞 It 怎麼分？
-- type: tip
+- type: info
   text: 把 It is／was 和 that 拿掉，剩下的如果還是完整的句子，就是強調句；不完整，就是虛主詞句。
 - type: examples
   examples:

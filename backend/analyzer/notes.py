@@ -39,7 +39,19 @@ def chunk_note(c, infos, text, compound=None) -> str:
     compound = len(infos) > 1 if compound is None else compound
     prefix = f"子句{'一二三四'[c.get('clause', 0)]}的" if compound and role not in ("M", "conj") else ""
 
+    focus = "被強調的部分（強調句把它放在 It is／was 和 that 中間）。" if spec is not None and spec.kind == "cleft_focus" else ""
+    if role == "EF":
+        return ("強調句的框架：It is／was ＋ 被強調的部分 ＋ that／who ＋ 其餘部分。"
+                "把框架拿掉，剩下的就是原本的句子，句型照原本的句子判斷。框架不算進公式。")
+    if focus and role == "M":
+        return focus + ADVERB_NOTE.get(c.get("function") or "", "")
+    if focus:
+        names = {"S": "主詞", "O": "受詞", "IO": "間接受詞", "DO": "直接受詞", "SC": "主詞補語", "OC": "受詞補語"}
+        return f"{focus}還原成原本的句子後，它是{names.get(role, '')}。"
     if role == "S":
+        if spec is not None and spec.kind == "lets_us":
+            return ("主詞：'s 是 us（我們）的縮寫，Let's＝Let us，不是 Let is。"
+                    "提議「我們一起…吧」，所以做動作的是「我們」。")
         if c.get("implicit"):
             return "省略的主詞：祈使句是直接對「你」說話，所以主詞 You 省略不寫。括號表示句子裡看不到，但文法上存在。"
         if spec is not None and spec.kind == "real_subject":
@@ -52,6 +64,9 @@ def chunk_note(c, infos, text, compound=None) -> str:
             return f"{prefix}主詞。這種「數量詞 ＋ of ＋ 名詞」的主詞不標核心字，看下方文法重點。"
         return f"{prefix}主詞{'，核心字是 ' + head if head else ''}。"
     if role == "RS":
+        if c.get("text", "").lower().startswith("for "):
+            return ("真正的主詞，因為太長，所以移到句尾，用 It 代替。不算進公式（虛線）。"
+                    "for ＋ 人 說明「誰」去做後面的動作（不定詞的意義上主詞）。")
         return "真正的主詞，因為太長，所以移到句尾，用 It 代替。不算進公式（虛線）。"
     if role == "RO":
         return "真正的受詞，因為太長，所以移到句尾，受詞的位置先用 it 代替。不算進公式（虛線）。"
@@ -73,6 +88,9 @@ def chunk_note(c, infos, text, compound=None) -> str:
         return f"{prefix}動詞。補充：這是「連綴動詞」，像等號一樣把主詞和後面的補語連起來，後面接的不是受詞。"
     if role == "aux":
         lower = c["text"].lower()
+        if spec is not None and spec.kind == "lets":
+            return ("Let's 的 Let：用來提議「我們一起…吧」，後面的 's 是 us（我們），再接原形動詞。"
+                    "Let 在這裡不算進公式，句型看後面的動詞。")
         if info and info.passive and lower in ("am", "is", "are", "was", "were", "be", "been", "being"):
             return "be 動詞在這裡當助動詞，和過去分詞組成被動語態，不算進公式（虛線）。"
         if lower in ("am", "is", "are", "was", "were") and info and info.verb_token.tag_ == "VBG":

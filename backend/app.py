@@ -317,7 +317,7 @@ def _quiz_ok(item):
     chunks = item["chunks"]
     roles = {c["role"] for c in chunks}
     return not (
-        roles & {"conj", "RS", "RO", "unknown"}
+        roles & {"conj", "RS", "RO", "EF", "unknown"}
         or item.get("passive")
         or any(c.get("function") == "引導詞" for c in chunks)
         or any(c["role"] == "Vi" and c["text"].lower() in _BE for c in chunks)

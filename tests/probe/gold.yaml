@@ -2075,19 +2075,97 @@
     text: that they can improve problem-solving skills
 - id: '146'
   sentence: It was John who broke the window.
-  expect: partial
+  pattern: 2
+  passive: false
+  chunks:
+  - role: EF
+    text: It was
+  - role: S
+    text: John
+  - role: EF
+    text: who
+  - role: Vt
+    text: broke
+  - role: O
+    text: the window
 - id: '147'
   sentence: It was in the park that I met her.
-  expect: partial
+  pattern: 2
+  passive: false
+  chunks:
+  - role: EF
+    text: It was
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the park
+  - role: EF
+    text: that
+  - role: S
+    text: I
+  - role: Vt
+    text: met
+  - role: O
+    text: her
 - id: '148'
   sentence: It is you that I love.
-  expect: partial
+  pattern: 2
+  passive: false
+  chunks:
+  - role: EF
+    text: It is
+  - role: O
+    text: you
+  - role: EF
+    text: that
+  - role: S
+    text: I
+  - role: Vt
+    text: love
 - id: '149'
   sentence: It was not until midnight that he came home.
-  expect: partial
+  pattern: 1
+  passive: false
+  chunks:
+  - role: EF
+    text: It was
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: not
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: until midnight
+  - role: EF
+    text: that
+  - role: S
+    text: he
+  - role: Vi
+    text: came
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: home
 - id: '150'
   sentence: It is because he is honest that we trust him.
-  expect: partial
+  pattern: 2
+  passive: false
+  chunks:
+  - role: EF
+    text: It is
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because he is honest
+  - role: EF
+    text: that
+  - role: S
+    text: we
+  - role: Vt
+    text: trust
+  - role: O
+    text: him
 - id: '151'
   sentence: It is true that he left.
   pattern: 3
@@ -4368,7 +4446,131 @@
     text: with their children
 - id: '303'
   sentence: It is important for teenagers to get enough sleep.
-  expect: partial
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: important
+  - role: RS
+    text: for teenagers to get enough sleep
 - id: '304'
   sentence: She spends most of her free time reading novels.
   expect: partial
+- id: '305'
+  sentence: Let's go to the park.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: aux
+    text: Let
+  - role: S
+    text: '''s'
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the park
+- id: '306'
+  sentence: Let's not argue.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: aux
+    text: Let
+  - role: S
+    text: '''s'
+  - role: aux
+    text: not
+  - role: Vi
+    text: argue
+- id: '307'
+  sentence: Let's play basketball after school.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: aux
+    text: Let
+  - role: S
+    text: '''s'
+  - role: Vt
+    text: play
+  - role: O
+    text: basketball
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: after school
+- id: '308'
+  sentence: Let me help you.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: Vt
+    text: Let
+  - role: O
+    text: me
+  - role: OC
+    text: help you
+- id: '309'
+  sentence: Was it John who broke the window?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: EF
+    text: Was it
+  - role: S
+    text: John
+  - role: EF
+    text: who
+  - role: Vt
+    text: broke
+  - role: O
+    text: the window
+- id: '310'
+  sentence: It was Mary that called.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: EF
+    text: It was
+  - role: S
+    text: Mary
+  - role: EF
+    text: that
+  - role: Vi
+    text: called
+- id: '311'
+  sentence: It is hard for me to learn English.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: hard
+  - role: RS
+    text: for me to learn English
+- id: '312'
+  sentence: It is kind of you to help me.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: kind
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: of you
+  - role: RS
+    text: to help me

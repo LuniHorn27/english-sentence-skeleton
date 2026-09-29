@@ -15,6 +15,7 @@ Role = Literal[
     "S", "Vt", "Vi", "V", "aux", "O", "IO", "DO", "SC", "OC",
     "RS",       # 真主詞（虛主詞 It 句型）
     "RO",       # 真受詞（虛受詞 it 句型）
+    "EF",       # 強調句框架（It is／was … that／who），不算進公式
     "conj",     # 連接詞
     "M",        # 修飾語（含引導詞 There）
     "unknown",  # 未分析
@@ -43,6 +44,7 @@ class Chunk(BaseModel):
     end: int
     role: Role
     implicit: bool = Field(False, description="句子裡看不到的字，例如祈使句的 (You)")
+    suffix: str = Field("", description="畫面上接在文字後面的補充，例如 Let's 的 's 顯示成 's（us）")
     function: Optional[str] = Field(None, description="修飾語的功能，例如「副詞・表地點」「形容詞・修飾」「引導詞」")
     modifies: Optional[Span] = Field(None, description="形容詞修飾的那個字")
     heads: list[Span] = Field(default_factory=list, description="核心字（粗體）")

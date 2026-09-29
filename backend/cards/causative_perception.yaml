@@ -4,17 +4,31 @@ brief: 後面接「受詞 ＋ 原形動詞」，說明讓某人做、或看到�
 trigger: make／let／have／see／hear／watch ＋ 受詞 ＋ 原形動詞
 blocks:
 - type: formula
-  text: 使役／感官動詞 ＋ O ＋ 原形動詞
+  text: 使役／感官動詞 ＋ O ＋ 原形動詞（句型四：S ＋ Vt ＋ O ＋ OC）
 - type: heading
   text: 使役動詞：讓、叫某人做
 - type: examples
   examples:
   - en: The teacher <b>made</b> us <b>clean</b> the classroom.
-    zh: 老師叫我們打掃教室
+    zh: 老師叫我們打掃教室（make：強迫）
     mark: none
   - en: My mom <b>let</b> me <b>go</b> out.
-    zh: 媽媽讓我出去
+    zh: 媽媽讓我出去（let：允許）
     mark: none
+  - en: I <b>had</b> him <b>fix</b> my bike.
+    zh: 我請他修我的腳踏車（have：請、叫）
+    mark: none
+- type: heading
+  text: 拆解 Let me help you.
+- type: list
+  items:
+  - 完整的句子是 (You) let me help you.，這是祈使句，主詞 You 省略了。
+  - 主詞 S：(You)
+  - 動詞 Vt：let（讓）
+  - 受詞 O：me（我）
+  - 受詞補語 OC：help you（幫你）。let 後面一定要交代「讓某人去做什麼」，這個動作就是受詞補語。
+- type: info
+  text: Let's（＝Let us）不一樣：Let's go. 是提議「我們一起去吧」，句型看後面的 go（句型一：S ＋ Vi）。Let us know.（讓我們知道）則是真的「讓」，照使役動詞看。
 - type: heading
   text: 感官動詞：看到、聽到某人做
 - type: examples
@@ -28,7 +42,7 @@ blocks:
 - type: tip
   text: 感官動詞也可以接 V-ing，表示「正在做」：I saw him <b>crossing</b> the street.（看到他正在過馬路）
 - type: warn
-  text: 使役動詞後面不能加 to。
+  text: 使役動詞後面不能加 to（但被動時要加：He was made <b>to</b> work.）。
   examples:
   - en: The teacher made us to clean the room.
     zh: ''
@@ -36,4 +50,5 @@ blocks:
   - en: The teacher made us clean the room.
     zh: ''
     mark: ok
-see_also: []
+see_also:
+- imperative
