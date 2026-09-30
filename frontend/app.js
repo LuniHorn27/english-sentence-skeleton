@@ -54,8 +54,37 @@ function storageSet(key, value) {
 }
 
 // ---------- 顯示模式 ----------
+// 標籤比底下的字寬時（副詞・表時間 ＋ Finally,），讓標籤超出字的寬度、不把片段撐開；
+// 只有相鄰兩個標籤真的會重疊時，才把後面的片段往右推一點（使用者回報「空兩格」，2026-10-01）
+function fixLabelOverlap(root = result) {
+  const chunks = [...root.querySelectorAll(".ck")].filter((c) => c.querySelector(":scope > .lb"));
+  for (const c of chunks) c.style.marginLeft = "";
+  let prev = null;
+  for (const c of chunks) {
+    const lb = c.querySelector(":scope > .lb");
+    if (getComputedStyle(lb).visibility === "hidden" || !lb.textContent) continue;
+    const r = lb.getBoundingClientRect();
+    const sameLine = prev && Math.abs(prev.top - r.top) < 4 && prev.parent === c.parentElement;
+    if (sameLine && r.left < prev.right + 6) {
+      c.style.marginLeft = `${prev.right + 6 - r.left}px`;
+    } else if (!sameLine) {
+      const left = c.parentElement.getBoundingClientRect().left;  // 每行第一個片段：標籤不要超出左邊
+      if (r.left < left) c.style.marginLeft = `${left - r.left}px`;
+    }
+    const r2 = lb.getBoundingClientRect();
+    prev = { top: r2.top, right: r2.right, parent: c.parentElement };
+  }
+}
+let overlapTimer = null;
+function scheduleOverlapFix() {
+  cancelAnimationFrame(overlapTimer);
+  overlapTimer = requestAnimationFrame(() => fixLabelOverlap());
+}
+window.addEventListener("resize", scheduleOverlapFix);
+
 function setMode(mode) {
   result.classList.toggle("detail", mode === "detail");
+  scheduleOverlapFix();
   for (const btn of toolbar.querySelectorAll("[data-mode]")) {
     btn.setAttribute("aria-pressed", String(btn.dataset.mode === mode));
   }
@@ -211,7 +240,16 @@ function explainBox(sentence, view) {
     box.append(el("br"));
     box.append(document.createTextNode(chunk.note));
   }
-  if (!chunk.implicit) box.append(wordList(chunk.text));
+  // 分詞構句：還原成完整的句子，列出精簡的步驟
+  if (chunk.restore) {
+    const r = el("div", "restore");
+    r.append(el("div", "restore-h", "還原成完整的句子"), el("div", "restore-s", chunk.restore.clause));
+    const ol = el("ol", "restore-steps");
+    chunk.restore.steps.forEach((t) => ol.append(el("li", null, t)));
+    r.append(ol);
+    box.append(r);
+  }
+  // 單字列表先不顯示（使用者決定 2026-10-01），之後改成點單字查詢
   return box;
 }
 
@@ -366,41 +404,26 @@ function feedbackForm(sIdx) {
   const form = el("form", "feedback");
   form.append(el("p", "fb-title", "哪裡分析錯了？"));
 
-  const select = el("select");
-  select.setAttribute("aria-label", "選擇有問題的部分");
-  const options = [["句型", sentence.header || "（無）"]];
-  for (const c of sentence.chunks) {
-    options.push([`「${c.text}」`, c.role === "M" ? labelText(c) : `${ROLE_NAME[c.role]}（${LABEL[c.role] || c.role}）`]);
-  }
-  for (const p of sentence.phrases || []) options.push([`片語「${p.phrase}」`, p.meaning]);
-  options.push(["文法重點卡", ""], ["中文翻譯", sentence.translation || ""], ["其他", ""]);
-  for (const [part, current] of options) {
-    const opt = el("option", null, current ? `${part}：${current}` : part);
-    opt.value = JSON.stringify([part, current]);
-    select.append(opt);
-  }
-
   const text = el("textarea");
   text.rows = 2;
   text.maxLength = 1000;
-  text.placeholder = "你認為正確的是什麼？例如：in the garden 應該是副詞・表地點";
-  text.setAttribute("aria-label", "你認為正確的答案");
+  text.placeholder = "例如：in the garden 應該是副詞・表地點（句子和分析結果會自動附上）";
+  text.setAttribute("aria-label", "哪裡分析錯了");
   const note = el("p", "fb-note", "請不要填寫姓名、電話等個人資料。");
   const status = el("p", "fb-status");
   const send = el("button", "primary", "送出");
   send.type = "submit";
-  form.append(select, text, note, send, status);
+  form.append(text, note, send, status);
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!text.value.trim()) {
-      status.textContent = "請先寫下你認為正確的答案";
+      status.textContent = "請先寫下哪裡錯了";
       return;
     }
-    const [part, current] = JSON.parse(select.value);
     send.disabled = true;
     try {
-      await sendFeedback({ kind: "error", sentence: sentence.text, part, current, message: text.value.trim(), analysis: sentence });
+      await sendFeedback({ kind: "error", sentence: sentence.text, message: text.value.trim(), analysis: sentence });
       view.feedback = "sent";
       renderSentence(sIdx);
     } catch (err) {
@@ -509,7 +532,10 @@ function renderSentence(sIdx) {
   if (sentence.status !== "ok" && sentence.message) {
     box.append(el("div", `banner${sentence.status === "failed" ? " fail" : ""}`, sentence.message));
   }
-  if (sentence.status !== "failed") box.append(chunkRow(sIdx));
+  if (sentence.status !== "failed") {
+    box.append(chunkRow(sIdx));
+    scheduleOverlapFix();
+  }
 
   const zh = el("p", "zh");
   zh.dataset.translation = String(sIdx);

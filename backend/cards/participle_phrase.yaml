@@ -1,32 +1,35 @@
 id: participle_phrase
 title: 分詞構句
-brief: 副詞子句省略主詞、動詞改成 V-ing，變成比較簡潔的副詞片語。
+brief: 把兩個主詞相同的句子精簡：省略連接詞和重複的主詞，動詞改成分詞。
 trigger: 句首或句尾有沒有主詞的 V-ing／p.p. 片語，用來修飾主要句子
 blocks:
 - type: formula
-  text: （連接詞）＋ V-ing …, 主要句子
+  text: （連接詞）＋ V-ing／p.p. …, 主要句子
 - type: heading
-  text: 怎麼來的
-- type: examples
-  examples:
-  - en: <b>While I was walking</b> to school, I saw a cat.
-    zh: 副詞子句
-    mark: none
-  - en: <b>While walking</b> to school, I saw a cat.
-    zh: 省略主詞和 be 動詞
-    mark: none
-  - en: <b>Walking</b> to school, I saw a cat.
-    zh: 連接詞也省略
-    mark: none
-- type: heading
-  text: 常見的意思
+  text: 三大簡化步驟
 - type: list
   items:
-  - 同時：一邊……一邊……
-  - 原因：因為……
-  - 時間：……之後（After finishing…）
+  - ① 省略連接詞：because、when、while、and 等（怕意思不清楚時可以保留）。
+  - ② 省略重複的主詞：兩個句子的主詞相同，才能把其中一個刪掉。
+  - ③ 動詞改成分詞：主動改成現在分詞 <b>V-ing</b>；被動改成過去分詞 <b>p.p.</b>；比主要句子更早發生，改成 <b>Having ＋ p.p.</b>。
+- type: heading
+  text: 範例對照
+- type: examples
+  examples:
+  - en: <b>Because I was tired</b>, I went to bed early.
+    zh: 原句（因為我累了，所以早早就去睡了）
+    mark: none
+  - en: <b>Being tired</b>, I went to bed early.
+    zh: 分詞構句：省略 Because 和 I，was 改成 Being
+    mark: none
+  - en: <b>Having finished</b> my homework, I went out to play.
+    zh: 先做完功課才出去玩：After I had finished → Having finished
+    mark: none
+  - en: <b>Seen</b> from the hill, the city looks beautiful.
+    zh: 城市是「被看」的：When the city is seen → Seen
+    mark: none
 - type: tip
-  text: 只有「副詞子句的主詞」和「主要句子的主詞」相同時，才能這樣省略。
+  text: 點一下句子裡的分詞構句，可以看到這一句還原成完整句子的樣子。
 - type: warn
   text: 主詞不同時不能省略，否則意思會變得很奇怪。
   examples:

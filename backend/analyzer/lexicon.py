@@ -222,3 +222,10 @@ ADJ_PREPS = {
     ("happy", "with"), ("happy", "about"), ("ready", "for"), ("late", "for"), ("good", "for"),
     ("bad", "for"), ("close", "to"), ("far", "from"), ("nice", "to"), ("polite", "to"),
 }
+
+# 移動動詞：後面的距離、時間是修飾語，不是受詞（sailed a hundred miles、walked two hours）
+MOTION_VERBS = {"walk", "run", "sail", "drive", "fly", "swim", "travel", "go", "ride", "move", "jog", "hike", "climb",
+                "cycle", "row", "drift", "march", "wander", "crawl", "journey", "commute"}
+# 距離單位
+DISTANCE_NOUNS = {"mile", "kilometer", "kilometre", "km", "meter", "metre", "foot", "feet", "yard", "block", "step", "inch",
+                  "centimeter", "lap", "way"}

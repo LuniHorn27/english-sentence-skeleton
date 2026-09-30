@@ -37,6 +37,11 @@ class Span(BaseModel):
     text: str
 
 
+class Restore(BaseModel):
+    clause: str = Field(description="還原後的完整子句，例如 and the crew survived on penguins")
+    steps: list[str] = Field(default_factory=list, description="從完整句子變成分詞構句的步驟")
+
+
 class Chunk(BaseModel):
     id: int
     text: str
@@ -45,6 +50,7 @@ class Chunk(BaseModel):
     role: Role
     implicit: bool = Field(False, description="句子裡看不到的字，例如祈使句的 (You)")
     suffix: str = Field("", description="畫面上接在文字後面的補充，例如 Let's 的 's 顯示成 's（us）")
+    restore: Optional[Restore] = Field(None, description="分詞構句還原成完整句子（點開說明時顯示）")
     function: Optional[str] = Field(None, description="修飾語的功能，例如「副詞・表地點」「形容詞・修飾」「引導詞」")
     modifies: Optional[Span] = Field(None, description="形容詞修飾的那個字")
     heads: list[Span] = Field(default_factory=list, description="核心字（粗體）")

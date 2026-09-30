@@ -4696,3 +4696,191 @@
     text: became
   - role: SC
     text: wiser
+- id: '321'
+  sentence: In March 2022, the Endurance— the lost vessel of the famed polar explorer Ernest Shackleton— was found in Antarctica, 107 years after it sank.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: In March 2022
+  - role: S
+    text: the Endurance
+  - role: M
+    function: 同位語・說明Endurance
+    modifies: null
+    text: the lost vessel of the famed polar explorer Ernest Shackleton
+  - role: aux
+    text: was
+  - role: Vt
+    text: found
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in Antarctica
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: 107 years after it sank
+- id: '322'
+  sentence: The next five months, the crew camped out on the pack ice as it drifted north, surviving on penguins, seals, and seaweed.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: The next five months
+  - role: S
+    text: the crew
+  - role: Vi
+    text: camped out
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: on the pack ice
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: as it drifted north
+  - role: M
+    function: 副詞・分詞構句
+    modifies: null
+    text: surviving on penguins, seals, and seaweed
+- id: '323'
+  sentence: Finally, the ice broke up enough for them to escape in lifeboats.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: Finally
+  - role: S
+    text: the ice
+  - role: Vi
+    text: broke up
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: enough for them to escape in lifeboats
+- id: '324'
+  sentence: For seven days, they sailed more than a hundred miles to the uninhabited Elephant Island.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: For seven days
+  - role: S
+    text: they
+  - role: Vi
+    text: sailed
+  - role: M
+    function: 副詞・表路程
+    modifies: null
+    text: more than a hundred miles
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the uninhabited Elephant Island
+- id: '325'
+  sentence: Help was almost at hand, but ice and bad weather hindered their return.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Help
+  - role: V
+    text: was
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: almost
+  - role: SC
+    text: at hand
+  - role: conj
+    text: but
+  - role: S
+    text: ice and bad weather
+  - role: Vt
+    text: hindered
+  - role: O
+    text: their return
+- id: '326'
+  sentence: On August 30, 1916, Shackleton finally got back to Elephant Island with a ship big enough to rescue the rest of his men.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: On August 30, 1916
+  - role: S
+    text: Shackleton
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: finally
+  - role: Vi
+    text: got
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: back to Elephant Island
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: with a ship
+  - role: M
+    function: 形容詞・修飾
+    modifies: ship
+    text: big enough to rescue the rest of his men
+- id: '327'
+  sentence: All the members of the expedition team survived, but the Endurance remained lost under the sea until its discovery in 2022.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: All the members of the expedition team
+  - role: Vi
+    text: survived
+  - role: conj
+    text: but
+  - role: S
+    text: the Endurance
+  - role: V
+    text: remained
+  - role: SC
+    text: lost
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: under the sea
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: until its discovery
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: in 2022
+- id: '328'
+  sentence: She runs five kilometers every morning.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: runs
+  - role: M
+    function: 副詞・表路程
+    modifies: null
+    text: five kilometers
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every morning

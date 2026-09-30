@@ -164,6 +164,7 @@ button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
 .ck { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; background: none; border: 0; padding: 0; color: inherit; font: inherit; border-radius: 4px; }
 .ck:hover { background: none; }
 .lb { font-size: 12px; line-height: 1.5; padding: 1px 8px; border-radius: 6px; white-space: nowrap; }
+.row .ck > .lb { margin-inline: -5em; }  /* 標籤可以超出字的寬度，不把片段撐開（重疊時由 fixLabelOverlap 推開） */
 .tx { font-size: 20px; line-height: 1.35; padding: 0 2px 2px; white-space: nowrap; }
 .sub { font-size: 11px; color: var(--muted); min-height: 16px; }
 .punct { color: var(--text); }
@@ -208,6 +209,10 @@ button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
 .explain { font-size: 14px; color: var(--text-2); background: var(--surface-2); border-radius: 8px; padding: 8px 12px; margin-top: 10px; line-height: 1.7; }
 .explain strong { color: var(--text); font-weight: 600; }
 .explain .struct { color: var(--muted); font-size: 13px; }
+.restore { margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--accent-text); background: var(--surface); border-radius: 6px; }
+.restore-h { font-size: 13px; font-weight: 600; color: var(--text-2); }
+.restore-s { font-size: 16px; color: var(--text); margin: 2px 0 4px; }
+.restore-steps { margin: 0; padding-left: 20px; }
 /* 查單字 */
 .lookup:empty { display: none; }
 .lookup { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-strong); }

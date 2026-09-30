@@ -17,6 +17,7 @@ from typing import Optional
 
 from . import lexicon as L
 from .notes import chunk_note
+from .restore import participle_restore
 from .phrases import find_phrases, phrasal_object
 from .schema import CardRef, Chunk, Clause, SentenceResult, Span
 from .verb_check import check as verb_check
@@ -98,6 +99,7 @@ def adverb_function(tok) -> str:
         small_clause = any(c.dep_ == "pcomp" and any(g.dep_ == "nsubj" for g in c.children) for c in tok.children)
         if small_clause or pobj is not None and any(
                 c.i > pobj.i and (c.tag_ in ("VBN", "VBG") or c.dep_ in ("acl", "amod") and c.pos_ in ("ADJ", "VERB"))
+                and not any(g.dep_ in ("xcomp", "prep") or g.lower_ == "enough" for g in c.children)  # a ship big enough to…
                 for c in pobj.children):
             return "副詞・表狀況"  # 附帶狀況：with his eyes closed、with the door open
     if dep == "advmod" and " ".join(t.lower_ for t in sorted(tok.subtree, key=lambda t: t.i)[:2]) == "no matter":
@@ -658,6 +660,16 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 info.flags.add("dummy_object")
                 info.flags.discard("to_v_or_ving_object")
 
+    # 移動動詞 ＋ 距離／時間：sailed more than a hundred miles、walked two hours → 不是受詞，是修飾語（句型一）
+    if v.lemma_.lower() in L.MOTION_VERBS:
+        for c in children:
+            if c.dep_ in ("dobj", "npadvmod") and c.i in roots and roots[c.i].role in ("O", "M") and c.i > v.i:
+                unit = c.lemma_.lower()
+                if unit in L.DISTANCE_NOUNS:
+                    roots[c.i] = Spec("M", function="副詞・表路程", clause=index)
+                elif unit in L.TIME_NOUNS and any(g.dep_ in ("nummod", "det", "amod") for g in c.children):
+                    roots[c.i] = Spec("M", function="副詞・表時間", clause=index)
+
     # be ＋ 介系詞片語／地方副詞 → 主詞補語（使用者決定 2026-10-01，照課本與賴世雄）：
     #   Your book is on the shelf.、I am at school. → 句型二：S + Vi + SC
     if v.lemma_ == "be" and roots.get(v.i) is not None and roots[v.i].role == VERB_ROLE and not info.existential \
@@ -859,7 +871,9 @@ def expand_noun_modifiers(roots, tokens, owner_of):
                     is_time = obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME"))
                     if is_time and (tok.pos_ == "NUM" or tok.lemma_.lower() in L.TIME_NOUNS):
                         continue  # at eight in the morning：整段都是時間，不拆開
-                    if is_time and tok.lemma_.lower() not in L.TIME_NOUNS and spec.role in NOMINAL:
+                    dated = obj is not None and (obj.ent_type_ in ("DATE", "TIME") or obj.tag_ == "CD") and g.lower_ != "about"
+                    if is_time and tok.lemma_.lower() not in L.TIME_NOUNS and (spec.role in NOMINAL or (spec.role == "M" and dated)):
+                        # until its discovery in 2022：in 2022 說明「什麼時候」→ 表時間（使用者回報 2026-10-01）
                         # on a busy day 掛在受詞上 → 其實是說明動作的時間
                         roots[g.i] = Spec("M", function="副詞・表時間", clause=spec.clause, kind="reattached")
                     elif (tok.dep_ == "dobj" and g.lemma_.lower() in ("in", "at", "on")
@@ -887,6 +901,8 @@ def expand_noun_modifiers(roots, tokens, owner_of):
                 elif g.dep_ == "acl":
                     roots[g.i] = Spec("M", function="形容詞・修飾", modifies=target, clause=spec.clause, kind="acl")
                     changed = True
+                elif g.dep_ == "appos" and g.pos_ == "NUM" and (tok.ent_type_ == "DATE" or tok.lemma_.lower() in L.TIME_NOUNS):
+                    continue  # August 30, 1916：年份是日期的一部分，不是同位語
                 elif g.dep_ == "appos":
                     # Paris, the capital of France：同位語（Azar 13-15）
                     roots[g.i] = Spec("M", function="同位語・說明", modifies=tok, clause=spec.clause, kind="appos")
@@ -1377,6 +1393,8 @@ def analyze_sentence(text: str) -> SentenceResult:
     for i, c in enumerate(raw):
         c["id"] = i
         c["note"] = chunk_note(c, infos, stext, compound=(kind == "compound"))
+        if c.get("function") == "副詞・分詞構句" and c.get("_root") is not None:
+            c["restore"] = participle_restore(c["_root"])  # 點開時顯示還原成完整句子的步驟
         if c.get("_spec") is not None and c["_spec"].kind == "lets_us":
             c["suffix"] = "（us）"  # 使用者要求：畫面上直接看得到 's 就是 us
         c.pop("_root", None)
