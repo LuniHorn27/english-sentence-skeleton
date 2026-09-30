@@ -72,11 +72,18 @@ _rate_lock = threading.Lock()
 _rate_times: dict[tuple[str, str], deque] = defaultdict(deque)
 
 
+_rate_cleaned = [0.0]
+
+
 def check_rate(request: Request, bucket: str, limit: int, window: int, message: str):
     """同一個來源在 window 秒內最多 limit 次；來源位址只放在記憶體裡計數，不存檔"""
     key = (bucket, request.client.host if request.client else "unknown")
     now = time.time()
     with _rate_lock:
+        if now - _rate_cleaned[0] > 600:  # 每 10 分鐘清掉一小時前的紀錄，記憶體才不會一直變大
+            for k in [k for k, v in _rate_times.items() if not v or now - v[-1] > 3600]:
+                del _rate_times[k]
+            _rate_cleaned[0] = now
         times = _rate_times[key]
         while times and now - times[0] > window:
             times.popleft()
@@ -284,12 +291,30 @@ def get_card(card_id: str):
     return Card(**yaml.safe_load(path.read_text(encoding="utf-8")))
 
 
+MAX_BODY = 200_000  # 送進來的資料最多 200 KB（分析上限 2000 字元，回饋附的分析結果也不會超過）
+SECURITY_HEADERS = {
+    # 只准載入本站的程式和樣式；朗讀的聲音用 blob: 播放
+    "Content-Security-Policy": ("default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; "
+                                "media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; "
+                                "form-action 'self'; frame-ancestors 'none'"),
+    "X-Content-Type-Options": "nosniff",  # 不讓瀏覽器猜檔案類型
+    "X-Frame-Options": "DENY",  # 不能被嵌進別人的網頁（防止點擊劫持）
+    "Referrer-Policy": "no-referrer",  # 點外部連結時不透露在看哪一頁（分享連結裡有句子）
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+}
+
+
 @app.middleware("http")
 async def no_stale_files(request, call_next):
-    """網頁檔案更新後，瀏覽器要重新確認，不要用舊的快取"""
+    """網頁檔案更新後，瀏覽器要重新確認，不要用舊的快取；另外加上安全標頭、擋掉太大的請求"""
+    length = request.headers.get("content-length")
+    if length and (not length.isdigit() or int(length) > MAX_BODY):
+        return Response("資料太大了", status_code=413)
     response = await call_next(request)
     if request.url.path in ("/", "/patterns", "/about", "/quiz") or request.url.path.startswith("/static/"):
         response.headers["Cache-Control"] = "no-cache"
+    for k, v in SECURITY_HEADERS.items():
+        response.headers.setdefault(k, v)
     return response
 
 
