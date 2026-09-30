@@ -4884,3 +4884,69 @@
     function: 副詞・表時間
     modifies: null
     text: every morning
+- id: '329'
+  sentence: The news made headlines around the world, not only for the incredible achievement of the search team, but because the discovery marked the final chapter in a legendary story of extraordinary
+    courage and perseverance.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The news
+  - role: Vt
+    text: made
+  - role: O
+    text: headlines
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: around the world
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: not only for the incredible achievement of the search team
+  - role: conj
+    text: but
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because the discovery marked the final chapter in a legendary story of extraordinary courage and perseverance
+- id: '330'
+  sentence: She was praised not only for her talent but also for her hard work.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: was
+  - role: Vt
+    text: praised
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: not only for her talent
+  - role: conj
+    text: but also
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: for her hard work
+- id: '331'
+  sentence: He works in the morning and at night.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: works
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: in the morning
+  - role: conj
+    text: and
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: at night

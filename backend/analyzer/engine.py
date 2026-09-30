@@ -660,6 +660,36 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 info.flags.add("dummy_object")
                 info.flags.discard("to_v_or_ving_object")
 
+    # not only for A, but because B：修飾語裡面用 but／and 接了第二個修飾語 → 拆成兩塊，中間的 but 標 conj.
+    for c in children:
+        if c.i not in roots or roots[c.i].role != "M" or c.dep_ != "prep":
+            continue
+        second = next((g for g in c.children if g.dep_ == "conj" and (
+            (g.pos_ in ("VERB", "AUX") and any(m.dep_ == "mark" for m in g.children)) or g.dep_ == "prep" or g.pos_ == "ADP")), None)
+        cc = next((g for g in c.children if g.dep_ == "cc"), None)
+        if second is None or cc is None:
+            continue
+        if second.pos_ in ("VERB", "AUX"):
+            f2 = advcl_function(second)
+        else:  # 第二個介系詞片語掛在第一個底下（dep＝conj），照介系詞和後面的名詞判斷
+            obj = next((x for x in second.children if x.dep_ == "pobj"), None)
+            olemma = obj.lemma_.lower() if obj is not None else ""
+            if second.lemma_ == c.lemma_:
+                f2 = roots[c.i].function
+            elif second.lemma_ in L.TIME_PREPS or olemma in L.TIME_NOUNS or (obj is not None and obj.ent_type_ in ("DATE", "TIME")):
+                f2 = "副詞・表時間"
+            elif second.lemma_ in L.PLACE_PREPS:
+                f2 = "副詞・表地點"
+            else:
+                f2 = roots[c.i].function
+        if not f2:
+            continue
+        roots[second.i] = Spec("M", function=f2, clause=index, kind="advcl" if f2.startswith("副詞子句") else "",
+                               inner_verb=second if f2.startswith("副詞子句") else None)
+        roots[cc.i] = Spec("conj", clause=index)
+        if f2.endswith("表原因") and c.lower_ == "for":
+            roots[c.i] = Spec("M", function="副詞・表原因", clause=index)  # not only for A but because B：for 也是「因為」
+
     # 移動動詞 ＋ 距離／時間：sailed more than a hundred miles、walked two hours → 不是受詞，是修飾語（句型一）
     if v.lemma_.lower() in L.MOTION_VERBS:
         for c in children:
