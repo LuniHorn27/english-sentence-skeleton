@@ -50,7 +50,7 @@ check("單句分析：核心字", code == 200 and any(h["text"] == "boy" for c i
 code, d, _ = analyze("I give you a big hand.")
 check("片語卡：慣用語", code == 200 and any(p["id"] == "give_a_big_hand" for p in d["sentences"][0]["phrases"]), "give someone a big hand")
 code, d, _ = analyze("I am at school.")
-check("I am at school 歸句型一（使用者決定）", code == 200 and d["sentences"][0]["header"] == "句型一：S + Vi", d["sentences"][0]["header"] if code == 200 else "")
+check("I am at school 歸句型二（使用者決定 2026-10-01）", code == 200 and d["sentences"][0]["header"] == "句型二：S + Vi + SC", d["sentences"][0]["header"] if code == 200 else "")
 code, d, _ = analyze("It was not easy.")
 check("not 標「副詞・表否定」", code == 200 and any(c.get("function") == "副詞・表否定" for c in d["sentences"][0]["chunks"]))
 para = " ".join(["The sun rises in the east."] * 32)
