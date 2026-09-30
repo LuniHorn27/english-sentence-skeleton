@@ -491,7 +491,7 @@ function renderSentence(sIdx) {
   if (window.Speech?.available && sentence.status !== "failed") {
     tools.append(speakButton(sentence.text, "朗讀"));
   }
-  const report = el("button", "speak", view.feedback === "sent" ? "已回報，謝謝" : "回報錯誤");
+  const report = el("button", "speak", view.feedback === "sent" ? "✅ 已回報，謝謝" : "🚩 回報錯誤");  // 前面加圖示，和「🔊 朗讀」對齊
   report.type = "button";
   report.disabled = view.feedback === "sent";
   report.addEventListener("click", () => {

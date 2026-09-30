@@ -3155,16 +3155,14 @@
     text: wrong
 - id: '220'
   sentence: Most of the students are here.
-  pattern: 1
+  pattern: 3
   passive: false
   chunks:
   - role: S
     text: Most of the students
-  - role: Vi
+  - role: V
     text: are
-  - role: M
-    function: 副詞・表地點
-    modifies: null
+  - role: SC
     text: here
 - id: '221'
   sentence: A number of students were absent.

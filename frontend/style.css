@@ -222,7 +222,7 @@ button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
 
 /* ---------- 文法重點卡 ---------- */
 /* 片語卡和文法重點卡：寬螢幕並排兩欄，展開的卡片佔滿整行 */
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 10px; margin-top: 10px; align-items: start; }
+.cards { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 10px; align-items: start; }  /* 一張卡一行，不擠在一起（使用者要求） */
 .cards:empty { display: none; }
 .card.open { grid-column: 1 / -1; }
 .card { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 14px; line-height: 1.7; background: var(--bg); }

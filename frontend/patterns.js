@@ -103,7 +103,7 @@ const PATTERNS = [
       { parts: [["The soup", "S"], ["smells", "V"], ["good", "SC"]], zh: "這碗湯聞起來很香。（The soup ＝ good，補語是形容詞）" },
     ],
     tips: [
-      "主詞補語可以是名詞（She is a nurse.）或形容詞（The soup smells good.）。",
+      "主詞補語可以是名詞（She is a nurse.）、形容詞（The soup smells good.），或介系詞片語（The cat is under the table.）。",
     ],
     verbs: "be 動詞（am、is、are）；感官：look、sound、smell、taste、feel；保持：keep、stay、remain；變成：become、get、turn、grow",
   },

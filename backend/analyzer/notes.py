@@ -119,6 +119,9 @@ def chunk_note(c, infos, text, compound=None) -> str:
             return "直接受詞：整個名詞子句是給對方的「內容」。點一下可以展開子句。"
         return f"直接受詞：給「什麼」？{'核心字是 ' + head + '。' if head else ''}"
     if role == "SC":
+        if root is not None and (root.dep_ == "prep" or root.lower_ in ("here", "there", "home", "where")):
+            return ("主詞補語：be 動詞後面的介系詞片語或地方副詞，說明主詞「在哪裡」或「處於什麼狀態」。"
+                    "少了它，句子的意思就不完整。")
         return "主詞補語：說明主詞的身分或狀態，可以想成「主詞 ＝ 補語」。"
     if role == "OC":
         if c.get("structure") == "不定詞片語":

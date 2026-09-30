@@ -623,6 +623,19 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 info.flags.add("dummy_object")
                 info.flags.discard("to_v_or_ving_object")
 
+    # be ＋ 介系詞片語／地方副詞 → 主詞補語（使用者決定 2026-10-01，照課本與賴世雄）：
+    #   Your book is on the shelf.、I am at school. → 句型二：S + Vi + SC
+    if v.lemma_ == "be" and roots.get(v.i) is not None and roots[v.i].role == VERB_ROLE and not info.existential \
+            and not info.passive and not any(roots.get(c.i) and roots[c.i].role in ("SC", "O", "RS") and roots[c.i].clause == index
+                                             for c in children):
+        place = next((c for c in sorted(children, key=lambda t: t.i) if c.i in roots and roots[c.i].role == "M"
+                      and ((c.i > v.i and c.dep_ == "prep" and any(g.dep_ in ("pobj", "pcomp") for g in c.children)
+                            and not (v.lower_ == "been" and c.lower_ == "to"))  # have been to Japan（去過）維持句型一
+                           or (c.i > v.i and c.dep_ == "advmod" and c.lemma_.lower() in L.PLACE_ADVERBS)
+                           or (c.dep_ == "advmod" and c.lower_ == "where"))), None)  # Where is your book?
+        if place is not None:
+            roots[place.i] = Spec("SC", clause=index)
+
     # There is 句型：掛在真正主詞底下的介系詞片語，當成表地點的副詞
     if info.existential:
         for c in children:
@@ -1114,8 +1127,15 @@ def tag_question_main(root, sent):
 
 
 # ---------- 主程式 ----------
+def clean_spaces(text: str) -> str:
+    """從網頁複製的句子常夾著不斷行空白、全形空白、零寬字元或連續空白，
+    分析程式會把它們當成一個字而看錯結構（畫面上也會空兩格）→ 統一成一個普通空白"""
+    text = re.sub(r"[\u200b\u200c\u200d\u2060\ufeff]", "", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def analyze_sentence(text: str) -> SentenceResult:
-    text = text.strip()
+    text = clean_spaces(text)
     if not re.search(r"[A-Za-z]{2,}", text) or re.search(r"[\u3400-\u9fff]", text):
         return SentenceResult(text=text, status="failed", clauses=[], chunks=[],
                               message="請輸入英文句子（不能包含中文字）。")
@@ -1354,12 +1374,13 @@ MAX_SENTENCES = 30
 
 def split_sentences(text: str) -> list[str]:
     """整段文章切成句子（用 spaCy 的斷句，縮寫如 Mr. 不會被誤切）"""
-    doc = get_nlp()(text.strip())
+    doc = get_nlp()(clean_spaces(text))
     return [s.text.strip() for s in doc.sents if s.text.strip()]
 
 
 def analyze_text(text: str) -> list[SentenceResult]:
     """整段文章：逐句分析；超過上限的句子不分析"""
+    text = clean_spaces(text)
     if not re.search(r"[A-Za-z]{2,}", text) or re.search(r"[\u3400-\u9fff]", text):
         return [analyze_sentence(text)]
     parts = split_sentences(text)

@@ -1368,16 +1368,14 @@
     text: of wood
 - id: '77'
   sentence: I am at school.
-  pattern: 1
+  pattern: 3
   passive: false
   chunks:
   - role: S
     text: I
-  - role: Vi
+  - role: V
     text: am
-  - role: M
-    function: 副詞・表地點
-    modifies: null
+  - role: SC
     text: at school
 - id: '78'
   sentence: I left my keys at school.
