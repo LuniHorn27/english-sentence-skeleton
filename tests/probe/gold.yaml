@@ -4572,3 +4572,127 @@
     text: of you
   - role: RS
     text: to help me
+- id: '313'
+  sentence: As the weather was bad, we delayed our trip.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: As the weather was bad
+  - role: S
+    text: we
+  - role: Vt
+    text: delayed
+  - role: O
+    text: our trip
+- id: '314'
+  sentence: I saw Linda as I was getting off the bus.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: saw
+  - role: O
+    text: Linda
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: as I was getting off the bus
+- id: '315'
+  sentence: As technology advances, our lives get more convenient.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表比例
+    modifies: null
+    text: As technology advances
+  - role: S
+    text: our lives
+  - role: V
+    text: get
+  - role: SC
+    text: more convenient
+- id: '316'
+  sentence: Do as I say.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: Vi
+    text: Do
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: as I say
+- id: '317'
+  sentence: Tired as Mom was, she still cooked dinner.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Tired as Mom was
+  - role: S
+    text: she
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: still
+  - role: Vt
+    text: cooked
+  - role: O
+    text: dinner
+- id: '318'
+  sentence: As he is my friend, I will help him.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: As he is my friend
+  - role: S
+    text: I
+  - role: aux
+    text: will
+  - role: Vt
+    text: help
+  - role: O
+    text: him
+- id: '319'
+  sentence: The crew camped out on the pack ice as it drifted north.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: The crew
+  - role: Vi
+    text: camped out
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: on the pack ice
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: as it drifted north
+- id: '320'
+  sentence: As she grew older, she became wiser.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表比例
+    modifies: null
+    text: As she grew older
+  - role: S
+    text: she
+  - role: V
+    text: became
+  - role: SC
+    text: wiser

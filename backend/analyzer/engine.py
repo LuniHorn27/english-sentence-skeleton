@@ -215,8 +215,36 @@ def has_perfect(verb):
     return any(c.dep_ == "aux" and c.lemma_ == "have" for c in verb.children)
 
 
+AS_MANNER_VERBS = {"do", "say", "tell", "show", "expect", "instruct", "please", "wish", "like", "want", "plan", "teach", "suggest", "direct"}
+AS_CHANGE_VERBS = {"grow", "get", "increase", "decrease", "advance", "develop", "change", "rise", "fall", "age", "improve",
+                   "progress", "go", "pass", "spread", "expand", "deepen", "become", "shrink", "mature"}
+AS_STATIVE_VERBS = {"be", "have", "know", "need", "want", "seem", "like", "understand", "believe", "own", "live", "feel"}
+
+
+def as_function(tok) -> str:
+    """as 帶的副詞子句（使用者整理的五種意思，2026-10-01）：
+    時間（當…時）、原因（因為）、比例（隨著）、方式（依照、如同）、讓步（Tired as Mom was，另外處理）。
+    分析程式看不懂語意，用線索猜，猜不到就維持表時間；說明裡會教學生用換字法自己判斷。"""
+    kids = list(tok.children)
+    progressive = tok.tag_ == "VBG" and any(c.dep_ == "aux" and c.lemma_ == "be" for c in kids)
+    if progressive:
+        return "表時間"  # I saw Linda as I was getting off the bus.
+    if tok.lemma_.lower() in AS_MANNER_VERBS and not any(c.dep_ in ("dobj", "ccomp", "xcomp") for c in kids):
+        return "表方式"  # Do as I say.、as the Romans do
+    main = tok.head
+    comparative = any(t.tag_ in ("JJR", "RBR") for t in list(tok.subtree) + [c for c in main.children if c.dep_ in ("acomp", "advmod", "oprd", "attr")])
+    if tok.lemma_.lower() in AS_CHANGE_VERBS or comparative:
+        return "表比例"  # As technology advances, our lives get more convenient.、As she grew older…
+    negative = any(c.dep_ == "neg" or c.tag_ == "MD" for c in kids)
+    if tok.lemma_.lower() in AS_STATIVE_VERBS or negative:
+        return "表原因"  # As the weather was bad, …、As he is my friend, …
+    return "表時間"
+
+
 def advcl_function(tok) -> Optional[str]:
     opener, f = opener_tokens(tok)
+    if len(opener) == 1 and opener[0].lower_ == "as":
+        f = as_function(tok)
     no_subject = not any(c.dep_ in ("nsubj", "nsubjpass", "expl") for c in tok.children)
     if opener and opener[0].lower_ == "since" and len(opener) == 1:
         f = "表時間" if has_perfect(tok.head) or has_perfect(tok) else "表原因"
@@ -517,6 +545,13 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         elif d in ("prep", "agent", "advmod", "npadvmod", "intj"):
             roots[c.i] = Spec("M", function=adverb_function(c), clause=index,
                               kind="npadv" if d == "npadvmod" else "")
+        elif d == "advcl" and c.pos_ in ("ADJ", "ADV") and c.i < v.i and any(
+                g.dep_ == "advcl" and any(m.dep_ == "mark" and m.lower_ == "as" and m.i == c.i + 1 for m in g.children)
+                for g in c.children):
+            # Tired as Mom was, she still cooked dinner.（形容詞 ＋ as ＋ S ＋ V：雖然、儘管）
+            inner = next(g for g in c.children if g.dep_ == "advcl")
+            roots[c.i] = Spec("M", function="副詞子句・表讓步", clause=index, kind="advcl", inner_verb=inner)
+            info.flags.add("subordinating_conj")
         elif d == "advcl" and c.pos_ == "ADJ" and c.i < v.i:
             roots[c.i] = Spec("M", function="副詞・分詞構句", clause=index)  # (Being) Tired after work, he went to bed.
             info.flags.add("participle_phrase")

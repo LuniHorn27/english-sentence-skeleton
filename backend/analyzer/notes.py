@@ -22,6 +22,8 @@ ADVERB_NOTE = {
     "副詞子句・表地點": "副詞子句：說明「在哪裡」。它不能單獨成句。",
     "副詞子句・表結果": "so／such … that 的 that 子句：說明「所以導致什麼結果」。",
     "副詞子句・表對比": "副詞子句：和主要句子形成對比（whereas、while）。它不能單獨成句。",
+    "副詞子句・表比例": "副詞子句：意思是「隨著…」，一邊變化、另一邊也跟著變化。它不能單獨成句。",
+    "副詞子句・表方式": "副詞子句：說明「照什麼方式、像什麼樣子」（as、as if）。它不能單獨成句。",
 }
 
 
@@ -170,6 +172,10 @@ def chunk_note(c, infos, text, compound=None) -> str:
             base += "這裡的地點是動詞必需的，拿掉之後句子意思就不完整。"
         if spec is not None and spec.kind == "ambiguous_place":
             base += "也可以理解成修飾前面的名詞（例如「花園裡的花」），意思差不多。"
+        if f.startswith("副詞子句") and c["text"].lower().startswith("as ") and not c["text"].lower().startswith(("as if", "as though", "as soon as", "as long as")):
+            base += ("as 有五種常見意思，可以用換字法判斷：換成 when／while 說得通是表時間（當…時）；"
+                     "換成 because 是表原因（因為）；翻成「隨著」是表比例；換成 in the way that 是表方式（依照、如同）；"
+                     "形容詞放在 as 前面（Tired as Mom was）是表讓步（雖然）。")
         if c.get("inner"):
             base += "點一下可以展開子句。"
         return base
