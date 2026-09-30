@@ -21,7 +21,7 @@ blocks:
     zh: 直述句
     mark: none
   - en: <b>Is</b> your sister a nurse?
-    zh: 疑問句：這裡的 Is 是主要動詞，標 V
+    zh: 疑問句：這裡的 Is 是主要動詞（連綴動詞），標 Vi
     mark: none
 - type: heading
   text: 沒有助動詞時，加上 do／does／did

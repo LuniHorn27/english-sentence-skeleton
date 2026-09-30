@@ -85,7 +85,8 @@ def chunk_note(c, infos, text, compound=None) -> str:
             return "be 動詞在這裡表示「在（某個地方）」，是不及物動詞 Vi。後面的地點是修飾語，但不能省略，少了它意思就不完整。"
         return f"{prefix}不及物動詞，後面不需要受詞，主幹到這裡就完整了。"
     if role == "V":
-        return f"{prefix}動詞。補充：這是「連綴動詞」，像等號一樣把主詞和後面的補語連起來，後面接的不是受詞。"
+        return (f"{prefix}不及物動詞 Vi，而且是「連綴動詞」：像等號一樣把主詞和後面的補語連起來，"
+                "後面接的不是受詞，但一定要接補語，意思才完整。")
     if role == "aux":
         lower = c["text"].lower()
         if spec is not None and spec.kind == "lets":

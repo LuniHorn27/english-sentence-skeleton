@@ -16,7 +16,7 @@ DICT_PATH = Path(__file__).with_name("verb_patterns.yaml")
 CODE = {1: "SV", 2: "SVO", 3: "SVC", 4: "SVOO", 5: "SVOC"}
 LABEL = {
     "SV": "句型一 S+Vi",
-    "SVC": "句型二 S+V+SC",
+    "SVC": "句型二 S+Vi+SC",
     "SVO": "句型三 S+Vt+O",
     "SVOC": "句型四 S+Vt+O+OC",
     "SVOO": "句型五 S+Vt+IO+DO",

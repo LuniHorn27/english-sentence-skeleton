@@ -167,7 +167,7 @@ VERB_PREP_OBJECT = {
     ("take", "care"), ("get", "along"), ("take", "after"),
 }
 
-# 看起來像被動、其實當形容詞用的過去分詞（is crowded → 句型二 S + V + SC）
+# 看起來像被動、其實當形容詞用的過去分詞（is crowded → 句型二 S + Vi + SC）
 ADJ_PARTICIPLES = {
     "crowded", "interested", "excited", "bored", "tired", "surprised", "worried",
     "scared", "frightened", "pleased", "satisfied", "married", "closed", "finished",

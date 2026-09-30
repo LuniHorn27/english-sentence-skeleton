@@ -13,7 +13,7 @@ const ROLE_NAME = {
 };
 // [內部代號, 顯示編號, 公式]，依賴世雄的編號排列
 const PATTERNS = [
-  [1, "句型一", "S + Vi"], [3, "句型二", "S + V + SC"], [2, "句型三", "S + Vt + O"],
+  [1, "句型一", "S + Vi"], [3, "句型二", "S + Vi + SC"], [2, "句型三", "S + Vt + O"],
   [5, "句型四", "S + Vt + O + OC"], [4, "句型五", "S + Vt + IO + DO"],
 ];
 const MODES = {
@@ -74,7 +74,7 @@ function answerRow(item, revealAll = true) {
   for (const c of item.chunks) {
     const core = c.role !== "M";
     const ck = el("span", `ck ${core ? `${c.role === "aux" || c.role === "RS" || c.role === "RO" ? "soft" : "core"} r-${GROUP[c.role] || "S"}` : "m"}`);
-    const label = core ? (c.role === "aux" ? "aux." : c.role) : c.function || "修飾語";
+    const label = core ? (c.role === "aux" ? "aux." : c.role === "V" ? "Vi" : c.role) : c.function || "修飾語";
     ck.append(el("span", "lb", revealAll ? label : ""), el("span", "tx", c.text));
     row.append(ck);
   }
@@ -226,7 +226,7 @@ function askSkeleton(item, card) {
     });
     if (step < steps.length) {
       const role = steps[step].c.role;
-      ask.replaceChildren(`第 ${step + 1} 步：點出`, el("b", `ask-role r-${GROUP[role]}`, `${ROLE_NAME[role]}（${role}）`));
+      ask.replaceChildren(`第 ${step + 1} 步：點出`, el("b", `ask-role r-${GROUP[role]}`, `${ROLE_NAME[role]}（${role === "V" ? "Vi" : role}）`));
     }
   }
 
@@ -249,7 +249,7 @@ function askSkeleton(item, card) {
           t.disabled = true;
           if (!t.classList.contains("found")) {
             t.classList.add("rest");
-            t.querySelector(".lb").textContent = c.role === "M" ? "修飾" : c.role === "aux" ? "aux." : c.role;
+            t.querySelector(".lb").textContent = c.role === "M" ? "修飾" : c.role === "aux" ? "aux." : c.role === "V" ? "Vi" : c.role;
           }
         });
         const ok = mistakes === 0;

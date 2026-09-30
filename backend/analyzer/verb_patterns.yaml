@@ -3,7 +3,7 @@
 #   VerbNet＝VerbNet 3.4 換算、VerbNet?＝換算時有疑問、ECDICT＝字典標 vt./vi.、
 #   賴世雄＝《教你學英語語法》上冊、字表＝lexicon.py、題庫＝練習題標準答案、
 #   補充＝文法書常見動詞表（build_verb_dict.py 的 SUPPLEMENT）
-# 句型代號：SV 句型一 S+Vi、SVC 句型二 S+V+SC、SVO 句型三 S+Vt+O、
+# 句型代號：SV 句型一 S+Vi、SVC 句型二 S+Vi+SC、SVO 句型三 S+Vt+O、
 #           SVOC 句型四 S+Vt+O+OC、SVOO 句型五 S+Vt+IO+DO
 # common: true＝常用動詞（牛津 3000、中國中考／高考字表、或其他來源提到）
 #

@@ -24,8 +24,8 @@ Role = Literal[
 CORE_ROLES = {"S", "Vt", "Vi", "V", "O", "IO", "DO", "SC", "OC"}  # 算進公式的角色
 
 # 句型的「內部代號」→「顯示編號」（採賴世雄／常春藤的編號，2026-09-27 使用者決定）
-#   內部代號：1 S+Vi、2 S+Vt+O、3 S+V+SC、4 S+Vt+IO+DO、5 S+Vt+O+OC（程式與題庫資料使用）
-#   顯示編號：句型一 S+Vi、句型二 S+V+SC、句型三 S+Vt+O、句型四 S+Vt+O+OC、句型五 S+Vt+IO+DO
+#   內部代號：1 S+Vi、2 S+Vt+O、3 S+Vi+SC、4 S+Vt+IO+DO、5 S+Vt+O+OC（程式與題庫資料使用）
+#   顯示編號：句型一 S+Vi、句型二 S+Vi+SC、句型三 S+Vt+O、句型四 S+Vt+O+OC、句型五 S+Vt+IO+DO
 PATTERN_DISPLAY = {1: 1, 2: 3, 3: 2, 4: 5, 5: 4}
 
 

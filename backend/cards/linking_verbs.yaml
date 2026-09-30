@@ -4,7 +4,7 @@ brief: 後面接形容詞或名詞，說明主詞的狀態或身分，而不是�
 trigger: 動詞後面接主詞補語（句型二），而且不是 be 動詞
 blocks:
 - type: formula
-  text: 主詞 ＋ 連綴動詞 ＋ 補語　→　主詞 ＝ 補語
+  text: 主詞 ＋ 連綴動詞（Vi）＋ 補語　→　主詞 ＝ 補語（句型二：S ＋ Vi ＋ SC）
 - type: heading
   text: 常見的連綴動詞
 - type: list
@@ -14,6 +14,8 @@ blocks:
   - 變化：become、get、turn、grow
   - 保持：stay、keep、remain
   - 看起來：seem、appear
+- type: info
+  text: 連綴動詞是一種不及物動詞（Vi）：後面不接受詞，但一定要接補語，意思才完整。
 - type: tip
   text: 等號測試：The tree stayed green → tree = green 說得通，green 就是補語。
 - type: warn

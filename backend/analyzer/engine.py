@@ -1058,7 +1058,7 @@ MAX_CARDS = 3
 def comparative_correlative(sent, v, roots, info):
     """The more you practice, the better you get.（越…就越…）
     前半「the ＋ 比較級 …」整塊是副詞子句（表條件）；後半是主要子句，the ＋ 比較級是被移到前面的補語或受詞：
-    the better you get → you get better（句型二：S + V + SC）。沒把握的部分留給「未分析」。"""
+    the better you get → you get better（句型二：S + Vi + SC）。沒把握的部分留給「未分析」。"""
     toks = [t for t in sent if not t.is_space]
     if len(toks) < 4 or toks[0].lower_ != "the" or not (toks[1].tag_ in ("JJR", "RBR") or toks[1].lower_ in ("more", "less", "fewer")):
         return False
@@ -1390,7 +1390,7 @@ def parallel_clauses(infos, chunks):
     return out
 
 
-FORMULA = {1: "S + Vi", 2: "S + Vt + O", 3: "S + V + SC", 4: "S + Vt + IO + DO", 5: "S + Vt + O + OC"}
+FORMULA = {1: "S + Vi", 2: "S + Vt + O", 3: "S + Vi + SC", 4: "S + Vt + IO + DO", 5: "S + Vt + O + OC"}
 
 
 def formula(info, chunks):
