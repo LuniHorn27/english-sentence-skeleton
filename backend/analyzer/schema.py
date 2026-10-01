@@ -110,6 +110,13 @@ class PhraseHit(BaseModel):
     start: int = Field(description="第一個字在句子中的字元位置")
 
 
+class Typo(BaseModel):
+    word: str
+    start: int = Field(description="在句子中的起始字元位置")
+    end: int
+    suggestion: Optional[str] = Field(None, description="最可能想打的字；找不到就是 None")
+
+
 class SentenceResult(BaseModel):
     text: str
     status: Literal["ok", "partial", "failed"]
@@ -120,6 +127,7 @@ class SentenceResult(BaseModel):
     cards: list[CardRef] = Field(default_factory=list)
     phrases: list[PhraseHit] = Field(default_factory=list)
     translation: Optional[str] = Field(None, description="分析時不翻譯；網頁另外呼叫 /api/translate 補上")
+    typos: list[Typo] = Field(default_factory=list, description="可能打錯的字（拼字檢查）")
 
     @computed_field
     @property

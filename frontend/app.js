@@ -479,6 +479,30 @@ if (suggestForm) {
   });
 }
 
+// ---------- 拼字提醒：是不是打錯字？ ----------
+function typoBanner(sentence) {
+  const box = el("div", "banner typo");
+  const parts = sentence.typos.map((t) => (t.suggestion ? `「${t.word}」是不是「${t.suggestion}」？` : `「${t.word}」好像不是英文單字，請確認拼字。`));
+  box.append(el("span", null, `✏️ 可能打錯字：${parts.join("")}打錯字會讓分析出錯，改正後再分析一次會比較準。`));
+  const fixes = sentence.typos.filter((t) => t.suggestion);
+  if (fixes.length) {
+    const btn = el("button", "typo-fix", fixes.length === 1 ? `改成 ${fixes[0].suggestion} 再分析` : "全部改正再分析");
+    btn.type = "button";
+    btn.addEventListener("click", () => {
+      let text = input.value;
+      for (const t of fixes) {
+        const esc = t.word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        text = text.replace(new RegExp(`\\b${esc}\\b`), t.suggestion);
+      }
+      input.value = text;
+      updateCounter();
+      form.requestSubmit();
+    });
+    box.append(btn);
+  }
+  return box;
+}
+
 // ---------- 一整句 ----------
 function renderSentence(sIdx) {
   const sentence = sentences[sIdx];
@@ -527,7 +551,9 @@ function renderSentence(sIdx) {
   }
 
   if (sentence.status === "failed" && sentences.length > 1) box.append(el("p", "failed-text", sentence.text));
-  if (sentence.status !== "ok" && sentence.message) {
+  if (sentence.typos?.length) {
+    box.append(typoBanner(sentence));  // 打錯字常常讓整句看錯，先提醒改字，不顯示「這句比較複雜」
+  } else if (sentence.status !== "ok" && sentence.message) {
     box.append(el("div", `banner${sentence.status === "failed" ? " fail" : ""}`, sentence.message));
   }
   if (sentence.status !== "failed") {

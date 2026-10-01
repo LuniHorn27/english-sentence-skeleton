@@ -18,6 +18,7 @@ from typing import Optional
 from . import lexicon as L
 from .notes import chunk_note
 from .restore import participle_restore
+from .spelling import find_typos
 from .phrases import find_phrases, phrasal_object
 from .schema import CardRef, Chunk, Clause, SentenceResult, Span
 from .verb_check import check as verb_check
@@ -1233,10 +1234,11 @@ def analyze_sentence(text: str) -> SentenceResult:
         status = "partial"
         message = "目前一次只能分析一句，這裡只顯示第一句的分析。"
 
+    typos = find_typos(sent)  # 可能打錯的字：畫面上提醒「是不是打錯字？」
     root = sent.root
     if root.pos_ not in ("VERB", "AUX"):
         return SentenceResult(
-            text=stext, status="failed", clauses=[], chunks=[],
+            text=stext, status="failed", clauses=[], chunks=[], typos=typos,
             message="找不到句子的主要動詞，這可能不是一個完整的句子（例如只有片語），請再確認一次。",
         )
 
@@ -1448,7 +1450,7 @@ def analyze_sentence(text: str) -> SentenceResult:
     if any(p.kind == "慣用語" and " of " in f" {p.words} " for p in phrases):
         flags = flags - {"unit_of", "quantifier_of"}  # a piece of cake 是慣用語，不是「一塊」蛋糕
     cards = [CardRef(id=f, vars=vars_.get(f, {})) for f in CARD_ORDER if f in flags][:MAX_CARDS]
-    return SentenceResult(text=stext, status=status, message=message, kind=kind, clauses=clauses, chunks=chunks, cards=cards,
+    return SentenceResult(text=stext, status=status, message=message, kind=kind, clauses=clauses, chunks=chunks, cards=cards, typos=typos,
                           phrases=phrases)
 
 
