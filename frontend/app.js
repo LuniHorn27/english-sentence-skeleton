@@ -492,9 +492,7 @@ function renderSentence(sIdx) {
   if (sentence.clauses.length) {
     // 句型標籤可以點，打開五大句型介紹的對應段落
     const link = el("a", "pattern", sentence.header);
-    link.href = `/patterns#p${sentence.clauses[0].pattern}`;
-    link.target = "_blank";
-    link.rel = "noopener";
+    link.href = `/patterns#p${sentence.clauses[0].pattern}`;  // 在同一頁打開（使用者要求）；按上一頁回來會自動重新分析
     link.title = "看這個句型的說明";
     head.append(link);
   }
@@ -623,6 +621,7 @@ form.addEventListener("submit", async (event) => {
   const text = input.value.trim();
   if (!text) return showError("請輸入英文句子或一段英文文章");
   if (text.length > MAX_CHARS) return showError(`句子太長了，請控制在 ${MAX_CHARS} 個字元以內`);
+  try { sessionStorage.setItem("last", text); } catch { /* 無痕模式等情況，不影響使用 */ }
 
   submit.disabled = true;
   submit.textContent = "分析中…";
@@ -751,3 +750,22 @@ $("history-clear").addEventListener("click", () => {
 updateCounter();
 renderHistory();
 loadFromHash();
+
+// 從五大句型頁按「上一頁」回來時，分析結果可能已經被瀏覽器清掉 → 自動重新分析上一次的句子
+function restoreAfterBack() {
+  const nav = performance.getEntriesByType("navigation")[0];
+  if (!nav || nav.type !== "back_forward" || location.hash.startsWith("#q=") || result.childElementCount) return;
+  let last = null;
+  try { last = sessionStorage.getItem("last"); } catch { return; }
+  if (!last) return;
+  input.value = last;
+  updateCounter();
+  form.requestSubmit();
+}
+restoreAfterBack();
+// 點去五大句型頁時做記號：那邊的「回到句子分析」就用上一頁，回來看得到剛才的分析
+document.addEventListener("click", (e) => {
+  if (e.target.closest?.('a[href^="/patterns"]')) {
+    try { sessionStorage.setItem("fromAnalysis", "1"); } catch { /* 不影響使用 */ }
+  }
+});

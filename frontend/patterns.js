@@ -177,5 +177,16 @@ for (const n of [1, 3, 2, 5, 4]) {
   wrap.append(card);
 }
 
+// 從分析頁點過來的：「回到句子分析」用上一頁，回去看得到剛才的分析結果
+const backLink = document.querySelector(".back a[href='/']");
+backLink?.addEventListener("click", (e) => {
+  let from = null;
+  try { from = sessionStorage.getItem("fromAnalysis"); sessionStorage.removeItem("fromAnalysis"); } catch { /* 不影響使用 */ }
+  if (from && history.length > 1) {
+    e.preventDefault();
+    history.back();
+  }
+});
+
 // 從分析頁點過來時，捲到對應的句型
 if (location.hash) document.querySelector(location.hash)?.scrollIntoView();

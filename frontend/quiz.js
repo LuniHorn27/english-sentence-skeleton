@@ -150,8 +150,6 @@ function feedback(card, item, ok, verdict) {
   const bar = el("div", "q-bar");
   const link = el("a", null, "看這個句型的說明");
   link.href = `/patterns#p${item.pattern}`;
-  link.target = "_blank";
-  link.rel = "noopener";
   const last = state.index + 1 >= state.items.length;
   const next = button(last ? "看成績" : "下一題 →", "primary q-next", () => {
     state.index += 1;
