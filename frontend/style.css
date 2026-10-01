@@ -124,7 +124,7 @@ textarea {
 .error { color: var(--danger); font-size: 14px; margin: 8px 4px 0; }
 
 /* ---------- 工具列 ---------- */
-.toolbar { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin: 20px 0 4px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin: 20px 0 16px; }  /* 和下面的句子卡片多留一點空間（使用者要求） */
 .modes { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: var(--surface-2); }
 .modes button { border: 0; border-radius: 8px; padding: 5px 14px; color: var(--text-2); }
 .modes button:hover { background: transparent; color: var(--text); }
