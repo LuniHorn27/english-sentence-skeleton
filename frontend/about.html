@@ -3,28 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>關於這個工具</title>
+  <title>關於此網站</title>
   <link rel="icon" href="/static/favicon.svg?v=2" type="image/svg+xml">
   <link rel="icon" href="/static/favicon-32.png?v=2" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/static/apple-touch-icon.png?v=2">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="about-page">
+  <header class="site-head">
   <nav class="site-nav" aria-label="網站選單">
-    <a class="brand" href="/"><img class="brand-mark" src="/static/favicon.svg?v=2" alt="" width="28" height="28">英文句子骨架分析</a>
-    <div class="nav-links">
-      <a href="/patterns">五大句型</a>
-      <a href="/quiz">句型小遊戲</a>
-      <a href="/about" aria-current="page">關於</a>
+    <a class="brand" href="/"><img class="brand-mark" src="/static/favicon.svg?v=2" alt="" width="32" height="32"><span class="brand-name">英文句子骨架分析</span></a>
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="選單"><svg class="i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="nav-links" id="nav-links">
+      <a href="/patterns">何謂五大句型？</a>
+      <a href="/quiz">測驗小遊戲</a>
+      <a href="/about" aria-current="page">關於此網站</a>
       <button type="button" id="share-site" class="nav-share">分享</button>
     </div>
   </nav>
+  </header>
   <main>
     <p class="back"><a href="/">← 回到句子分析</a></p>
 
     <!-- 主視覺 -->
     <header class="about-hero">
-      <p class="about-kicker">關於這個工具</p>
+      <p class="about-kicker">關於此網站</p>
       <h1>每讀懂一個句子，<br>就多打開一扇門。</h1>
       <p class="about-sub">一個免費的英文句子骨架分析工具，為台灣的學生和英文學習者而做。</p>
       <div class="about-cta">

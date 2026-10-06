@@ -46,3 +46,28 @@ async function share(url, title) {
 }
 
 document.getElementById("share-site")?.addEventListener("click", () => share(location.origin + "/", "英文句子骨架分析"));
+
+// 手機上的漢堡選單：點按鈕開關；點選單外面、按 Esc、選了項目都會收起來
+(() => {
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.querySelector(".site-nav");
+  if (!toggle || !nav) return;
+  function setOpen(open) {
+    nav.classList.toggle("open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "關閉選單" : "選單");
+  }
+  toggle.addEventListener("click", () => setOpen(!nav.classList.contains("open")));
+  document.addEventListener("click", (e) => {
+    if (nav.classList.contains("open") && !nav.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && nav.classList.contains("open")) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+  nav.querySelector(".nav-links").addEventListener("click", (e) => {
+    if (e.target.closest("a, button")) setOpen(false);
+  });
+})();
