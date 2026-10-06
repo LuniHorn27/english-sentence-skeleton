@@ -368,7 +368,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             elif c.dep_ == "advmod" and c.lower_ == "so" and c.i == sent.start:
                 roots[c.i] = Spec("M", function="副詞・表語氣", clause=index)  # So do I.（我也是）
             elif c.dep_ in ("advmod", "npadvmod", "intj"):
-                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+                roots[c.i] = modifier_spec(c, index, info)
         return info
 
     # 分析程式把 enjoy 之類的主要動詞誤判成助動詞：enjoy 才是動詞，後面的 playing 是受詞
@@ -409,7 +409,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             elif c.dep_ in ("aux", "auxpass") or (c.dep_ == "neg" and c.lower_ in ("not", "n't")):
                 roots[c.i] = Spec("aux", clause=index, kind="neg" if c.dep_ == "neg" else "")
             elif c.dep_ in ("advmod", "npadvmod", "prep", "neg"):
-                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+                roots[c.i] = modifier_spec(c, index, info)
         for t in able_to.children:
             if t.dep_ == "aux" and t.lower_ == "to":
                 roots[t.i] = Spec("aux", clause=index)
@@ -426,7 +426,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             elif c.dep_ in ("aux", "auxpass") or (c.dep_ == "neg" and c.i < v.i):
                 roots[c.i] = Spec("aux", clause=index, kind="neg" if c.dep_ == "neg" else "")
             elif c.dep_ in ("advmod", "npadvmod", "prep", "neg"):
-                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+                roots[c.i] = modifier_spec(c, index, info)
         for t in have_to.children:
             if t.dep_ == "aux" and t.lower_ == "to":
                 roots[t.i] = Spec("aux", clause=index)
@@ -465,11 +465,11 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             elif c.dep_ in ("aux", "auxpass", "neg"):
                 roots[c.i] = Spec("aux", clause=index)
             elif c.dep_ in ("advmod", "npadvmod") and c.i < v.i:
-                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+                roots[c.i] = modifier_spec(c, index, info)
             elif c.dep_ == "prep" and (v.lower_, c.lower_) in L.STATIVE_PAIRS:
                 roots[c.i] = Spec("M", function="副詞・表對象", clause=index)  # interested in art
             elif c.dep_ in ("prep", "advmod", "npadvmod") and adverb_function(c) in ("副詞・表時間", "副詞・表頻率", "副詞・表地點"):
-                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+                roots[c.i] = modifier_spec(c, index, info)
             elif c.dep_ == "prep" and c.i > v.i:
                 roots[c.i] = Spec("M", function="副詞・表對象", clause=index)  # interested in art
         info.pattern = 3
@@ -617,6 +617,15 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             continue  # 標點不分配；片語動詞的介副詞留在動詞裡；對等連接由外層處理
         else:
             roots[c.i] = Spec("unknown", clause=index)
+
+    # 連綴動詞 ＋ like ＋ 名詞（feel like a heavy weight、looks like a cat）：like 片語說明主詞「像什麼」，
+    # 是主詞補語 → 句型二（照賴世雄；使用者同意 2026-10-07）。feel like ＋ V-ing（想要）不在這裡處理
+    if v.lemma_.lower() in L.LIKE_LINKING_VERBS and not has_obj:
+        for c in children:
+            if c.dep_ == "prep" and c.lower_ == "like" and c.i > v.i:
+                pobj = next((g for g in c.children if g.dep_ == "pobj"), None)
+                if pobj is not None and pobj.tag_ != "VBG" and pobj.pos_ in ("NOUN", "PROPN", "PRON", "NUM"):
+                    roots[c.i] = Spec("SC", clause=index)
 
     # 賴世雄：turned him into a good student、regard him as a genius → into／as 片語是受詞補語
     if has_obj or info.passive:
@@ -862,6 +871,53 @@ def split_finite_adverb_clauses(roots, infos, doc):
             info = infos.get(spec.clause)
             if info is not None:
                 info.flags.add("subordinating_conj")
+
+
+FUTURE_OPENERS = {"when", "before", "after", "until", "till", "once", "if", "unless", "as soon as", "by the time", "the next time"}
+
+
+def present_for_future(roots, doc) -> bool:
+    """時間、條件副詞子句用現在式，講的卻是未來的事（When you grow up、If it rains tomorrow）→ 附「以現在代替未來」卡。
+    判斷「講未來」：主要動詞有 will／shall／can／may／must 或 be going to、是祈使句，或子句掛在不定詞底下（want to be … when…）。
+    When I am tired, I go to bed. 這種講習慣的句子主要子句是現在式，不附卡（使用者要求新增，2026-10-07）。"""
+    for ri, spec in roots.items():
+        d = spec.inner_verb
+        if spec.kind != "advcl" or d is None or spec.function not in ("副詞子句・表時間", "副詞子句・表條件"):
+            continue
+        # 從整個副詞子句片段的開頭讀連接詞（as soon as 的 as soon 掛在別的字底下，從子句動詞往前找會漏掉）
+        words = [t.lower_ for t in sorted(doc[ri].subtree, key=lambda t: t.i) if not t.is_punct][:3]
+        if not any(" ".join(words[:n]) in FUTURE_OPENERS for n in (3, 2, 1)):
+            continue
+        aux = [c for c in d.children if c.dep_ in ("aux", "auxpass")]
+        if any(a.lemma_ in ("will", "shall") or a.tag_ == "VBD" for a in aux) or d.tag_ in ("VBD", "VBN") and not aux:
+            continue  # 子句本身是未來式或過去式，不是「以現在代替未來」
+        if not (d.tag_ in ("VBZ", "VBP") or any(a.tag_ in ("VBZ", "VBP") for a in aux)):
+            continue
+        main = d.head  # 往上找到子句修飾的那個動詞（as soon as 子句會先掛在 soon 底下）
+        while main.dep_ != "ROOT" and (main.pos_ not in ("VERB", "AUX") or main.dep_ in ("advcl", "advmod", "conj", "mark", "prep")):
+            main = main.head
+        main_aux = [c for c in main.children if c.dep_ in ("aux", "auxpass")]
+        future = any(a.lemma_ in ("will", "shall", "can", "may", "must") or a.lower_ == "'ll" for a in main_aux)
+        future |= main.lower_ == "going" and any(c.lemma_ == "be" for c in main_aux)
+        future |= any(a.lower_ == "to" for a in main_aux) and main.head.lemma_ in L.FUTURE_WISH_VERBS  # want to be … when you grow up
+        future |= main.lemma_ in ("have", "need") and any(  # you have to call me as soon as you finish
+            c.dep_ == "xcomp" and any(g.lower_ == "to" for g in c.children) for c in main.children)
+        future |= main.dep_ == "ROOT" and main.tag_ == "VB" and not any(c.dep_ in ("nsubj", "nsubjpass") for c in main.children)  # 祈使句
+        if future:
+            return True
+    return False
+
+
+def modifier_spec(c, index, info):
+    """動詞底下的修飾語 → Spec。now that／so that／as soon as 帶的子句是副詞子句，不是 now、so 這些副詞
+    （have to 這類分支原本只看 adverb_function，*Now that you are in high school, you have to…* 被標成表時間，2026-10-07）"""
+    if c.dep_ == "advmod":
+        mc = multi_opener_clause(c)
+        if mc is not None:
+            clause_verb, f = mc
+            info.flags.add("subordinating_conj")
+            return Spec("M", function=f"副詞子句・{f}", clause=index, kind="advcl", inner_verb=clause_verb)
+    return Spec("M", function=adverb_function(c), clause=index)
 
 
 def adverb_function_prep_like(tok):
@@ -1219,7 +1275,7 @@ def inner_chunks(sent, verb, text, base, top=None):
 CARD_ORDER = [
     "passive", "present_perfect", "present_progressive", "there_be", "imperative",
     "yes_no_question", "dummy_it", "gerund_subject", "coordinating_conj",
-    "subordinating_conj", "relative_pronoun", "causative_perception", "dative_verbs",
+    "subordinating_conj", "present_for_future", "relative_pronoun", "causative_perception", "dative_verbs",
     "linking_verbs", "to_v_or_ving_object", "quantifier_of", "unit_of",
     "cleft", "verb_multiple_patterns", "parallel_structure", "participle_phrase", "appositive", "so_such_that", "modifier_position",
 ]
@@ -1379,6 +1435,8 @@ def analyze_sentence(text: str) -> SentenceResult:
                     roots[c.i] = Spec("unknown", clause=0)
 
     split_finite_adverb_clauses(roots, infos, sent.doc)
+    if present_for_future(roots, sent.doc):
+        infos[0].flags.add("present_for_future")
 
     if kind == "simple":
         comparative_correlative(sent, root, roots, infos[0])
@@ -1430,6 +1488,8 @@ def analyze_sentence(text: str) -> SentenceResult:
         flags.add("modifier_position")
     if any(c["_spec"].function == "副詞子句・表結果" for c in raw):
         flags.add("so_such_that")
+    elif any((c["_spec"].function or "").startswith("副詞子句") for c in raw):
+        flags.add("subordinating_conj")  # 不管哪條分支找到的副詞子句，都附副詞子句卡
     if any(c["_spec"].kind == "appos" for c in raw):
         flags.add("appositive")
     if any(c["_spec"].kind == "relcl" and any(t.tag_ in ("WDT", "WP", "WP$") or t.lower_ == "that"
