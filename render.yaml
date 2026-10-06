@@ -16,6 +16,8 @@ services:
         value: 3.12.3
       - key: SPACY_MODEL
         value: en_core_web_sm
+      - key: CLIENT_IP_HEADER # 次數限制用 Cloudflare 給的真實來源位址（X-Forwarded-For 可以被偽造）
+        value: cf-connecting-ip
       - key: TEST_EDITION # 頁面顯示「測試版」提示
         value: "1"
       - key: FEEDBACK_SHEET_URL # 回饋試算表的網址，在 Render 後台填，不放進 GitHub
