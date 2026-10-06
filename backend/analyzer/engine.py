@@ -22,7 +22,7 @@ from .restore import participle_restore
 from .spelling import find_typos
 from .phrases import find_phrases, phrasal_object
 from .schema import CardRef, Chunk, Clause, SentenceResult, Span
-from .verb_check import check as verb_check
+from .verb_check import check as verb_check, verb_patterns
 
 NOMINAL = {"S", "O", "IO", "DO", "SC", "OC", "RS", "RO"}
 VERB_ROLE = "VERB"  # 動詞種類（Vt／Vi／V）等句型決定後再填
@@ -492,6 +492,40 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     if dative_fix is None and dobj is not None and that_clause is not None and v.lemma_.lower() in L.DATIVE_VERBS | {"remind", "inform", "promise", "teach", "warn", "assure"}:
         dative_fix = (dobj, that_clause)  # told [everyone] [that the company would move]
 
+    # 分析程式給一個動詞兩個直接受詞（dobj）是不可能的結構：name [our dog] [Betty]、gave [him] [a book]。
+    # 用動詞句型字典決定：只能 O＋OC（name、elect）→ 第二個是受詞補語；只能 IO＋DO → 雙受詞；
+    # 兩種都可以（make）→ 第二個前面有 a／an 是雙受詞（made her a cake），否則是受詞補語（made him captain）
+    oc_fix = None
+    two_dobj = [c for c in children if c.dep_ == "dobj" and c.i > v.i and c.pos_ in ("NOUN", "PROPN", "PRON", "NUM")]
+    if dative_fix is None and len(two_dobj) == 2:
+        first, second = sorted(two_dobj, key=lambda t: t.i)
+        allowed = verb_patterns().get(v.lemma_.lower(), set())
+        indefinite = any(d.lower_ in ("a", "an") for d in second.children if d.dep_ == "det")
+        if "SVOO" in allowed and ("SVOC" not in allowed or indefinite):
+            dative_fix = (first, second)
+        elif "SVOC" in allowed:
+            oc_fix = second
+
+    # 命名、選舉類動詞後面是「受詞＋受詞補語」，分析程式還會看錯成另外兩種結構：
+    #   name [your cat] [Mimi]：Mimi 被當成副詞性名詞（npadvmod）→ 改成受詞補語
+    #   elected [Amy] [president]：Amy president 被當成一個複合名詞 → 拆成受詞＋受詞補語
+    #   calls [her] [Mei]：her 被當成所有格（her 同時是受格和所有格）→ 拆成受詞＋受詞補語
+    split_oc = None
+    dobjs = [c for c in children if c.dep_ == "dobj" and c.i > v.i]
+    if dative_fix is None and oc_fix is None and v.lemma_.lower() in L.NAMING_VERBS and len(dobjs) == 1:
+        o = dobjs[0]
+        after = next((c for c in children if c.dep_ == "npadvmod" and c.i > o.i and c.pos_ in ("PROPN", "NOUN")
+                      and c.lemma_.lower() not in L.TIME_NOUNS), None)
+        comp = [d for d in o.children if d.dep_ == "compound" and d.pos_ in ("PROPN", "PRON") and d.i < o.i]
+        her = [d for d in o.children if d.dep_ == "poss" and d.lower_ == "her"]
+        if after is not None:
+            oc_fix = after
+        elif o.pos_ == "PROPN" and her and len(list(o.children)) == 1:
+            split_oc = (her[0], o)
+        elif (o.pos_ == "NOUN" and comp and not any(d.dep_ in ("det", "poss") for d in o.children)
+              and not any(d.dep_ in ("det", "poss") for d in comp[0].children)):
+            split_oc = (comp[0], o)
+
     has_dative = any(c.dep_ == "dative" and c.pos_ != "ADP" for c in children) or dative_fix is not None
     has_obj = bool(objects) or dative_fix is not None or (phrasal is not None and phrasal[1] is not None)
 
@@ -503,6 +537,11 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             roots[c.i] = Spec("IO", clause=index)
         elif dative_fix and c is dative_fix[1]:
             roots[c.i] = Spec("DO", clause=index)
+        elif c is oc_fix:
+            roots[c.i] = Spec("OC", clause=index)
+        elif split_oc and c is split_oc[1]:
+            roots[c.i] = Spec("OC", clause=index)
+            roots[split_oc[0].i] = Spec("O", clause=index)
         elif d in ("nsubj", "nsubjpass", "csubj", "csubjpass"):
             roots[c.i] = Spec("S", clause=index)
             if is_gerund(c):

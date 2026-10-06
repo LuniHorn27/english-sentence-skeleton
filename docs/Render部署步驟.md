@@ -6,7 +6,7 @@
 
 | | 完整版（Mac） | 測試版（Render） |
 |---|---|---|
-| 分析模型 | 大型 en_core_web_trf：題庫 471 句全對 | 小型 en_core_web_sm：約每 9 句有 1 句不對 |
+| 分析模型 | 大型 en_core_web_trf：題庫 471 句全對 | 小型、跟大型模型學過的 en_core_web_sm_distilled：題庫 471 句錯 17 句（原本的 en_core_web_sm 錯 54 句） |
 | 記憶體 | 約 6 GB（含翻譯、朗讀） | 最高約 270 MB（上限 512 MB） |
 | 翻譯 | 伺服器上的 Qwen3-4B | 只有電腦版 Chrome／Edge 能用瀏覽器內建翻譯 |
 | 朗讀 | 伺服器上的 Kokoro | 瀏覽器內建語音 |
@@ -20,7 +20,7 @@
 - `render.yaml`：Render 讀這個檔案自動建立網站（免費方案、新加坡機房、環境變數）。
 - `requirements-slim.txt`：測試版要安裝的套件（沒有 PyTorch、翻譯、朗讀）。
 - 環境變數：
-  - `SPACY_MODEL=en_core_web_sm`：換成小型模型。沒設定時用大型模型。
+  - `SPACY_MODEL=models/en_core_web_sm_distilled`：用跟大型模型學過的小型模型（部署時從 GitHub Release 下載，見 render.yaml 的 buildCommand）。出問題時改成 `en_core_web_sm`（原本的小型模型）就能退回。沒設定時用大型模型。
   - `TEST_EDITION=1`：首頁顯示測試版提示。
   - `FEEDBACK_SHEET_URL`：回饋試算表的網址。**只在 Render 後台填，不放進 GitHub。**
 
