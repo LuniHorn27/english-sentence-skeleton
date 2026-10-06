@@ -5207,3 +5207,148 @@
     function: 副詞・表伴隨
     modifies: null
     text: with us
+- id: '347'
+  sentence: But now that you are in high school, you have to study harder.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: conj
+    text: But
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: now that you are in high school
+  - role: S
+    text: you
+  - role: aux
+    text: have to
+  - role: Vi
+    text: study
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: harder
+- id: '348'
+  sentence: Now that you are here, we can start the meeting.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: Now that you are here
+  - role: S
+    text: we
+  - role: aux
+    text: can
+  - role: Vt
+    text: start
+  - role: O
+    text: the meeting
+    head:
+    - meeting
+- id: '349'
+  sentence: As soon as you finish, you have to call me.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: As soon as you finish
+  - role: S
+    text: you
+  - role: aux
+    text: have to
+  - role: Vt
+    text: call
+  - role: O
+    text: me
+- id: '350'
+  sentence: This simple question can suddenly feel like a heavy weight.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: This simple question
+    head:
+    - question
+  - role: aux
+    text: can
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: suddenly
+  - role: V
+    text: feel
+  - role: SC
+    text: like a heavy weight
+- id: '351'
+  sentence: The cloud looks like a rabbit.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The cloud
+    head:
+    - cloud
+  - role: V
+    text: looks
+  - role: SC
+    text: like a rabbit
+- id: '352'
+  sentence: This candy tastes like strawberries.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: This candy
+    head:
+    - candy
+  - role: V
+    text: tastes
+  - role: SC
+    text: like strawberries
+- id: '353'
+  sentence: She is like her mother.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: is
+  - role: SC
+    text: like her mother
+- id: '354'
+  sentence: I will call you when I get home.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: will
+  - role: Vt
+    text: call
+  - role: O
+    text: you
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when I get home
+- id: '355'
+  sentence: Call me as soon as you arrive.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: (You)
+  - role: Vt
+    text: Call
+  - role: O
+    text: me
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: as soon as you arrive

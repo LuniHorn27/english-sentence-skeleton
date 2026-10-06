@@ -17,6 +17,12 @@ LINKING_VERBS = {
     "grow", "stay", "keep", "remain", "seem", "appear", "go", "come", "prove",
 }
 
+# 連綴動詞 ＋ like ＋ 名詞 → like 片語是主詞補語（感官、看起來類的動詞；go、get 這類不算）
+LIKE_LINKING_VERBS = {"be", "look", "sound", "smell", "taste", "feel", "seem", "appear"}
+
+# 想要、打算類動詞 ＋ 不定詞：講的是未來（want to be … when you grow up）；like to、enjoy 這類講習慣的不算
+FUTURE_WISH_VERBS = {"want", "plan", "hope", "expect", "wish", "intend", "decide", "promise", "mean", "aim"}
+
 # 授與動詞：可以接 IO ＋ DO
 DATIVE_VERBS = {
     "give", "show", "send", "tell", "pass", "buy", "make", "lend", "bring",
