@@ -394,7 +394,7 @@ async function sendFeedback(payload) {
   });
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
-    throw new Error(typeof body.detail === "string" ? body.detail : "送出失敗，請稍後再試");
+    throw new Error(typeof body.detail === "string" ? body.detail : "送不出去，網路好像打結了，等一下再試。");
   }
 }
 
@@ -402,7 +402,7 @@ function feedbackForm(sIdx) {
   const sentence = sentences[sIdx];
   const view = views[sIdx];
   const form = el("form", "feedback");
-  form.append(el("p", "fb-title", "哪裡分析錯了？"));
+  form.append(el("p", "fb-title", "本貓哪裡看走眼了？"));
 
   const text = el("textarea");
   text.rows = 2;
@@ -418,7 +418,7 @@ function feedbackForm(sIdx) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!text.value.trim()) {
-      status.textContent = "請先寫下哪裡錯了";
+      status.textContent = "先告訴本貓錯在哪啦。";
       return;
     }
     send.disabled = true;
@@ -465,13 +465,13 @@ if (suggestForm) {
     const box = $("suggest-text");
     const status = $("suggest-status");
     if (!box.value.trim()) {
-      status.textContent = "請先寫下你想說的話";
+      status.textContent = "空白的本貓看不懂啦，寫點什麼吧。";
       return;
     }
     try {
       await sendFeedback({ kind: "suggestion", message: box.value.trim() });
       box.value = "";
-      status.textContent = "收到了，謝謝你！每一則回饋都會讓這個工具更好 🙌";
+      status.textContent = "收到！本貓會認真看，說不定下一版就有了 🐾";
       setTimeout(() => feedbackDialog?.close(), 1800);
     } catch (err) {
       status.textContent = err.message;
@@ -483,7 +483,7 @@ if (suggestForm) {
 function typoBanner(sentence) {
   const box = el("div", "banner typo");
   const parts = sentence.typos.map((t) => (t.suggestion ? `「${t.word}」是不是「${t.suggestion}」？` : `「${t.word}」好像不是英文單字，請確認拼字。`));
-  box.append(el("span", null, `✏️ 可能打錯字：${parts.join("")}打錯字會讓分析出錯，改正後再分析一次會比較準。`));
+  box.append(el("span", null, `✏️ 本貓發現可疑字跡：${parts.join("")}打錯字會讓本貓辦錯案，改正後再分析一次比較準。`));
   const fixes = sentence.typos.filter((t) => t.suggestion);
   if (fixes.length) {
     const btn = el("button", "typo-fix", fixes.length === 1 ? `改成 ${fixes[0].suggestion} 再分析` : "全部改正再分析");
@@ -523,7 +523,7 @@ function renderSentence(sIdx) {
   // 動詞句型字典檢查不通過：提醒這句可能分析錯了（點開看原因）
   const doubts = sentence.clauses.map((c) => c.doubt).filter(Boolean);
   if (doubts.length) {
-    const flag = el("button", "doubt", "⚠️ 這句可能分析錯了");
+    const flag = el("button", "doubt", "⚠️ 本貓對這句沒把握");
     flag.type = "button";
     flag.setAttribute("aria-expanded", String(Boolean(view.doubtOpen)));
     flag.addEventListener("click", () => {
@@ -536,7 +536,7 @@ function renderSentence(sIdx) {
   if (window.Speech?.available && sentence.status !== "failed") {
     tools.append(speakButton(sentence.text, "朗讀"));
   }
-  const report = el("button", "speak", view.feedback === "sent" ? "✅ 已回報，謝謝" : "🚩 回報錯誤");  // 前面加圖示，和「🔊 朗讀」對齊
+  const report = el("button", "speak", view.feedback === "sent" ? "✅ 收到，本貓去罰站了" : "🚩 回報錯誤");  // 前面加圖示，和「🔊 朗讀」對齊
   report.type = "button";
   report.disabled = view.feedback === "sent";
   report.addEventListener("click", () => {
@@ -547,7 +547,7 @@ function renderSentence(sIdx) {
   head.append(tools);
   box.append(head);
   if (doubts.length && view.doubtOpen) {
-    box.append(el("div", "banner doubt-note", `${doubts.join(" ")}如果你知道正確答案，歡迎按「回報錯誤」告訴我們。`));
+    box.append(el("div", "banner doubt-note", `${doubts.join(" ")}如果你知道正確答案，按「回報錯誤」教教本貓。`));
   }
 
   if (sentence.status === "failed" && sentences.length > 1) box.append(el("p", "failed-text", sentence.text));
@@ -645,17 +645,17 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   errorBox.hidden = true;
   const text = input.value.trim();
-  if (!text) return showError("請輸入英文句子或一段英文文章");
-  if (text.length > MAX_CHARS) return showError(`句子太長了，請控制在 ${MAX_CHARS} 個字元以內`);
+  if (!text) return showError("你什麼都沒貼，本貓的放大鏡對著空氣很尷尬。貼一句英文進來吧。");
+  if (text.length > MAX_CHARS) return showError(`這篇長到本貓的放大鏡起霧了，請控制在 ${MAX_CHARS} 個字元以內。`);
   try { sessionStorage.setItem("last", text); } catch { /* 無痕模式等情況，不影響使用 */ }
 
   submit.disabled = true;
   submit.textContent = "分析中…";
-  const loading = el("p", "loading", "分析中，請稍候…");
+  const loading = el("p", "loading", "本貓辦案分析中…");
   result.replaceChildren(loading);
   // 等超過 3 秒才補一句說明，平常很快就好的時候不用多看一行字
   const slowTimer = setTimeout(() => {
-    loading.textContent = "分析中，請稍候…第一次分析要先把分析程式準備好，會比較久，請耐心等候。";
+    loading.textContent = "本貓辦案分析中…第一次辦案要先把工具準備好，會比較久，等本貓一下。";
   }, 3000);
   $("result-actions").hidden = true;
   try {
@@ -667,14 +667,14 @@ form.addEventListener("submit", async (event) => {
     if (!response.ok) {
       const body = await response.json().catch(() => ({}));
       result.replaceChildren();
-      showError(typeof body.detail === "string" ? body.detail : "分析失敗，請稍後再試");
+      showError(typeof body.detail === "string" ? body.detail : "本貓卡關了，等一下再試一次。");
       return;
     }
     render(await response.json());
     addHistory(text);
   } catch {
     result.replaceChildren();
-    showError("連不上網站，請檢查網路後再按一次「分析」");
+    showError("本貓聯絡不上網站，檢查一下網路，再按一次「分析」。");
   } finally {
     clearTimeout(slowTimer);
     submit.disabled = false;
