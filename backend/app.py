@@ -21,7 +21,7 @@ from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from backend.analyzer.engine import analyze_text, get_nlp
+from backend.analyzer.engine import SPACY_MODEL, analyze_text, get_nlp
 from backend.analyzer.phrases import translation_hints
 from backend import dictionary, translate, tts
 from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
@@ -34,7 +34,7 @@ log = logging.getLogger("uvicorn.error")
 @asynccontextmanager
 async def lifespan(_app):
     get_nlp()  # 啟動時先載入分析程式，第一次分析才不會等很久
-    log.info("分析程式載入完成")
+    log.info("分析程式載入完成（%s）", SPACY_MODEL)
     # 朗讀模型在背景載入，不拖慢網站啟動
     threading.Thread(target=_warm_tts, daemon=True).start()
     threading.Thread(target=_warm_translate, daemon=True).start()
@@ -42,6 +42,9 @@ async def lifespan(_app):
 
 
 def _warm_tts():
+    if not tts.is_available():
+        log.warning("沒有安裝朗讀套件，網頁會改用瀏覽器內建語音")
+        return
     try:
         tts.get_pipeline()
         log.info("朗讀模型載入完成")
@@ -245,6 +248,8 @@ class SpeakRequest(BaseModel):
 def speak(req: SpeakRequest, request: Request):
     # 用 POST 而不是把句子放在網址裡，句子才不會出現在伺服器的存取紀錄中
     check_rate(request, "tts", 60, 60, "朗讀次數太多了，請等一分鐘後再試")
+    if not tts.is_available():
+        raise HTTPException(503, "朗讀暫時無法使用")
     try:
         audio = tts.synthesize(req.text, req.speed)
     except Exception:
@@ -316,6 +321,15 @@ async def no_stale_files(request, call_next):
     for k, v in SECURITY_HEADERS.items():
         response.headers.setdefault(k, v)
     return response
+
+
+# 測試版（免費主機、小型模型）：首頁顯示提示、翻譯失敗時說明只有電腦版 Chrome／Edge 能翻（設定在 render.yaml）
+TEST_EDITION = os.environ.get("TEST_EDITION") == "1"
+
+
+@app.get("/api/site")
+def site_info():
+    return {"test_edition": TEST_EDITION}
 
 
 @app.get("/")
