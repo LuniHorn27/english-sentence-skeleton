@@ -745,7 +745,7 @@
     head:
     - grandfather
   - role: M
-    function: 副詞・表時間
+    function: 副詞・表頻率
     modifies: null
     text: often
   - role: Vt
@@ -987,7 +987,7 @@
   - role: V
     text: is
   - role: M
-    function: 副詞・表時間
+    function: 副詞・表頻率
     modifies: null
     text: always
   - role: SC

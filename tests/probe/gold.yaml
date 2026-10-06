@@ -1308,7 +1308,11 @@
   - role: Vt
     text: allowed
   - role: OC
-    text: to go home before the bell rang
+    text: to go home
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: before the bell rang
 - id: '94'
   sentence: Although it was raining heavily, the players continued the game because they did not want to disappoint their fans.
   pattern: 2
@@ -2493,7 +2497,7 @@
   passive: false
   chunks:
   - role: M
-    function: 副詞・表時間
+    function: 副詞・表頻率
     modifies: null
     text: Seldom
   - role: aux
@@ -4054,7 +4058,7 @@
   - role: S
     text: my grandmother
   - role: M
-    function: 副詞・表時間
+    function: 副詞・表頻率
     modifies: null
     text: often
   - role: Vt
@@ -4117,7 +4121,7 @@
     modifies: People
     text: who exercise regularly
   - role: M
-    function: 副詞・表時間
+    function: 副詞・表頻率
     modifies: null
     text: usually
   - role: Vi
@@ -4950,3 +4954,256 @@
     function: 副詞・表時間
     modifies: null
     text: at night
+- id: '332'
+  sentence: What do you want to be when you grow up?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: What
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: want
+  - role: O
+    text: to be
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when you grow up
+- id: '333'
+  sentence: What do you want to eat?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: What
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: want
+  - role: O
+    text: to eat
+- id: '334'
+  sentence: Who do you want to invite to the party?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: Who
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: want
+  - role: O
+    text: to invite to the party
+- id: '335'
+  sentence: Where do you want to go?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: Where
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: want
+  - role: O
+    text: to go
+- id: '336'
+  sentence: I want to go home when I finish my homework.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: want
+  - role: O
+    text: to go home
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when I finish my homework
+- id: '337'
+  sentence: She told me to call her when I arrive.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: told
+  - role: O
+    text: me
+  - role: OC
+    text: to call her
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when I arrive
+- id: '338'
+  sentence: He likes playing games when he is bored.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: likes
+  - role: O
+    text: playing games
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when he is bored
+- id: '339'
+  sentence: I want to know when you will come.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: want
+  - role: O
+    text: to know when you will come
+- id: '340'
+  sentence: You have probably heard this question countless times since you were a little child.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: aux
+    text: have
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: probably
+  - role: Vt
+    text: heard
+  - role: O
+    text: this question
+    head:
+    - question
+  - role: M
+    function: 副詞・表頻率
+    modifies: null
+    text: countless times
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: since you were a little child
+- id: '341'
+  sentence: She calls her mother twice a week.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: calls
+  - role: O
+    text: her mother
+    head:
+    - mother
+  - role: M
+    function: 副詞・表頻率
+    modifies: null
+    text: twice a week
+- id: '342'
+  sentence: How often do you exercise?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表頻率
+    modifies: null
+    text: How often
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vi
+    text: exercise
+- id: '343'
+  sentence: Every time I see her, she smiles.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: Every time I see her
+  - role: S
+    text: she
+  - role: Vi
+    text: smiles
+- id: '344'
+  sentence: But he never told me the truth.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: conj
+    text: But
+  - role: S
+    text: he
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: never
+  - role: Vt
+    text: told
+  - role: IO
+    text: me
+  - role: DO
+    text: the truth
+    head:
+    - truth
+- id: '345'
+  sentence: But I don't like it.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: conj
+    text: But
+  - role: S
+    text: I
+  - role: aux
+    text: don't
+  - role: Vt
+    text: like
+  - role: O
+    text: it
+- id: '346'
+  sentence: Or you can stay here with us.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: conj
+    text: Or
+  - role: S
+    text: you
+  - role: aux
+    text: can
+  - role: Vi
+    text: stay
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: here
+  - role: M
+    function: 副詞・表伴隨
+    modifies: null
+    text: with us
