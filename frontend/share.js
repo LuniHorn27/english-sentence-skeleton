@@ -1,7 +1,8 @@
 // 分享：上方選單的「分享」每一頁都有；首頁結果下方的「分享這個分析」也用這裡的 share()
 // 頁面上沒有提示框（#toast）時自動補一個，複製連結後才有地方顯示「已複製」
 
-function showToast(message) {
+// action：{ label, onClick } 時在提示後面加一個按鈕（例如「復原」），提示多停留一下讓人來得及按
+function showToast(message, action) {
   let toast = document.getElementById("toast");
   if (!toast) {
     toast = document.createElement("p");
@@ -11,9 +12,20 @@ function showToast(message) {
     document.querySelector("main").prepend(toast);
   }
   toast.textContent = message;
+  if (action) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "toast-action";
+    btn.textContent = action.label;
+    btn.addEventListener("click", () => {
+      toast.hidden = true;
+      action.onClick();
+    });
+    toast.append(btn);
+  }
   toast.hidden = false;
   clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(() => { toast.hidden = true; }, 2500);
+  showToast.timer = setTimeout(() => { toast.hidden = true; }, action ? 6000 : 2500);
 }
 
 async function share(url, title) {

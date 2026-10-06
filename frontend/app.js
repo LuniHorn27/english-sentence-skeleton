@@ -749,8 +749,17 @@ function addHistory(text) {
   renderHistory();
 }
 $("history-clear").addEventListener("click", () => {
+  const before = storageGet("history") || "[]";
   storageSet("history", "[]");
   renderHistory();
+  // 一按就清掉太可惜：提示後面放「復原」，按錯可以拿回來
+  showToast("已清除紀錄", {
+    label: "復原",
+    onClick: () => {
+      storageSet("history", before);
+      renderHistory();
+    },
+  });
 });
 
 // 測試版（免費主機、小型模型）才顯示提示；翻譯失敗時的說明也看這個記號（translate.js）

@@ -119,7 +119,7 @@ function header() {
   info.append(el("span", "game-mode", `${MODES[mode].icon} ${MODES[mode].name}`));
   info.append(el("span", "game-count", `第 ${index + 1}／${items.length} 題`));
   info.append(el("span", "game-score", `✓ ${results.filter((r) => r.ok).length}`));
-  info.append(button("結束", "link-btn game-quit", () => renderStart()));
+  info.append(button("結束", "link-btn game-quit", () => askQuit(bar)));
   const progress = el("div", "progress");
   progress.setAttribute("role", "progressbar");
   progress.setAttribute("aria-valuenow", String(index));
@@ -129,6 +129,20 @@ function header() {
   progress.append(fill);
   bar.append(info, progress);
   return bar;
+}
+
+// 還沒答題就直接結束；答過題目先問一聲，免得誤按把這回合的進度弄丟
+function askQuit(bar) {
+  const done = state.results.length;
+  if (done === 0) return renderStart();
+  if (bar.querySelector(".quit-confirm")) return;
+  const box = el("div", "quit-confirm");
+  box.setAttribute("role", "alert");
+  box.append(el("span", "quit-text", `要結束這回合嗎？已經答了 ${done} 題，結束後不會記錄成績。`));
+  const keep = button("繼續作答", "", () => box.remove());
+  box.append(button("結束這回合", "danger", () => renderStart()), keep);
+  bar.insertBefore(box, bar.querySelector(".progress"));
+  keep.focus();
 }
 
 function renderQuestion() {

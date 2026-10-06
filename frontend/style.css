@@ -444,6 +444,8 @@ a.pattern:hover { text-decoration: underline; }
 .link-btn:hover { background: none; }
 .toast { position: sticky; top: 8px; z-index: 5; margin: 8px auto; width: fit-content; max-width: 90%;
   background: var(--text); color: var(--bg); padding: 6px 14px; border-radius: 8px; font-size: 14px; }
+.toast-action { margin-left: 12px; padding: 2px 10px; border: 1px solid currentColor; border-radius: 6px; background: transparent; color: inherit; font-size: 14px; font-weight: 600; }
+.toast-action:hover { background: color-mix(in srgb, var(--bg) 18%, transparent); }
 
 /* ---------- 最近分析 ---------- */
 .history { margin: 8px 2px 0; font-size: 14px; }
@@ -459,6 +461,11 @@ a.pattern:hover { text-decoration: underline; }
 .history-item { display: block; width: 100%; text-align: left; border: 0; border-radius: 0; padding: 8px 12px; background: transparent; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .history-item:hover { background: var(--surface-2); }
 .history-clear { display: block; margin: 6px 0 0 auto; font-size: 13px; }
+
+/* 手機上的小按鈕：外觀不變，手指可以點到的範圍往外擴到約 40px 高 */
+.s-tools .speak, .card-toggle, .history-clear { position: relative; }
+.s-tools .speak::after, .card-toggle::after { content: ""; position: absolute; inset: -8px -3px; }
+.history-clear::after { content: ""; position: absolute; inset: -10px -6px; }
 
 /* ---------- 列印講義 ---------- */
 @media print {
@@ -494,6 +501,12 @@ a.pattern:hover { text-decoration: underline; }
 .game-quit { margin-left: auto; font-size: 13px; }
 .progress { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
 .progress-fill { height: 100%; background: var(--accent-line); transition: width 0.3s; }
+/* 有開「減少動態效果」的人：進度條和輸入框直接變，不播動畫 */
+@media (prefers-reduced-motion: reduce) { .progress-fill, .ask { transition: none; } }
+.quit-confirm { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; padding: 10px 12px; border-radius: 10px; background: var(--danger-bg); color: var(--danger); font-size: 14px; }
+.quit-text { flex: 1 1 100%; }
+.quit-confirm button { font-size: 14px; color: var(--text); background: var(--surface); }
+.quit-confirm button.danger { background: var(--danger); border-color: var(--danger); color: var(--surface); }
 
 .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
 .q-prompt { font-size: 14px; color: var(--text-2); margin: 0 0 6px; }
