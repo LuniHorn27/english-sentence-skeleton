@@ -536,7 +536,10 @@ function renderSentence(sIdx) {
   if (window.Speech?.available && sentence.status !== "failed") {
     tools.append(speakButton(sentence.text, "朗讀"));
   }
-  const report = el("button", "speak", view.feedback === "sent" ? "✅ 收到，本貓去罰站了" : "🚩 回報錯誤");  // 前面加圖示，和「🔊 朗讀」對齊
+  // 前面加圖示，和「🔊 朗讀」對齊；手機上換短字（回報錯誤 → 回報），才能和句型標籤排在同一列
+  const report = el("button", "speak");
+  const [icon, long, short] = view.feedback === "sent" ? ["✅", "收到，本貓去罰站了", "收到"] : ["🚩", "回報錯誤", "回報"];
+  report.append(`${icon} `, el("span", "label-long", long), el("span", "label-short", short));
   report.type = "button";
   report.disabled = view.feedback === "sent";
   report.addEventListener("click", () => {

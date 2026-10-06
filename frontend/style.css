@@ -289,6 +289,12 @@ button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
   .result-actions button { flex: 1 1 0; padding: 8px 10px; }
   .label-long { display: none; }
   .label-short { display: inline; }
+  /* 句子編號、句型標籤、朗讀、回報排在同一列：字和留白都縮小一點 */
+  .s-head { gap: 4px; }
+  .s-num { min-width: 22px; height: 22px; padding: 0 4px; }
+  .pattern { font-size: 13px; padding: 3px 8px; }
+  .s-tools { gap: 4px; }
+  .s-tools .speak { padding: 2px 6px; white-space: nowrap; }
 }
 
 /* ---------- 五大句型介紹頁 ---------- */
