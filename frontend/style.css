@@ -308,11 +308,13 @@ button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
 #result .pattern .pf { white-space: nowrap; }
 #result a.pattern:hover { background: var(--surface-3); text-decoration: none; }
 #result .s-tools { gap: 6px; }
-.icon-btn { width: 40px; height: 40px; padding: 0; border-radius: 12px; color: var(--text-2); position: relative; }
-.icon-btn::after { content: ""; position: absolute; inset: -2px; }
-.icon-btn:hover, .icon-btn.on { color: var(--text); }
-.icon-btn.on { background: var(--surface-2); border-color: var(--text); }
-.icon-btn[disabled] { opacity: 1; cursor: default; color: var(--text); background: var(--surface-2); border-color: transparent; }
+.tool-btn { gap: 5px; font-size: 14px; padding: 6px 12px; min-height: 38px; border-radius: 999px; white-space: nowrap; position: relative; }
+.tool-btn .ic { width: 18px; height: 18px; }
+.tool-btn.on { background: var(--surface-2); border-color: var(--text); }
+.tool-btn[disabled] { opacity: 1; cursor: default; background: var(--surface-2); border-color: transparent; }
+/* 分析結果的提醒：放在顯示模式切換的旁邊，看結果前就會看到 */
+.result-note { display: flex; align-items: flex-start; gap: 6px; margin: 0; font-size: 13px; line-height: 1.6; color: var(--text-2); }
+.result-note .ic { width: 16px; height: 16px; margin-top: 2px; }
 button.doubt { gap: 4px; font-size: 13px; padding: 4px 12px; border-radius: 999px; background: var(--tip-bg); color: var(--tip); border-color: transparent; }
 button.doubt .ic { width: 16px; height: 16px; }
 #result .banner { display: flex; align-items: flex-start; gap: 8px; border-radius: 12px; padding: 10px 14px; }
@@ -321,7 +323,7 @@ button.doubt .ic { width: 16px; height: 16px; }
 /* 句子：一個成分一塊，標籤置中在成分上方，「核心」「點我展開子句」在成分下方（2026-10-07 依使用者附圖） */
 #result .row { gap: 12px 16px; margin: 20px 0 4px; align-items: flex-end; }
 #result .ck { gap: 5px; border-radius: 8px; text-align: left; } /* 長片段換成兩行時靠左，比較好讀 */
-#result .hw-mark { top: calc(100% + 9px); font-size: 11px; } /* 「核心」放在底線下面，不壓到線 */
+#result .hw-mark { top: calc(100% + 11px); font-size: 11px; line-height: 1; } /* 「核心」放在底線下面，不壓到線 */
 #result .ck:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
 #result .tx { color: var(--text); padding: 0 2px 3px; border-radius: 4px; transition: background-color 0.15s; }
 #result .ck:hover > .tx { background: var(--surface-2); }
@@ -384,8 +386,7 @@ button.doubt .ic { width: 16px; height: 16px; }
   .label-short { display: inline; }
   #result .sentence { padding: 16px 16px 18px; }
   #result .pattern { font-size: 13px; padding: 4px 10px; }
-  .icon-btn { width: 38px; height: 38px; }
-  .icon-btn::after { inset: -4px; }
+  .tool-btn { padding: 6px 10px; }
 }
 
 /* ---------- 五大句型介紹頁 ---------- */

@@ -20,7 +20,7 @@ const CALLOUT = {
 // 線條圖示（直接畫在網頁裡，不另外載入圖示字型）
 const ICON = {
   volume: '<path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10"/>',
-  report: '<path d="M4.5 5h15v10.5H10l-5.5 4z"/><path d="M12 7.8v3.6M12 13.6v.1"/>',
+  flag: '<path d="M5.5 20.5V4M5.5 4.5h11l-2.5 4 2.5 4h-11"/>',
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   alert: '<path d="M12 4.5l8.5 15h-17z"/><path d="M12 10v4M12 16.8v.2"/>',
   pencil: '<path d="M4.5 19.5l1-4.5L16 4.5l3.5 3.5L9 18.5z"/><path d="M14 6.5l3.5 3.5"/>',
@@ -474,7 +474,6 @@ function feedbackForm(sIdx) {
       await sendFeedback({ kind: "error", sentence: sentence.text, message: text.value.trim(), analysis: sentence });
       view.feedback = "sent";
       renderSentence(sIdx);
-      showToast("收到，偵探貓去罰站了"); // 回報按鈕只有圖示，送出後用提示說一聲
     } catch (err) {
       status.textContent = err.message;
       send.disabled = false;
@@ -588,13 +587,11 @@ function grammarSection(sIdx) {
   return sec;
 }
 
-// 只有圖示的小按鈕（朗讀、回報錯誤）：滑鼠移上去和螢幕閱讀器都會說出名稱
-function iconButton(name, label, onClick) {
-  const btn = el("button", "icon-btn");
+// 圖示＋文字的小按鈕（朗讀、回報錯誤）：手機上換短字，才能和句型公式排在同一列
+function toolButton(name, long, short, onClick) {
+  const btn = el("button", "tool-btn");
   btn.type = "button";
-  btn.append(icon(name));
-  btn.setAttribute("aria-label", label);
-  btn.title = label;
+  btn.append(icon(name), el("span", "label-long", long), el("span", "label-short", short));
   btn.addEventListener("click", onClick);
   return btn;
 }
@@ -644,14 +641,14 @@ function renderSentence(sIdx) {
   }
   const tools = el("span", "s-tools");
   if (window.Speech?.available && sentence.status !== "failed") {
-    tools.append(iconButton("volume", "朗讀", (e) => {
+    tools.append(toolButton("volume", "朗讀", "朗讀", (e) => {
       e.stopPropagation();
       window.Speech.speak(sentence.text);
     }));
   }
   if (!view.sample) {
     const sent = view.feedback === "sent";
-    const report = iconButton(sent ? "check" : "report", sent ? "收到，偵探貓去罰站了" : "回報錯誤", () => {
+    const report = toolButton(sent ? "check" : "flag", sent ? "收到，偵探貓去罰站了" : "回報錯誤", sent ? "收到" : "回報", () => {
       view.feedback = view.feedback === "open" ? null : "open";
       renderSentence(sIdx);
     });
