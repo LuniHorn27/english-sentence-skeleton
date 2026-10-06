@@ -10,6 +10,15 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="quiz-page">
+  <nav class="site-nav" aria-label="網站選單">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">骨</span>英文句子骨架分析</a>
+    <div class="nav-links">
+      <a href="/patterns">五大句型</a>
+      <a href="/quiz" aria-current="page">句型小遊戲</a>
+      <a href="/about">關於</a>
+      <button type="button" id="share-site" class="nav-share">分享</button>
+    </div>
+  </nav>
   <main>
     <p class="back"><a href="/">← 回到句子分析</a>　<a href="/patterns">五大句型是什麼？</a></p>
     <header class="top">
@@ -19,5 +28,6 @@
     <section id="game" class="game" aria-live="polite"></section>
   </main>
   <script src="/static/quiz.js"></script>
+  <script src="/static/share.js"></script>
 </body>
 </html>

@@ -411,7 +411,7 @@ function feedbackForm(sIdx) {
   text.setAttribute("aria-label", "哪裡分析錯了");
   const note = el("p", "fb-note", "請不要填寫姓名、電話等個人資料。");
   const status = el("p", "fb-status");
-  const send = el("button", "primary", "送出");
+  const send = el("button", "primary", "回報錯誤");
   send.type = "submit";
   form.append(text, note, send, status);
 
@@ -651,7 +651,12 @@ form.addEventListener("submit", async (event) => {
 
   submit.disabled = true;
   submit.textContent = "分析中…";
-  result.replaceChildren(el("p", "loading", "分析中，請稍候…"));
+  const loading = el("p", "loading", "分析中，請稍候…");
+  result.replaceChildren(loading);
+  // 等超過 3 秒才補一句說明，平常很快就好的時候不用多看一行字
+  const slowTimer = setTimeout(() => {
+    loading.textContent = "分析中，請稍候…第一次分析要先把分析程式準備好，會比較久，請耐心等候。";
+  }, 3000);
   $("result-actions").hidden = true;
   try {
     const response = await fetch("/api/analyze", {
@@ -669,41 +674,16 @@ form.addEventListener("submit", async (event) => {
     addHistory(text);
   } catch {
     result.replaceChildren();
-    showError("連不上伺服器，請確認伺服器已啟動");
+    showError("連不上網站，請檢查網路後再按一次「分析」");
   } finally {
+    clearTimeout(slowTimer);
     submit.disabled = false;
     submit.textContent = "分析";
   }
 });
 
 // ---------- 分享（F6） ----------
-// 分享某一句的分析時，句子放在網址的 # 後面：這部分不會送到伺服器
-const toast = $("toast");
-function showToast(message) {
-  toast.textContent = message;
-  toast.hidden = false;
-  clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(() => { toast.hidden = true; }, 2500);
-}
-
-async function share(url, title) {
-  if (navigator.share) {
-    try {
-      await navigator.share({ title, url });
-      return;
-    } catch (err) {
-      if (err.name === "AbortError") return; // 使用者自己取消
-    }
-  }
-  try {
-    await navigator.clipboard.writeText(url);
-    showToast("已複製連結，可以貼給朋友了");
-  } catch {
-    window.prompt("請複製這個連結：", url);
-  }
-}
-
-$("share-site").addEventListener("click", () => share(location.origin + "/", "英文句子骨架分析"));
+// 分享某一句的分析時，句子放在網址的 # 後面：這部分不會送到伺服器（share() 在 share.js）
 $("share-result").addEventListener("click", () => {
   const text = input.value.trim();
   if (!text) return;

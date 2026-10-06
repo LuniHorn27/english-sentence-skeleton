@@ -63,9 +63,9 @@
     <!-- 分享、列印是「看完分析之後」要做的事，放在結果下方，和上方切換顯示方式的按鈕分開 -->
     <div id="result-actions" class="result-actions" hidden>
       <span class="ra-hint">Hi, there!</span>
-      <button type="button" id="share-result">🔗 分享這個分析</button>
-      <button type="button" id="print">🖨️ 列印講義</button>
-      <button type="button" data-open-feedback>💬 給我回饋</button>
+      <button type="button" id="share-result">🔗 <span class="label-long">分享這個分析</span><span class="label-short">分享</span></button>
+      <button type="button" id="print">🖨️ <span class="label-long">列印講義</span><span class="label-short">列印</span></button>
+      <button type="button" data-open-feedback>💬 <span class="label-long">給我回饋</span><span class="label-short">回饋</span></button>
     </div>
 
     <!-- 頁面最下方：回饋入口（畫面上只留分析用的輸入框，回饋在對話框裡寫）＋請喝咖啡 -->
@@ -84,7 +84,7 @@
         <p id="suggest-status" class="fb-status" role="status"></p>
         <div class="fb-dialog-bar">
           <button type="button" data-close-feedback>取消</button>
-          <button type="submit" class="primary">送出</button>
+          <button type="submit" class="primary">送出回饋</button>
         </div>
       </form>
     </dialog>
@@ -96,6 +96,7 @@
   <script src="/static/site-config.js"></script>
   <script src="/static/support.js"></script>
   <script src="/static/speech.js"></script>
+  <script src="/static/share.js"></script>
   <script src="/static/app.js"></script>
   <script src="/static/translate.js"></script>
 </body>

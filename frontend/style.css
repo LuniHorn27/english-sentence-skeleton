@@ -100,6 +100,10 @@ button[disabled] { opacity: 0.55; cursor: wait; }
 .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
 .nav-links a, .nav-share { font-size: 14px; color: var(--text-2); text-decoration: none; padding: 6px 12px; border-radius: 8px; border: 0; background: transparent; }
 .nav-links a:hover, .nav-share:hover { background: var(--surface-2); color: var(--text); }
+.nav-links a[aria-current="page"] { color: var(--text); font-weight: 600; background: var(--surface-2); }
+/* 內頁內容比較窄，選單跟著同寬，左右邊才對齊 */
+.about-page .site-nav, .lesson .site-nav { max-width: 1040px; }
+.quiz-page .site-nav { max-width: 880px; }
 .hero { text-align: center; padding: clamp(24px, 7vw, 64px) 0 clamp(18px, 3vw, 28px); }
 .hero-title { font-size: clamp(28px, 5vw, 44px); font-weight: 800; letter-spacing: 0.5px; line-height: 1.3; margin: 0 0 12px; }
 .hero-sub { font-size: clamp(15px, 2vw, 17px); color: var(--text-2); line-height: 1.8; margin: 0; }
@@ -149,6 +153,8 @@ textarea {
 .result-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin: 20px 0 8px; padding: 14px 12px; border: 1px solid var(--border); background: var(--surface); border-radius: 14px; }
 .result-actions .ra-hint { color: var(--text-2); font-size: 14px; }
 .result-actions button { font-size: 15px; padding: 7px 18px; }
+/* 手機上按鈕字縮短（分享這個分析 → 分享），免得被擠成兩行 */
+.label-short { display: none; }
 .tag { font-size: 12px; color: var(--text-2); border: 1px solid var(--border-strong); padding: 1px 8px; border-radius: 6px; }
 .banner { font-size: 14px; background: var(--tip-bg); color: var(--tip); border-radius: 8px; padding: 8px 12px; margin-top: 10px; }
 .banner.fail { background: var(--danger-bg); color: var(--danger); }
@@ -281,6 +287,8 @@ button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
   .row { gap: 10px; }
   .result-actions .ra-hint { flex-basis: 100%; text-align: center; }
   .result-actions button { flex: 1 1 0; padding: 8px 10px; }
+  .label-long { display: none; }
+  .label-short { display: inline; }
 }
 
 /* ---------- 五大句型介紹頁 ---------- */
