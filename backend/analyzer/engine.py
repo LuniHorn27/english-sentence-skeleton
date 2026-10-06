@@ -410,6 +410,9 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("aux", clause=index, kind="neg" if c.dep_ == "neg" else "")
             elif c.dep_ in ("advmod", "npadvmod", "prep", "neg"):
                 roots[c.i] = modifier_spec(c, index, info)
+            elif c.dep_ == "advcl":
+                # 小型模型會把 so that 子句掛在 going、have 底下；不處理就會被併進 aux.（使用者回報 2026-10-07）
+                roots[c.i] = advcl_spec(c, index, info)
         for t in able_to.children:
             if t.dep_ == "aux" and t.lower_ == "to":
                 roots[t.i] = Spec("aux", clause=index)
@@ -427,6 +430,9 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("aux", clause=index, kind="neg" if c.dep_ == "neg" else "")
             elif c.dep_ in ("advmod", "npadvmod", "prep", "neg"):
                 roots[c.i] = modifier_spec(c, index, info)
+            elif c.dep_ == "advcl":
+                # 小型模型會把 so that 子句掛在 going、have 底下；不處理就會被併進 aux.（使用者回報 2026-10-07）
+                roots[c.i] = advcl_spec(c, index, info)
         for t in have_to.children:
             if t.dep_ == "aux" and t.lower_ == "to":
                 roots[t.i] = Spec("aux", clause=index)
@@ -602,15 +608,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             else:
                 roots[c.i] = Spec("SC", clause=index)  # The door flew open.
         elif d == "advcl":
-            f = advcl_function(c)
-            if f:
-                roots[c.i] = Spec("M", function=f, clause=index, kind="advcl", inner_verb=c if f.startswith("副詞子句") else None)
-                if f.startswith("副詞子句"):
-                    info.flags.add("subordinating_conj")
-                elif f == "副詞・分詞構句" or (f != "副詞・表目的" and c.tag_ in ("VBG", "VBN")):
-                    info.flags.add("participle_phrase")
-            else:
-                roots[c.i] = Spec("unknown", clause=index)
+            roots[c.i] = advcl_spec(c, index, info)
         elif d == "preconj":
             roots[c.i] = Spec("conj", clause=index)  # You can either stay here or go…
         elif d in ("punct", "prt", "cc", "conj", "mark"):
@@ -906,6 +904,18 @@ def present_for_future(roots, doc) -> bool:
         if future:
             return True
     return False
+
+
+def advcl_spec(c, index, info):
+    """動詞底下的 advcl → 副詞子句／分詞構句等修飾語（主程式和 have to、be going to 分支共用）"""
+    f = advcl_function(c)
+    if not f:
+        return Spec("unknown", clause=index)
+    if f.startswith("副詞子句"):
+        info.flags.add("subordinating_conj")
+    elif f == "副詞・分詞構句" or (f != "副詞・表目的" and c.tag_ in ("VBG", "VBN")):
+        info.flags.add("participle_phrase")
+    return Spec("M", function=f, clause=index, kind="advcl", inner_verb=c if f.startswith("副詞子句") else None)
 
 
 def modifier_spec(c, index, info):

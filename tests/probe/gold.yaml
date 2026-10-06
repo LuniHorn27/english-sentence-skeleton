@@ -5352,3 +5352,58 @@
     function: 副詞子句・表時間
     modifies: null
     text: as soon as you arrive
+- id: '356'
+  sentence: I am going to save money so that I can buy a bike.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: am going to
+  - role: Vt
+    text: save
+  - role: O
+    text: money
+  - role: M
+    function: 副詞子句・表目的
+    modifies: null
+    text: so that I can buy a bike
+- id: '357'
+  sentence: I have to leave now because my mother is waiting for me.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: have to
+  - role: Vi
+    text: leave
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: now
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because my mother is waiting for me
+- id: '358'
+  sentence: He used to walk to school when he was young.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: aux
+    text: used to
+  - role: Vi
+    text: walk
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to school
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when he was young
