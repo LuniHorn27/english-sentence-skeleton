@@ -78,9 +78,24 @@ _rate_times: dict[tuple[str, str], deque] = defaultdict(deque)
 _rate_cleaned = [0.0]
 
 
+# 使用者真正的來源位址從哪個標頭讀（次數限制用）。
+# Render 前面是 Cloudflare：它把訪客的真實位址放在 CF-Connecting-IP，訪客自己偽造的值會被蓋掉；
+# X-Forwarded-For 最前面那段訪客可以亂寫，只靠它的話，每次換一個假位址就能繞過次數限制（2026-10-06 實測）。
+# 設定在 render.yaml；Mac 上不用設（uvicorn 只相信本機的 cloudflared，會取到正確的位址）。
+CLIENT_IP_HEADER = os.environ.get("CLIENT_IP_HEADER", "").lower()
+
+
+def client_ip(request: Request) -> str:
+    if CLIENT_IP_HEADER:
+        ip = request.headers.get(CLIENT_IP_HEADER, "").strip()
+        if ip:
+            return ip
+    return request.client.host if request.client else "unknown"
+
+
 def check_rate(request: Request, bucket: str, limit: int, window: int, message: str):
     """同一個來源在 window 秒內最多 limit 次；來源位址只放在記憶體裡計數，不存檔"""
-    key = (bucket, request.client.host if request.client else "unknown")
+    key = (bucket, client_ip(request))
     now = time.time()
     with _rate_lock:
         if now - _rate_cleaned[0] > 600:  # 每 10 分鐘清掉一小時前的紀錄，記憶體才不會一直變大
