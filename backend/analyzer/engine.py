@@ -78,6 +78,32 @@ class ClauseInfo:
 
 
 # ---------- 修飾語功能 ----------
+def wh_fronted_note(c, by_root):
+    """疑問詞從受詞裡移到句首（What do you want to be?）：說明它和後面那段合起來是同一個受詞"""
+    root = c.get("_root")
+    if root is None or c["start"] != 0 or c["role"] not in ("O", "DO", "SC", "OC"):
+        return None
+    rest = [x for x in by_root.get(root.i, []) if x is not c]
+    first = root.doc[root.sent.start] if hasattr(root, "sent") else None
+    if not rest or first is None or first.tag_ not in ("WP", "WDT"):
+        return None
+    wh, other = c["text"], rest[0]["text"]
+    name = {"O": "受詞", "DO": "直接受詞", "SC": "主詞補語", "OC": "受詞補語"}[c["role"]]
+    where = "當 be 的補語" if root.lemma_ == "be" else "當動作的對象"
+    return (f"{wh} 是疑問詞，和後面的「{other}」合起來是同一個{name}：疑問句把它移到句首，"
+            f"還原成直述句是「{other} {wh.lower()}」，{wh.lower()} 在裡面{where}。")
+
+
+def is_count_of_times(tok) -> bool:
+    """three times、countless times、many times、every time：說明「幾次」，是頻率"""
+    if tok.lemma_.lower() != "time":
+        return False
+    if any(c.dep_ in ("relcl", "acl", "advcl") for c in tok.children):
+        return False  # Every time I see her, …（每當）是時間，不是次數
+    return tok.tag_ == "NNS" or any(c.dep_ in ("nummod", "amod", "det") and c.lower_ not in ("the", "this", "that")
+                                    for c in tok.children)
+
+
 def adverb_function(tok) -> str:
     """動詞底下的修飾語 → 副詞・表…"""
     lemma = tok.lemma_.lower()
@@ -140,6 +166,10 @@ def adverb_function(tok) -> str:
     if dep == "npadvmod":
         if lemma == "way":
             return "副詞・表路程"
+        if is_count_of_times(tok):
+            return "副詞・表頻率"  # countless times、three times a week（使用者回報 2026-10-07）
+        if any(c.lemma_.lower() in L.FREQ_ADVERBS for c in tok.children):
+            return "副詞・表頻率"  # twice a week、once a month（小型模型把 week 當成重心）
         if lemma in L.TIME_NOUNS or tok.ent_type_ in ("DATE", "TIME"):
             return "副詞・表時間"
         return "副詞・表方式"
@@ -149,7 +179,9 @@ def adverb_function(tok) -> str:
     if lemma == "how" or (tok.tag_ in ("JJ", "RB") and any(c.lower_ == "how" for c in tok.children)):
         nxt = tok if lemma != "how" else None
         word = nxt.lower_ if nxt is not None else ""
-        if word in ("long", "often", "soon", "late", "early"):
+        if word == "often":
+            return "副詞・表頻率"  # How often do you…?
+        if word in ("long", "soon", "late", "early"):
             return "副詞・表時間"  # How long have you lived here?
         if word == "far":
             return "副詞・表路程"
@@ -157,6 +189,8 @@ def adverb_function(tok) -> str:
         return {"where": "副詞・表地點", "when": "副詞・表時間", "why": "副詞・表原因"}.get(lemma, "副詞・表方式")
     if lemma in L.TONE_ADVERBS or lemma == "please":
         return "副詞・表語氣"
+    if lemma in L.FREQ_ADVERBS:
+        return "副詞・表頻率"  # always、often、twice
     if lemma in L.TIME_ADVERBS:
         return "副詞・表時間"
     if lemma in L.PLACE_ADVERBS:
@@ -434,7 +468,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
             elif c.dep_ == "prep" and (v.lower_, c.lower_) in L.STATIVE_PAIRS:
                 roots[c.i] = Spec("M", function="副詞・表對象", clause=index)  # interested in art
-            elif c.dep_ in ("prep", "advmod", "npadvmod") and adverb_function(c) in ("副詞・表時間", "副詞・表地點"):
+            elif c.dep_ in ("prep", "advmod", "npadvmod") and adverb_function(c) in ("副詞・表時間", "副詞・表頻率", "副詞・表地點"):
                 roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
             elif c.dep_ == "prep" and c.i > v.i:
                 roots[c.i] = Spec("M", function="副詞・表對象", clause=index)  # interested in art
@@ -702,6 +736,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 unit = c.lemma_.lower()
                 if unit in L.DISTANCE_NOUNS:
                     roots[c.i] = Spec("M", function="副詞・表路程", clause=index)
+                elif is_count_of_times(c) or any(g.lemma_.lower() in L.FREQ_ADVERBS for g in c.children):
+                    roots[c.i] = Spec("M", function="副詞・表頻率", clause=index)  # ran three times、go swimming once a month
                 elif unit in L.TIME_NOUNS and any(g.dep_ in ("nummod", "det", "amod") for g in c.children):
                     roots[c.i] = Spec("M", function="副詞・表時間", clause=index)
 
@@ -790,6 +826,42 @@ def cleft_analysis(v, subj, c, roots, index, sent):
             roots[focus.i] = Spec("M", function=adverb_function(focus), clause=index, kind="cleft_focus")
     inner.pattern = clause_pattern(roots, index, inner)
     return inner
+
+
+def split_finite_adverb_clauses(roots, infos, doc):
+    """有自己主詞的副詞子句（when you grow up、when I finish my homework）是完整的子句，
+    就算分析模型把它掛在不定詞或動名詞底下，也要獨立成一塊「副詞子句」，不併進受詞、補語裡。
+    只處理接在片段最後面的子句，切開後剩下的片段還是連在一起的（使用者回報 2026-10-07）。"""
+    for ri, spec in list(roots.items()):
+        if spec.role not in ("O", "OC", "SC", "DO", "S"):
+            continue
+        root_tok = doc[ri]
+        # 片段根是不定詞或動名詞（to be、to go、playing…）
+        if root_tok.pos_ not in ("VERB", "AUX"):
+            continue
+        if not (root_tok.tag_ == "VBG" or any(c.dep_ == "aux" and c.lower_ == "to" for c in root_tok.children)):
+            continue
+        inside = {t.i for t in root_tok.subtree}
+        last = max(t.i for t in root_tok.subtree if not t.is_punct)
+        for d in root_tok.subtree:
+            if d.dep_ != "advcl" or d.i in roots:
+                continue
+            finite = d.tag_ in ("VBD", "VBZ", "VBP", "MD") or any(c.dep_ == "aux" and c.tag_ in ("MD", "VBD", "VBZ", "VBP")
+                                                                  for c in d.children)
+            has_subj = any(c.dep_ in ("nsubj", "nsubjpass", "expl") for c in d.children)
+            if not has_subj and not (finite and any(c.dep_ == "mark" for c in d.children)):
+                continue  # 沒有主詞的（to save money、walking home）是片語，不是子句；小型模型看漏主詞時，看「連接詞＋有時態的動詞」
+            if any(a.i in roots and a.i != ri for a in d.ancestors if a.i in inside):
+                continue  # 已經在另一個片段（例如子句）裡面
+            if max(t.i for t in d.subtree if not t.is_punct) != last:
+                continue  # 子句在中間：切開會讓受詞斷成兩截，先不處理
+            f = advcl_function(d)
+            if not f or not f.startswith("副詞子句"):
+                continue
+            roots[d.i] = Spec("M", function=f, clause=spec.clause, kind="advcl", inner_verb=d)
+            info = infos.get(spec.clause)
+            if info is not None:
+                info.flags.add("subordinating_conj")
 
 
 def adverb_function_prep_like(tok):
@@ -1300,8 +1372,13 @@ def analyze_sentence(text: str) -> SentenceResult:
             flags.add("parallel_structure")
         else:
             for c in root.children:
-                if c.dep_ in ("conj", "cc"):
+                if c.dep_ == "cc":
+                    # 句首的 But／And／Or 連接的是上一句，句子裡找不到另一半，照樣是連接詞（使用者回報 2026-10-07）
+                    roots[c.i] = Spec("conj", clause=0)
+                elif c.dep_ == "conj":
                     roots[c.i] = Spec("unknown", clause=0)
+
+    split_finite_adverb_clauses(roots, infos, sent.doc)
 
     if kind == "simple":
         comparative_correlative(sent, root, roots, infos[0])
@@ -1340,7 +1417,9 @@ def analyze_sentence(text: str) -> SentenceResult:
     #   （平行結構的兩組 Vt ＋ O 除外）
     if status == "ok" and "parallel_structure" not in flags:
         from collections import Counter
-        counts = Counter((c["_spec"].clause, c["role"]) for c in raw if c["role"] in ("S", "O", "IO", "DO", "SC", "OC", "V"))
+        # 同一個成分被拆成兩段只算一次：What do you want to eat? 的 What 和 to eat 是同一個受詞（疑問詞移到句首）
+        counts = Counter(k[:2] for k in {(c["_spec"].clause, c["role"], c["_root"].i) for c in raw
+                                         if c["role"] in ("S", "O", "IO", "DO", "SC", "OC", "V")})
         # 連綴動詞 V 後面不會有受詞（It is no use crying… 的 crying 如果被標成 O，一定是看錯了）
         linking_obj = any(counts[(k, "V")] and counts[(k, "O")] for k, _ in list(counts))
         if linking_obj or any(n > 1 for (k, r), n in counts.items() if r != "V"):
@@ -1426,9 +1505,23 @@ def analyze_sentence(text: str) -> SentenceResult:
                 c["clause"] = min(seen, len(infos) - 1)
 
     chunks = []
+    by_root = {}
+    for c in raw:
+        if c.get("_root") is not None:
+            by_root.setdefault(c["_root"].i, []).append(c)
+    for c in raw:
+        # Where／When／How 從不定詞片語裡移到句首（Where do you want to go?）：它不是受詞的一部分，照疑問詞的功能標副詞
+        root = c.get("_root")
+        if root is not None and c["start"] == 0 and len(by_root.get(root.i, [])) > 1 and sent[0].tag_ == "WRB" \
+                and c["role"] in ("O", "DO", "SC", "OC"):
+            c["role"], c["function"] = "M", adverb_function(sent[0])
+            c["heads"] = []
     for i, c in enumerate(raw):
         c["id"] = i
         c["note"] = chunk_note(c, infos, stext, compound=(kind == "compound"))
+        wh_front = wh_fronted_note(c, by_root)
+        if wh_front:
+            c["note"] = wh_front
         if c.get("function") == "副詞・分詞構句" and c.get("_root") is not None:
             c["restore"] = participle_restore(c["_root"])  # 點開時顯示還原成完整句子的步驟
         if c.get("_spec") is not None and c["_spec"].kind == "lets_us":

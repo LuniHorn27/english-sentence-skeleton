@@ -88,6 +88,12 @@ PLACE_PREPS = {
 }
 
 # 表示時間的副詞
+# 頻率副詞（多常、幾次）：標「副詞・表頻率」（使用者決定 2026-10-07；never 照舊標表否定）
+FREQ_ADVERBS = {
+    "always", "usually", "often", "sometimes", "seldom", "rarely", "frequently", "occasionally",
+    "normally", "regularly", "constantly", "once", "twice", "thrice",
+}
+
 TIME_ADVERBS = {
     "today", "tonight", "tomorrow", "yesterday", "now", "then", "already", "soon",
     "later", "early", "late", "always", "often", "usually", "sometimes", "never",
