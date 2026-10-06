@@ -115,9 +115,9 @@ def analyze(req: AnalyzeRequest, request: Request):
     check_rate(request, "analyze", 30, 60, "分析次數太多了，請等一分鐘後再試")
     text = req.text.strip()
     if not text:
-        raise HTTPException(400, "你什麼都沒貼，本貓的放大鏡對著空氣很尷尬。貼一句英文進來吧。")
+        raise HTTPException(400, "你什麼都沒貼，偵探貓的放大鏡對著空氣很尷尬。貼一句英文進來吧。")
     if len(text) > MAX_CHARS:
-        raise HTTPException(400, f"這篇長到本貓的放大鏡起霧了，請控制在 {MAX_CHARS} 個字元以內。")
+        raise HTTPException(400, f"這篇長到偵探貓的放大鏡起霧了，請控制在 {MAX_CHARS} 個字元以內。")
     try:
         sentences = analyze_text(text)
     except Exception:  # 分析引擎出錯時，不讓網頁當掉，回報「無法分析」
@@ -264,12 +264,12 @@ def speak(req: SpeakRequest, request: Request):
     # 用 POST 而不是把句子放在網址裡，句子才不會出現在伺服器的存取紀錄中
     check_rate(request, "tts", 60, 60, "朗讀次數太多了，請等一分鐘後再試")
     if not tts.is_available():
-        raise HTTPException(503, "本貓今天喉嚨啞了，朗讀暫時不能用。")
+        raise HTTPException(503, "偵探貓今天喉嚨啞了，朗讀暫時不能用。")
     try:
         audio = tts.synthesize(req.text, req.speed)
     except Exception:
         log.exception("朗讀失敗（輸入長度 %d 字元）", len(req.text))
-        raise HTTPException(503, "本貓今天喉嚨啞了，朗讀暫時不能用。")
+        raise HTTPException(503, "偵探貓今天喉嚨啞了，朗讀暫時不能用。")
     return Response(content=audio, media_type="audio/wav", headers={"Cache-Control": "private, max-age=86400"})
 
 
@@ -282,7 +282,7 @@ class TranslateRequest(BaseModel):
 @app.post("/api/translate")
 def translate_sentence(req: TranslateRequest, request: Request):
     # 翻譯最吃電腦資源（一句 1～5 秒、一次只能翻一句），限制次數才不會有人把伺服器佔滿
-    check_rate(request, "translate", 60, 60, "翻譯次數太多，本貓要喘口氣，一分鐘後再來。")
+    check_rate(request, "translate", 60, 60, "翻譯次數太多，偵探貓要喘口氣，一分鐘後再來。")
     if not translate.is_available():
         raise HTTPException(503, "負責翻譯的同事去吃飯了，等一下再試。")
     try:

@@ -99,7 +99,7 @@ function renderStart(message) {
 }
 
 async function start(mode) {
-  game.replaceChildren(el("p", "loading", "本貓正在出題…"));
+  game.replaceChildren(el("p", "loading", "偵探貓正在出題…"));
   try {
     const response = await fetch(`/api/quiz?count=${ROUND}`);
     if (!response.ok) throw new Error();
@@ -107,7 +107,7 @@ async function start(mode) {
     state = { mode, items, index: 0, results: [] };
     renderQuestion();
   } catch {
-    renderStart("題目被本貓打翻了，等一下再試。");
+    renderStart("題目被偵探貓打翻了，等一下再試。");
   }
 }
 
@@ -265,7 +265,7 @@ function askSkeleton(item, card) {
           }
         });
         const ok = mistakes === 0;
-        feedback(card, item, ok, ok ? "一次全對，你比本貓還會辦案。" : `破案了，中間繞了 ${mistakes} 次遠路。`);
+        feedback(card, item, ok, ok ? "一次全對，你比偵探貓還會辦案。" : `破案了，中間繞了 ${mistakes} 次遠路。`);
       }
     } else {
       mistakes += 1;
@@ -290,9 +290,9 @@ function renderEnd() {
   const stars = score >= 9 ? "⭐⭐⭐" : score >= 7 ? "⭐⭐" : score >= 5 ? "⭐" : "";
   card.append(el("p", "end-stars", stars || "💪"));
   card.append(el("p", "end-score", `${score}／${items.length}`));
-  const words = score === items.length ? "全部答對，本貓的飯碗不保了。" : score >= 7 ? "不錯喔，下面幾題是漏網之魚，抓回來看看。" : "沒關係，本貓剛入行也常看走眼，多玩幾回合就越看越清楚。";
+  const words = score === items.length ? "全部答對，偵探貓的飯碗不保了。" : score >= 7 ? "不錯喔，下面幾題是漏網之魚，抓回來看看。" : "沒關係，偵探貓剛入行也常看走眼，多玩幾回合就越看越清楚。";
   card.append(el("p", "end-words", words));
-  if (score > best && best > 0) card.append(el("p", "end-best", "🎉 新紀錄！本貓幫你記下來了。"));
+  if (score > best && best > 0) card.append(el("p", "end-best", "🎉 新紀錄！偵探貓幫你記下來了。"));
 
   const bar = el("div", "end-bar");
   bar.append(button("再玩一回合", "primary", () => start(mode)), button("換一種玩法", null, () => renderStart()));

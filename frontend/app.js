@@ -20,7 +20,7 @@ const CALLOUT = {
 // 線條圖示（直接畫在網頁裡，不另外載入圖示字型）
 const ICON = {
   volume: '<path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10"/>',
-  flag: '<path d="M5.5 20.5V4M5.5 4.5h11l-2.5 4 2.5 4h-11"/>',
+  report: '<path d="M4.5 5h15v10.5H10l-5.5 4z"/><path d="M12 7.8v3.6M12 13.6v.1"/>',
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   alert: '<path d="M12 4.5l8.5 15h-17z"/><path d="M12 10v4M12 16.8v.2"/>',
   pencil: '<path d="M4.5 19.5l1-4.5L16 4.5l3.5 3.5L9 18.5z"/><path d="M14 6.5l3.5 3.5"/>',
@@ -95,33 +95,25 @@ function storageSet(key, value) {
 }
 
 // ---------- 顯示模式 ----------
-// 標籤浮在字的上方、不佔句子的位置；相鄰兩個標籤會疊在一起時，才把後面的片段往右推一點，
-// 每行第一個標籤也不能超出左邊。標籤播動畫時會縮小，所以用實際寬度（offsetWidth）計算。
-function ownLabel(ck) {
-  return [...ck.querySelectorAll(".lb")].find((lb) => lb.closest(".ck") === ck);
-}
+// 標籤比底下的字寬時（副詞・表時間 ＋ Finally,），讓標籤超出字的寬度、不把片段撐開；
+// 只有相鄰兩個標籤真的會重疊時，才把後面的片段往右推一點（使用者回報「空兩格」，2026-10-01）
 function fixLabelOverlap(root = result) {
-  const items = [...root.querySelectorAll(".ck")].map((c) => [c, ownLabel(c)]).filter(([, lb]) => lb);
-  for (const [c] of items) c.style.marginLeft = "";
+  const chunks = [...root.querySelectorAll(".ck")].filter((c) => c.querySelector(":scope > .lb"));
+  for (const c of chunks) c.style.marginLeft = "";
   let prev = null;
-  for (const [c, lb] of items) {
-    const style = getComputedStyle(lb);
-    if (style.visibility === "hidden" || style.display === "none" || !lb.textContent) continue;
-    const box = c.parentElement.closest(".row, .inner");
-    const measure = () => {
-      const r = lb.getBoundingClientRect();
-      const mid = r.left + r.width / 2;
-      return { top: r.top + r.height / 2, left: mid - lb.offsetWidth / 2, right: mid + lb.offsetWidth / 2 };
-    };
-    const r = measure();
-    const sameLine = prev && Math.abs(prev.top - r.top) < 6 && prev.box === box;
-    if (sameLine && r.left < prev.right + 4) {
-      c.style.marginLeft = `${prev.right + 4 - r.left}px`;
+  for (const c of chunks) {
+    const lb = c.querySelector(":scope > .lb");
+    if (getComputedStyle(lb).visibility === "hidden" || !lb.textContent) continue;
+    const r = lb.getBoundingClientRect();
+    const sameLine = prev && Math.abs(prev.top - r.top) < 4 && prev.parent === c.parentElement;
+    if (sameLine && r.left < prev.right + 6) {
+      c.style.marginLeft = `${prev.right + 6 - r.left}px`;
     } else if (!sameLine) {
-      const left = box.getBoundingClientRect().left;
+      const left = c.parentElement.getBoundingClientRect().left;  // 每行第一個片段：標籤不要超出左邊
       if (r.left < left) c.style.marginLeft = `${left - r.left}px`;
     }
-    prev = { ...measure(), box };
+    const r2 = lb.getBoundingClientRect();
+    prev = { top: r2.top, right: r2.right, parent: c.parentElement };
   }
 }
 let overlapTimer = null;
@@ -146,7 +138,27 @@ toolbar.addEventListener("click", (e) => {
 setMode(storageGet("mode") === "detail" ? "detail" : "skeleton");
 
 // ---------- 片段 ----------
-// 句子不拆開：整句照原本的順序像文章一樣換行，標籤浮在核心字的上方（2026-10-06 改版）
+function chunkText(chunk) {
+  // 把核心字包成粗體，其他照原樣
+  const tx = el("span", "tx");
+  if (chunk.implicit) {
+    tx.textContent = chunk.text;
+    return tx;
+  }
+  const heads = [...(chunk.heads || [])].sort((a, b) => a.start - b.start);
+  let pos = chunk.start;
+  for (const h of heads) {
+    if (h.start > pos) tx.append(chunk.text.slice(pos - chunk.start, h.start - chunk.start));
+    const hw = el("span", "hw", h.text);
+    hw.append(el("span", "hw-mark", "核心"));
+    tx.append(hw);
+    pos = h.end;
+  }
+  if (pos < chunk.end) tx.append(chunk.text.slice(pos - chunk.start));
+  if (chunk.suffix) tx.append(el("span", "suffix", chunk.suffix)); // Let's 的 's（us）
+  return tx;
+}
+
 function labelText(chunk) {
   if (chunk.role === "M") {
     return chunk.modifies ? `${chunk.function} ${chunk.modifies.text}` : chunk.function;
@@ -162,105 +174,52 @@ function roleClass(chunk) {
   return `${style} r-${GROUP[chunk.role]}`;
 }
 
-// S、Vt、IO 這類兩個字以內的標籤畫成圓形，放在核心字正上方；其他（修飾語、aux.、真主詞）放在片段開頭
+// S、Vt、IO 這類兩個字以內的主要成分標籤畫成圓形（2026-10-06 改版）
 function makeLabel(chunk) {
   const text = labelText(chunk) || "";
-  const dot = GROUP[chunk.role] && text.length <= 2;
-  return el("span", dot ? "lb dot" : "lb", text);
-}
-
-// 標籤的落腳處：包住核心字（粗體），或片段開頭一個看不見的點
-function anchor(text, label, bold) {
-  const a = el("span", bold ? "anc hw" : "anc");
-  if (label) a.append(label);
-  a.append(text);
-  return a;
-}
-function point(label) {
-  const a = el("span", "anc pt");
-  a.append(label);
-  return a;
-}
-
-function chunkText(chunk, label) {
-  const tx = el("span", "tx");
-  const centered = label?.classList.contains("dot");
-  if (!centered) {
-    if (label) tx.append(point(label));
-    tx.append(chunk.text);
-  } else if (chunk.implicit) {
-    tx.append(anchor(chunk.text, label, false));
-  } else {
-    const heads = [...(chunk.heads || [])].sort((a, b) => a.start - b.start);
-    if (!heads.length) {
-      // 沒有標核心字：一個字的片段整個字就是核心；好幾個字的片段，標籤放在第一個字上方
-      const sp = chunk.text.indexOf(" ");
-      if (sp < 0) tx.append(anchor(chunk.text, label, true));
-      else tx.append(anchor(chunk.text.slice(0, sp), label, false), chunk.text.slice(sp));
-    } else {
-      let pos = chunk.start;
-      heads.forEach((h, i) => {
-        if (h.start > pos) tx.append(chunk.text.slice(pos - chunk.start, h.start - chunk.start));
-        tx.append(anchor(h.text, i === 0 ? label : null, true));
-        pos = h.end;
-      });
-      if (pos < chunk.end) tx.append(chunk.text.slice(pos - chunk.start));
-    }
-  }
-  if (chunk.suffix) tx.append(el("span", "suffix", chunk.suffix)); // Let's 的 's（us）
-  return tx;
+  return el("span", GROUP[chunk.role] && text.length <= 2 ? "lb dot" : "lb", text);
 }
 
 function miniChunk(chunk) {
   const node = el("span", `ck ${roleClass(chunk)}`);
-  node.append(chunkText(chunk, makeLabel(chunk)));
+  node.append(makeLabel(chunk), el("span", "tx", chunk.text + (chunk.suffix || "")));
   return node;
 }
 
-function chunkNode(sIdx, chunk) {
+function chunkNode(sIdx, chunk, trailing) {
   const view = views[sIdx];
-  // 用 span 不用 button：button 在瀏覽器裡一定是一整塊，長片段就沒辦法跟著句子換行
-  const node = el("span", `ck ${roleClass(chunk)}`);
-  node.tabIndex = 0;
-  node.setAttribute("role", "button");
+  const node = el("button", `ck ${roleClass(chunk)}`);
+  node.type = "button";
   if (view.selected === chunk.id) node.classList.add("selected");
   node.setAttribute("aria-label", `${chunk.text}：${chunk.role === "M" ? labelText(chunk) : ROLE_NAME[chunk.role]}`);
+  node.append(makeLabel(chunk));
 
   const expanded = chunk.inner?.length && view.expanded.has(chunk.id);
   if (expanded) {
-    node.setAttribute("aria-expanded", "true");
     const inner = el("span", "inner");
-    chunk.inner.forEach((c, i) => {
-      if (i) inner.append(" ");
-      inner.append(miniChunk(c));
-    });
-    node.append(point(makeLabel(chunk)), inner);
+    chunk.inner.forEach((c) => inner.append(miniChunk(c)));
+    const wrap = el("span", "inner-wrap");
+    wrap.append(inner);
+    if (trailing) wrap.append(el("span", "punct tx", trailing));
+    node.append(wrap);
   } else {
-    if (chunk.inner?.length) node.setAttribute("aria-expanded", "false");
-    node.append(chunkText(chunk, makeLabel(chunk)));
+    const tx = chunkText(chunk);
+    if (trailing) tx.append(el("span", "punct", trailing));
+    node.append(tx);
   }
-  if (chunk.inner?.length) node.append(" ", el("span", "more", expanded ? "收合子句" : "點我展開子句"));
+  node.append(el("span", "sub", chunk.inner?.length ? (expanded ? "收合子句" : "點我展開子句") : ""));
 
-  const activate = () => {
+  node.addEventListener("click", () => {
     if (chunk.inner?.length) {
       view.expanded.has(chunk.id) ? view.expanded.delete(chunk.id) : view.expanded.add(chunk.id);
     }
     view.selected = view.selected === chunk.id && !chunk.inner?.length ? null : chunk.id;
     renderSentence(sIdx);
-    views[sIdx].node.querySelector(`[data-chunk="${chunk.id}"]`)?.focus();
-  };
-  node.dataset.chunk = chunk.id;
-  node.addEventListener("click", activate);
-  node.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      activate();
-    }
   });
   return node;
 }
 
-// 片段之間的標點（逗號、句號）接在前一個片段後面，不畫底線
+// 片段之間的標點（逗號、句號）接在前一個片段後面顯示
 function trailingPunct(sentence, chunks, i) {
   const c = chunks[i];
   if (c.implicit) return "";
@@ -271,49 +230,33 @@ function trailingPunct(sentence, chunks, i) {
 
 function chunkRow(sIdx) {
   const sentence = sentences[sIdx];
-  const row = el("div", "row flow");
+  const row = el("div", "row");
   const chunks = sentence.chunks;
-  let order = 0; // 骨架浮現的順序：只算主要成分
-  const pieces = chunks.map((c, i) => {
-    const node = chunkNode(sIdx, c);
-    if (/core|soft/.test(roleClass(c))) node.style.setProperty("--i", order++);
-    const punct = trailingPunct(sentence, chunks, i);
-    return punct ? [node, el("span", "punct", punct)] : [node];
-  });
+  const nodes = chunks.map((c, i) => chunkNode(sIdx, c, trailingPunct(sentence, chunks, i)));
 
   if (sentence.kind !== "compound") {
-    pieces.forEach((p, i) => row.append(...p, i < pieces.length - 1 ? " " : ""));
+    row.append(...nodes);
     return row;
   }
   // 對等句：同一個子句的片段圈在同一個框裡，連接詞放在框外
   let box = null;
   let boxClause = null;
   chunks.forEach((c, i) => {
-    const sep = i < chunks.length - 1 ? " " : "";
     if (c.role === "conj") {
       box = null;
-      row.append(...pieces[i], sep);
+      row.append(nodes[i]);
       return;
     }
     if (!box || boxClause !== c.clause) {
-      box = el("span", "clause");
-      box.append(el("span", "clause-cap", CLAUSE_NAME[c.clause] || `子句 ${c.clause + 1}`), " ");
+      box = el("div", "clause");
+      box.append(el("span", "clause-cap", CLAUSE_NAME[c.clause] || `子句 ${c.clause + 1}`));
+      box.append(el("div", "clause-row"));
       boxClause = c.clause;
-      row.append(box, " ");
+      row.append(box);
     }
-    box.append(...pieces[i], sep);
+    box.lastChild.append(nodes[i]);
   });
   return row;
-}
-
-// 骨架浮現：先出現完整的句子，修飾語退成灰色，主要成分的標籤和底線再依序出現。每句只播一次。
-function reveal(row) {
-  row.classList.add("pre", "revealing");
-  getComputedStyle(row).opacity; // 先讓瀏覽器畫出「完整句子」的樣子，拿掉 pre 時才會播動畫
-  setTimeout(() => {
-    row.classList.remove("pre");
-    setTimeout(() => row.classList.remove("revealing"), 2600);
-  }, 30);
 }
 
 // ---------- 朗讀 ----------
@@ -507,7 +450,7 @@ function feedbackForm(sIdx) {
   const sentence = sentences[sIdx];
   const view = views[sIdx];
   const form = el("form", "feedback");
-  form.append(el("p", "fb-title", "本貓哪裡看走眼了？"));
+  form.append(el("p", "fb-title", "偵探貓哪裡看走眼了？"));
 
   const text = el("textarea");
   text.rows = 2;
@@ -523,7 +466,7 @@ function feedbackForm(sIdx) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!text.value.trim()) {
-      status.textContent = "先告訴本貓錯在哪啦。";
+      status.textContent = "先告訴偵探貓錯在哪啦。";
       return;
     }
     send.disabled = true;
@@ -531,7 +474,7 @@ function feedbackForm(sIdx) {
       await sendFeedback({ kind: "error", sentence: sentence.text, message: text.value.trim(), analysis: sentence });
       view.feedback = "sent";
       renderSentence(sIdx);
-      showToast("收到，本貓去罰站了"); // 回報按鈕只剩圖示，送出後用提示說一聲
+      showToast("收到，偵探貓去罰站了"); // 回報按鈕只有圖示，送出後用提示說一聲
     } catch (err) {
       status.textContent = err.message;
       send.disabled = false;
@@ -571,13 +514,13 @@ if (suggestForm) {
     const box = $("suggest-text");
     const status = $("suggest-status");
     if (!box.value.trim()) {
-      status.textContent = "空白的本貓看不懂啦，寫點什麼吧。";
+      status.textContent = "空白的偵探貓看不懂啦，寫點什麼吧。";
       return;
     }
     try {
       await sendFeedback({ kind: "suggestion", message: box.value.trim() });
       box.value = "";
-      status.textContent = "收到！本貓會認真看，說不定下一版就有了 🐾";
+      status.textContent = "收到！偵探貓會認真看，說不定下一版就有了 🐾";
       setTimeout(() => feedbackDialog?.close(), 1800);
     } catch (err) {
       status.textContent = err.message;
@@ -589,7 +532,7 @@ if (suggestForm) {
 function typoBanner(sentence) {
   const box = el("div", "banner typo");
   const parts = sentence.typos.map((t) => (t.suggestion ? `「${t.word}」是不是「${t.suggestion}」？` : `「${t.word}」好像不是英文單字，請確認拼字。`));
-  box.append(icon("pencil"), el("span", null, `本貓發現可疑字跡：${parts.join("")}打錯字會讓本貓辦錯案，改正後再分析一次比較準。`));
+  box.append(icon("pencil"), el("span", null, `偵探貓發現可疑字跡：${parts.join("")}打錯字會讓偵探貓辦錯案，改正後再分析一次比較準。`));
   const fixes = sentence.typos.filter((t) => t.suggestion);
   if (fixes.length) {
     const btn = el("button", "typo-fix", fixes.length === 1 ? `改成 ${fixes[0].suggestion} 再分析` : "全部改正再分析");
@@ -610,26 +553,23 @@ function typoBanner(sentence) {
 }
 
 // ---------- 一整句 ----------
-// 文法重點：只列標題，點了才在下面展開說明；片語卡接在後面
+// 片語卡放最上面；文法重點只列標題、一個一行，點了在那一行下面展開說明
 function grammarSection(sIdx) {
   const sentence = sentences[sIdx];
   const view = views[sIdx];
   const refs = sentence.cards || [];
   if (!refs.length && !sentence.phrases?.length) return null;
   const sec = el("div", "gp-sec");
+  if (sentence.phrases?.length) sec.append(phraseCard(sentence));
   if (refs.length) {
-    const chips = el("div", "gp-chips");
-    const panels = el("div", "gp-panels");
-    sec.append(el("p", "sec-title", "文法重點"), chips, panels);
+    const list = el("div", "gp-list");
+    sec.append(el("p", "sec-title", "文法重點"), list);
     for (const ref of refs) {
-      const slot = el("span");
-      const panelSlot = el("div");
-      chips.append(slot);
-      panels.append(panelSlot);
+      const item = el("div", "gp-item");
+      list.append(item);
       fetchCard(ref.id).then((card) => {
         if (!card) {
-          slot.remove();
-          panelSlot.remove();
+          item.remove();
           return;
         }
         const open = view.openCards.has(ref.id);
@@ -640,16 +580,15 @@ function grammarSection(sIdx) {
           open ? view.openCards.delete(ref.id) : view.openCards.add(ref.id);
           renderSentence(sIdx);
         });
-        slot.replaceWith(chip);
-        if (open) panelSlot.replaceWith(cardNode(sIdx, ref, card));
-        else panelSlot.remove();
+        item.append(chip);
+        if (open) item.append(cardNode(sIdx, ref, card));
       });
     }
   }
-  if (sentence.phrases?.length) sec.append(phraseCard(sentence));
   return sec;
 }
 
+// 只有圖示的小按鈕（朗讀、回報錯誤）：滑鼠移上去和螢幕閱讀器都會說出名稱
 function iconButton(name, label, onClick) {
   const btn = el("button", "icon-btn");
   btn.type = "button";
@@ -694,7 +633,7 @@ function renderSentence(sIdx) {
   const doubts = sentence.clauses.map((c) => c.doubt).filter(Boolean);
   if (doubts.length) {
     const flag = el("button", "doubt");
-    flag.append(icon("alert"), "本貓對這句沒把握");
+    flag.append(icon("alert"), "偵探貓對這句沒把握");
     flag.type = "button";
     flag.setAttribute("aria-expanded", String(Boolean(view.doubtOpen)));
     flag.addEventListener("click", () => {
@@ -712,7 +651,7 @@ function renderSentence(sIdx) {
   }
   if (!view.sample) {
     const sent = view.feedback === "sent";
-    const report = iconButton(sent ? "check" : "flag", sent ? "收到，本貓去罰站了" : "回報錯誤", () => {
+    const report = iconButton(sent ? "check" : "report", sent ? "收到，偵探貓去罰站了" : "回報錯誤", () => {
       view.feedback = view.feedback === "open" ? null : "open";
       renderSentence(sIdx);
     });
@@ -723,7 +662,7 @@ function renderSentence(sIdx) {
   head.append(tools);
   box.append(head);
   if (doubts.length && view.doubtOpen) {
-    box.append(el("div", "banner doubt-note", `${doubts.join(" ")}如果你知道正確答案，按「回報錯誤」教教本貓。`));
+    box.append(el("div", "banner doubt-note", `${doubts.join(" ")}如果你知道正確答案，按「回報錯誤」教教偵探貓。`));
   }
 
   if (sentence.status === "failed" && sentences.length > 1) box.append(el("p", "failed-text", sentence.text));
@@ -733,12 +672,7 @@ function renderSentence(sIdx) {
     box.append(el("div", `banner${sentence.status === "failed" ? " fail" : ""}`, sentence.message));
   }
   if (sentence.status !== "failed") {
-    const row = chunkRow(sIdx);
-    box.append(row);
-    if (!view.revealed) {
-      view.revealed = true;
-      reveal(row);
-    }
+    box.append(chunkRow(sIdx));
     scheduleOverlapFix();
   }
 
@@ -825,20 +759,20 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   errorBox.hidden = true;
   const text = input.value.trim();
-  if (!text) return showError("你什麼都沒貼，本貓的放大鏡對著空氣很尷尬。貼一句英文進來吧。");
-  if (text.length > MAX_CHARS) return showError(`這篇長到本貓的放大鏡起霧了，請控制在 ${MAX_CHARS} 個字元以內。`);
+  if (!text) return showError("你什麼都沒貼，偵探貓的放大鏡對著空氣很尷尬。貼一句英文進來吧。");
+  if (text.length > MAX_CHARS) return showError(`這篇長到偵探貓的放大鏡起霧了，請控制在 ${MAX_CHARS} 個字元以內。`);
   try { sessionStorage.setItem("last", text); } catch { /* 無痕模式等情況，不影響使用 */ }
 
   submit.disabled = true;
   submit.textContent = "分析中…";
   const loading = el("div", "loading");
-  const loadingText = el("p", null, "本貓辦案分析中…");
+  const loadingText = el("p", null, "偵探貓辦案分析中…");
   loading.append(cat("work"), loadingText);
   result.dataset.sample = "";
   result.replaceChildren(loading);
   // 等超過 3 秒才補一句說明，平常很快就好的時候不用多看一行字
   const slowTimer = setTimeout(() => {
-    loadingText.textContent = "本貓辦案分析中…第一次辦案要先把工具準備好，會比較久，等本貓一下。";
+    loadingText.textContent = "偵探貓辦案分析中…第一次辦案要先把工具準備好，會比較久，等偵探貓一下。";
   }, 3000);
   $("result-actions").hidden = true;
   try {
@@ -850,7 +784,7 @@ form.addEventListener("submit", async (event) => {
     if (!response.ok) {
       const body = await response.json().catch(() => ({}));
       result.replaceChildren();
-      showError(typeof body.detail === "string" ? body.detail : "本貓卡關了，等一下再試一次。");
+      showError(typeof body.detail === "string" ? body.detail : "偵探貓卡關了，等一下再試一次。");
       return;
     }
     render(await response.json());
@@ -858,7 +792,7 @@ form.addEventListener("submit", async (event) => {
     bringIntoView(result);
   } catch {
     result.replaceChildren();
-    showError("本貓聯絡不上網站，檢查一下網路，再按一次「分析」。");
+    showError("偵探貓聯絡不上網站，檢查一下網路，再按一次「分析」。");
   } finally {
     clearTimeout(slowTimer);
     submit.disabled = false;
@@ -894,6 +828,7 @@ let modeBeforePrint = null;
 window.addEventListener("beforeprint", () => {
   modeBeforePrint = result.classList.contains("detail") ? "detail" : "skeleton";
   result.classList.add("detail");
+  fixLabelOverlap(); // 修飾語的說明印出來時也要錯開，不能疊在旁邊的標籤上
 });
 window.addEventListener("afterprint", () => {
   if (modeBeforePrint) setMode(modeBeforePrint);

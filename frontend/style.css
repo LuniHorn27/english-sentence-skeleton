@@ -27,6 +27,7 @@
   --pro-bg: #f1ebde;
   --pro: #3d3628;
   --ok: #2f7a18;
+  --page-max: 1280px; /* 全站同一個最大寬度：頁首和內容左右對齊 */
   --shadow: 0 1px 0 rgba(26, 29, 35, 0.03), 0 12px 32px -18px rgba(92, 84, 68, 0.45);
 
   /* 句子成分四色：網頁標記用（對比已調到達標：標籤白字 4.5 以上、底線 3 以上） */
@@ -54,7 +55,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 /* 版面寬度隨螢幕變化：手機左右留 16px，電腦最寬 1120px */
-main { max-width: 1120px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 40px) 56px; }
+main { max-width: var(--page-max); margin: 0 auto; padding: 24px clamp(16px, 4vw, 40px) 56px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h1 { font-size: 22px; font-weight: 600; margin: 0 0 4px; }
 .hint { color: var(--text-2); font-size: 15px; margin: 0 0 16px; }
@@ -77,7 +78,7 @@ button[disabled]:active { transform: none; }
 
 /* ---------- 頁首（四個頁面共用） ---------- */
 .site-head { border-bottom: 1px solid var(--border); background: var(--bg); position: relative; z-index: 20; }
-.site-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px 20px; max-width: 1120px; margin: 0 auto; padding: 12px clamp(16px, 4vw, 40px); }
+.site-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px 20px; max-width: var(--page-max); margin: 0 auto; padding: 12px clamp(16px, 4vw, 40px); }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: 0.02em; color: var(--text); text-decoration: none; }
 .brand-mark { display: block; width: 32px; height: 32px; }
 .nav-links { display: flex; align-items: center; gap: 2px; }
@@ -89,10 +90,6 @@ button[disabled]:active { transform: none; }
 .nav-toggle svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; }
 .nav-toggle .i-close, .site-nav.open .nav-toggle .i-menu { display: none; }
 .site-nav.open .nav-toggle .i-close { display: block; }
-/* 內頁內容比較窄，選單跟著同寬，左右邊才對齊（第二段統一寬度） */
-.about-page .site-nav, .lesson .site-nav { max-width: 1040px; }
-.quiz-page .site-nav { max-width: 880px; }
-.home-page .site-nav { max-width: 800px; }
 @media (max-width: 767px) {
   .nav-toggle { display: inline-flex; }
   .nav-links { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; gap: 0;
@@ -104,7 +101,6 @@ button[disabled]:active { transform: none; }
 }
 
 /* ---------- 首頁：標題、輸入框、範例 ---------- */
-main.home { max-width: 800px; }
 .hero { padding: clamp(28px, 6vw, 60px) 0 clamp(18px, 3vw, 26px); }
 .hero-title { font-size: clamp(30px, 6.4vw, 48px); font-weight: 800; letter-spacing: 0.01em; line-height: 1.2; margin: 0 0 12px; }
 .hero-sub { font-size: clamp(15px, 2vw, 17px); color: var(--text-2); line-height: 1.8; margin: 0; text-wrap: pretty; }
@@ -322,61 +318,36 @@ button.doubt .ic { width: 16px; height: 16px; }
 #result .banner { display: flex; align-items: flex-start; gap: 8px; border-radius: 12px; padding: 10px 14px; }
 #result .banner .ic { width: 18px; height: 18px; margin-top: 2px; }
 
-.row.flow { display: block; margin: 18px 0 2px; font-size: 21px; line-height: 2.9; color: var(--text); overflow-wrap: break-word; }
-.flow .ck { display: inline; gap: 0; cursor: pointer; border-radius: 6px; -webkit-tap-highlight-color: transparent; }
-.flow .ck:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
-.flow .tx { font-size: inherit; line-height: inherit; white-space: normal; padding: 0 1px; border-bottom: 0; border-radius: 4px; color: var(--text);
-  -webkit-box-decoration-break: clone; box-decoration-break: clone; text-decoration-skip-ink: none; text-underline-offset: 8px; transition: background-color 0.15s; }
-.flow .ck:hover > .tx { background: var(--surface-2); }
-.flow .ck.selected > .tx { outline: 0; background: var(--surface-3); }
-.flow .r-S { --line-r: var(--s-solid); --dot-bg: var(--s-solid); --dot-fg: #fff; }
-.flow .r-V { --line-r: var(--v-solid); --dot-bg: var(--v-solid); --dot-fg: #fff; }
-.flow .r-O { --line-r: var(--o-solid); --dot-bg: var(--o-solid); --dot-fg: #fff; }
-.flow .r-C { --line-r: var(--c-under); --dot-bg: var(--c-solid); --dot-fg: var(--c-on); }
-.flow .core > .tx { text-decoration: underline 3px var(--line-r); }
-.flow .soft > .tx { text-decoration: underline dashed 2px var(--line-r); }
-.flow .hw { font-weight: 700; }
-.flow .punct, .flow .suffix { color: var(--text); }
-.flow .suffix { font-size: 0.75em; color: var(--muted); }
-
-.flow .anc { position: relative; }
-.flow .lb { position: absolute; bottom: calc(100% + 4px); margin: 0; white-space: nowrap; line-height: 1; font-size: 12px; font-weight: 500; pointer-events: none; }
-.flow .lb.dot { left: 50%; translate: -50% 0; display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border-radius: 50%;
+/* 句子：一個成分一塊，標籤置中在成分上方，「核心」「點我展開子句」在成分下方（2026-10-07 依使用者附圖） */
+#result .row { gap: 12px 16px; margin: 20px 0 4px; align-items: flex-end; }
+#result .ck { gap: 5px; border-radius: 8px; text-align: left; } /* 長片段換成兩行時靠左，比較好讀 */
+#result .hw-mark { top: calc(100% + 9px); font-size: 11px; } /* 「核心」放在底線下面，不壓到線 */
+#result .ck:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+#result .tx { color: var(--text); padding: 0 2px 3px; border-radius: 4px; transition: background-color 0.15s; }
+#result .ck:hover > .tx { background: var(--surface-2); }
+#result .ck.selected > .tx { outline: 0; background: var(--surface-3); }
+#result .r-S { --line-r: var(--s-solid); --dot-bg: var(--s-solid); --dot-fg: #fff; }
+#result .r-V { --line-r: var(--v-solid); --dot-bg: var(--v-solid); --dot-fg: #fff; }
+#result .r-O { --line-r: var(--o-solid); --dot-bg: var(--o-solid); --dot-fg: #fff; }
+#result .r-C { --line-r: var(--c-under); --dot-bg: var(--c-solid); --dot-fg: var(--c-on); }
+#result .core .tx, #result .soft .tx { color: var(--text); }
+#result .core .tx { border-bottom: 3px solid var(--line-r); }
+#result .soft .tx { border-bottom: 2px dashed var(--line-r); }
+#result .core .punct, #result .soft .punct { color: var(--text); }
+#result .lb { font-size: 12px; font-weight: 500; line-height: 1.4; padding: 2px 9px; border-radius: 999px; background: var(--surface-2); color: var(--text-2); }
+#result .lb.dot { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border-radius: 50%; line-height: 1;
   background: var(--dot-bg); color: var(--dot-fg); font-size: 11px; font-weight: 700; letter-spacing: -0.02em; }
-.flow .pt .lb { left: 0; padding: 4px 9px; border-radius: 999px; background: var(--surface-2); color: var(--text-2); }
-.flow .soft .pt .lb { background: var(--surface); color: var(--text); border: 1.5px dashed var(--line-r); padding: 3px 8px; }
-.flow .conj .pt .lb { background: var(--surface); color: var(--text); border: 1px solid var(--border-strong); padding: 3px 8px; }
-.flow .unk .pt .lb { background: transparent; color: var(--muted); border: 1px dashed var(--border-strong); padding: 3px 8px; }
-.flow .unk > .tx { color: var(--muted); text-decoration: underline dotted 2px var(--border-strong); }
-.flow .m > .tx { color: var(--muted); }
-/* 展開的子句裡，主要成分的標籤要看得到（外層修飾語的說明照樣只在詳細模式顯示） */
-.flow .m .ck:not(.m) .lb { visibility: visible; }
-.detail .flow .m > .tx { color: var(--text-2); }
-.flow .more { display: inline-block; font-size: 12px; font-weight: 500; line-height: 1.6; color: var(--text-2); background: var(--surface); border: 1px solid var(--border-strong); border-radius: 999px; padding: 0 8px; vertical-align: 3px; white-space: nowrap; }
-.flow .ck:hover > .more { border-color: var(--text); color: var(--text); }
-.flow .inner { display: inline; gap: 0; padding: 3px 6px; border: 1.5px dashed var(--border-strong); border-radius: 10px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-.flow .clause { display: inline; gap: 0; padding: 0; border: 0; }
-.flow .clause-cap { font-size: 12px; font-weight: 600; color: var(--text-2); background: var(--surface-2); border-radius: 999px; padding: 2px 8px; vertical-align: 3px; }
-
-/* 骨架浮現：先是完整的句子 → 修飾語退成灰色 → 主要成分的標籤和底線依序出現 */
-.flow .lb { transition: opacity 0.3s ease-out, scale 0.4s cubic-bezier(0.3, 1.5, 0.5, 1); }
-.flow .core > .tx, .flow .soft > .tx { transition: text-decoration-color 0.45s ease-out, background-color 0.15s; }
-.flow .m > .tx { transition: color 0.5s ease-out, background-color 0.15s; }
-.flow.revealing .core, .flow.revealing .soft { --d: calc(var(--i, 0) * 240ms + 500ms); }
-.flow.revealing .core .lb, .flow.revealing .soft .lb { transition-delay: var(--d); }
-.flow.revealing .core > .tx, .flow.revealing .soft > .tx { transition-delay: var(--d), 0s; }
-.flow.pre .lb { opacity: 0; scale: 0.4; }
-.flow.pre .core > .tx, .flow.pre .soft > .tx { text-decoration-color: transparent; }
-.flow.pre .m > .tx { color: var(--text); }
-@media (prefers-reduced-motion: reduce) {
-  .flow .lb, .flow .tx { transition: none !important; }
-}
+#result .soft .lb { background: var(--surface); color: var(--text); border: 1.5px dashed var(--line-r); padding: 1px 8px; }
+#result .conj .lb { background: var(--surface); color: var(--text); border: 1px solid var(--border-strong); padding: 1px 8px; }
+#result .m .tx { color: var(--muted); }
+#result.detail .m .tx { color: var(--text-2); }
+#result .sub, #result .hw-mark { color: var(--muted); }
+#result .sub { font-size: 12px; }
+#result .ck:hover > .sub { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+#result .inner { border: 1.5px dashed var(--border-strong); border-radius: 12px; padding: 6px 10px 4px; gap: 10px 12px; }
+#result .clause { border-color: var(--border-strong); border-radius: 14px; }
 @media (min-width: 1024px) {
-  .row.flow { font-size: 24px; }
-}
-@media (max-width: 480px) {
-  .row.flow { font-size: 19px; line-height: 3; }
-  .flow .tx { text-underline-offset: 7px; }
+  #result .tx { font-size: 23px; }
 }
 
 #result .explain { font-size: 15px; background: var(--surface-2); border-radius: 12px; padding: 10px 14px; margin-top: 12px; }
@@ -385,11 +356,12 @@ button.doubt .ic { width: 16px; height: 16px; }
 #result .zh .mt { border-radius: 999px; padding: 1px 8px; border-color: var(--border-strong); white-space: nowrap; }
 .gp-sec { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
 .sec-title { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); margin: 0 0 8px; }
-.gp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.gp-chips:empty { display: none; }
-.gp-chip { font-size: 14px; padding: 6px 14px; min-height: 36px; border-radius: 999px; }
+.gp-list { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.gp-item { width: 100%; }
+.gp-chip { font-size: 14px; padding: 6px 14px; min-height: 36px; border-radius: 999px; text-align: left; }
 .gp-chip.on { background: var(--text); border-color: var(--text); color: #fff; }
-.gp-panels .card, .gp-sec > .card { margin-top: 10px; border-radius: 14px; padding: 12px 16px; background: var(--bg); }
+.gp-item .card, .gp-sec > .card { margin-top: 8px; border-radius: 14px; padding: 12px 16px; background: var(--bg); }
+.gp-sec > .card + .sec-title { margin-top: 14px; }
 #result .card-title { font-size: 15px; }
 #result .card-toggle { border-radius: 999px; padding: 4px 12px; }
 
@@ -425,7 +397,7 @@ a { color: var(--accent-line); }
 .intro p { margin: 6px 0; }
 .intro .muted { color: var(--text-2); }
 /* ---------- 關於頁 ---------- */
-.about-page main { max-width: 1040px; }
+
 .about-hero { padding: clamp(28px, 6vw, 64px) clamp(20px, 5vw, 56px); margin: 0 0 8px; border-radius: 20px; background: linear-gradient(135deg, var(--accent-bg), var(--surface-2)); }
 .about-kicker { font-size: 13px; font-weight: 600; letter-spacing: 1px; color: var(--accent-text); margin: 0 0 10px; }
 .about-hero h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.35; font-weight: 800; margin: 0 0 14px; }
@@ -465,8 +437,7 @@ a.privacy-item.res:hover { border-color: var(--accent-line); }
 .detail-page .m .lb { visibility: visible; }
 .detail-page .m .tx { color: var(--text-2); }
 /* 五大句型介紹頁（給初學者的編排） */
-.lesson main { max-width: 1040px; }
-.quiz-page main { max-width: 880px; }
+
 .lesson-sec { padding: 22px 0 6px; border-top: 1px solid var(--border); }
 .lesson-sec h2 { font-size: 20px; font-weight: 700; margin: 0 0 12px; }
 .lesson-sec > p { margin: 6px 0 10px; line-height: 1.7; }
@@ -600,11 +571,13 @@ a.pattern:hover { text-decoration: underline; }
   main { max-width: none; padding: 0; }
   .ask, .toolbar, .result-actions, .history, .foot, .s-tools, .card-toggle, .feedback, .explain, .toast, .top .hint, .top-links, .doubt, .doubt-note { display: none !important; }
   .top h1::after { content: "　英文句子骨架分析講義"; font-size: 14px; font-weight: 400; }
-  .site-head, .hero, .test-notice, .examples-row, .home-foot, .sample-tag, .flow .more, .gp-chips, .sec-title { display: none !important; }
-  #result .sentence { box-shadow: none; border: 0; }
-  .flow .lb, .flow .tx { transition: none !important; }
+  .site-head, .hero, .test-notice, .examples-row, .home-foot, .sample-tag, .gp-chip, .gp-sec .sec-title { display: none !important; }
+  /* 不要整張句子卡「不准分頁」：卡片比一頁剩下的空間高時，瀏覽器會把整張推到下一頁，第一頁就變空白 */
+  #result .sentence { box-shadow: none; border: 0; break-inside: auto; }
+  #result .row { break-inside: avoid; }
+  #result { margin-top: 0; }
   .print-title { display: block; font-size: 18px; font-weight: 700; margin: 0 0 12px; }
-  .sentence { break-inside: avoid; padding: 10px 0; }
+  .sentence { padding: 10px 0; }
   .lb, .pattern, .card-tag, .callout { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .m .lb, .m .sub, .hw-mark { visibility: visible !important; }
   .card { break-inside: avoid; }
