@@ -1,5 +1,5 @@
 id: verb_multiple_patterns
-title: 同一個動詞，不同句型
+title: 動詞的多種句型
 brief: '{verb} 可以用在好幾種句型，要看後面接什麼。'
 trigger: 動詞在「多句型動詞」字表裡（find、run、turn、make、get、keep…）
 blocks:

@@ -110,7 +110,7 @@ button[disabled]:active { transform: none; }
 .ask:focus-within { box-shadow: 0 0 0 4px rgba(26, 29, 35, 0.1); }
 .ask textarea:focus-visible { outline: none; }
 textarea {
-  width: 100%; resize: vertical; border: 0; background: transparent; color: var(--text);
+  width: 100%; resize: none; max-height: 50vh; overflow-y: auto; border: 0; background: transparent; color: var(--text);
   font: inherit; font-size: 18px; line-height: 1.5; padding: 2px;
 }
 textarea::placeholder { color: #a39a87; }
@@ -314,7 +314,8 @@ button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
 .tool-btn[disabled] { opacity: 1; cursor: default; background: var(--surface-2); border-color: transparent; }
 /* 分析結果的提醒：放在顯示模式切換的旁邊，看結果前就會看到 */
 .result-note { display: flex; align-items: flex-start; gap: 6px; margin: 0; font-size: 13px; line-height: 1.6; color: var(--text-2); }
-.result-note .ic { width: 16px; height: 16px; margin-top: 2px; }
+.result-note > .ic { width: 16px; height: 16px; margin-top: 2px; }
+.ic-inline { width: 1.1em; height: 1.1em; vertical-align: -0.2em; margin: 0 1px; }
 button.doubt { gap: 4px; font-size: 13px; padding: 4px 12px; border-radius: 999px; background: var(--tip-bg); color: var(--tip); border-color: transparent; }
 button.doubt .ic { width: 16px; height: 16px; }
 #result .banner { display: flex; align-items: flex-start; gap: 8px; border-radius: 12px; padding: 10px 14px; }
@@ -323,7 +324,7 @@ button.doubt .ic { width: 16px; height: 16px; }
 /* 句子：一個成分一塊，標籤置中在成分上方，「核心」「點我展開子句」在成分下方（2026-10-07 依使用者附圖） */
 #result .row { gap: 12px 16px; margin: 20px 0 4px; align-items: flex-end; }
 #result .ck { gap: 5px; border-radius: 8px; text-align: left; } /* 長片段換成兩行時靠左，比較好讀 */
-#result .hw-mark { top: calc(100% + 11px); font-size: 11px; line-height: 1; } /* 「核心」放在底線下面，不壓到線 */
+#result .hw-mark { display: none; } /* 核心字只用粗體表示（使用者決定 2026-10-07） */
 #result .ck:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
 #result .tx { color: var(--text); padding: 0 2px 3px; border-radius: 4px; transition: background-color 0.15s; }
 #result .ck:hover > .tx { background: var(--surface-2); }

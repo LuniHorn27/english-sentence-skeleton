@@ -20,7 +20,7 @@ const CALLOUT = {
 // 線條圖示（直接畫在網頁裡，不另外載入圖示字型）
 const ICON = {
   volume: '<path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10"/>',
-  flag: '<path d="M5.5 20.5V4M5.5 4.5h11l-2.5 4 2.5 4h-11"/>',
+  report: '<path d="M4.5 5h15v10.5H10l-5.5 4z"/><path d="M12 7.8v3.6M12 13.6v.1"/>',
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   alert: '<path d="M12 4.5l8.5 15h-17z"/><path d="M12 10v4M12 16.8v.2"/>',
   pencil: '<path d="M4.5 19.5l1-4.5L16 4.5l3.5 3.5L9 18.5z"/><path d="M14 6.5l3.5 3.5"/>',
@@ -149,9 +149,7 @@ function chunkText(chunk) {
   let pos = chunk.start;
   for (const h of heads) {
     if (h.start > pos) tx.append(chunk.text.slice(pos - chunk.start, h.start - chunk.start));
-    const hw = el("span", "hw", h.text);
-    hw.append(el("span", "hw-mark", "核心"));
-    tx.append(hw);
+    tx.append(el("span", "hw", h.text)); // 核心字只用粗體表示，不另外標「核心」（使用者決定 2026-10-07）
     pos = h.end;
   }
   if (pos < chunk.end) tx.append(chunk.text.slice(pos - chunk.start));
@@ -457,6 +455,7 @@ function feedbackForm(sIdx) {
   text.maxLength = 1000;
   text.placeholder = "例如：in the garden 應該是副詞・表地點（句子和分析結果會自動附上）";
   text.setAttribute("aria-label", "哪裡分析錯了");
+  autoGrow(text);
   const note = el("p", "fb-note", "請不要填寫姓名、電話等個人資料。");
   const status = el("p", "fb-status");
   const send = el("button", "primary", "回報錯誤");
@@ -648,7 +647,7 @@ function renderSentence(sIdx) {
   }
   if (!view.sample) {
     const sent = view.feedback === "sent";
-    const report = toolButton(sent ? "check" : "flag", sent ? "收到，偵探貓去罰站了" : "回報錯誤", sent ? "收到" : "回報", () => {
+    const report = toolButton(sent ? "check" : "report", sent ? "收到，偵探貓去罰站了" : "回報錯誤", sent ? "收到" : "回報", () => {
       view.feedback = view.feedback === "open" ? null : "open";
       renderSentence(sIdx);
     });
@@ -730,12 +729,24 @@ function bringIntoView(node) {
 }
 
 // ---------- 輸入 ----------
+// 輸入框跟著內容自動長高（分析的輸入框、回報錯誤的輸入框），太長時才出現捲軸
+function autoGrow(box) {
+  const fit = () => {
+    box.style.height = "auto";
+    box.style.height = `${box.scrollHeight + 2}px`;
+  };
+  box.addEventListener("input", fit);
+  requestAnimationFrame(fit);
+  return fit;
+}
+const fitInput = autoGrow(input);
 function showError(message) {
   errorBox.replaceChildren(cat("oops"), el("span", null, message));
   errorBox.hidden = false;
 }
 
 function updateCounter() {
+  if (typeof fitInput === "function") fitInput(); // 程式填入句子時（範例、最近分析）也要重新調整高度
   const n = input.value.length;
   counter.textContent = `${n} / ${MAX_CHARS}`;
   counter.classList.toggle("over", n > MAX_CHARS);
