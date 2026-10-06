@@ -4,7 +4,7 @@
 
 (() => {
   const OPTIONS = { sourceLanguage: "en", targetLanguage: "zh-Hant" };
-  const UNAVAILABLE = "翻譯暫時無法使用，請稍後再試。";
+  const UNAVAILABLE = "負責翻譯的同事去吃飯了，等一下再試。";
   const NO_BROWSER = "只有電腦版 Chrome／Edge 能用瀏覽器翻譯。"; // 測試版沒有伺服器翻譯
   let translatorPromise = null;
   let run = 0; // 每次按「分析」加一；舊的翻譯還在跑時，結果不要寫到新的畫面上
@@ -52,7 +52,7 @@
     if (response.ok) return (await response.json()).translation;
     if (response.status === 429) {
       const detail = (await response.json().catch(() => ({}))).detail;
-      throw new Error(detail || "翻譯次數太多了，請等一分鐘後再試");
+      throw new Error(detail || "翻譯次數太多，本貓要喘口氣，一分鐘後再來。");
     }
     return browserTranslate(text);
   }

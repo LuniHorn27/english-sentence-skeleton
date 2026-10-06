@@ -99,7 +99,7 @@ function renderStart(message) {
 }
 
 async function start(mode) {
-  game.replaceChildren(el("p", "loading", "題目準備中…"));
+  game.replaceChildren(el("p", "loading", "本貓正在出題…"));
   try {
     const response = await fetch(`/api/quiz?count=${ROUND}`);
     if (!response.ok) throw new Error();
@@ -107,7 +107,7 @@ async function start(mode) {
     state = { mode, items, index: 0, results: [] };
     renderQuestion();
   } catch {
-    renderStart("題目載入失敗，請稍後再試。");
+    renderStart("題目被本貓打翻了，等一下再試。");
   }
 }
 
@@ -181,7 +181,7 @@ function askPattern(item, card) {
     const ok = n === item.pattern;
     list.querySelector(`[data-n="${item.pattern}"]`).classList.add("is-right");
     if (!ok) picked.classList.add("is-wrong");
-    feedback(card, item, ok, ok ? "答對了！" : `不是${PATTERNS.find(([x]) => x === n)[1]}喔`);
+    feedback(card, item, ok, ok ? "破案！" : `欸不是，這句不是${PATTERNS.find(([x]) => x === n).slice(1).join(" ")}。`);
   }
 }
 
@@ -251,7 +251,7 @@ function askSkeleton(item, card) {
           }
         });
         const ok = mistakes === 0;
-        feedback(card, item, ok, ok ? "完美！一次就全部找對" : `完成了！中間點錯 ${mistakes} 次`);
+        feedback(card, item, ok, ok ? "一次全對，你比本貓還會辦案。" : `破案了，中間繞了 ${mistakes} 次遠路。`);
       }
     } else {
       mistakes += 1;
@@ -259,7 +259,7 @@ function askSkeleton(item, card) {
       void tile.offsetWidth; // 重新觸發動畫
       tile.classList.add("shake");
       hint.hidden = false;
-      hint.textContent = `「${item.chunks[i].text}」是${ROLE_NAME[got] || "其他成分"}，不是${ROLE_NAME[want]}。再找找看！`;
+      hint.textContent = `「${item.chunks[i].text}」是${ROLE_NAME[got] || "其他成分"}，不是${ROLE_NAME[want]}。線索不對，再找找。`;
     }
   }
 }
@@ -276,9 +276,9 @@ function renderEnd() {
   const stars = score >= 9 ? "⭐⭐⭐" : score >= 7 ? "⭐⭐" : score >= 5 ? "⭐" : "";
   card.append(el("p", "end-stars", stars || "💪"));
   card.append(el("p", "end-score", `${score}／${items.length}`));
-  const words = score === items.length ? "全部答對，太厲害了！" : score >= 7 ? "很不錯！看看下面答錯的題目。" : "多練習幾回合，骨架會越看越清楚。";
+  const words = score === items.length ? "全部答對，本貓的飯碗不保了。" : score >= 7 ? "不錯喔，下面幾題是漏網之魚，抓回來看看。" : "沒關係，本貓剛入行也常看走眼，多玩幾回合就越看越清楚。";
   card.append(el("p", "end-words", words));
-  if (score > best && best > 0) card.append(el("p", "end-best", "🎉 新的最佳成績！"));
+  if (score > best && best > 0) card.append(el("p", "end-best", "🎉 新紀錄！本貓幫你記下來了。"));
 
   const bar = el("div", "end-bar");
   bar.append(button("再玩一回合", "primary", () => start(mode)), button("換一種玩法", null, () => renderStart()));

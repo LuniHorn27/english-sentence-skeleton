@@ -27,7 +27,7 @@ async function share(url, title) {
   }
   try {
     await navigator.clipboard.writeText(url);
-    showToast("已複製連結，可以貼給朋友了");
+    showToast("連結複製好了，去分享給朋友吧（順便幫本貓打廣告）。");
   } catch {
     window.prompt("請複製這個連結：", url);
   }
