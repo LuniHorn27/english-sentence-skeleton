@@ -32,7 +32,7 @@
 
     <form id="form" class="ask" novalidate>
       <label for="input" class="sr-only">英文句子</label>
-      <textarea id="input" rows="2" maxlength="2000" placeholder="The teacher showed us a picture." autocomplete="off" spellcheck="false"></textarea>
+      <textarea id="input" rows="2" maxlength="500" placeholder="The teacher showed us a picture." autocomplete="off" spellcheck="false"></textarea>
       <div class="ask-bar">
         <!-- 最近分析：收在輸入框左下角，點了往下展開清單 -->
         <details id="history" class="history" hidden>
@@ -42,7 +42,7 @@
             <button type="button" id="history-clear" class="link-btn history-clear">清除紀錄</button>
           </div>
         </details>
-        <span id="counter" class="counter">0 / 2000</span>
+        <span id="counter" class="counter">0 / 500</span>
         <button id="submit" type="submit" class="primary">分析</button>
       </div>
       <p id="error" class="error" role="alert" hidden></p>

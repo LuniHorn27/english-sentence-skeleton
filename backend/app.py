@@ -27,7 +27,7 @@ from backend import dictionary, translate, tts
 from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
 
 ROOT = Path(__file__).resolve().parent.parent
-MAX_CHARS = 2000
+MAX_CHARS = 500  # 約 5 句、一小段文字（2026-10-07 使用者決定，原本 2000）
 log = logging.getLogger("uvicorn.error")
 
 
@@ -311,7 +311,7 @@ def get_card(card_id: str):
     return Card(**yaml.safe_load(path.read_text(encoding="utf-8")))
 
 
-MAX_BODY = 200_000  # 送進來的資料最多 200 KB（分析上限 2000 字元，回饋附的分析結果也不會超過）
+MAX_BODY = 200_000  # 送進來的資料最多 200 KB（分析上限 500 字元，回饋附的分析結果也不會超過）
 SECURITY_HEADERS = {
     # 只准載入本站的程式和樣式；朗讀的聲音用 blob: 播放
     "Content-Security-Policy": ("default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; "

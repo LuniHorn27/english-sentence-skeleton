@@ -19,7 +19,7 @@ MODEL_FILE = "Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
 MODEL_PATH = Path(os.environ.get("TRANSLATE_MODEL", ROOT / "models" / MODEL_FILE))
 THREADS = int(os.environ.get("TRANSLATE_THREADS", min(4, os.cpu_count() or 1)))
 CACHE_SIZE = 500
-MAX_CHARS = 2000  # 和分析的上限一樣；一整句不會被截斷
+MAX_CHARS = 500  # 和分析的上限一樣；一整句不會被截斷
 
 SYSTEM_PROMPT = (
     "你是專業的英翻中譯者，服務對象是台灣的英文學習者。"

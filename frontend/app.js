@@ -1,7 +1,7 @@
 // 英文句子骨架分析：前端畫面
 // 資安：句子、說明等文字一律用 textContent 顯示；只有我們自己寫的文法重點卡允許 <b> 粗體。
 
-const MAX_CHARS = 2000;
+const MAX_CHARS = 500;
 const GROUP = { S: "S", RS: "S", RO: "O", Vt: "V", Vi: "V", V: "V", aux: "V", O: "O", IO: "O", DO: "O", SC: "C", OC: "C" };
 const LABEL = { V: "Vi", aux: "aux.", RS: "真主詞", RO: "真受詞", EF: "強調框架", conj: "conj.", unknown: "未分析" };
 const ROLE_NAME = {
@@ -149,7 +149,9 @@ function chunkText(chunk) {
   let pos = chunk.start;
   for (const h of heads) {
     if (h.start > pos) tx.append(chunk.text.slice(pos - chunk.start, h.start - chunk.start));
-    tx.append(el("span", "hw", h.text)); // 核心字只用粗體表示，不另外標「核心」（使用者決定 2026-10-07）
+    const hw = el("span", "hw", h.text);
+    hw.append(el("span", "hw-mark", "核心"));
+    tx.append(hw);
     pos = h.end;
   }
   if (pos < chunk.end) tx.append(chunk.text.slice(pos - chunk.start));
