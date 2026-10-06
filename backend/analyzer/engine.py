@@ -482,8 +482,13 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     if dative_fix is None and v.lemma_.lower() in L.DATIVE_VERBS:
         # 分析程式有時把 IO 看成 DO 的主詞：made [our whole family] [a cake]
         for c in children:
-            g = next((x for x in c.children if x.dep_ == "nsubj"), None) if c.dep_ == "dobj" else None
+            g = next((x for x in c.children if x.dep_ == "nsubj"), None) if c.dep_ in ("dobj", "ccomp") else None
             if g is not None and c.pos_ == "NOUN" and g.pos_ in ("NOUN", "PRON", "PROPN") and g.i < c.i:
+                # 當成子句（ccomp）時比較容易是真的受詞補語（made him captain），要「人 ＋ a／an 東西」才算雙受詞
+                if c.dep_ == "ccomp" and not (
+                        (g.lower_ in L.PERSON_PRONOUNS or g.lemma_.lower() in L.PERSON_NOUNS or g.ent_type_ == "PERSON")
+                        and any(d.lower_ in ("a", "an") for d in c.children if d.dep_ == "det")):
+                    continue
                 dative_fix = (g, c)
 
     that_clause = next((c for c in children if c.dep_ == "ccomp" and c.i > v.i and (
@@ -636,6 +641,15 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         do = dative_fix[1]
         roots[do.i] = Spec("DO", clause=index, inner_verb=do if do.pos_ in ("VERB", "AUX") else None)
 
+    # 受詞後面插了一段前後有逗號的修飾語，第二個名詞在後面（規格書 5.19）：
+    #   considered [the museum], characterized by…, [an absolute masterpiece]
+    #   gave [the students], who had spent…, [an extension]
+    late = None if (dative_fix or oc_fix or split_oc) else interrupted_second_object(v, children)
+    if late:
+        first, second, kind = late
+        roots[first.i] = Spec("IO" if kind == "SVOO" else "O", clause=index)
+        roots[second.i] = Spec("DO" if kind == "SVOO" else "OC", clause=index)
+
     # so／such … that：that 子句是「表結果」的副詞子句（Azar 19-4）
     #   so excited that…、such good coffee that…、speaks so fast that…
     for g in v.subtree:
@@ -767,6 +781,46 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
 
     info.pattern = clause_pattern(roots, index, info)
     return info
+
+
+def interrupted_second_object(v, children):
+    """動詞 ＋ 名詞一 ＋「, 修飾語 ,」＋ 名詞二（規格書 5.19）。分析程式常沒把名詞二接回主要動詞：
+    當成修飾語裡的名詞（同位語、修飾語裡動詞的受詞），或當成名詞一的同位語、沒有 and 的對等名詞；
+    大型模型則會把 made [the guests], who…, [a dinner] 的名詞二直接當成受詞補語。
+    動詞句型字典說這個動詞可以接兩個成分時，把名詞二拉回主要動詞。
+    名詞二要緊接在逗號後面、一直到子句結尾，而且前面一定要有那段「, 修飾語 ,」，
+    才不會把一般的同位語（I called Tom, my best friend.）改掉。
+    回傳 (名詞一, 名詞二, "SVOO" 或 "SVOC")，不符合時回傳 None"""
+    lemma = v.lemma_.lower()
+    allowed = verb_patterns().get(lemma, set()) & {"SVOO", "SVOC"}
+    objs = [c for c in children if c.dep_ in ("dobj", "dative", "oprd") and c.i > v.i
+            and c.pos_ in ("NOUN", "PROPN", "PRON")]
+    if not allowed or len(objs) != 1:
+        return None
+    first, doc = objs[0], v.doc
+    last = max(t.i for t in v.subtree if not t.is_punct)
+    # 夾在中間、前面有逗號的修飾語：名詞一的形容詞子句／分詞片語，或接在動詞上的分詞片語
+    mods = [m for m in list(first.children) + [c for c in children if c.dep_ == "advcl"]
+            if m.dep_ in ("acl", "relcl", "advcl") and m.i > first.i
+            and m.left_edge.i > 0 and doc[m.left_edge.i - 1].text == ","]
+    if not mods:
+        return None
+    start = min(m.left_edge.i for m in mods)
+    for n in doc[start:last + 1]:
+        if (n.pos_ in ("NOUN", "PROPN") and (n.dep_ in ("appos", "dobj", "npadvmod", "attr", "conj")
+                                             or (n.dep_ == "oprd" and n.head is v))
+                and doc[n.left_edge.i - 1].text == "," and n.right_edge.i == last
+                and not (n.dep_ == "conj" and any(c.dep_ == "cc" for c in n.head.children))):
+            if allowed == {"SVOO"}:
+                return first, n, "SVOO"
+            if allowed == {"SVOC"} or lemma in L.NAMING_VERBS:
+                return first, n, "SVOC"
+            # 兩種都可以（make、find）：名詞一是人、名詞二前面有 a／an → 雙受詞（made the guests a dinner）；
+            # 否則是受詞補語（found the house a perfect place、made him captain）
+            person = first.lower_ in L.PERSON_PRONOUNS or first.lemma_.lower() in L.PERSON_NOUNS or first.ent_type_ == "PERSON"
+            indefinite = any(d.lower_ in ("a", "an") for d in n.children if d.dep_ == "det")
+            return first, n, "SVOO" if (person and indefinite) else "SVOC"
+    return None
 
 
 def cleft_clause(v, subj, children):

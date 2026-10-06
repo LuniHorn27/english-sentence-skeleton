@@ -119,7 +119,11 @@ PERSON_NOUNS = {
     "grandpa", "grandmother", "grandfather", "uncle", "aunt", "cousin", "son",
     "daughter", "wife", "husband", "boy", "girl", "man", "woman", "team",
     "student", "neighbor", "neighbour", "partner", "dog", "cat", "pet",
+    "guest", "visitor", "baby", "player",
 }
+
+# 指人的代名詞（it、this、that 不算：made it a rule 的 it 是虛受詞）
+PERSON_PRONOUNS = {"i", "me", "you", "he", "him", "she", "her", "we", "us", "they", "them", "everyone", "everybody", "someone", "somebody"}
 
 # 數量詞：most of the kids（不標核心字）
 QUANTIFIERS = {
