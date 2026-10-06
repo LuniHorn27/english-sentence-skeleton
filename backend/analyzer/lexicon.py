@@ -37,6 +37,10 @@ OC_PREP_VERBS = {
     ("elect", "as"), ("appoint", "as"), ("choose", "as"),
 }
 
+# 命名、選舉類動詞：後面兩個名詞是「受詞＋受詞補語」（name the baby Lily、elected Amy president）。
+# 小型分析程式常把這兩個名詞看成別的結構，engine.py 用這張表修正；make 意思太多，不放
+NAMING_VERBS = {"name", "call", "elect", "appoint", "choose", "nickname", "crown", "dub", "vote"}
+
 # 動詞 ＋ 受詞 ＋ 不定詞：不定詞是受詞補語（asked him to write…）。
 # 不在這個清單的動詞，受詞後面的不定詞當「表目的」（used the cupboard to store food）
 VERB_OBJ_TO_V = {

@@ -4950,3 +4950,137 @@
     function: 副詞・表時間
     modifies: null
     text: at night
+- id: '332'
+  sentence: We name our dog Betty.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: name
+  - role: O
+    text: our dog
+  - role: OC
+    text: Betty
+- id: '333'
+  sentence: Did you name your cat Mimi?
+  pattern: 5
+  passive: false
+  chunks:
+  - role: aux
+    text: Did
+  - role: S
+    text: you
+  - role: Vt
+    text: name
+  - role: O
+    text: your cat
+  - role: OC
+    text: Mimi
+- id: '334'
+  sentence: The class elected Amy president.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The class
+  - role: Vt
+    text: elected
+  - role: O
+    text: Amy
+  - role: OC
+    text: president
+- id: '335'
+  sentence: Everyone calls her Mei.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Everyone
+  - role: Vt
+    text: calls
+  - role: O
+    text: her
+  - role: OC
+    text: Mei
+- id: '336'
+  sentence: They chose Tom leader.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: Vt
+    text: chose
+  - role: O
+    text: Tom
+  - role: OC
+    text: leader
+- id: '337'
+  sentence: We call this dog Max.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: call
+  - role: O
+    text: this dog
+  - role: OC
+    text: Max
+- id: '338'
+  sentence: We named our team the Tigers.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: named
+  - role: O
+    text: our team
+  - role: OC
+    text: the Tigers
+- id: '339'
+  sentence: She made her son a sandwich.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: made
+  - role: IO
+    text: her son
+  - role: DO
+    text: a sandwich
+- id: '340'
+  sentence: They made Apple products.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: Vt
+    text: made
+  - role: O
+    text: Apple products
+- id: '341'
+  sentence: Did you call your mom yesterday?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: aux
+    text: Did
+  - role: S
+    text: you
+  - role: Vt
+    text: call
+  - role: O
+    text: your mom
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: yesterday
