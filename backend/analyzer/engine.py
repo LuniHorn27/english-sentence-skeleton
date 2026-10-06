@@ -1,7 +1,7 @@
 """分析引擎：英文句子 → 分析結果（符合 schema.py 的格式）。
 
 流程
-1. spaCy（大型模型）分析句子，得到每個字的詞性和「依附關係」。
+1. spaCy 分析句子（預設大型模型，可用環境變數 SPACY_MODEL 換成小型模型），得到每個字的詞性和「依附關係」。
 2. 找出每個子句的主要動詞，替動詞底下的成分分配角色（S、O、SC…、修飾語）。
 3. 名詞後面的介系詞片語、形容詞子句另外切成「形容詞・修飾 X」。
 4. 每個字歸給離它最近、有角色的祖先 → 組成片段。
@@ -11,6 +11,7 @@
 """
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass, field
 from typing import Optional
@@ -26,6 +27,9 @@ from .verb_check import check as verb_check
 NOMINAL = {"S", "O", "IO", "DO", "SC", "OC", "RS", "RO"}
 VERB_ROLE = "VERB"  # 動詞種類（Vt／Vi／V）等句型決定後再填
 
+# 看句子結構的模型。預設大型模型（en_core_web_trf，題庫全對，但要 PyTorch、約 1.9 GB 記憶體）；
+# 免費主機記憶體只有 512 MB 時設 SPACY_MODEL=en_core_web_sm（約 270 MB，準確度較低，約每 9 句錯 1 句）
+SPACY_MODEL = os.environ.get("SPACY_MODEL", "en_core_web_trf")
 _nlp = None
 
 
@@ -37,7 +41,7 @@ def get_nlp():
         import spacy
 
         warnings.filterwarnings("ignore")
-        _nlp = spacy.load("en_core_web_trf")
+        _nlp = spacy.load(SPACY_MODEL)
         # 名詞後面的 'll 也要拆開（this rain'll last → rain ＋ 'll）
         from spacy.util import compile_suffix_regex
 

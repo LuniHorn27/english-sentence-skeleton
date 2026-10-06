@@ -5,6 +5,7 @@
   不寫進硬碟，伺服器重新啟動就清空（隱私：不保存使用者輸入的句子）。
 - 完全在自己的伺服器上執行，不呼叫任何外部服務，也不需要 API 金鑰。
 """
+import importlib.util
 import io
 import threading
 from collections import OrderedDict
@@ -20,6 +21,11 @@ SPEEDS = {"normal": 0.95, "slow": 0.75}
 _pipeline = None
 _lock = threading.Lock()  # 模型一次只處理一個請求，避免同時佔用太多記憶體
 _cache: "OrderedDict[tuple, bytes]" = OrderedDict()
+
+
+def is_available() -> bool:
+    """有沒有安裝朗讀套件。精簡版伺服器（免費主機）不裝，網頁會改用瀏覽器內建語音"""
+    return all(importlib.util.find_spec(m) is not None for m in ("kokoro", "soundfile"))
 
 
 def get_pipeline():

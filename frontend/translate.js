@@ -5,6 +5,7 @@
 (() => {
   const OPTIONS = { sourceLanguage: "en", targetLanguage: "zh-Hant" };
   const UNAVAILABLE = "翻譯暫時無法使用，請稍後再試。";
+  const NO_BROWSER = "只有電腦版 Chrome／Edge 能用瀏覽器翻譯。"; // 測試版沒有伺服器翻譯
   let translatorPromise = null;
   let run = 0; // 每次按「分析」加一；舊的翻譯還在跑時，結果不要寫到新的畫面上
 
@@ -34,6 +35,7 @@
 
   // 回傳翻譯；伺服器說次數太多時丟出訊息；伺服器無法翻譯時改用瀏覽器
   async function serverTranslate(text, phrases) {
+    if (document.documentElement.dataset.edition === "test") return browserTranslate(text); // 測試版沒有伺服器翻譯
     let response;
     try {
       response = await withTimeout(
@@ -97,7 +99,9 @@
       } catch (error) {
         if (myRun !== run) return;
         const node = document.querySelector(`[data-translation="${i}"]`);
-        const message = error.message.includes("次數") ? error.message : UNAVAILABLE;
+        const testEdition = document.documentElement.dataset.edition === "test";
+        const message = error.message.includes("次數") ? error.message
+          : testEdition && error.message === "unsupported" ? NO_BROWSER : UNAVAILABLE;
         if (node) setLine(node, message, false, sentence);
       }
     }

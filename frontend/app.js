@@ -773,6 +773,16 @@ $("history-clear").addEventListener("click", () => {
   renderHistory();
 });
 
+// 測試版（免費主機、小型模型）才顯示提示；翻譯失敗時的說明也看這個記號（translate.js）
+fetch("/api/site")
+  .then((r) => (r.ok ? r.json() : {}))
+  .then((site) => {
+    if (!site.test_edition) return;
+    document.documentElement.dataset.edition = "test";
+    $("test-notice").hidden = false;
+  })
+  .catch(() => { /* 拿不到就當完整版 */ });
+
 updateCounter();
 renderHistory();
 loadFromHash();

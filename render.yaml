@@ -1,0 +1,22 @@
+# Render 免費方案的部署設定（測試版），步驟見 docs/Render部署步驟.md
+# 免費方案：512 MB 記憶體、閒置 15 分鐘會休眠（下一個人要等 30～60 秒）、不用綁信用卡
+services:
+  - type: web
+    name: english-sentence-skeleton
+    runtime: python
+    plan: free
+    region: singapore # 離台灣最近
+    buildCommand: pip install -r requirements-slim.txt
+    # --proxy-headers：Render 前面有代理伺服器，要從標頭取得使用者真正的來源位址（次數限制要用）
+    # --no-access-log：不記錄每個請求（隱私）
+    startCommand: uvicorn backend.app:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips "*" --no-access-log
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: SPACY_MODEL
+        value: en_core_web_sm
+      - key: TEST_EDITION # 頁面顯示「測試版」提示
+        value: "1"
+      - key: FEEDBACK_SHEET_URL # 回饋試算表的網址，在 Render 後台填，不放進 GitHub
+        sync: false

@@ -1,0 +1,14 @@
+# 精簡版（測試版）：給記憶體只有 512 MB 的免費主機（Render）用
+# 跟 requirements.txt 的差別：用小型分析模型、不裝 PyTorch、沒有伺服器翻譯和朗讀
+#   → 網頁會自動改用瀏覽器內建的翻譯和語音
+#   → 要搭配環境變數 SPACY_MODEL=en_core_web_sm（見 render.yaml）
+# 實測（2026-10-06）：記憶體最高約 270 MB；題庫約每 9 句有 1 句分析有錯（大型模型全對）
+
+# 網頁伺服器
+fastapi==0.141.1
+uvicorn[standard]==0.54.0
+pyyaml==6.0.3
+
+# 文法分析程式（小型模型直接從 spaCy 官方下載，固定版本）
+spacy==3.8.16
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
