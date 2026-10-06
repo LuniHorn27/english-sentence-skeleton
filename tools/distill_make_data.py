@@ -5,8 +5,9 @@
 另外留一份從沒拿來訓練的句子（heldout.txt），最後用來比較新舊小模型和大模型差多少。
 
 用法（要用有大型模型的環境）：
-  .venv/bin/python tools/distill_make_data.py 60000
-輸出：data/distill/train.spacy、dev.spacy、heldout.txt（data/ 不上傳）
+  .venv/bin/python tools/distill_make_data.py 60000          # 第一次：訓練 6 萬句＋驗證＋最後檢查
+  .venv/bin/python tools/distill_make_data.py --add 240000   # 加教材：沿用原本的句子，再多 24 萬句
+輸出：data/distill/train.spacy（加教材時是 train_2.spacy、train_3.spacy…）、dev.spacy、heldout.txt（data/ 不上傳）
 Tatoeba 授權：CC BY 2.0 FR（https://tatoeba.org）
 """
 import bz2
@@ -22,7 +23,8 @@ from spacy.tokens import DocBin
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "distill"
-N_TRAIN = int(sys.argv[1]) if len(sys.argv) > 1 else 60000
+ADD = len(sys.argv) > 1 and sys.argv[1] == "--add"
+N_TRAIN = int(sys.argv[-1]) if len(sys.argv) > 1 else 60000
 N_DEV, N_HELDOUT = 2000, 1000
 
 
@@ -42,16 +44,28 @@ def main():
         if 3 <= len(s.split()) <= 40 and s[-1:] in ".?!" and key not in seen and key not in gold:
             seen.add(key)
             pool.append(s)
-    random.seed(20261006)
-    picks = random.sample(pool, N_TRAIN + N_DEV + N_HELDOUT)
-    heldout, dev, train = picks[:N_HELDOUT], picks[N_HELDOUT:N_HELDOUT + N_DEV], picks[N_HELDOUT + N_DEV:]
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "heldout.txt").write_text("\n".join(heldout) + "\n", encoding="utf-8")
-    print(f"可用句子 {len(pool):,}；訓練 {len(train):,}、驗證 {len(dev):,}、最後檢查 {len(heldout):,}")
-
     spacy.prefer_gpu()
     nlp = spacy.load("en_core_web_trf", disable=["ner", "lemmatizer"])
-    for name, texts in (("dev", dev), ("train", train)):
+    if ADD:
+        # 已經用過的句子（訓練、驗證、最後檢查）都不再抽，最後檢查的成績才能跟之前比
+        used = {norm(s) for s in (OUT / "heldout.txt").read_text(encoding="utf-8").splitlines()}
+        files = sorted(OUT.glob("train*.spacy")) + [OUT / "dev.spacy"]
+        for f in files:
+            used |= {norm(d.text) for d in DocBin().from_disk(f).get_docs(nlp.vocab)}
+        pool = [s for s in pool if norm(s) not in used]
+        random.seed(20261006 + len(files))
+        jobs = ((f"train_{len(files)}", random.sample(pool, N_TRAIN)),)
+        print(f"可用句子 {len(pool):,}（已排除用過的 {len(used):,} 句）；這次加 {N_TRAIN:,} 句", flush=True)
+    else:
+        random.seed(20261006)
+        picks = random.sample(pool, N_TRAIN + N_DEV + N_HELDOUT)
+        heldout, dev, train = picks[:N_HELDOUT], picks[N_HELDOUT:N_HELDOUT + N_DEV], picks[N_HELDOUT + N_DEV:]
+        OUT.mkdir(parents=True, exist_ok=True)
+        (OUT / "heldout.txt").write_text("\n".join(heldout) + "\n", encoding="utf-8")
+        print(f"可用句子 {len(pool):,}；訓練 {len(train):,}、驗證 {len(dev):,}、最後檢查 {len(heldout):,}")
+        jobs = (("dev", dev), ("train", train))
+
+    for name, texts in jobs:
         db = DocBin(attrs=["TAG", "POS", "HEAD", "DEP", "SENT_START"])
         for i, doc in enumerate(nlp.pipe(texts, batch_size=64)):
             db.add(doc)

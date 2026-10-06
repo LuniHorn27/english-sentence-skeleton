@@ -6,7 +6,7 @@
 
 用法（小型模型的環境即可，不需要 PyTorch）：
   python tools/distill_train.py [輪數] [學習速度]
-輸入：data/distill/train.spacy、dev.spacy（tools/distill_make_data.py 產生）
+輸入：data/distill/train*.spacy、dev.spacy（tools/distill_make_data.py 產生）
 輸出：models/en_core_web_sm_distilled/（驗證分數最好的那一輪；models/ 不上傳）
 """
 import random
@@ -27,8 +27,9 @@ FROZEN = ["attribute_ruler", "lemmatizer", "ner"]  # 不訓練（存檔時仍保
 
 
 def load_examples(nlp, name):
-    docs = DocBin().from_disk(DATA / f"{name}.spacy").get_docs(nlp.vocab)
-    return [Example(nlp.make_doc(d.text), d) for d in docs]
+    """name 是 train 時，所有 train*.spacy（加過的教材）都一起讀"""
+    files = sorted(DATA.glob("train*.spacy")) if name == "train" else [DATA / f"{name}.spacy"]
+    return [Example(nlp.make_doc(d.text), d) for f in files for d in DocBin().from_disk(f).get_docs(nlp.vocab)]
 
 
 def scores(nlp, examples):
