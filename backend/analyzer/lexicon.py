@@ -186,6 +186,9 @@ PLACE_NOUNS = {
     "bedroom", "bathroom", "hall", "hallway", "gym", "zoo", "museum", "backyard",
     "country", "village", "world", "air", "water", "sky", "sea", "river", "lake",
     "mountain", "hill", "forest", "farm", "camp", "class", "church", "temple",
+    # 2026-10-08：建築、交通工具、容器（ran out of the building、got out of the car、looked into the box）
+    "building", "apartment", "car", "bus", "train", "taxi", "plane", "boat", "ship", "elevator",
+    "door", "window", "box", "cave", "tunnel", "hole", "pool", "theater", "theatre", "cinema", "stadium",
 }
 
 # 動詞 ＋ 介系詞的固定搭配：介系詞後面是動作的對象，不是地點（look at the photo）

@@ -140,8 +140,8 @@ def adverb_function(tok) -> str:
             return "副詞・表時間"
         if obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME")):
             return "副詞・表時間"
-        if (tok.head.lemma_.lower(), lemma) in L.VERB_PREP_OBJECT:
-            return "副詞・表對象"  # look at the photo：介系詞後面是動作的對象
+        if (tok.head.lemma_.lower(), lemma) in L.VERB_PREP_OBJECT and not (lemma in ("into", "across", "through", "onto") and olemma in L.PLACE_NOUNS):
+            return "副詞・表對象"  # look at the photo：介系詞後面是動作的對象（ran into the building 是地點）
         if olemma in L.CONDITION_NOUNS:
             return "副詞・表狀況"
         if lemma == "for":
@@ -365,7 +365,13 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
 
     # 省略句：I can't.、Yes, I will.、I did.（只有助動詞，後面的動詞省略了）；So do I.、Neither can she.
     agree = sent[0].lower_ in ("so", "neither", "nor") and (v.lemma_ in ("do", "be", "have") or v.tag_ == "MD")
-    if (v.tag_ == "MD" or (v.lemma_ == "do" and v.pos_ == "AUX") or agree) and not any(
+    # 代替前面動詞的 do（She doesn't like coffee, but I do.）：模型常把 do 當一般動詞；
+    # 後面只有 now、too 這類時間或語氣副詞時才算（He did well 的 well 是方式，不算）
+    echo_do = v.lemma_ == "do" and v.pos_ == "VERB" and any(c.dep_ == "nsubj" for c in children) and all(
+        c.dep_ in ("nsubj", "aux", "neg", "punct", "cc", "conj")
+        or (c.dep_ == "advmod" and (c.lemma_.lower() in L.TIME_ADVERBS or c.lemma_.lower() in L.TONE_ADVERBS))
+        for c in children)
+    if (v.tag_ == "MD" or (v.lemma_ == "do" and v.pos_ == "AUX") or agree or echo_do) and not any(
             c.dep_ in ("xcomp", "ccomp", "acomp", "attr", "dobj", "oprd", "dative", "advcl", "prep") for c in children):
         info.elliptic = True
         info.pattern = 1
@@ -883,6 +889,8 @@ def cleft_clause(v, subj, children):
             continue
         focus = [x for x in children if v.i < x.i < opener.i and x.dep_ not in ("neg", "punct", "nsubj", "expl")
                  and not (x.dep_ == "advmod" and x.lower_ in ("only", "just", "really", "also"))]
+        if not focus and opener.lower_ == "that" and wh_focus(v) is not None:
+            return c  # Why is it that you never listen to me?：被強調的是句首的疑問詞
         if not focus or any(x.dep_ == "acomp" or x.pos_ == "ADJ" for x in focus):
             continue
         f = focus[0]
@@ -894,6 +902,16 @@ def cleft_clause(v, subj, children):
     return None
 
 
+def wh_focus(v):
+    """疑問句的強調句 Why／What／Who is it that…?：回傳句首的疑問詞（掛在 be 動詞底下）；不是就回傳 None"""
+    if not v.sent.text.rstrip().endswith("?"):
+        return None
+    first = next(t for t in v.sent if not t.is_punct)
+    if first.tag_ in ("WRB", "WP", "WDT") and first.head.i == v.i and first.i < v.i:
+        return first
+    return None
+
+
 def cleft_analysis(v, subj, c, roots, index, sent):
     """強調句（使用者決定 2026-09-29）：照「還原句」標句型。
     It was John who broke the window → John broke the window → 句型三：S + Vt + O
@@ -901,6 +919,8 @@ def cleft_analysis(v, subj, c, roots, index, sent):
     opener = min(c.subtree, key=lambda t: t.i)
     focus = next((x for x in v.children if v.i < x.i < opener.i and x.dep_ not in ("neg", "punct", "nsubj", "expl")
                   and not (x.dep_ == "advmod" and x.lower_ in ("only", "just", "really", "also"))), None)
+    if focus is None:
+        focus = wh_focus(v)  # Why is it that…?
     inner = assign_clause(c, roots, index, sent, shared_subject=True)
     inner.flags.add("cleft")
     gap = roots.get(opener.i).role if opener.i in roots else None  # who／that 在子句裡的角色，就是被強調部分的角色
@@ -1353,6 +1373,26 @@ def tag_question_main(root, sent):
     return main
 
 
+THINK_VERBS = {"think", "believe", "suppose", "guess", "say", "reckon", "expect", "imagine", "feel"}
+
+
+def inserted_think(root, sent):
+    """What do you think is the best way?：疑問詞和真正的子句中間插了 do you think。
+    回傳 (真正子句的動詞, 疑問詞)；不是這種句子就回傳 None"""
+    if not sent.text.rstrip().endswith("?") or root.lemma_.lower() not in THINK_VERBS:
+        return None
+    first = next(t for t in sent if not t.is_punct)
+    if first.tag_ not in ("WP", "WDT", "WRB", "WP$"):
+        return None
+    wh = first if first.dep_ not in ("det", "poss") else first.head  # Which book do you think…：整個疑問片語
+    if not any(c.dep_ == "aux" and c.lemma_ == "do" and c.i < root.i for c in root.children):
+        return None
+    inner = next((c for c in root.children if c.dep_ == "ccomp" and c.i > root.i and c.pos_ in ("VERB", "AUX")), None)
+    if inner is None or wh.i > root.i:
+        return None
+    return inner, wh
+
+
 # ---------- 主程式 ----------
 def clean_spaces(text: str) -> str:
     """從網頁複製的句子常夾著不斷行空白、全形空白、零寬字元或連續空白，
@@ -1486,6 +1526,12 @@ def analyze_doc(text: str, doc) -> SentenceResult:
     vars_: dict[str, dict] = {}
     kind = "simple"
 
+    # 插入的 do you think：What do you think is the best way? 照 What is the best way? 分析
+    inserted = inserted_think(root, sent)
+    if inserted is not None:
+        roots[root.i] = Spec("M", function="副詞・表語氣", clause=0)
+        root, inserted_wh = inserted
+
     # 附加問句：She didn't do it, did she? 分析程式把句尾的 did she 當成主要動詞
     tag_main = tag_question_main(root, sent)
     if tag_main is not None:
@@ -1538,6 +1584,17 @@ def analyze_doc(text: str, doc) -> SentenceResult:
                 if c.dep_ in ("conj", "cc"):
                     roots[c.i] = Spec("unknown", clause=0)
 
+    if inserted is not None and inserted_wh.i not in roots:
+        # 疑問詞在子句裡的角色：子句缺主詞 → 主詞（Who do you think will win?）；
+        # where／when／why／how → 副詞；其他 → 受詞（What do you think he bought?）
+        kids = list(root.children)
+        if not any(c.dep_ in ("nsubj", "nsubjpass", "expl", "csubj") for c in kids):
+            roots[inserted_wh.i] = Spec("S", clause=0)
+        elif inserted_wh.tag_ == "WRB" or inserted_wh.lower_ in ("where", "when", "why", "how"):
+            roots[inserted_wh.i] = Spec("M", function=adverb_function(inserted_wh), clause=0)
+        else:
+            roots[inserted_wh.i] = Spec("O", clause=0)
+        infos[0].pattern = clause_pattern(roots, 0, infos[0])
     if kind == "simple":
         comparative_correlative(sent, root, roots, infos[0])
     owner_of = make_owner_fn(roots)

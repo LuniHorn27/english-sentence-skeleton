@@ -94,10 +94,14 @@ CASES = [
     ("Let's go back up there.", set()),  # back 是副詞
     ("I really think we need to be honest with Tom.", set()),
     ("Two children are sitting on the fence.", set()),
-    ("The dog ran out of the house.", {"run_out_of"}),  # 字面「跑出去」也會被找到：已在說明中提醒要看上下文
+    ("The dog ran out of the house.", set()),  # 字面「跑出房子」：方向介系詞＋地點，不是 run out of（2026-10-08）
+    ("We ran out of milk.", {"run_out_of"}),
+    ("She looked into the box.", set()),  # 字面「往盒子裡看」，不是 look into（調查）
+    ("The children came out of the classroom.", set()),  # 字面「走出教室」，不是 come out（出版、出現）
+    ("The police looked into the case.", {"look_into"}),  # 調查：case 不是地點
 ]
 
-KNOWN_AMBIGUOUS = {"The dog ran out of the house."}  # 已知會找到、但意思其實是字面的例子
+KNOWN_AMBIGUOUS = set()  # 已知會找到、但意思其實是字面的例子
 
 
 def main():
