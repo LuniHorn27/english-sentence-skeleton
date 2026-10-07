@@ -1502,8 +1502,8 @@
   - role: S
     text: The fact
   - role: M
-    function: 同位語・說明fact
-    modifies: null
+    function: 同位語・說明
+    modifies: fact
     text: that he lied
   - role: Vt
     text: made
@@ -4708,8 +4708,8 @@
   - role: S
     text: the Endurance
   - role: M
-    function: 同位語・說明Endurance
-    modifies: null
+    function: 同位語・說明
+    modifies: Endurance
     text: the lost vessel of the famed polar explorer Ernest Shackleton
   - role: aux
     text: was
@@ -7727,3 +7727,273 @@
     function: 副詞・表時間
     modifies: null
     text: every morning
+- id: '506'
+  sentence: How long will it take you to finish doing that?
+  pattern: 4
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: How long
+  - role: aux
+    text: will
+  - role: S
+    text: it
+  - role: Vt
+    text: take
+  - role: IO
+    text: you
+  - role: RS
+    text: to finish doing that
+- id: '507'
+  sentence: How long does it take you to get to school?
+  pattern: 4
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: How long
+  - role: aux
+    text: does
+  - role: S
+    text: it
+  - role: Vt
+    text: take
+  - role: IO
+    text: you
+  - role: RS
+    text: to get to school
+- id: '508'
+  sentence: How much did it cost you to fix the car?
+  pattern: 4
+  passive: false
+  chunks:
+  - role: DO
+    text: How much
+    head:
+    - much
+  - role: aux
+    text: did
+  - role: S
+    text: it
+  - role: Vt
+    text: cost
+  - role: IO
+    text: you
+  - role: RS
+    text: to fix the car
+- id: '509'
+  sentence: It takes me an hour to get to school.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vt
+    text: takes
+  - role: IO
+    text: me
+  - role: DO
+    text: an hour
+    head:
+    - hour
+  - role: RS
+    text: to get to school
+- id: '510'
+  sentence: How long did it take?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: How long
+  - role: aux
+    text: did
+  - role: S
+    text: it
+  - role: Vi
+    text: take
+- id: '511'
+  sentence: Which do you like better, Boston or Chicago?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: Which
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: like
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: better
+  - role: M
+    function: 同位語・說明
+    modifies: Which
+    text: Boston or Chicago
+- id: '512'
+  sentence: Which do you prefer, tea or coffee?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: Which
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: prefer
+  - role: M
+    function: 同位語・說明
+    modifies: Which
+    text: tea or coffee
+- id: '513'
+  sentence: Who is taller, Tom or Mary?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Who
+  - role: V
+    text: is
+  - role: SC
+    text: taller
+  - role: M
+    function: 同位語・說明
+    modifies: Who
+    text: Tom or Mary
+- id: '514'
+  sentence: Which is bigger, the sun or the moon?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Which
+  - role: V
+    text: is
+  - role: SC
+    text: bigger
+  - role: M
+    function: 同位語・說明
+    modifies: Which
+    text: the sun or the moon
+- id: '515'
+  sentence: What a pain, why does he have to vacuum in the middle of the night!
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: What a pain
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: why
+  - role: aux
+    text: does
+  - role: S
+    text: he
+  - role: aux
+    text: have to
+  - role: Vi
+    text: vacuum
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: in the middle of the night
+- id: '516'
+  sentence: What a surprise, you are here!
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: What a surprise
+  - role: S
+    text: you
+  - role: V
+    text: are
+  - role: SC
+    text: here
+- id: '517'
+  sentence: What a beautiful day it is!
+  pattern: 3
+  passive: false
+  chunks:
+  - role: SC
+    text: What a beautiful day
+    head:
+    - day
+  - role: S
+    text: it
+  - role: V
+    text: is
+- id: '518'
+  sentence: What a nice car you have!
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: What a nice car
+    head:
+    - car
+  - role: S
+    text: you
+  - role: Vt
+    text: have
+- id: '519'
+  sentence: Which of these books is yours?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Which of these books
+  - role: V
+    text: is
+  - role: SC
+    text: yours
+- id: '520'
+  sentence: What do you want, money or fame?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: What
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: want
+  - role: M
+    function: 同位語・說明
+    modifies: What
+    text: money or fame
+- id: '521'
+  sentence: What a shame, I have to leave now.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: What a shame
+  - role: S
+    text: I
+  - role: aux
+    text: have to
+  - role: Vi
+    text: leave
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: now

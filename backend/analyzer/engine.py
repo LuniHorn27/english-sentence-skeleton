@@ -864,8 +864,46 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                     if g.dep_ == "prep":
                         roots[g.i] = Spec("M", function=adverb_function(g), clause=index)
 
+    question_fixes(v, children, roots, index, sent)
     info.pattern = clause_pattern(roots, index, info)
     return info
+
+
+def question_fixes(v, children, roots, index, sent) -> bool:
+    """疑問句和感嘆語的幾種固定說法（2026-10-08，Gemini 抓錯助手找到，照第 110 項建議）。有改動時回傳 True"""
+    before = {k: (r.role, r.function) for k, r in roots.items()}
+    doc = v.doc
+    first = next(t for t in sent if not t.is_punct)
+    # ① How long will it take you to…?：規則 5.19「It takes ＋ 人 ＋ 時間 ＋ to V」，人是 IO；
+    #    How long 維持副詞・表時間（第六批⑤），How much（金錢）是 DO → 句型五
+    if v.lemma_ in ("take", "cost") and first.lower_ == "how" and any(
+            c.dep_ in ("nsubj", "expl") and c.lower_ == "it" for c in children):
+        amount = next((c for c in children if c.i < v.i and c.lower_ in ("long", "much") and first.head.i == c.i), None)
+        person = next((c for c in children if c.i > v.i and c.dep_ in ("dobj", "dative")
+                       and (c.pos_ in ("PRON", "PROPN") or c.lemma_.lower() in L.PERSON_NOUNS)), None)
+        if amount is not None and person is not None:
+            roots[person.i] = Spec("IO", clause=index)
+            roots[amount.i] = Spec("M", function="副詞・表時間", clause=index) if amount.lower_ == "long" else Spec("DO", clause=index)
+    # ② Which do you like better, Boston or Chicago?：句尾「, A or B」說明句首的疑問詞 → 同位語
+    if sent.text.rstrip().endswith("?") and first.lower_ in ("which", "who", "what") and first.tag_ in ("WDT", "WP"):
+        for c in children:
+            start = min(t.i for t in c.subtree)
+            if c.i > v.i and start > 0 and doc[start - 1].text == "," and any(
+                    g.dep_ == "cc" and g.lower_ == "or" for g in c.children) and any(g.dep_ == "conj" for g in c.children):
+                roots[c.i] = Spec("M", function="同位語・說明", modifies=first, clause=index, kind="appos")
+                if v.lemma_ == "be":  # Which is bigger, the sun or the moon?：be 後面的 bigger 是主詞補語
+                    for g in children:
+                        if g.i in roots and roots[g.i].role == "OC" and roots[g.i].clause == index:
+                            roots[g.i] = Spec("SC", clause=index)
+                    if first.i in roots and roots[first.i].role == "O":
+                        roots[first.i] = Spec("S", clause=index)
+    # ③ What a pain, why does he…!：句首「What a ＋ 名詞」後面接逗號，是感嘆語，不是句子的成分
+    for c in children:
+        if c.i < v.i and c.pos_ == "NOUN" and any(g.lower_ == "what" and g.dep_ == "det" for g in c.children):
+            end = max(t.i for t in c.subtree)
+            if end + 1 < len(doc) and doc[end + 1].text == ",":
+                roots[c.i] = Spec("M", function="副詞・表語氣", clause=index)
+    return {k: (r.role, r.function) for k, r in roots.items()} != before
 
 
 def interrupted_second_object(v, children):
@@ -1617,6 +1655,9 @@ def analyze_doc(text: str, doc) -> SentenceResult:
                 if c.dep_ in ("conj", "cc"):
                     roots[c.i] = Spec("unknown", clause=0)
 
+    # have to、be able to 等分支會換成後面的動詞分析，句子真正的主要動詞底下的感嘆語等也要處理
+    if kind == "simple" and question_fixes(sent.root, list(sent.root.children), roots, 0, sent):
+        infos[0].pattern = clause_pattern(roots, 0, infos[0])
     if inserted is not None and inserted_wh.i not in roots:
         # 疑問詞在子句裡的角色：子句缺主詞 → 主詞（Who do you think will win?）；
         # where／when／why／how → 副詞；其他 → 受詞（What do you think he bought?）
