@@ -101,9 +101,15 @@ button[disabled]:active { transform: none; }
 }
 
 /* ---------- 首頁：標題、輸入框、範例 ---------- */
-.hero { padding: clamp(28px, 6vw, 60px) 0 clamp(18px, 3vw, 26px); }
-.hero-title { font-size: clamp(30px, 6.4vw, 48px); font-weight: 800; letter-spacing: 0.01em; line-height: 1.2; margin: 0 0 12px; }
-.hero-sub { font-size: clamp(15px, 2vw, 17px); color: var(--text-2); line-height: 1.8; margin: 0; text-wrap: pretty; }
+/* 首頁標題區：置中；大標題（品牌）→ 副標（問題）→ 內文（說明），三層字級 */
+.hero { text-align: center; padding: clamp(32px, 7vw, 72px) 0 clamp(24px, 4vw, 40px); }
+.hero-cat { display: block; width: clamp(56px, 8vw, 76px); height: auto; margin: 0 auto clamp(14px, 2vw, 20px); }
+.hero-title { font-size: clamp(27px, 5.6vw, 50px); font-weight: 800; letter-spacing: 0.02em; line-height: 1.25; margin: 0 0 clamp(10px, 1.6vw, 16px); }
+.hero-title .nobr { display: inline-block; } /* 手機上在冒號後面換行，不從字中間斷開 */
+.hero-sub { font-size: clamp(18px, 2.6vw, 24px); font-weight: 700; color: var(--text); line-height: 1.5; margin: 0 0 clamp(10px, 1.6vw, 14px); }
+.hero-text { font-size: clamp(15px, 1.9vw, 17px); color: var(--text-2); line-height: 1.9; margin: 0 auto; max-width: 40em; }
+.hero-text > span { display: block; } /* 一句一行 */
+.hero-text .nobr { display: inline-block; } /* 太長的句子只在逗號後面換行，不從詞的中間斷開 */
 .print-title { display: none; }
 
 .ask { position: relative; background: var(--surface); border: 1.5px solid var(--text); border-radius: 20px; padding: 14px 16px 12px; transition: box-shadow 0.15s; }
@@ -121,13 +127,13 @@ textarea::placeholder { color: #a39a87; }
 .error { display: flex; align-items: flex-start; gap: 8px; color: var(--danger); font-size: 15px; line-height: 1.6; margin: 10px 2px 0; }
 .error .cat { width: 28px; height: 28px; flex-shrink: 0; margin-top: -1px; }
 
-.examples-row { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; flex-wrap: wrap; }
+.examples-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 14px 0 0; flex-wrap: wrap; }
 .examples-title { font-size: 13px; color: var(--muted); flex-shrink: 0; }
 .example-chip { font-size: 14px; padding: 6px 14px; min-height: 36px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); white-space: nowrap; }
 .example-chip:hover { border-color: var(--text); }
 @media (max-width: 600px) {
   /* 手機：範例排成一列，左右滑 */
-  .examples-row { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 2px 16px; scrollbar-width: none; }
+  .examples-row { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; margin-inline: -16px; padding: 2px 16px; scrollbar-width: none; }
   .examples-row::-webkit-scrollbar { display: none; }
 }
 
