@@ -819,9 +819,12 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                       and ((c.i > v.i and c.dep_ == "prep" and any(g.dep_ in ("pobj", "pcomp") for g in c.children)
                             and not (v.lower_ == "been" and c.lower_ == "to"))  # have been to Japan（去過）維持句型一
                            or (c.i > v.i and c.dep_ == "advmod" and c.lemma_.lower() in L.PLACE_ADVERBS)
-                           or (c.dep_ == "advmod" and c.lower_ == "where"))), None)  # Where is your book?
+                           or (c.dep_ == "advmod" and c.lower_ == "where")  # Where is your book?
+                           # The reason I'm late is because I missed the bus.（be 後面一定要接的 because 子句，2026-10-08）
+                           or (c.i > v.i and c.dep_ == "advcl" and roots[c.i].function == "副詞子句・表原因"
+                               and any(m.dep_ == "mark" and m.lower_ == "because" for m in c.children)))), None)
         if place is not None:
-            roots[place.i] = Spec("SC", clause=index)
+            roots[place.i] = Spec("SC", clause=index, inner_verb=roots[place.i].inner_verb)
 
     # There is 句型：掛在真正主詞底下的介系詞片語，當成表地點的副詞
     if info.existential:

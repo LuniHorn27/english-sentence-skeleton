@@ -7115,3 +7115,280 @@
     function: 副詞・表時間
     modifies: null
     text: yesterday
+- id: '464'
+  sentence: It seems like we've been talking about this all day.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: seems
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: like we've been talking about this all day
+- id: '465'
+  sentence: It looks like Tom and Mary are mad.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: looks
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: like Tom and Mary are mad
+- id: '466'
+  sentence: Tom and Mary looked like they were discouraged.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: Tom and Mary
+  - role: Vi
+    text: looked
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: like they were discouraged
+- id: '467'
+  sentence: Tom and Mary looked like they were healthy.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: Tom and Mary
+  - role: Vi
+    text: looked
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: like they were healthy
+- id: '468'
+  sentence: It sounds like you had a great time.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: sounds
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: like you had a great time
+- id: '469'
+  sentence: She looks like she is tired.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: looks
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: like she is tired
+- id: '470'
+  sentence: It feels like it is going to rain.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: feels
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: like it is going to rain
+- id: '471'
+  sentence: He looks as if he has seen a ghost.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: looks
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: as if he has seen a ghost
+- id: '472'
+  sentence: It seems as though nobody cares.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: seems
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: as though nobody cares
+- id: '473'
+  sentence: The reason that Tom got sick was because he overate.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The reason
+    head:
+    - reason
+  - role: M
+    function: 形容詞・修飾
+    modifies: reason
+    text: that Tom got sick
+  - role: V
+    text: was
+  - role: SC
+    text: because he overate
+- id: '474'
+  sentence: The reason I'm late is because I missed the bus.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The reason
+    head:
+    - reason
+  - role: M
+    function: 形容詞・修飾
+    modifies: reason
+    text: I'm late
+  - role: V
+    text: is
+  - role: SC
+    text: because I missed the bus
+- id: '475'
+  sentence: It is because he is lazy.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: because he is lazy
+- id: '476'
+  sentence: She looks like her mother.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: looks
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: like her mother
+- id: '477'
+  sentence: It looks like rain.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: looks
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: like rain
+- id: '478'
+  sentence: He left because he was tired.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: left
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because he was tired
+- id: '479'
+  sentence: He talks as if he knew everything.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: talks
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: as if he knew everything
+- id: '480'
+  sentence: Nobody sings like she does.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: Nobody
+  - role: Vi
+    text: sings
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: like she does
+- id: '481'
+  sentence: The problem is that we have no money.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The problem
+    head:
+    - problem
+  - role: V
+    text: is
+  - role: SC
+    text: that we have no money
+- id: '482'
+  sentence: It is because of the rain.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: because of the rain
+- id: '483'
+  sentence: I was late because I missed the bus.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: V
+    text: was
+  - role: SC
+    text: late
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because I missed the bus
+- id: '484'
+  sentence: Is it because you are tired?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: V
+    text: Is
+  - role: S
+    text: it
+  - role: SC
+    text: because you are tired

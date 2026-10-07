@@ -176,6 +176,7 @@ SUBORDINATORS = {
     "if": "表條件", "unless": "表條件",
     "although": "表讓步", "though": "表讓步",
     "so": "表目的",
+    "like": "表方式",  # It looks like it's going to rain.：口語的 like ＝ as if（2026-10-08）
 }
 
 # 場所名詞（water the flowers in the garden → 表地點）
