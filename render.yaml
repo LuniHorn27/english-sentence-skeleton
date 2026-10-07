@@ -6,7 +6,8 @@ services:
     runtime: python
     plan: free
     region: singapore # 離台灣最近
-    buildCommand: pip install -r requirements-slim.txt
+    # 小型分析模型（跟大型模型學過的版本）放在 GitHub Release，部署時下載解壓到 models/（models/ 不進 git）
+    buildCommand: pip install -r requirements-slim.txt && mkdir -p models && curl -fsSL https://github.com/LuniHorn27/english-sentence-skeleton/releases/download/model-sm-distilled-1.0.0/en_core_web_sm_distilled-1.0.0.tar.gz | tar xz -C models
     # --proxy-headers：Render 前面有代理伺服器，要從標頭取得使用者真正的來源位址（次數限制要用）
     # --no-access-log：不記錄每個請求（隱私）
     startCommand: uvicorn backend.app:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips "*" --no-access-log
@@ -14,8 +15,8 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.3
-      - key: SPACY_MODEL
-        value: en_core_web_sm
+      - key: SPACY_MODEL # 出問題時改回 en_core_web_sm（原本的小型模型，requirements-slim.txt 有裝）就能退回
+        value: models/en_core_web_sm_distilled
       - key: CLIENT_IP_HEADER # 次數限制用 Cloudflare 給的真實來源位址（X-Forwarded-For 可以被偽造）
         value: cf-connecting-ip
       - key: TEST_EDITION # 頁面顯示「測試版」提示

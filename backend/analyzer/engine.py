@@ -22,7 +22,7 @@ from .restore import participle_restore
 from .spelling import find_typos
 from .phrases import find_phrases, phrasal_object
 from .schema import CardRef, Chunk, Clause, SentenceResult, Span
-from .verb_check import check as verb_check
+from .verb_check import check as verb_check, verb_patterns
 
 NOMINAL = {"S", "O", "IO", "DO", "SC", "OC", "RS", "RO"}
 VERB_ROLE = "VERB"  # 動詞種類（Vt／Vi／V）等句型決定後再填
@@ -522,8 +522,13 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     if dative_fix is None and v.lemma_.lower() in L.DATIVE_VERBS:
         # 分析程式有時把 IO 看成 DO 的主詞：made [our whole family] [a cake]
         for c in children:
-            g = next((x for x in c.children if x.dep_ == "nsubj"), None) if c.dep_ == "dobj" else None
+            g = next((x for x in c.children if x.dep_ == "nsubj"), None) if c.dep_ in ("dobj", "ccomp") else None
             if g is not None and c.pos_ == "NOUN" and g.pos_ in ("NOUN", "PRON", "PROPN") and g.i < c.i:
+                # 當成子句（ccomp）時比較容易是真的受詞補語（made him captain），要「人 ＋ a／an 東西」才算雙受詞
+                if c.dep_ == "ccomp" and not (
+                        (g.lower_ in L.PERSON_PRONOUNS or g.lemma_.lower() in L.PERSON_NOUNS or g.ent_type_ == "PERSON")
+                        and any(d.lower_ in ("a", "an") for d in c.children if d.dep_ == "det")):
+                    continue
                 dative_fix = (g, c)
 
     that_clause = next((c for c in children if c.dep_ == "ccomp" and c.i > v.i and (
@@ -531,6 +536,40 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     dobj = next((c for c in children if c.dep_ == "dobj"), None)
     if dative_fix is None and dobj is not None and that_clause is not None and v.lemma_.lower() in L.DATIVE_VERBS | {"remind", "inform", "promise", "teach", "warn", "assure"}:
         dative_fix = (dobj, that_clause)  # told [everyone] [that the company would move]
+
+    # 分析程式給一個動詞兩個直接受詞（dobj）是不可能的結構：name [our dog] [Betty]、gave [him] [a book]。
+    # 用動詞句型字典決定：只能 O＋OC（name、elect）→ 第二個是受詞補語；只能 IO＋DO → 雙受詞；
+    # 兩種都可以（make）→ 第二個前面有 a／an 是雙受詞（made her a cake），否則是受詞補語（made him captain）
+    oc_fix = None
+    two_dobj = [c for c in children if c.dep_ == "dobj" and c.i > v.i and c.pos_ in ("NOUN", "PROPN", "PRON", "NUM")]
+    if dative_fix is None and len(two_dobj) == 2:
+        first, second = sorted(two_dobj, key=lambda t: t.i)
+        allowed = verb_patterns().get(v.lemma_.lower(), set())
+        indefinite = any(d.lower_ in ("a", "an") for d in second.children if d.dep_ == "det")
+        if "SVOO" in allowed and ("SVOC" not in allowed or indefinite):
+            dative_fix = (first, second)
+        elif "SVOC" in allowed:
+            oc_fix = second
+
+    # 命名、選舉類動詞後面是「受詞＋受詞補語」，分析程式還會看錯成另外兩種結構：
+    #   name [your cat] [Mimi]：Mimi 被當成副詞性名詞（npadvmod）→ 改成受詞補語
+    #   elected [Amy] [president]：Amy president 被當成一個複合名詞 → 拆成受詞＋受詞補語
+    #   calls [her] [Mei]：her 被當成所有格（her 同時是受格和所有格）→ 拆成受詞＋受詞補語
+    split_oc = None
+    dobjs = [c for c in children if c.dep_ == "dobj" and c.i > v.i]
+    if dative_fix is None and oc_fix is None and v.lemma_.lower() in L.NAMING_VERBS and len(dobjs) == 1:
+        o = dobjs[0]
+        after = next((c for c in children if c.dep_ == "npadvmod" and c.i > o.i and c.pos_ in ("PROPN", "NOUN")
+                      and c.lemma_.lower() not in L.TIME_NOUNS), None)
+        comp = [d for d in o.children if d.dep_ == "compound" and d.pos_ in ("PROPN", "PRON") and d.i < o.i]
+        her = [d for d in o.children if d.dep_ == "poss" and d.lower_ == "her"]
+        if after is not None:
+            oc_fix = after
+        elif o.pos_ == "PROPN" and her and len(list(o.children)) == 1:
+            split_oc = (her[0], o)
+        elif (o.pos_ == "NOUN" and comp and not any(d.dep_ in ("det", "poss") for d in o.children)
+              and not any(d.dep_ in ("det", "poss") for d in comp[0].children)):
+            split_oc = (comp[0], o)
 
     has_dative = any(c.dep_ == "dative" and c.pos_ != "ADP" for c in children) or dative_fix is not None
     has_obj = bool(objects) or dative_fix is not None or (phrasal is not None and phrasal[1] is not None)
@@ -543,6 +582,11 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             roots[c.i] = Spec("IO", clause=index)
         elif dative_fix and c is dative_fix[1]:
             roots[c.i] = Spec("DO", clause=index)
+        elif c is oc_fix:
+            roots[c.i] = Spec("OC", clause=index)
+        elif split_oc and c is split_oc[1]:
+            roots[c.i] = Spec("OC", clause=index)
+            roots[split_oc[0].i] = Spec("O", clause=index)
         elif d in ("nsubj", "nsubjpass", "csubj", "csubjpass"):
             roots[c.i] = Spec("S", clause=index)
             if is_gerund(c):
@@ -637,6 +681,15 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
         roots[dative_fix[0].i] = Spec("IO", clause=index)
         do = dative_fix[1]
         roots[do.i] = Spec("DO", clause=index, inner_verb=do if do.pos_ in ("VERB", "AUX") else None)
+
+    # 受詞後面插了一段前後有逗號的修飾語，第二個名詞在後面（規格書 5.19）：
+    #   considered [the museum], characterized by…, [an absolute masterpiece]
+    #   gave [the students], who had spent…, [an extension]
+    late = None if (dative_fix or oc_fix or split_oc) else interrupted_second_object(v, children)
+    if late:
+        first, second, kind = late
+        roots[first.i] = Spec("IO" if kind == "SVOO" else "O", clause=index)
+        roots[second.i] = Spec("DO" if kind == "SVOO" else "OC", clause=index)
 
     # so／such … that：that 子句是「表結果」的副詞子句（Azar 19-4）
     #   so excited that…、such good coffee that…、speaks so fast that…
@@ -771,6 +824,46 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
 
     info.pattern = clause_pattern(roots, index, info)
     return info
+
+
+def interrupted_second_object(v, children):
+    """動詞 ＋ 名詞一 ＋「, 修飾語 ,」＋ 名詞二（規格書 5.19）。分析程式常沒把名詞二接回主要動詞：
+    當成修飾語裡的名詞（同位語、修飾語裡動詞的受詞），或當成名詞一的同位語、沒有 and 的對等名詞；
+    大型模型則會把 made [the guests], who…, [a dinner] 的名詞二直接當成受詞補語。
+    動詞句型字典說這個動詞可以接兩個成分時，把名詞二拉回主要動詞。
+    名詞二要緊接在逗號後面、一直到子句結尾，而且前面一定要有那段「, 修飾語 ,」，
+    才不會把一般的同位語（I called Tom, my best friend.）改掉。
+    回傳 (名詞一, 名詞二, "SVOO" 或 "SVOC")，不符合時回傳 None"""
+    lemma = v.lemma_.lower()
+    allowed = verb_patterns().get(lemma, set()) & {"SVOO", "SVOC"}
+    objs = [c for c in children if c.dep_ in ("dobj", "dative", "oprd") and c.i > v.i
+            and c.pos_ in ("NOUN", "PROPN", "PRON")]
+    if not allowed or len(objs) != 1:
+        return None
+    first, doc = objs[0], v.doc
+    last = max(t.i for t in v.subtree if not t.is_punct)
+    # 夾在中間、前面有逗號的修飾語：名詞一的形容詞子句／分詞片語，或接在動詞上的分詞片語
+    mods = [m for m in list(first.children) + [c for c in children if c.dep_ == "advcl"]
+            if m.dep_ in ("acl", "relcl", "advcl") and m.i > first.i
+            and m.left_edge.i > 0 and doc[m.left_edge.i - 1].text == ","]
+    if not mods:
+        return None
+    start = min(m.left_edge.i for m in mods)
+    for n in doc[start:last + 1]:
+        if (n.pos_ in ("NOUN", "PROPN") and (n.dep_ in ("appos", "dobj", "npadvmod", "attr", "conj")
+                                             or (n.dep_ == "oprd" and n.head is v))
+                and doc[n.left_edge.i - 1].text == "," and n.right_edge.i == last
+                and not (n.dep_ == "conj" and any(c.dep_ == "cc" for c in n.head.children))):
+            if allowed == {"SVOO"}:
+                return first, n, "SVOO"
+            if allowed == {"SVOC"} or lemma in L.NAMING_VERBS:
+                return first, n, "SVOC"
+            # 兩種都可以（make、find）：名詞一是人、名詞二前面有 a／an → 雙受詞（made the guests a dinner）；
+            # 否則是受詞補語（found the house a perfect place、made him captain）
+            person = first.lower_ in L.PERSON_PRONOUNS or first.lemma_.lower() in L.PERSON_NOUNS or first.ent_type_ == "PERSON"
+            indefinite = any(d.lower_ in ("a", "an") for d in n.children if d.dep_ == "det")
+            return first, n, "SVOO" if (person and indefinite) else "SVOC"
+    return None
 
 
 def cleft_clause(v, subj, children):

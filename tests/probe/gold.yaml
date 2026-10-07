@@ -4955,6 +4955,412 @@
     modifies: null
     text: at night
 - id: '332'
+  sentence: We name our dog Betty.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: name
+  - role: O
+    text: our dog
+  - role: OC
+    text: Betty
+- id: '333'
+  sentence: Did you name your cat Mimi?
+  pattern: 5
+  passive: false
+  chunks:
+  - role: aux
+    text: Did
+  - role: S
+    text: you
+  - role: Vt
+    text: name
+  - role: O
+    text: your cat
+  - role: OC
+    text: Mimi
+- id: '334'
+  sentence: The class elected Amy president.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The class
+  - role: Vt
+    text: elected
+  - role: O
+    text: Amy
+  - role: OC
+    text: president
+- id: '335'
+  sentence: Everyone calls her Mei.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Everyone
+  - role: Vt
+    text: calls
+  - role: O
+    text: her
+  - role: OC
+    text: Mei
+- id: '336'
+  sentence: They chose Tom leader.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: Vt
+    text: chose
+  - role: O
+    text: Tom
+  - role: OC
+    text: leader
+- id: '337'
+  sentence: We call this dog Max.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: call
+  - role: O
+    text: this dog
+  - role: OC
+    text: Max
+- id: '338'
+  sentence: We named our team the Tigers.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: named
+  - role: O
+    text: our team
+  - role: OC
+    text: the Tigers
+- id: '339'
+  sentence: She made her son a sandwich.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: made
+  - role: IO
+    text: her son
+  - role: DO
+    text: a sandwich
+- id: '340'
+  sentence: They made Apple products.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: Vt
+    text: made
+  - role: O
+    text: Apple products
+- id: '341'
+  sentence: Did you call your mom yesterday?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: aux
+    text: Did
+  - role: S
+    text: you
+  - role: Vt
+    text: call
+  - role: O
+    text: your mom
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: yesterday
+- id: '342'
+  sentence: The international panel of architectural critics consistently considered the controversial contemporary art museum, characterized by its jagged metallic exterior and unsettlingly asymmetric
+    spatial layouts, an absolute masterpiece of modern deconstructivism.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The international panel of architectural critics
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: consistently
+  - role: Vt
+    text: considered
+  - role: O
+    text: the controversial contemporary art museum
+  - role: M
+    function: 形容詞・修飾
+    modifies: museum
+    text: characterized by its jagged metallic exterior and unsettlingly asymmetric spatial layouts
+  - role: OC
+    text: an absolute masterpiece of modern deconstructivism
+- id: '343'
+  sentence: The notoriously demanding physics professor reluctantly gave the visibly exhausted graduate students, who had spent the entire weekend conducting rigorous thermodynamic experiments, an unexpected
+    two-week extension on their final dissertations.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: The notoriously demanding physics professor
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: reluctantly
+  - role: Vt
+    text: gave
+  - role: IO
+    text: the visibly exhausted graduate students
+  - role: M
+    function: 形容詞・修飾
+    modifies: students
+    text: who had spent the entire weekend conducting rigorous thermodynamic experiments
+  - role: DO
+    text: an unexpected two-week extension
+  - role: M
+    function: 形容詞・修飾
+    modifies: extension
+    text: on their final dissertations
+- id: '344'
+  sentence: My grandmother gave the children, who had waited all afternoon, a big plate of cookies.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: My grandmother
+  - role: Vt
+    text: gave
+  - role: IO
+    text: the children
+  - role: M
+    function: 形容詞・修飾
+    modifies: children
+    text: who had waited all afternoon
+  - role: DO
+    text: a big plate of cookies
+- id: '345'
+  sentence: The teacher showed the new students, who looked very nervous, the way to the library.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: The teacher
+  - role: Vt
+    text: showed
+  - role: IO
+    text: the new students
+  - role: M
+    function: 形容詞・修飾
+    modifies: students
+    text: who looked very nervous
+  - role: DO
+    text: the way
+  - role: M
+    function: 形容詞・修飾
+    modifies: way
+    text: to the library
+- id: '346'
+  sentence: Did your uncle send you, who were studying abroad, a birthday card?
+  pattern: 4
+  passive: false
+  chunks:
+  - role: aux
+    text: Did
+  - role: S
+    text: your uncle
+  - role: Vt
+    text: send
+  - role: IO
+    text: you
+  - role: M
+    function: 形容詞・修飾
+    modifies: you
+    text: who were studying abroad
+  - role: DO
+    text: a birthday card
+- id: '347'
+  sentence: The committee did not consider the plan, written in a hurry last night, a good idea.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: The committee
+  - role: aux
+    text: did not
+  - role: Vt
+    text: consider
+  - role: O
+    text: the plan
+  - role: M
+    function: 形容詞・修飾
+    modifies: plan
+    text: written in a hurry last night
+  - role: OC
+    text: a good idea
+- id: '348'
+  sentence: Everyone considered the young pianist, trained by her own mother, a genius.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: Everyone
+  - role: Vt
+    text: considered
+  - role: O
+    text: the young pianist
+  - role: M
+    function: 形容詞・修飾
+    modifies: pianist
+    text: trained by her own mother
+  - role: OC
+    text: a genius
+- id: '349'
+  sentence: We elected Tom, who always helps others, class leader.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: elected
+  - role: O
+    text: Tom
+  - role: M
+    function: 形容詞・修飾
+    modifies: Tom
+    text: who always helps others
+  - role: OC
+    text: class leader
+- id: '350'
+  sentence: She made the guests, who had traveled a long way, a delicious dinner.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: made
+  - role: IO
+    text: the guests
+  - role: M
+    function: 形容詞・修飾
+    modifies: guests
+    text: who had traveled a long way
+  - role: DO
+    text: a delicious dinner
+- id: '351'
+  sentence: They found the old house, hidden behind tall trees, a perfect place to live.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: Vt
+    text: found
+  - role: O
+    text: the old house
+  - role: M
+    function: 形容詞・修飾
+    modifies: house
+    text: hidden behind tall trees
+  - role: OC
+    text: a perfect place
+  - role: M
+    function: 形容詞・修飾
+    modifies: place
+    text: to live
+- id: '352'
+  sentence: We visited the museum, built in 1900, last summer.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: visited
+  - role: O
+    text: the museum
+  - role: M
+    function: 形容詞・修飾
+    modifies: museum
+    text: built in 1900
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: last summer
+- id: '353'
+  sentence: I met the new teacher, who teaches math, yesterday.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: met
+  - role: O
+    text: the new teacher
+  - role: M
+    function: 形容詞・修飾
+    modifies: teacher
+    text: who teaches math
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: yesterday
+- id: '354'
+  sentence: He told the story, which nobody believed, to everyone in the class.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: told
+  - role: O
+    text: the story
+  - role: M
+    function: 形容詞・修飾
+    modifies: story
+    text: which nobody believed
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to everyone
+  - role: M
+    function: 形容詞・修飾
+    modifies: everyone
+    text: in the class
+- id: '355'
+  sentence: I called Tom, my best friend.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: called
+  - role: O
+    text: Tom
+  - role: M
+    function: 同位語・說明Tom
+    modifies: null
+    text: my best friend
+- id: '356'
   sentence: What do you want to be when you grow up?
   pattern: 2
   passive: false
@@ -4973,7 +5379,7 @@
     function: 副詞子句・表時間
     modifies: null
     text: when you grow up
-- id: '333'
+- id: '357'
   sentence: What do you want to eat?
   pattern: 2
   passive: false
@@ -4988,7 +5394,7 @@
     text: want
   - role: O
     text: to eat
-- id: '334'
+- id: '358'
   sentence: Who do you want to invite to the party?
   pattern: 2
   passive: false
@@ -5003,7 +5409,7 @@
     text: want
   - role: O
     text: to invite to the party
-- id: '335'
+- id: '359'
   sentence: Where do you want to go?
   pattern: 2
   passive: false
@@ -5020,7 +5426,7 @@
     text: want
   - role: O
     text: to go
-- id: '336'
+- id: '360'
   sentence: I want to go home when I finish my homework.
   pattern: 2
   passive: false
@@ -5035,7 +5441,7 @@
     function: 副詞子句・表時間
     modifies: null
     text: when I finish my homework
-- id: '337'
+- id: '361'
   sentence: She told me to call her when I arrive.
   pattern: 5
   passive: false
@@ -5052,7 +5458,7 @@
     function: 副詞子句・表時間
     modifies: null
     text: when I arrive
-- id: '338'
+- id: '362'
   sentence: He likes playing games when he is bored.
   pattern: 2
   passive: false
@@ -5067,7 +5473,7 @@
     function: 副詞子句・表時間
     modifies: null
     text: when he is bored
-- id: '339'
+- id: '363'
   sentence: I want to know when you will come.
   pattern: 2
   passive: false
@@ -5078,7 +5484,7 @@
     text: want
   - role: O
     text: to know when you will come
-- id: '340'
+- id: '364'
   sentence: You have probably heard this question countless times since you were a little child.
   pattern: 2
   passive: false
@@ -5105,7 +5511,7 @@
     function: 副詞子句・表時間
     modifies: null
     text: since you were a little child
-- id: '341'
+- id: '365'
   sentence: She calls her mother twice a week.
   pattern: 2
   passive: false
@@ -5122,7 +5528,7 @@
     function: 副詞・表頻率
     modifies: null
     text: twice a week
-- id: '342'
+- id: '366'
   sentence: How often do you exercise?
   pattern: 1
   passive: false
@@ -5137,7 +5543,7 @@
     text: you
   - role: Vi
     text: exercise
-- id: '343'
+- id: '367'
   sentence: Every time I see her, she smiles.
   pattern: 1
   passive: false
@@ -5150,7 +5556,7 @@
     text: she
   - role: Vi
     text: smiles
-- id: '344'
+- id: '368'
   sentence: But he never told me the truth.
   pattern: 4
   passive: false
@@ -5171,7 +5577,7 @@
     text: the truth
     head:
     - truth
-- id: '345'
+- id: '369'
   sentence: But I don't like it.
   pattern: 2
   passive: false
@@ -5186,7 +5592,7 @@
     text: like
   - role: O
     text: it
-- id: '346'
+- id: '370'
   sentence: Or you can stay here with us.
   pattern: 1
   passive: false
@@ -5207,7 +5613,7 @@
     function: 副詞・表伴隨
     modifies: null
     text: with us
-- id: '347'
+- id: '371'
   sentence: But now that you are in high school, you have to study harder.
   pattern: 1
   passive: false
@@ -5228,7 +5634,7 @@
     function: 副詞・表方式
     modifies: null
     text: harder
-- id: '348'
+- id: '372'
   sentence: Now that you are here, we can start the meeting.
   pattern: 2
   passive: false
@@ -5247,7 +5653,7 @@
     text: the meeting
     head:
     - meeting
-- id: '349'
+- id: '373'
   sentence: As soon as you finish, you have to call me.
   pattern: 2
   passive: false
@@ -5264,7 +5670,7 @@
     text: call
   - role: O
     text: me
-- id: '350'
+- id: '374'
   sentence: This simple question can suddenly feel like a heavy weight.
   pattern: 3
   passive: false
@@ -5283,7 +5689,7 @@
     text: feel
   - role: SC
     text: like a heavy weight
-- id: '351'
+- id: '375'
   sentence: The cloud looks like a rabbit.
   pattern: 3
   passive: false
@@ -5296,7 +5702,7 @@
     text: looks
   - role: SC
     text: like a rabbit
-- id: '352'
+- id: '376'
   sentence: This candy tastes like strawberries.
   pattern: 3
   passive: false
@@ -5309,7 +5715,7 @@
     text: tastes
   - role: SC
     text: like strawberries
-- id: '353'
+- id: '377'
   sentence: She is like her mother.
   pattern: 3
   passive: false
@@ -5320,7 +5726,7 @@
     text: is
   - role: SC
     text: like her mother
-- id: '354'
+- id: '378'
   sentence: I will call you when I get home.
   pattern: 2
   passive: false
@@ -5337,7 +5743,7 @@
     function: 副詞子句・表時間
     modifies: null
     text: when I get home
-- id: '355'
+- id: '379'
   sentence: Call me as soon as you arrive.
   pattern: 2
   passive: false
@@ -5352,7 +5758,7 @@
     function: 副詞子句・表時間
     modifies: null
     text: as soon as you arrive
-- id: '356'
+- id: '380'
   sentence: I am going to save money so that I can buy a bike.
   pattern: 2
   passive: false
@@ -5369,7 +5775,7 @@
     function: 副詞子句・表目的
     modifies: null
     text: so that I can buy a bike
-- id: '357'
+- id: '381'
   sentence: I have to leave now because my mother is waiting for me.
   pattern: 1
   passive: false
@@ -5388,7 +5794,7 @@
     function: 副詞子句・表原因
     modifies: null
     text: because my mother is waiting for me
-- id: '358'
+- id: '382'
   sentence: He used to walk to school when he was young.
   pattern: 1
   passive: false
