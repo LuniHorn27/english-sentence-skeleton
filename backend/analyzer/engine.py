@@ -208,9 +208,17 @@ def clause_opener(tok):
     return mark
 
 
+def clause_words(tok, n=3):
+    """子句開頭的前幾個字；開頭掛在子句底下的 But／And（模型把句首連接詞掛錯地方）先跳過"""
+    words = [t for t in sorted(tok.subtree, key=lambda t: t.i) if not t.is_punct]
+    while words and words[0].dep_ == "cc":
+        words = words[1:]
+    return words[:n]
+
+
 def opener_tokens(tok):
     """副詞子句開頭的連接詞（可以是多個字：as soon as、even though…），回傳 (字的清單, 功能)"""
-    words = [t for t in sorted(tok.subtree, key=lambda t: t.i) if not t.is_punct][:3]
+    words = clause_words(tok)
     for n in (3, 2):
         phrase = " ".join(t.lower_ for t in words[:n])
         if len(words) >= n and phrase in L.MULTI_SUBORDINATORS:
@@ -241,7 +249,7 @@ def adjective_pp_function(adj, prep):
 
 def multi_opener_clause(adv):
     """As soon as I got home：分析程式把 as soon 當副詞、子句掛在它底下。回傳 (子句的動詞, 功能)"""
-    words = [t for t in sorted(adv.subtree, key=lambda t: t.i) if not t.is_punct][:3]
+    words = clause_words(adv)
     clause = next((t for t in adv.subtree if t.dep_ in ("advcl", "ccomp") and t.pos_ in ("VERB", "AUX")), None)
     if clause is None:
         return None
@@ -1538,6 +1546,9 @@ def analyze_sentence(text: str) -> SentenceResult:
                     roots[c.i] = Spec("unknown", clause=0)
 
     split_finite_adverb_clauses(roots, infos, sent.doc)
+    # 句首的 But／And／Or 不管模型掛在哪個字底下，都獨立成連接詞（蒸餾版模型會把它掛進後面的子句，2026-10-07）
+    if sent[0].dep_ == "cc" and sent[0].i not in roots:
+        roots[sent[0].i] = Spec("conj", clause=0)
     if present_for_future(roots, sent.doc):
         infos[0].flags.add("present_for_future")
 

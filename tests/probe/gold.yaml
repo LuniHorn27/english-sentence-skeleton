@@ -5813,3 +5813,41 @@
     function: 副詞子句・表時間
     modifies: null
     text: when he was young
+- id: '383'
+  sentence: And as soon as you finish, you can go home.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: conj
+    text: And
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: as soon as you finish
+  - role: S
+    text: you
+  - role: aux
+    text: can
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: home
+- id: '384'
+  sentence: But when I got home, nobody was there.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: conj
+    text: But
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: when I got home
+  - role: S
+    text: nobody
+  - role: V
+    text: was
+  - role: SC
+    text: there
