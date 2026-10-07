@@ -17,8 +17,8 @@
     <div class="nav-links" id="nav-links">
       <a href="/patterns" aria-current="page">何謂五大句型？</a>
       <a href="/quiz">測驗小遊戲</a>
-      <a href="/about">關於此網站</a>
-      <button type="button" id="share-site" class="nav-share">分享</button>
+      <a href="/about">關於偵探貓</a>
+      <button type="button" id="share-site" class="nav-share" aria-label="分享" title="分享"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3.5M7.5 8 12 3.5 16.5 8M5 12.5V20h14v-7.5"/></svg><span class="nav-share-label">分享</span></button>
     </div>
   </nav>
   </header>
@@ -53,8 +53,35 @@
       <div class="callout c-tip"><span class="icon">💡</span><div><span class="c-name">等號測試</span><span class="c-text">在兩個東西中間放一個等號。說得通（She ＝ a nurse），後面那個是<b>補語</b>；說不通（I ≠ music），後面那個是<b>受詞</b>。</span></div></div>
     </section>
 
+
+    <!-- 頁尾（四個頁面共用）：回饋、請喝咖啡、開源資源 -->
+    <footer class="site-foot">
+      <section class="support" aria-label="回饋">
+        <p class="support-line"><span><b>給偵探貓一點意見</b><span class="support-desc">哪裡好用、哪裡卡卡、想要什麼新功能？</span></span><button type="button" class="support-open" data-open-feedback><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5h15v10.5H10l-5.5 4z"/></svg>寫下想法</button></p>
+        <p class="coffee-card coffee-line" hidden>覺得偵探貓有用？<a class="coffee-btn" href="#" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9.5h11V14a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16M9 3.5v2.5M12.5 3.5v2.5"/></svg>請偵探貓喝杯咖啡</a></p>
+      </section>
+      <p class="credits">這個工具免費提供給所有人使用，使用了 spaCy、Qwen3、Kokoro 等開源資源（<a href="/about#credits">完整清單與授權</a>）。</p>
+    </footer>
+
+    <dialog id="feedback-dialog" class="fb-dialog" aria-labelledby="fb-dialog-title">
+      <form id="suggest-form">
+        <h2 id="fb-dialog-title">給偵探貓一點意見 💬</h2>
+        <p class="support-lead">想誇偵探貓、吐槽偵探貓、許願都可以，每一則偵探貓都會認真看。</p>
+        <label for="suggest-text" class="sr-only">你的回饋</label>
+        <textarea id="suggest-text" rows="5" maxlength="1000" placeholder="寫下你的想法……"></textarea>
+        <p class="fb-note">請不要填寫姓名、電話等個人資料。</p>
+        <p id="suggest-status" class="fb-status" role="status"></p>
+        <div class="fb-dialog-bar">
+          <button type="button" data-close-feedback>取消</button>
+          <button type="submit" class="primary">送出回饋</button>
+        </div>
+      </form>
+    </dialog>
   </main>
   <script src="/static/patterns.js"></script>
+  <script src="/static/site-config.js"></script>
+  <script src="/static/support.js"></script>
+  <script src="/static/feedback.js"></script>
   <script src="/static/share.js"></script>
 </body>
 </html>

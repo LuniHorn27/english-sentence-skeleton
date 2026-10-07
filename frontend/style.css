@@ -88,6 +88,10 @@ button[disabled]:active { transform: none; }
 .nav-links { display: flex; align-items: center; gap: 2px; }
 .nav-links a, .nav-share { font-size: 15px; color: var(--text-2); text-decoration: none; padding: 8px 12px; border-radius: 999px; border: 0; background: transparent; min-height: 40px; }
 .nav-links a:hover, .nav-share:hover { color: var(--text); background: var(--surface-2); }
+/* 分享：電腦版頁首只放圖示（滑鼠移上去有「分享」提示）；手機選單是一行一行的清單，圖示旁邊顯示文字 */
+.nav-share { gap: 6px; }
+.nav-share .ic { width: 19px; height: 19px; }
+.nav-share-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .nav-links a[aria-current="page"] { color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 7px; }
 .nav-toggle { display: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 12px; background: transparent; color: var(--text); margin-right: -8px; }
 .nav-toggle:hover { background: var(--surface-2); }
@@ -101,6 +105,7 @@ button[disabled]:active { transform: none; }
   .site-nav.open .nav-links { display: flex; }
   .nav-links a, .nav-share { font-size: 16px; color: var(--text); padding: 12px 4px; border-radius: 0; min-height: 48px; justify-content: flex-start; text-align: left; }
   .nav-links a + a, .nav-links a + .nav-share { border-top: 1px solid var(--border); }
+  .nav-share-label { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
   .nav-links a:hover, .nav-share:hover { background: transparent; }
 }
 
@@ -591,8 +596,16 @@ a.pattern:hover { text-decoration: underline; }
 .fb-note { margin: 0; font-size: 12px; color: var(--muted); }
 .fb-status { margin: 0; font-size: 13px; color: var(--text-2); min-height: 1em; }
 /* 頁面最下方：回饋入口＋請喝咖啡，兩行置中（使用者喜歡原本的結構，只把上下間距收緊，2026-10-07） */
-.home-foot { margin: 48px 0 0; padding-top: 18px; border-top: 1px solid var(--border); }
+.site-foot { margin: 48px 0 0; padding-top: 18px; border-top: 1px solid var(--border); }
 .support { text-align: center; }
+.credits { max-width: 860px; margin: 22px auto 0; font-size: 12.5px; line-height: 1.8; color: var(--muted); text-align: center; }
+.credits a { color: var(--text-2); text-underline-offset: 3px; }
+/* 關於偵探貓頁的開源資源清單：名稱、用途、授權各一欄，手機上用途和授權換到名稱下面 */
+.credit-list { list-style: none; margin: 14px 0 0; padding: 0; border-top: 1px solid var(--border); }
+.credit-list li { display: grid; grid-template-columns: 260px minmax(0, 1fr) 150px; gap: 4px 16px; align-items: baseline; padding: 11px 2px; border-bottom: 1px solid var(--border); font-size: 15px; }
+.credit-list .use { color: var(--text-2); }
+.credit-list .lic { font-size: 13px; color: var(--muted); white-space: nowrap; text-align: right; }
+@media (max-width: 560px) { .credit-list li { grid-template-columns: 1fr auto; } .credit-list .use { grid-column: 1 / -1; grid-row: 2; } }
 .support-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 14px; font-size: 16px; color: var(--text-2); margin: 0; }
 .support-line b { color: var(--text); }
 .support-desc { margin-left: 1em; }
@@ -600,10 +613,10 @@ a.pattern:hover { text-decoration: underline; }
   /* 手機：標題自成一行；說明和「寫下想法」排在同一行（跟下面「覺得偵探貓有用？」那行一樣的結構） */
   .support-line > span { display: contents; }
   .support-line b { flex-basis: 100%; }
-  .home-foot .support-line, .home-foot .coffee-line { gap: 6px 8px; font-size: 14px; }
+  .site-foot .support-line, .site-foot .coffee-line { gap: 6px 8px; font-size: 14px; }
   .support-desc { margin: 0; font-size: clamp(11px, calc((100vw - 150px) / 18), 13px); white-space: nowrap; } /* 18 個字＋按鈕放得下一行；太窄的舊手機（320 寬）才讓按鈕換行 */
-  .home-foot .support-open, .home-foot .coffee-btn { gap: 5px; padding: 5px 11px; min-height: 36px; font-size: 13.5px; } /* 加 .home-foot：後面的電腦版設定才不會蓋過來 */
-  .home-foot .support-open .ic, .home-foot .coffee-btn .ic { width: 16px; height: 16px; }
+  .site-foot .support-open, .site-foot .coffee-btn { gap: 5px; padding: 5px 11px; min-height: 36px; font-size: 13.5px; } /* 加 .site-foot：後面的電腦版設定才不會蓋過來 */
+  .site-foot .support-open .ic, .site-foot .coffee-btn .ic { width: 16px; height: 16px; }
 }
 .coffee-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 14px; font-size: 16px; color: var(--text-2); margin: 12px 0 0; }
 .coffee-line[hidden] { display: none; }
@@ -669,7 +682,7 @@ a.pattern:hover { text-decoration: underline; }
   main { max-width: none; padding: 0; }
   .ask, .toolbar, .result-actions, .history, .foot, .s-tools, .card-toggle, .feedback, .explain, .toast, .top .hint, .top-links, .doubt, .doubt-note { display: none !important; }
   .top h1::after { content: "　英文句子骨架分析講義"; font-size: 14px; font-weight: 400; }
-  .to-top, .home-sec, .home-cta, .site-head, .hero, .examples-row, .home-foot, .sample-tag, .gp-chip, .gp-sec .sec-title { display: none !important; }
+  .to-top, .home-sec, .home-cta, .site-head, .hero, .examples-row, .site-foot, .sample-tag, .gp-chip, .gp-sec .sec-title { display: none !important; }
   /* 不要整張句子卡「不准分頁」：卡片比一頁剩下的空間高時，瀏覽器會把整張推到下一頁，第一頁就變空白 */
   #result .sentence { box-shadow: none; border: 0; break-inside: auto; }
   #result .row { break-inside: avoid; }

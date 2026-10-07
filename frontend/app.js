@@ -434,17 +434,7 @@ function phraseCard(sentence) {
 }
 
 // ---------- 回報錯誤（2-5） ----------
-async function sendFeedback(payload) {
-  const response = await fetch("/api/feedback", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  if (!response.ok) {
-    const body = await response.json().catch(() => ({}));
-    throw new Error(typeof body.detail === "string" ? body.detail : "送不出去，網路好像打結了，等一下再試。");
-  }
-}
+// sendFeedback 在 feedback.js（四個頁面共用）
 
 function feedbackForm(sIdx) {
   const sentence = sentences[sIdx];
@@ -493,40 +483,7 @@ for (const chip of document.querySelectorAll(".example-chip")) {
   });
 }
 
-const suggestForm = $("suggest-form");
-// 回饋對話框：首頁下方的「寫下你的想法」和結果下方的「給我回饋」都會打開它
-const feedbackDialog = $("feedback-dialog");
-for (const btn of document.querySelectorAll("[data-open-feedback]")) {
-  btn.addEventListener("click", () => {
-    $("suggest-status").textContent = "";
-    feedbackDialog.showModal();
-    $("suggest-text").focus();
-  });
-}
-feedbackDialog?.querySelector("[data-close-feedback]").addEventListener("click", () => feedbackDialog.close());
-feedbackDialog?.addEventListener("click", (e) => {
-  if (e.target === feedbackDialog) feedbackDialog.close(); // 點對話框外面也可以關掉
-});
-
-if (suggestForm) {
-  suggestForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const box = $("suggest-text");
-    const status = $("suggest-status");
-    if (!box.value.trim()) {
-      status.textContent = "空白的偵探貓看不懂啦，寫點什麼吧。";
-      return;
-    }
-    try {
-      await sendFeedback({ kind: "suggestion", message: box.value.trim() });
-      box.value = "";
-      status.textContent = "收到！偵探貓會認真看，說不定下一版就有了 🐾";
-      setTimeout(() => feedbackDialog?.close(), 1800);
-    } catch (err) {
-      status.textContent = err.message;
-    }
-  });
-}
+// 「給偵探貓一點意見」對話框在 feedback.js（四個頁面共用）
 
 // ---------- 拼字提醒：是不是打錯字？ ----------
 function typoBanner(sentence) {
