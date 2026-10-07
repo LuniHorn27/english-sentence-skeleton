@@ -468,25 +468,36 @@ a { color: var(--accent-line); }
 /* ---------- 關於頁 ---------- */
 
 .about-hero { position: relative; overflow: hidden; padding: clamp(28px, 6vw, 64px) clamp(20px, 5vw, 56px); margin: 0 0 8px; border-radius: 20px; background: #f3ebda; } /* 單一底色（品牌規範：不用漸層） */
-/* 偵探貓從卡片底部探頭：開頁時冒出來一次，之後偶爾偷看標題、眨眼；滑鼠移上來時眼睛變成「？」 */
-.peek-cat { position: absolute; right: 7%; bottom: -4px; width: clamp(110px, 17vw, 200px); animation: peek-in 0.7s cubic-bezier(0.3, 1.35, 0.5, 1) 0.3s both; }
-@keyframes peek-in { from { transform: translateY(105%); } to { transform: none; } }
+/* 偵探貓從卡片底部探頭：開頁時先探出耳朵、歪頭晃耳朵，縮一下再彈出來（一次）；之後偶爾偷看標題、眨眼；滑鼠靠近貓時眼睛變成「？」 */
+.peek-cat { position: absolute; right: 7%; bottom: -4px; width: clamp(110px, 17vw, 200px); transform-origin: 50% 100%; animation: peek-in 2.6s 0.3s both; }
+@keyframes peek-in {
+  0%   { transform: translateY(105%); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  14%  { transform: translateY(58%); animation-timing-function: ease-in-out; } /* 只露出耳朵 */
+  32%  { transform: translateY(58%) rotate(-4deg); animation-timing-function: ease-in-out; } /* 歪頭聽 */
+  48%  { transform: translateY(58%) rotate(3deg); animation-timing-function: ease-in-out; }
+  58%  { transform: translateY(66%); animation-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1.1); } /* 縮一下蓄力 */
+  74%  { transform: translateY(-7%) rotate(-3deg); animation-timing-function: ease-in-out; } /* 彈出來 */
+  86%  { transform: translateY(2%) rotate(1.5deg); animation-timing-function: ease-out; }
+  100% { transform: none; }
+}
+.peek-ear-l { transform-origin: 55px 66px; animation: peek-ear-l 2.6s 0.3s both; }
+.peek-ear-r { transform-origin: 150px 66px; animation: peek-ear-r 2.6s 0.3s both; }
+@keyframes peek-ear-l { 0%, 20%, 25%, 30%, 100% { transform: none; } 22.5% { transform: rotate(-16deg); } 27.5% { transform: rotate(-11deg); } }
+@keyframes peek-ear-r { 0%, 40%, 45%, 100% { transform: none; } 42.5% { transform: rotate(15deg); } }
 .peek-eye, .peek-q { transition: opacity 0.15s; }
 .peek-q { opacity: 0; }
+.peek-cat.curious .peek-eye { opacity: 0; }
+.peek-cat.curious .peek-q { opacity: 1; }
 .peek-cat.glance .peek-eye { animation: peek-glance 2s ease-in-out; }
 .peek-cat.glance .peek-lid { transform-origin: 68px 106px; animation: peek-blink 2s ease-in-out; }
 @keyframes peek-glance { 0%, 100% { transform: none; } 20%, 45% { transform: translate(-6px, -2px); } 60%, 80% { transform: translate(4px, 2px); } }
 @keyframes peek-blink { 0%, 84%, 100% { transform: none; } 90% { transform: scaleY(0.1); } }
-@media (hover: hover) {
-  .about-hero:hover .peek-eye { opacity: 0; }
-  .about-hero:hover .peek-q { opacity: 1; }
-}
 @media (max-width: 560px) {
   .about-hero { padding-bottom: 104px; } /* 手機：貓放在按鈕下方的右下角 */
   .peek-cat { width: 104px; right: 8%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .peek-cat { animation: none; }
+  .peek-cat, .peek-ear { animation: none; }
   .peek-cat .peek-eye, .peek-cat .peek-lid { animation: none !important; }
 }
 .about-kicker { font-size: 13px; font-weight: 600; letter-spacing: 1px; color: var(--accent-text); margin: 0 0 10px; }
