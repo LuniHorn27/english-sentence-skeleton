@@ -5354,3 +5354,398 @@
     function: 同位語・說明
     modifies: Tom
     text: my best friend
+- id: '356'
+  sentence: As far as I know the store is closed.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as I know
+  - role: S
+    text: the store
+  - role: V
+    text: is
+  - role: SC
+    text: closed
+- id: '357'
+  sentence: As far as I am concerned the question is not simple.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as I am concerned
+  - role: S
+    text: the question
+  - role: V
+    text: is
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: not
+  - role: SC
+    text: simple
+- id: '358'
+  sentence: As far as I can tell he is telling the truth.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as I can tell
+  - role: S
+    text: he
+  - role: aux
+    text: is
+  - role: Vt
+    text: telling
+  - role: O
+    text: the truth
+- id: '359'
+  sentence: As far as we know nobody saw the accident.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as we know
+  - role: S
+    text: nobody
+  - role: Vt
+    text: saw
+  - role: O
+    text: the accident
+- id: '360'
+  sentence: As far as she remembers the meeting was on Monday.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as she remembers
+  - role: S
+    text: the meeting
+  - role: V
+    text: was
+  - role: SC
+    text: on Monday
+- id: '361'
+  sentence: When I got home my mother was cooking dinner.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: When I got home
+  - role: S
+    text: my mother
+  - role: aux
+    text: was
+  - role: Vt
+    text: cooking
+  - role: O
+    text: dinner
+- id: '362'
+  sentence: If you need help please call me.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If you need help
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: please
+  - role: S
+    text: (You)
+  - role: Vt
+    text: call
+  - role: O
+    text: me
+- id: '363'
+  sentence: Because it was raining we stayed at home.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: Because it was raining
+  - role: S
+    text: we
+  - role: Vi
+    text: stayed
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at home
+- id: '364'
+  sentence: Although he was tired he kept working.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Although he was tired
+  - role: S
+    text: he
+  - role: Vt
+    text: kept
+  - role: O
+    text: working
+- id: '365'
+  sentence: As soon as I heard the news I called my sister.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: As soon as I heard the news
+  - role: S
+    text: I
+  - role: Vt
+    text: called
+  - role: O
+    text: my sister
+- id: '366'
+  sentence: Before you leave turn off the lights.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: Before you leave
+  - role: S
+    text: (You)
+  - role: Vt
+    text: turn off
+  - role: O
+    text: the lights
+- id: '367'
+  sentence: After the movie ended we went home.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: After the movie ended
+  - role: S
+    text: we
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: home
+- id: '368'
+  sentence: If I were you I would take the job.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If I were you
+  - role: S
+    text: I
+  - role: aux
+    text: would
+  - role: Vt
+    text: take
+  - role: O
+    text: the job
+- id: '369'
+  sentence: While I was reading the phone rang.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: While I was reading
+  - role: S
+    text: the phone
+  - role: Vi
+    text: rang
+- id: '370'
+  sentence: Since you are here you can help me.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: Since you are here
+  - role: S
+    text: you
+  - role: aux
+    text: can
+  - role: Vt
+    text: help
+  - role: O
+    text: me
+- id: '371'
+  sentence: Once you understand the rule the exercise is easy.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: Once you understand the rule
+  - role: S
+    text: the exercise
+  - role: V
+    text: is
+  - role: SC
+    text: easy
+- id: '372'
+  sentence: When she saw the dog she screamed.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: When she saw the dog
+  - role: S
+    text: she
+  - role: Vi
+    text: screamed
+- id: '373'
+  sentence: If it rains tomorrow the game will be canceled.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If it rains tomorrow
+  - role: S
+    text: the game
+  - role: aux
+    text: will
+  - role: aux
+    text: be
+  - role: Vt
+    text: canceled
+- id: '374'
+  sentence: Until he finishes his homework he can't watch TV.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: Until he finishes his homework
+  - role: S
+    text: he
+  - role: aux
+    text: can't
+  - role: Vt
+    text: watch
+  - role: O
+    text: TV
+- id: '375'
+  sentence: Even though I know the answer I can't explain it.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Even though I know the answer
+  - role: S
+    text: I
+  - role: aux
+    text: can't
+  - role: Vt
+    text: explain
+  - role: O
+    text: it
+- id: '376'
+  sentence: I ran as far as I could.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vi
+    text: ran
+  - role: M
+    function: 副詞子句・表比較
+    modifies: null
+    text: as far as I could
+- id: '377'
+  sentence: If you need help, call me.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If you need help
+  - role: S
+    text: (You)
+  - role: Vt
+    text: call
+  - role: O
+    text: me
+- id: '378'
+  sentence: If you see Tom tell him to call me.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If you see Tom
+  - role: S
+    text: (You)
+  - role: Vt
+    text: tell
+  - role: O
+    text: him
+  - role: OC
+    text: to call me
+- id: '379'
+  sentence: As I was leaving the phone rang.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: As I was leaving
+  - role: S
+    text: the phone
+  - role: Vi
+    text: rang
+- id: '380'
+  sentence: Although it was late we kept talking.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Although it was late
+  - role: S
+    text: we
+  - role: Vt
+    text: kept
+  - role: O
+    text: talking

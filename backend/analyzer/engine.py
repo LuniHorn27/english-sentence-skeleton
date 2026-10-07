@@ -84,6 +84,10 @@ def adverb_function(tok) -> str:
     dep = tok.dep_
     if dep == "agent":
         return "副詞・表執行者"
+    if dep == "advmod":
+        multi = multi_opener_clause(tok)  # As far as I know…、As soon as I got home…（子句掛在 far／soon 底下）
+        if multi is not None:
+            return f"副詞子句・{multi[1]}"
     if dep in ("prep",) and lemma == "than":
         return "副詞・表比較"  # taller than her sister
     head = tok.head.lemma_.lower()
@@ -180,6 +184,8 @@ def opener_tokens(tok):
     for n in (3, 2):
         phrase = " ".join(t.lower_ for t in words[:n])
         if len(words) >= n and phrase in L.MULTI_SUBORDINATORS:
+            if phrase == "as far as" and tok.lemma_.lower() in L.AS_FAR_AS_OPINION_VERBS:
+                return words[:n], "表語氣"  # As far as I know…：就我所知
             return words[:n], L.MULTI_SUBORDINATORS[phrase]
     mark = clause_opener(tok)
     if mark is not None:
@@ -214,6 +220,8 @@ def multi_opener_clause(adv):
     for n in (3, 2):
         phrase = " ".join(t.lower_ for t in words[:n])
         if len(words) >= n and phrase in L.MULTI_SUBORDINATORS:
+            if phrase == "as far as" and clause.lemma_.lower() in L.AS_FAR_AS_OPINION_VERBS:
+                return clause, "表語氣"  # As far as I know…：就我所知
             return clause, L.MULTI_SUBORDINATORS[phrase]
     return None
 
@@ -1313,12 +1321,106 @@ def clean_spaces(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+# ---------- 句首副詞子句後面少了逗號 ----------
+# As far as I know the store is closed.、Because it was raining we stayed home.：
+# 小型模型常把後面的主要子句當成前面動詞的受詞（know 的 ccomp），或把連接詞當成主要動詞，
+# 結果找不到主要動詞、或悄悄標錯。加上逗號，模型就切得對 → 在子句交界補一個看不見的逗號重新分析，
+# 再把字元位置對回原句（畫面上不會出現這個逗號）。
+CLAUSE_START_TAGS = {"DT", "PRP", "PRP$", "NNP", "NNPS", "NN", "NNS", "EX", "CD", "VB", "UH", "JJ", "WP"}
+
+
+def leading_subordinator(doc) -> int:
+    """句首是副詞子句連接詞時，回傳連接詞的字數；不是就回傳 0"""
+    words = [t.lower_ for t in doc[:3]]
+    for n in (3, 2):
+        if len(words) >= n and " ".join(words[:n]) in L.MULTI_SUBORDINATORS:
+            return n
+    return 1 if words and words[0] in L.SUBORDINATORS and words[0] != "so" else 0  # So I went home 的 so 是對等連接詞
+
+
+def well_split(doc, k: int, rest: int) -> bool:
+    """第 0～k-1 個字是句首的副詞子句、第 rest 個字以後是主要子句時，模型的結構是不是切對了：
+    副詞子句整塊只靠一個字掛在主要子句底下、主要子句沒有字掛在副詞子句裡、整句只有一個主要動詞且在主要子句裡"""
+    roots = [t for t in doc if t.dep_ == "ROOT"]
+    if len(roots) != 1 or roots[0].i < rest or roots[0].pos_ not in ("VERB", "AUX"):
+        return False
+    root = roots[0]
+    if any(c.dep_ == "aux" and c.tag_ == "TO" for c in root.children):
+        return False  # to call me 是不定詞，不能當主要子句的動詞（If you see Tom tell him to call me）
+    prefix = [t for t in doc[:k] if not t.is_punct]
+    suffix = [t for t in doc[rest:] if not t.is_punct]
+    if not any(t.pos_ in ("VERB", "AUX") for t in prefix):
+        return False
+    exits = [t for t in prefix if t.head.i >= k]
+    if len(exits) != 1 or exits[0].head.i < rest:
+        return False
+    if any(t.head.i < k for t in suffix):
+        return False
+    subjects = [c for c in root.children if c.dep_ in ("nsubj", "nsubjpass", "expl", "csubj") and c.i >= rest]
+    if root.tag_ == "VB" and not any(c.dep_ in ("aux", "auxpass") for c in root.children):
+        # 原形動詞又沒有助動詞＝祈使句，主詞只可能是 you。
+        # If you need help please call me：模型把 help 當 call 的主詞，代表交界切錯了（help 是 need 的受詞）
+        return all(c.lower_ == "you" for c in subjects)
+    return bool(subjects)
+
+
+def missing_comma_split(text: str, doc):
+    """句首副詞子句後面少了逗號、模型切錯時，回傳補了逗號的 (文字, 分析結果, 逗號位置)；不需要補就回傳 None"""
+    n = leading_subordinator(doc)
+    if not n or text.rstrip().endswith("?"):
+        return None
+    toks = list(doc)
+    if any(t.text in (",", ";", ":", "—") for t in toks):
+        return None  # 已經有逗號：只處理完全沒有標點分隔的句子，避免把原本對的切壞
+    candidates = [k for k in range(n + 2, len(toks))
+                  if (toks[k].tag_ in CLAUSE_START_TAGS or toks[k].lower_ == "please") and not toks[k].is_punct
+                  and toks[k - 1].tag_ not in ("DT", "PRP$", "IN", "TO", "MD", "CC", "POS", "WDT")
+                  and any(t.pos_ in ("VERB", "AUX") for t in toks[n:k])]  # As a child I lived… 的 as 是介系詞，不用補
+    if any(well_split(doc, k, k) for k in candidates):
+        return None  # 模型本來就切對了（大型模型通常是這樣）
+    for k in reversed(candidates):  # 從後面試起：If you need help please call me 的交界在 please，不是 help
+        pos = toks[k - 1].idx + len(toks[k - 1].text)
+        new_text = text[:pos] + "," + text[pos:]
+        new_doc = get_nlp()(new_text)
+        if len(new_doc) == len(toks) + 1 and new_doc[k].text == "," and well_split(new_doc, k, k + 1):
+            return new_text, new_doc, pos
+    return None
+
+
+def drop_inserted_comma(result: SentenceResult, text: str, pos: int) -> SentenceResult:
+    """把補了逗號的分析結果的字元位置對回原句"""
+    def fix(x):
+        if isinstance(x, list):
+            return [fix(v) for v in x]
+        if not isinstance(x, dict):
+            return x
+        x = {k: fix(v) for k, v in x.items()}
+        for k in ("start", "end"):
+            if isinstance(x.get(k), int) and x[k] > pos:
+                x[k] -= 1
+        if isinstance(x.get("text"), str) and "start" in x and "end" in x and not x.get("implicit"):
+            x["text"] = text[x["start"]:x["end"]]
+        return x
+
+    data = fix(result.model_dump(exclude={"header"}))
+    data["text"] = text[: len(data["text"]) - 1]
+    return SentenceResult(**data)
+
+
 def analyze_sentence(text: str) -> SentenceResult:
     text = clean_spaces(text)
     if not re.search(r"[A-Za-z]{2,}", text) or re.search(r"[\u3400-\u9fff]", text):
         return SentenceResult(text=text, status="failed", clauses=[], chunks=[],
                               message="請輸入英文句子（不能包含中文字）。")
     doc = get_nlp()(text)
+    fixed = missing_comma_split(text, doc)
+    if fixed is not None:
+        new_text, new_doc, pos = fixed
+        return drop_inserted_comma(analyze_doc(new_text, new_doc), text, pos)
+    return analyze_doc(text, doc)
+
+
+def analyze_doc(text: str, doc) -> SentenceResult:
     sents = list(doc.sents)
     if not sents:
         return SentenceResult(text=text, status="failed", message="沒有辦法分析這段文字，請輸入一個英文句子。", clauses=[], chunks=[])

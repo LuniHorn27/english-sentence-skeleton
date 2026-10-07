@@ -203,7 +203,11 @@ MULTI_SUBORDINATORS = {
     "now that": "表原因",
     "so that": "表目的", "in order that": "表目的",
     "as if": "表方式", "as though": "表方式",  # He talks as if he knew everything.
+    "as far as": "表比較",  # I ran as far as I could.；後面接 know、concerned 這類動詞時改標表語氣（見下方）
 }
+
+# As far as I know／am concerned／can tell…：「就我所知、就我看來」，說話者表達看法 → 表語氣（跟 In my opinion 一樣）
+AS_FAR_AS_OPINION_VERBS = {"know", "concern", "concerned", "tell", "see", "remember", "recall", "understand", "say", "judge"}
 
 # 狀態被動：過去分詞 ＋ 固定介系詞（Azar 11-5、11-6），當形容詞用
 STATIVE_PAIRS = {

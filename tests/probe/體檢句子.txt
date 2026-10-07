@@ -206,3 +206,29 @@ We visited the museum, built in 1900, last summer.
 I met the new teacher, who teaches math, yesterday.
 He told the story, which nobody believed, to everyone in the class.
 I called Tom, my best friend.
+## 句首副詞子句後面少了逗號
+As far as I know the store is closed.
+As far as I am concerned the question is not simple.
+As far as I can tell he is telling the truth.
+As far as we know nobody saw the accident.
+As far as she remembers the meeting was on Monday.
+When I got home my mother was cooking dinner.
+If you need help please call me.
+Because it was raining we stayed at home.
+Although he was tired he kept working.
+As soon as I heard the news I called my sister.
+Before you leave turn off the lights.
+After the movie ended we went home.
+If I were you I would take the job.
+While I was reading the phone rang.
+Since you are here you can help me.
+Once you understand the rule the exercise is easy.
+When she saw the dog she screamed.
+If it rains tomorrow the game will be canceled.
+Until he finishes his homework he can't watch TV.
+Even though I know the answer I can't explain it.
+I ran as far as I could.
+If you need help, call me.
+If you see Tom tell him to call me.
+As I was leaving the phone rang.
+Although it was late we kept talking.
