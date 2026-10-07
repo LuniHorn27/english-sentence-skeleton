@@ -101,15 +101,27 @@ button[disabled]:active { transform: none; }
 }
 
 /* ---------- 首頁：標題、輸入框、範例 ---------- */
-/* 首頁標題區：置中；大標題（品牌）→ 副標（問題）→ 內文（說明），三層字級 */
-.hero { text-align: center; padding: clamp(32px, 7vw, 72px) 0 clamp(24px, 4vw, 40px); }
-.hero-cat { display: block; width: clamp(56px, 8vw, 76px); height: auto; margin: 0 auto clamp(14px, 2vw, 20px); }
-.hero-title { font-size: clamp(27px, 5.6vw, 50px); font-weight: 800; letter-spacing: 0.02em; line-height: 1.25; margin: 0 0 clamp(10px, 1.6vw, 16px); }
+/* 首頁標題區：標題、副標置中；內文是偵探貓說的話，放在貓旁邊的對話泡泡裡（靠左，不會參差不齊） */
+.hero { text-align: center; padding: clamp(28px, 5.5vw, 60px) 0 clamp(24px, 4vw, 36px); }
+.hero-title { font-size: clamp(26px, 4.4vw, 42px); font-weight: 800; letter-spacing: 0.02em; line-height: 1.3; margin: 0 0 6px; }
 .hero-title .nobr { display: inline-block; } /* 手機上在冒號後面換行，不從字中間斷開 */
-.hero-sub { font-size: clamp(18px, 2.6vw, 24px); font-weight: 700; color: var(--text); line-height: 1.5; margin: 0 0 clamp(10px, 1.6vw, 14px); }
-.hero-text { font-size: clamp(15px, 1.9vw, 17px); color: var(--text-2); line-height: 1.9; margin: 0 auto; max-width: 40em; }
-.hero-text > span { display: block; } /* 一句一行 */
-.hero-text .nobr { display: inline-block; } /* 太長的句子只在逗號後面換行，不從詞的中間斷開 */
+.hero-sub { font-size: clamp(17px, 2.1vw, 21px); font-weight: 500; color: var(--text-2); line-height: 1.6; margin: 0 0 clamp(22px, 3.4vw, 32px); }
+.hero-talk { display: flex; align-items: flex-end; justify-content: center; gap: clamp(10px, 1.6vw, 16px); max-width: 620px; margin: 0 auto; text-align: left; }
+.hero-cat { width: clamp(46px, 6vw, 64px); height: auto; flex-shrink: 0; margin-bottom: 2px; }
+.hero-bubble { position: relative; margin: 0; padding: clamp(12px, 1.8vw, 16px) clamp(14px, 2.2vw, 20px); background: var(--surface);
+  border: 1.5px solid var(--text); border-radius: 20px 20px 20px 6px; font-size: clamp(14.5px, 1.6vw, 16px); line-height: 1.8; color: var(--text-2); text-wrap: pretty; }
+.hero-bubble::before { /* 泡泡的小尾巴，指向偵探貓 */
+  content: ""; position: absolute; left: -8px; bottom: 14px; width: 13px; height: 13px; background: var(--surface);
+  border-left: 1.5px solid var(--text); border-bottom: 1.5px solid var(--text); transform: rotate(45deg); }
+.hero-bubble span, .hero-bubble strong { display: block; }
+.hero-bubble strong { color: var(--text); font-weight: 700; font-size: 1.06em; margin-top: 2px; }
+.hero-bubble .nobr { display: inline-block; } /* 太長的句子只在逗號後面換行 */
+@media (max-width: 560px) {
+  /* 手機：貓在上、泡泡在下（泡泡才夠寬，句子不會被拆成一兩個字一行），尾巴朝上指著貓 */
+  .hero-talk { flex-direction: column; align-items: center; gap: 12px; }
+  .hero-bubble { border-radius: 20px; width: 100%; }
+  .hero-bubble::before { left: 50%; top: -8px; bottom: auto; margin-left: -6px; border-bottom: 0; border-top: 1.5px solid var(--text); }
+}
 .print-title { display: none; }
 
 .ask { position: relative; background: var(--surface); border: 1.5px solid var(--text); border-radius: 20px; padding: 14px 16px 12px; transition: box-shadow 0.15s; }
@@ -540,24 +552,21 @@ a.pattern:hover { text-decoration: underline; }
 .fb-title { margin: 0; font-weight: 600; font-size: 14px; }
 .fb-note { margin: 0; font-size: 12px; color: var(--muted); }
 .fb-status { margin: 0; font-size: 13px; color: var(--text-2); min-height: 1em; }
-/* 頁面最下方：回饋入口＋請喝咖啡。兩列同樣的結構：左邊文字、右邊一樣寬的按鈕 */
-.home-foot { margin: 72px 0 0; }
-.support { max-width: 720px; margin: 0 auto; padding: 4px 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; }
-.support-row { display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; padding: 16px 0; }
-.support-row + .support-row { border-top: 1px solid var(--border); }
-.support-copy { display: flex; flex-direction: column; gap: 2px; margin: 0; text-align: left; }
-.support-copy b { font-size: 15px; color: var(--text); }
-.support-copy span { font-size: 14px; color: var(--text-2); }
-.support-open, .coffee-btn { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 196px; min-height: 44px;
-  padding: 8px 18px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font-size: 15px; text-decoration: none; }
-.support-open:hover, .coffee-btn:hover { border-color: var(--text); background: var(--surface); }
-.support-open .ic, .coffee-btn .ic { width: 18px; height: 18px; }
-.coffee-line { font-size: 13px; color: var(--muted); margin: 12px 0 0; }  /* 關於此網站頁還在用 */
+/* 頁面最下方：回饋入口＋請喝咖啡，兩行置中（使用者喜歡原本的結構，只把上下間距收緊，2026-10-07） */
+.home-foot { margin: 48px 0 0; padding-top: 18px; border-top: 1px solid var(--border); }
+.support { text-align: center; }
+.support-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--text-2); margin: 0; }
+.support-line b { color: var(--text); }
+.support-desc { margin-left: 1em; }
 @media (max-width: 560px) {
-  .support { padding: 4px 16px; }
-  .support-row { flex-direction: column; align-items: stretch; }
-  .support-open, .coffee-btn { width: 100%; }
+  .support-line b, .support-desc { display: block; margin: 0; } /* 手機：標題和說明各一行，說明不會被拆開 */
 }
+.coffee-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--text-2); margin: 10px 0 0; }
+.coffee-line[hidden] { display: none; }
+.support-open, .coffee-btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; min-height: 34px; border-radius: 999px;
+  border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font-size: 14px; text-decoration: none; }
+.support-open:hover, .coffee-btn:hover { border-color: var(--text); background: var(--surface); }
+.support-open .ic, .coffee-btn .ic { width: 16px; height: 16px; }
 
 /* 回饋對話框 */
 .fb-dialog { width: min(520px, calc(100% - 32px)); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
