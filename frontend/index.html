@@ -24,19 +24,12 @@
   </header>
   <main class="home">
     <p class="print-title">英文句子骨架分析講義</p>
+    <!-- 第一個畫面：標題到範例句都在同一條中軸上（約 720px），上下對齊 -->
+    <div class="home-axis">
     <header class="hero">
       <h1 class="hero-title"><span class="nobr">偵探貓：</span><span class="nobr">陪你一起拆解英文骨架！</span></h1>
       <p class="hero-sub">英文句子落落長看不懂？</p>
-      <!-- 偵探貓自己說話：內文放在貓旁邊的對話泡泡裡 -->
-      <div class="hero-talk">
-        <img class="hero-cat" src="/static/favicon.svg?v=2" alt="偵探貓" width="64" height="64">
-        <p class="hero-bubble">
-          <span>你也有過這樣的經驗嗎？</span>
-          <span><span class="nobr">每個英文單字都看得懂，</span><span class="nobr">合起來卻看攏無？</span></span>
-          <strong>快餵給我英文句子吧！</strong>
-          <span><span class="nobr">讓偵探貓用五大句型陪你拆出核心骨架，</span><span class="nobr">帶你一眼看穿重點！</span></span>
-        </p>
-      </div>
+      <p class="hero-text"><span class="nobr">每個英文單字都看得懂，</span><span class="nobr">合起來卻看攏無？</span><br><span class="nobr">快把句子餵給偵探貓，</span><span class="nobr">用五大句型幫你一眼看穿骨架！</span></p>
     </header>
     <p id="test-notice" class="banner test-notice" hidden>測試版：偵探貓還在實習，偶爾會看走眼。看到怪怪的地方，按「🚩 回報錯誤」抓包偵探貓。</p>
 
@@ -63,6 +56,10 @@
       <button type="button" class="example-chip">The soup smells delicious.</button>
       <button type="button" class="example-chip">The news made her sad.</button>
     </div>
+    </div>
+
+    <!-- 第一個畫面以下：比較寬的版面（約 1024px） -->
+    <div class="home-wide">
 
     <section id="toolbar" class="toolbar" hidden>
       <div class="modes" role="group" aria-label="顯示模式">
@@ -81,7 +78,47 @@
       <button type="button" data-open-feedback><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5h15v10.5H10l-5.5 4z"/></svg><span class="label-long">給我回饋</span><span class="label-short">回饋</span></button>
     </div>
 
-    <!-- 頁面最下方：回饋入口＋請喝咖啡＋說明，合成一個安靜的頁尾 -->
+    <section class="home-sec" aria-labelledby="steps-title">
+      <h2 id="steps-title" class="home-h2">三步驟，看穿句子骨架</h2>
+      <p class="home-lead">不用註冊，貼上就能用。</p>
+      <ol class="home-steps">
+        <li class="step"><span class="step-num">01</span><h3>貼上句子</h3><p>一句或一小段英文都可以，最多 500 個字元。</p></li>
+        <li class="step"><span class="step-num">02</span><h3>看見骨架</h3><p>主詞、動詞、受詞、補語用四種顏色標出來，修飾語退成灰色。</p></li>
+        <li class="step"><span class="step-num">03</span><h3>點開學文法</h3><p>句型、中文翻譯、文法重點都在同一張卡片裡。</p></li>
+      </ol>
+    </section>
+
+    <section class="home-sec" aria-labelledby="five-title">
+      <h2 id="five-title" class="home-h2">英文句子再長，骨架只有五種</h2>
+      <p class="home-lead">先認得這五種，再長的句子也拆得開。</p>
+      <div class="five">
+        <a class="five-card" href="/patterns#p1"><b>句型一</b><span class="five-f"><i class="fs">S</i>＋<i class="fv">Vi</i></span><span class="five-ex">Birds fly.</span></a>
+        <a class="five-card" href="/patterns#p3"><b>句型二</b><span class="five-f"><i class="fs">S</i>＋<i class="fv">Vi</i>＋<i class="fc">SC</i></span><span class="five-ex">She is happy.</span></a>
+        <a class="five-card" href="/patterns#p2"><b>句型三</b><span class="five-f"><i class="fs">S</i>＋<i class="fv">Vt</i>＋<i class="fo">O</i></span><span class="five-ex">I like cats.</span></a>
+        <a class="five-card" href="/patterns#p5"><b>句型四</b><span class="five-f"><i class="fs">S</i>＋<i class="fv">Vt</i>＋<i class="fo">O</i>＋<i class="fc">OC</i></span><span class="five-ex">The news made her sad.</span></a>
+        <a class="five-card" href="/patterns#p4"><b>句型五</b><span class="five-f"><i class="fs">S</i>＋<i class="fv">Vt</i>＋<i class="fo">IO</i>＋<i class="fo">DO</i></span><span class="five-ex">He gave me a book.</span></a>
+      </div>
+      <p class="home-more"><a href="/patterns">看完整說明：何謂五大句型？</a></p>
+    </section>
+
+    <section class="home-sec" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="home-h2">常見問題</h2>
+      <div class="faq">
+        <details><summary>要錢嗎？要註冊嗎？</summary><p>完全免費，也不用註冊，打開網頁就能用。</p></details>
+        <details><summary>我貼的句子會被保存嗎？</summary><p>網站不會保存。句子只用來當下分析和翻譯，不會寫進檔案。「最近分析」只存在你自己的瀏覽器裡，可以隨時清除。詳細說明在<a href="/about">關於此網站</a>。</p></details>
+        <details><summary>分析一定對嗎？</summary><p>不一定。分析由程式自動產生，偶爾會看走眼。看到怪怪的地方，請按卡片右上角的「回報錯誤」，偵探貓會回去修。</p></details>
+        <details><summary>手機可以用嗎？</summary><p>可以。手機、平板、電腦都能用，畫面會自動調整。</p></details>
+      </div>
+    </section>
+
+    <section class="home-cta">
+      <h2 class="home-h2">現在就貼一句試試</h2>
+      <p class="home-lead">課本、考卷、新聞裡看不懂的那一句，丟進來就對了。</p>
+      <button type="button" class="primary" id="back-to-input">回到輸入框</button>
+    </section>
+    </div>
+
+    <!-- 頁面最下方：回饋入口＋請喝咖啡 -->
     <footer class="home-foot">
       <section class="support" aria-label="回饋">
         <p class="support-line"><span><b>給偵探貓一點意見</b><span class="support-desc">哪裡好用、哪裡卡卡、想要什麼新功能？</span></span><button type="button" class="support-open" data-open-feedback><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5h15v10.5H10l-5.5 4z"/></svg>寫下你的想法</button></p>

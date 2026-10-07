@@ -27,7 +27,8 @@
   --pro-bg: #f1ebde;
   --pro: #3d3628;
   --ok: #2f7a18;
-  --page-max: 1280px; /* 全站同一個最大寬度：頁首和內容左右對齊 */
+  --page-max: 1104px; /* 全站同一個最大寬度（內容 1024px＋左右留白）：頁首和內容左右對齊 */
+  --axis: 720px;      /* 首頁第一個畫面的中軸寬度 */
   --shadow: 0 1px 0 rgba(26, 29, 35, 0.03), 0 12px 32px -18px rgba(92, 84, 68, 0.45);
 
   /* 句子成分四色：網頁標記用（對比已調到達標：標籤白字 4.5 以上、底線 3 以上） */
@@ -101,27 +102,56 @@ button[disabled]:active { transform: none; }
 }
 
 /* ---------- 首頁：標題、輸入框、範例 ---------- */
-/* 首頁標題區：標題、副標置中；內文是偵探貓說的話，放在貓旁邊的對話泡泡裡（靠左，不會參差不齊） */
-.hero { text-align: center; padding: clamp(28px, 5.5vw, 60px) 0 clamp(24px, 4vw, 36px); }
-.hero-title { font-size: clamp(26px, 4.4vw, 42px); font-weight: 800; letter-spacing: 0.02em; line-height: 1.3; margin: 0 0 6px; }
-.hero-title .nobr { display: inline-block; } /* 手機上在冒號後面換行，不從字中間斷開 */
-.hero-sub { font-size: clamp(17px, 2.1vw, 21px); font-weight: 500; color: var(--text-2); line-height: 1.6; margin: 0 0 clamp(22px, 3.4vw, 32px); }
-.hero-talk { display: flex; align-items: flex-end; justify-content: center; gap: clamp(10px, 1.6vw, 16px); max-width: 620px; margin: 0 auto; text-align: left; }
-.hero-cat { width: clamp(46px, 6vw, 64px); height: auto; flex-shrink: 0; margin-bottom: 2px; }
-.hero-bubble { position: relative; margin: 0; padding: clamp(12px, 1.8vw, 16px) clamp(14px, 2.2vw, 20px); background: var(--surface);
-  border: 1.5px solid var(--text); border-radius: 20px 20px 20px 6px; font-size: clamp(14.5px, 1.6vw, 16px); line-height: 1.8; color: var(--text-2); text-wrap: pretty; }
-.hero-bubble::before { /* 泡泡的小尾巴，指向偵探貓 */
-  content: ""; position: absolute; left: -8px; bottom: 14px; width: 13px; height: 13px; background: var(--surface);
-  border-left: 1.5px solid var(--text); border-bottom: 1.5px solid var(--text); transform: rotate(45deg); }
-.hero-bubble span, .hero-bubble strong { display: block; }
-.hero-bubble strong { color: var(--text); font-weight: 700; font-size: 1.06em; margin-top: 2px; }
-.hero-bubble .nobr { display: inline-block; } /* 太長的句子只在逗號後面換行 */
-@media (max-width: 560px) {
-  /* 手機：貓在上、泡泡在下（泡泡才夠寬，句子不會被拆成一兩個字一行），尾巴朝上指著貓 */
-  .hero-talk { flex-direction: column; align-items: center; gap: 12px; }
-  .hero-bubble { border-radius: 20px; width: 100%; }
-  .hero-bubble::before { left: 50%; top: -8px; bottom: auto; margin-left: -6px; border-bottom: 0; border-top: 1.5px solid var(--text); }
+/* 首頁第一個畫面：標題、副標、內文、輸入框、範例句都在同一條中軸上（參考 dropalways.com 的排法） */
+.home-axis { max-width: var(--axis); margin: 0 auto; }
+.hero { text-align: center; padding: clamp(32px, 6.5vw, 76px) 0 clamp(22px, 3.4vw, 32px); }
+.hero-title { font-size: clamp(27px, 4.4vw, 42px); font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; margin: 0 0 8px; }
+.hero-title .nobr, .hero-text .nobr { display: inline-block; } /* 只在冒號、逗號後面換行，不從詞的中間斷開 */
+.hero-sub { font-size: clamp(17px, 2.1vw, 21px); font-weight: 600; color: var(--text); line-height: 1.6; margin: 0 0 10px; }
+.hero-text { font-size: clamp(15px, 1.7vw, 16.5px); color: var(--text-2); line-height: 1.85; margin: 0; }
+
+/* 第一個畫面以下：比較寬的版面，每一段同樣的節奏（小標題靠左、上方留白一致） */
+.home-wide { max-width: 1024px; margin: 0 auto; }
+.home-sec { padding-top: clamp(48px, 7vw, 88px); }
+.home-h2 { font-size: clamp(22px, 2.8vw, 30px); font-weight: 700; letter-spacing: -0.01em; line-height: 1.35; margin: 0 0 6px; }
+.home-lead { font-size: 15px; color: var(--text-2); margin: 0 0 20px; }
+.home-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
+.step, .five-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; }
+.step-num { font-size: 13px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.step h3 { font-size: 17px; font-weight: 700; margin: 6px 0 4px; }
+.step p { font-size: 14.5px; color: var(--text-2); line-height: 1.7; margin: 0; text-wrap: pretty; } /* 不讓最後一個字單獨掉到下一行 */
+.five { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.five-card { display: flex; flex-direction: column; gap: 4px; color: var(--text); text-decoration: none; transition: border-color 0.15s; }
+.five-card:hover { border-color: var(--text); }
+.five-card b { font-size: 16px; }
+.five-f { font-size: 14px; font-weight: 600; }
+.five-f i { font-style: normal; }
+.five-f .fs { color: var(--s-solid); } .five-f .fv { color: var(--v-solid); } .five-f .fo { color: var(--o-solid); } .five-f .fc { color: #a06f00; }
+.five-ex { font-size: 14px; color: var(--text-2); text-wrap: pretty; }
+.home-more { margin: 14px 0 0; font-size: 15px; }
+.home-more a, .faq a { color: var(--text); text-underline-offset: 3px; }
+.faq { border-top: 1px solid var(--border); }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 2px; font-size: 16px; font-weight: 600; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; width: 9px; height: 9px; border-right: 2px solid var(--text-2); border-bottom: 2px solid var(--text-2); transform: rotate(45deg) translateY(-3px); transition: transform 0.2s; flex-shrink: 0; }
+.faq details[open] summary::after { transform: rotate(-135deg) translateY(-1px); }
+.faq details p { font-size: 15px; color: var(--text-2); line-height: 1.8; margin: 0 2px 16px; }
+.home-cta { margin-top: clamp(48px, 7vw, 88px); text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: clamp(28px, 4vw, 44px) 20px; }
+.home-cta .home-lead { margin-bottom: 18px; }
+/* 卡片排法不讓最後一張落單：三步驟 3／1，五大句型 5／1 */
+@media (min-width: 760px) { .home-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .five { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .faq summary::after { transition: none; } }
+@media (max-width: 759px) {
+  /* 手機：卡片精簡，五大句型的名稱和公式排在同一行，整段不會長到兩個螢幕 */
+  .step, .five-card { padding: 14px 16px; border-radius: 14px; }
+  .step h3 { margin: 2px 0 2px; }
+  .five { gap: 8px; }
+  .five-card { display: grid; grid-template-columns: auto 1fr; column-gap: 12px; row-gap: 2px; align-items: baseline; }
+  .five-ex { grid-column: 1 / -1; }
 }
+
 .print-title { display: none; }
 
 .ask { position: relative; background: var(--surface); border: 1.5px solid var(--text); border-radius: 20px; padding: 14px 16px 12px; transition: box-shadow 0.15s; }
@@ -625,7 +655,7 @@ a.pattern:hover { text-decoration: underline; }
   main { max-width: none; padding: 0; }
   .ask, .toolbar, .result-actions, .history, .foot, .s-tools, .card-toggle, .feedback, .explain, .toast, .top .hint, .top-links, .doubt, .doubt-note { display: none !important; }
   .top h1::after { content: "　英文句子骨架分析講義"; font-size: 14px; font-weight: 400; }
-  .to-top, .site-head, .hero, .test-notice, .examples-row, .home-foot, .sample-tag, .gp-chip, .gp-sec .sec-title { display: none !important; }
+  .to-top, .home-sec, .home-cta, .site-head, .hero, .test-notice, .examples-row, .home-foot, .sample-tag, .gp-chip, .gp-sec .sec-title { display: none !important; }
   /* 不要整張句子卡「不准分頁」：卡片比一頁剩下的空間高時，瀏覽器會把整張推到下一頁，第一頁就變空白 */
   #result .sentence { box-shadow: none; border: 0; break-inside: auto; }
   #result .row { break-inside: avoid; }

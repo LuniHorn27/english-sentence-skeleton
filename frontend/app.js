@@ -901,6 +901,13 @@ fetch("/api/site")
   })
   .catch(() => { /* 拿不到就當完整版 */ });
 
+// 首頁最下方「回到輸入框」：捲回輸入框並把游標放進去
+$("back-to-input")?.addEventListener("click", () => {
+  const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  form.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "center" });
+  input.focus({ preventScroll: true });
+});
+
 updateCounter();
 renderHistory();
 if (!location.hash.startsWith("#q=")) render(SAMPLE, { sample: true });
