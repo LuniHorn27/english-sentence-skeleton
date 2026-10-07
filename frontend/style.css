@@ -538,7 +538,7 @@ a.privacy-item.res:hover { border-color: var(--accent-line); }
 .pmap-test { font-size: 13px; font-weight: 600; color: var(--tip); }
 .pmap-ex { font-size: 14px; color: var(--text-2); }
 
-#patterns { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 820px; }
+#patterns { display: grid; grid-template-columns: 1fr; gap: 16px; } /* 和上面「四位主角」同寬，右邊不留大片空白 */
 .pcard { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 16px 18px 10px; scroll-margin-top: 12px; }
 .pcard-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .pcard-name { font-size: 20px; font-weight: 700; }
