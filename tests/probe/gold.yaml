@@ -6344,3 +6344,235 @@
     text: was
   - role: SC
     text: wrong
+- id: '418'
+  sentence: You're the only one that ever really liked Tom.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: V
+    text: '''re'
+  - role: SC
+    text: the only one
+    head:
+    - one
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: that ever really liked Tom
+- id: '419'
+  sentence: Tom is going to be the last one to do that.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Tom
+  - role: aux
+    text: is going to
+  - role: V
+    text: be
+  - role: SC
+    text: the last one
+    head:
+    - one
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: to do that
+- id: '420'
+  sentence: One group will go, and the other one will stay.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: One group
+    head:
+    - group
+  - role: aux
+    text: will
+  - role: Vi
+    text: go
+  - role: conj
+    text: and
+  - role: S
+    text: the other one
+    head:
+    - one
+  - role: aux
+    text: will
+  - role: Vi
+    text: stay
+- id: '421'
+  sentence: I'm not the one who did that.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: V
+    text: '''m'
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: not
+  - role: SC
+    text: the one
+    head:
+    - one
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: who did that
+- id: '422'
+  sentence: I like the red ones.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: like
+  - role: O
+    text: the red ones
+    head:
+    - ones
+- id: '423'
+  sentence: She was the first one in our class to get married.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: was
+  - role: SC
+    text: the first one
+    head:
+    - one
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: in our class
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: to get married
+- id: '424'
+  sentence: This one is better than that one.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: This one
+    head:
+    - one
+  - role: V
+    text: is
+  - role: SC
+    text: better
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: than that one
+- id: '425'
+  sentence: The enemy fired a volley of shots at us.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The enemy
+    head:
+    - enemy
+  - role: Vt
+    text: fired
+  - role: O
+    text: a volley of shots
+    head:
+    - shots
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: at us
+- id: '426'
+  sentence: Tom is buying us a round of drinks.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: Tom
+  - role: aux
+    text: is
+  - role: Vt
+    text: buying
+  - role: IO
+    text: us
+  - role: DO
+    text: a round of drinks
+    head:
+    - drinks
+- id: '427'
+  sentence: He ate a handful of nuts.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: ate
+  - role: O
+    text: a handful of nuts
+    head:
+    - nuts
+- id: '428'
+  sentence: He bought a pile of books.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: bought
+  - role: O
+    text: a pile of books
+    head:
+    - books
+- id: '429'
+  sentence: She drank a glass of water.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: drank
+  - role: O
+    text: a glass of water
+    head:
+    - water
+- id: '430'
+  sentence: One of my friends lives in Japan.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: One of my friends
+  - role: Vi
+    text: lives
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in Japan
+- id: '431'
+  sentence: I have one brother.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: have
+  - role: O
+    text: one brother
+    head:
+    - brother

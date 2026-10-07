@@ -160,6 +160,9 @@ UNIT_NOUNS = {
     "glass", "cup", "piece", "bottle", "bowl", "slice", "pair", "bag", "box",
     "sheet", "loaf", "bar", "can", "carton", "spoonful", "plate", "jar",
     "packet", "pack", "bunch", "drop", "pound", "kilo", "liter", "litre",
+    # Gemini 抓錯助手（2026-10-08）：a volley of shots、a round of drinks
+    "volley", "round", "pile", "stack", "heap", "handful", "basket", "bucket", "tube", "roll",
+    "pinch", "bite", "sip", "gram", "kilogram", "meter", "metre", "spoon", "pot", "jug",
 }
 
 # 從屬連接詞 → 副詞子句的功能

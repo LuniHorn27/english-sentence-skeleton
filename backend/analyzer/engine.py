@@ -1162,6 +1162,8 @@ def heads_for(root, spec, toks, flags, vars_):
         return [pobj] + [c for c in pobj.children if c.dep_ == "conj"]
     if root.pos_ in ("NOUN",):
         return [root] + [c for c in root.children if c.dep_ == "conj" and c.pos_ == "NOUN"]
+    if root.lower_ in ("one", "ones") and any(c.dep_ in ("det", "amod", "poss") for c in root.children):
+        return [root]  # the one、the last one、the red ones：one 代替前面的名詞（模型常把它當數字）
     if root.pos_ == "ADJ":
         return [root]
     return []
