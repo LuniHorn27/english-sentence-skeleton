@@ -117,7 +117,7 @@ button[disabled]:active { transform: none; }
 .home-wide { max-width: 1024px; margin: 0 auto; }
 .home-sec { padding-top: clamp(48px, 7vw, 88px); }
 .home-h2 { font-size: clamp(22px, 2.8vw, 30px); font-weight: 700; letter-spacing: -0.01em; line-height: 1.35; margin: 0 0 6px; }
-.home-lead { font-size: 15px; color: var(--text-2); margin: 0 0 20px; }
+.home-lead { font-size: clamp(15px, 1.6vw, 16.5px); color: var(--text-2); margin: 0 0 20px; }
 .home-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
 .step, .five-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; }
 .step-num { font-size: 13px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -593,23 +593,24 @@ a.pattern:hover { text-decoration: underline; }
 /* 頁面最下方：回饋入口＋請喝咖啡，兩行置中（使用者喜歡原本的結構，只把上下間距收緊，2026-10-07） */
 .home-foot { margin: 48px 0 0; padding-top: 18px; border-top: 1px solid var(--border); }
 .support { text-align: center; }
-.support-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--text-2); margin: 0; }
+.support-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 14px; font-size: 16px; color: var(--text-2); margin: 0; }
 .support-line b { color: var(--text); }
 .support-desc { margin-left: 1em; }
 @media (max-width: 560px) {
   /* 手機：標題自成一行；說明和「寫下想法」排在同一行（跟下面「覺得偵探貓有用？」那行一樣的結構） */
   .support-line > span { display: contents; }
   .support-line b { flex-basis: 100%; }
-  .support-line, .coffee-line { gap: 6px 8px; }
+  .home-foot .support-line, .home-foot .coffee-line { gap: 6px 8px; font-size: 14px; }
   .support-desc { margin: 0; font-size: clamp(11px, calc((100vw - 150px) / 18), 13px); white-space: nowrap; } /* 18 個字＋按鈕放得下一行；太窄的舊手機（320 寬）才讓按鈕換行 */
-  .support-open, .coffee-btn { padding: 5px 11px; font-size: 13.5px; }
+  .home-foot .support-open, .home-foot .coffee-btn { gap: 5px; padding: 5px 11px; min-height: 36px; font-size: 13.5px; } /* 加 .home-foot：後面的電腦版設定才不會蓋過來 */
+  .home-foot .support-open .ic, .home-foot .coffee-btn .ic { width: 16px; height: 16px; }
 }
-.coffee-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--text-2); margin: 10px 0 0; }
+.coffee-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 14px; font-size: 16px; color: var(--text-2); margin: 12px 0 0; }
 .coffee-line[hidden] { display: none; }
-.support-open, .coffee-btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; min-height: 34px; border-radius: 999px;
-  border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font-size: 14px; text-decoration: none; }
+.support-open, .coffee-btn { display: inline-flex; align-items: center; gap: 7px; padding: 7px 18px; min-height: 42px; border-radius: 999px;
+  border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font-size: 15.5px; text-decoration: none; }
 .support-open:hover, .coffee-btn:hover { border-color: var(--text); background: var(--surface); }
-.support-open .ic, .coffee-btn .ic { width: 16px; height: 16px; }
+.support-open .ic, .coffee-btn .ic { width: 18px; height: 18px; }
 
 /* 回饋對話框 */
 .fb-dialog { width: min(520px, calc(100% - 32px)); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
