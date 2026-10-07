@@ -1,5 +1,5 @@
 id: cleft
-title: 強調句 It is … that …
+title: 強調句
 brief: 把想強調的部分放在 It is／was 和 that 中間；拿掉框架，句型照原本的句子判斷。
 trigger: It ＋ be ＋ 被強調的部分 ＋ that／who ＋ 句子其餘部分
 blocks:

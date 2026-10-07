@@ -1,5 +1,5 @@
 id: unit_of
-title: 單位詞 ＋ of ＋ 名詞
+title: 單位詞＋of
 brief: '{unit} 是單位，真正的東西是 {noun}；動詞單複數看單位。'
 trigger: a glass／cup／piece… ＋ of ＋ 名詞
 blocks:

@@ -3,41 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>五大句型</title>
+  <title>何謂五大句型？</title>
   <link rel="icon" href="/static/favicon.svg?v=2" type="image/svg+xml">
   <link rel="icon" href="/static/favicon-32.png?v=2" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/static/apple-touch-icon.png?v=2">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="detail-page lesson">
+  <header class="site-head">
   <nav class="site-nav" aria-label="網站選單">
-    <a class="brand" href="/"><img class="brand-mark" src="/static/favicon.svg?v=2" alt="" width="28" height="28">英文句子骨架分析</a>
-    <div class="nav-links">
-      <a href="/patterns" aria-current="page">五大句型</a>
-      <a href="/quiz">句型小遊戲</a>
-      <a href="/about">關於</a>
+    <a class="brand" href="/"><img class="brand-mark" src="/static/favicon.svg?v=2" alt="" width="32" height="32"><span class="brand-name">英文句子骨架分析</span></a>
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="選單"><svg class="i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="nav-links" id="nav-links">
+      <a href="/patterns" aria-current="page">何謂五大句型？</a>
+      <a href="/quiz">測驗小遊戲</a>
+      <a href="/about">關於此網站</a>
       <button type="button" id="share-site" class="nav-share">分享</button>
     </div>
   </nav>
+  </header>
   <main>
     <p class="back"><a href="/">← 回到句子分析</a></p>
     <header class="top">
-      <h1>五大句型</h1>
+      <h1>何謂五大句型？</h1>
       <p class="hint">英文句子再長，骨架只有五種。學會看骨架，長句子也不怕。</p>
     </header>
 
-    <!-- 第 1 步：零件 -->
+    <!-- 第 1 步：主角 -->
     <section class="lesson-sec" id="basics">
       <p class="step-label">第 1 步</p>
-      <h2>認識句子的 4 個零件</h2>
+      <h2>認識四位主角</h2>
       <div class="parts" id="parts"></div>
-      <p class="note">除了這 4 個零件，其他說明時間、地點、方式的字都是<b>修飾語</b>。修飾語拿掉，句子的骨架還是完整的。</p>
+      <p class="note">除了這四位主角，其他說明時間、地點、方式的字都是<b>修飾語</b>。修飾語拿掉，句子的骨架還是完整的。</p>
     </section>
 
     <!-- 第 2 步：逐一介紹 -->
     <section class="lesson-sec" id="detail">
       <p class="step-label">第 2 步</p>
-      <h2>五個句型，一次一個</h2>
+      <h2>認識五大句型</h2>
       <div id="patterns"></div>
     </section>
 

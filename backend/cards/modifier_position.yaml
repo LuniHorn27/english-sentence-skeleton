@@ -1,5 +1,5 @@
 id: modifier_position
-title: 修飾語放在名詞後面
+title: 後位修飾
 brief: 中文的修飾語放在名詞前面，英文的片語、子句修飾語常常放在名詞後面。
 trigger: 形容詞功能的片語或子句，放在被修飾的名詞後面
 blocks:
