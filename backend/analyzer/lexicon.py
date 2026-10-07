@@ -119,7 +119,29 @@ PLACE_ADVERBS = {
 }
 
 # 表示語氣的副詞
-TONE_ADVERBS = {"please", "yes", "no", "also", "too", "only", "just", "even", "really", "actually", "certainly", "surely", "maybe", "perhaps"}
+TONE_ADVERBS = {"please", "yes", "no", "also", "too", "only", "just", "even", "really", "actually", "certainly", "surely", "maybe", "perhaps",
+                # 說話者的判斷、態度、承接（Gemini 抓錯助手，2026-10-08）：probably（大概）、therefore（因此）
+                "probably", "likely", "possibly", "definitely", "obviously", "apparently", "evidently",
+                "fortunately", "unfortunately", "luckily", "hopefully", "therefore", "thus", "hence",
+                "however", "moreover", "furthermore", "besides", "nevertheless", "nonetheless", "anyway", "indeed"}
+
+# 放在句首或助動詞前面時是說話者的態度（He clearly didn't want…：顯然），放在動詞後面是方式（explain clearly）
+TONE_OR_MANNER_ADVERBS = {"clearly", "honestly", "frankly", "seriously", "naturally"}
+
+# 表語氣的固定片語：To be honest、To tell the truth、Generally speaking…（不是表目的、也不是分詞構句）
+TONE_PHRASES = {"to be honest", "to tell the truth", "to be frank", "to begin with", "to start with",
+                "to sum up", "to make matters worse", "to be sure", "needless to say",
+                "generally speaking", "frankly speaking", "strictly speaking", "honestly speaking", "roughly speaking"}
+
+# to my surprise、much to my dismay：說話者的感受 → 表語氣
+FEELING_NOUNS = {"surprise", "dismay", "delight", "regret", "disappointment", "horror", "relief", "amazement",
+                 "astonishment", "joy", "sorrow", "shock", "embarrassment", "annoyance", "satisfaction"}
+
+# in my life、in his childhood：一段人生時期 → 表時間（只用在介系詞片語的功能判斷）
+LIFE_NOUNS = {"life", "lifetime", "childhood", "youth", "career", "adulthood", "old age"}
+
+# the middle／beginning／end of ＋ 時間 → 表時間（in the middle of the night）；接地點時照地點（in the middle of the city）
+PART_NOUNS = {"middle", "beginning", "end", "start", "rest", "course", "dead"}
 
 # 天氣、狀況名詞（in the heavy rain → 表狀況）
 CONDITION_NOUNS = {"rain", "snow", "wind", "storm", "sun", "sunshine", "heat", "cold", "dark", "darkness", "fog", "weather", "silence", "hurry", "danger", "trouble"}
@@ -150,6 +172,9 @@ UNIT_NOUNS = {
     "glass", "cup", "piece", "bottle", "bowl", "slice", "pair", "bag", "box",
     "sheet", "loaf", "bar", "can", "carton", "spoonful", "plate", "jar",
     "packet", "pack", "bunch", "drop", "pound", "kilo", "liter", "litre",
+    # Gemini 抓錯助手（2026-10-08）：a volley of shots、a round of drinks
+    "volley", "round", "pile", "stack", "heap", "handful", "basket", "bucket", "tube", "roll",
+    "pinch", "bite", "sip", "gram", "kilogram", "meter", "metre", "spoon", "pot", "jug",
 }
 
 # 從屬連接詞 → 副詞子句的功能
@@ -163,6 +188,7 @@ SUBORDINATORS = {
     "if": "表條件", "unless": "表條件",
     "although": "表讓步", "though": "表讓步",
     "so": "表目的",
+    "like": "表方式",  # It looks like it's going to rain.：口語的 like ＝ as if（2026-10-08）
 }
 
 # 場所名詞（water the flowers in the garden → 表地點）
@@ -173,6 +199,9 @@ PLACE_NOUNS = {
     "bedroom", "bathroom", "hall", "hallway", "gym", "zoo", "museum", "backyard",
     "country", "village", "world", "air", "water", "sky", "sea", "river", "lake",
     "mountain", "hill", "forest", "farm", "camp", "class", "church", "temple",
+    # 2026-10-08：建築、交通工具、容器（ran out of the building、got out of the car、looked into the box）
+    "building", "apartment", "car", "bus", "train", "taxi", "plane", "boat", "ship", "elevator",
+    "door", "window", "box", "cave", "tunnel", "hole", "pool", "theater", "theatre", "cinema", "stadium",
 }
 
 # 動詞 ＋ 介系詞的固定搭配：介系詞後面是動作的對象，不是地點（look at the photo）
@@ -185,6 +214,14 @@ VERB_PREP_OBJECT = {
     ("reply", "to"), ("ask", "for"), ("pay", "for"), ("search", "for"), ("apply", "for"),
     ("run", "into"), ("bump", "into"), ("come", "across"), ("look", "into"), ("deal", "with"),
     ("take", "care"), ("get", "along"), ("take", "after"),
+    # Gemini 抓錯助手（2026-10-08）：被動或「動詞 ＋ 受詞 ＋ 介系詞」的固定搭配
+    ("link", "to"), ("connect", "to"), ("relate", "to"), ("compare", "to"), ("compare", "with"),
+    ("expose", "to"), ("respond", "to"), ("react", "to"), ("refer", "to"), ("object", "to"),
+    ("contribute", "to"), ("adapt", "to"), ("prevent", "from"), ("stop", "from"), ("keep", "from"),
+    ("protect", "from"), ("save", "from"), ("suffer", "from"), ("recover", "from"), ("differ", "from"),
+    ("benefit", "from"), ("accuse", "of"), ("provide", "with"), ("supply", "with"), ("cope", "with"),
+    ("rely", "on"), ("insist", "on"), ("focus", "on"), ("concentrate", "on"), ("comment", "on"),
+    ("believe", "in"), ("succeed", "in"), ("participate", "in"), ("specialize", "in"), ("result", "in"),
 }
 
 # 看起來像被動、其實當形容詞用的過去分詞（is crowded → 句型二 S + Vi + SC）
@@ -215,7 +252,11 @@ MULTI_SUBORDINATORS = {
     "now that": "表原因",
     "so that": "表目的", "in order that": "表目的",
     "as if": "表方式", "as though": "表方式",  # He talks as if he knew everything.
+    "as far as": "表比較",  # I ran as far as I could.；後面接 know、concerned 這類動詞時改標表語氣（見下方）
 }
+
+# As far as I know／am concerned／can tell…：「就我所知、就我看來」，說話者表達看法 → 表語氣（跟 In my opinion 一樣）
+AS_FAR_AS_OPINION_VERBS = {"know", "concern", "concerned", "tell", "see", "remember", "recall", "understand", "say", "judge"}
 
 # 狀態被動：過去分詞 ＋ 固定介系詞（Azar 11-5、11-6），當形容詞用
 STATIVE_PAIRS = {
