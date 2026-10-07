@@ -88,6 +88,12 @@ def adverb_function(tok) -> str:
         multi = multi_opener_clause(tok)  # As far as I know…、As soon as I got home…（子句掛在 far／soon 底下）
         if multi is not None:
             return f"副詞子句・{multi[1]}"
+    if " ".join(t.lower_ for t in sorted(tok.subtree, key=lambda t: t.i) if not t.is_punct) in L.TONE_PHRASES:
+        return "副詞・表語氣"  # To be honest、To tell the truth、Generally speaking
+    if dep in ("advmod", "prep") and feeling_phrase(tok):
+        return "副詞・表語氣"  # (Much) to my surprise
+    if dep == "advmod" and as_as_comparison(tok):
+        return "副詞・表比較"  # runs as fast as his brother、eat out as often as I did（規則 5.19 第五批②）
     if dep in ("prep",) and lemma == "than":
         return "副詞・表比較"  # taller than her sister
     head = tok.head.lemma_.lower()
@@ -122,6 +128,14 @@ def adverb_function(tok) -> str:
             return "副詞・表路程"  # all the way to school
         if lemma in ("in", "from") and olemma in ("opinion", "view", "perspective", "experience"):
             return "副詞・表語氣"  # In my opinion,…（依我看）
+        if lemma == "for" and olemma == "sake" and any(c.dep_ == "poss" and c.lemma_.lower() in ("god", "heaven", "goodness", "pete") for c in obj.children):
+            return "副詞・表語氣"  # For God's sake（拜託）
+        if lemma in ("in", "during", "throughout") and olemma in L.LIFE_NOUNS:
+            return "副詞・表時間"  # in my next life、in his childhood
+        if obj is not None and olemma in L.PART_NOUNS and any(
+                p.lower_ == "of" and any(g.dep_ == "pobj" and (g.lemma_.lower() in L.TIME_NOUNS or g.ent_type_ in ("DATE", "TIME"))
+                                         for g in p.children) for p in obj.children if p.dep_ == "prep"):
+            return "副詞・表時間"  # in the middle of the night、at the beginning of the year
         if lemma in L.TIME_PREPS:
             return "副詞・表時間"
         if obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME")):
@@ -161,11 +175,33 @@ def adverb_function(tok) -> str:
         return {"where": "副詞・表地點", "when": "副詞・表時間", "why": "副詞・表原因"}.get(lemma, "副詞・表方式")
     if lemma in L.TONE_ADVERBS or lemma == "please":
         return "副詞・表語氣"
+    if lemma in L.TONE_OR_MANNER_ADVERBS and tok.i < tok.head.i and (
+            tok.i == tok.sent.start or tok.nbor().dep_ in ("aux", "auxpass", "neg") or tok.nbor().tag_ == "MD"):
+        return "副詞・表語氣"  # Clearly, …、He clearly didn't want…（顯然）；explain clearly 仍是表方式
     if lemma in L.TIME_ADVERBS:
         return "副詞・表時間"
     if lemma in L.PLACE_ADVERBS:
         return "副詞・表地點"
     return "副詞・表方式"
+
+
+def feeling_phrase(tok) -> bool:
+    """to my surprise、much to my dismay：說話者的感受"""
+    prep = tok if tok.dep_ == "prep" else next((c for c in tok.children if c.dep_ == "prep"), None)
+    if prep is None or prep.lower_ != "to" or (tok is not prep and tok.lower_ != "much"):
+        return False
+    return any(c.dep_ == "pobj" and c.lemma_.lower() in L.FEELING_NOUNS for c in prep.children)
+
+
+def as_as_comparison(tok) -> bool:
+    """as fast as his brother、as often as I did：副詞前面有 as、後面接 as 片語或 as 子句（as soon as 等連接詞除外）"""
+    if tok.lower_ in ("soon", "long", "far", "well"):
+        return False  # as soon as（表時間）、as long as（表條件）、as far as、as well as 當連接詞，另外處理
+    if not any(c.lower_ == "as" and c.i == tok.i - 1 for c in tok.children):
+        return False
+    return any((c.dep_ == "prep" and c.lower_ == "as") or
+               (c.dep_ == "advcl" and any(m.dep_ == "mark" and m.lower_ == "as" for m in c.children))
+               for c in tok.children if c.i > tok.i)
 
 
 def clause_opener(tok):
@@ -257,6 +293,8 @@ def as_function(tok) -> str:
 
 
 def advcl_function(tok) -> Optional[str]:
+    if " ".join(t.lower_ for t in sorted(tok.subtree, key=lambda t: t.i) if not t.is_punct) in L.TONE_PHRASES:
+        return "副詞・表語氣"  # To be honest、To tell the truth、Generally speaking（不是表目的）
     opener, f = opener_tokens(tok)
     if len(opener) == 1 and opener[0].lower_ == "as":
         f = as_function(tok)

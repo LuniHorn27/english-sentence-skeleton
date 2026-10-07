@@ -1026,7 +1026,7 @@
   - role: Vi
     text: runs
   - role: M
-    function: 副詞・表方式
+    function: 副詞・表比較
     modifies: null
     text: as fast as his brother
 - id: '74'
@@ -5749,3 +5749,598 @@
     text: kept
   - role: O
     text: talking
+- id: '381'
+  sentence: Tom is probably at home now.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Tom
+  - role: V
+    text: is
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: probably
+  - role: SC
+    text: at home
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: now
+- id: '382'
+  sentence: I'm probably going to be busy for a few hours.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: '''m'
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: probably
+  - role: aux
+    text: going to
+  - role: V
+    text: be
+  - role: SC
+    text: busy
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: for a few hours
+- id: '383'
+  sentence: She will likely come tomorrow.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: will
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: likely
+  - role: Vi
+    text: come
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: tomorrow
+- id: '384'
+  sentence: He clearly didn't want to go.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: clearly
+  - role: aux
+    text: didn't
+  - role: Vt
+    text: want
+  - role: O
+    text: to go
+- id: '385'
+  sentence: She is busy, and therefore she cannot talk with you.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: is
+  - role: SC
+    text: busy
+  - role: conj
+    text: and
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: therefore
+  - role: S
+    text: she
+  - role: aux
+    text: cannot
+  - role: Vi
+    text: talk
+  - role: M
+    function: 副詞・表伴隨
+    modifies: null
+    text: with you
+- id: '386'
+  sentence: To be honest, I don't like this movie.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: To be honest
+  - role: S
+    text: I
+  - role: aux
+    text: don't
+  - role: Vt
+    text: like
+  - role: O
+    text: this movie
+- id: '387'
+  sentence: To tell the truth, I forgot your name.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: To tell the truth
+  - role: S
+    text: I
+  - role: Vt
+    text: forgot
+  - role: O
+    text: your name
+- id: '388'
+  sentence: For God's sake, stop shouting.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: For God's sake
+  - role: S
+    text: (You)
+  - role: Vt
+    text: stop
+  - role: O
+    text: shouting
+- id: '389'
+  sentence: Much to my surprise, he passed the exam.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Much to my surprise
+  - role: S
+    text: he
+  - role: Vt
+    text: passed
+  - role: O
+    text: the exam
+- id: '390'
+  sentence: Fortunately, nobody was hurt.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Fortunately
+  - role: S
+    text: nobody
+  - role: aux
+    text: was
+  - role: Vt
+    text: hurt
+- id: '391'
+  sentence: Obviously he was lying.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Obviously
+  - role: S
+    text: he
+  - role: aux
+    text: was
+  - role: Vi
+    text: lying
+- id: '392'
+  sentence: In my next life I want to be a bird.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: In my next life
+  - role: S
+    text: I
+  - role: Vt
+    text: want
+  - role: O
+    text: to be a bird
+- id: '393'
+  sentence: I have never seen snow in my life.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: have
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: never
+  - role: Vt
+    text: seen
+  - role: O
+    text: snow
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: in my life
+- id: '394'
+  sentence: He woke up in the middle of the night.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: woke up
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: in the middle of the night
+- id: '395'
+  sentence: We arrived at the end of the day.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vi
+    text: arrived
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: at the end of the day
+- id: '396'
+  sentence: She left at the beginning of the year.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: left
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: at the beginning of the year
+- id: '397'
+  sentence: At the age of ten he moved to Taipei.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: At the age of ten
+  - role: S
+    text: he
+  - role: Vi
+    text: moved
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to Taipei
+- id: '398'
+  sentence: Asbestos is linked to lung disease.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: S
+    text: Asbestos
+  - role: aux
+    text: is
+  - role: Vt
+    text: linked
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to lung disease
+- id: '399'
+  sentence: The rain prevented us from going out.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The rain
+  - role: Vt
+    text: prevented
+  - role: O
+    text: us
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: from going out
+- id: '400'
+  sentence: The fence keeps the dog from running away.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The fence
+  - role: Vt
+    text: keeps
+  - role: O
+    text: the dog
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: from running away
+- id: '401'
+  sentence: She compared the copy to the original.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: compared
+  - role: O
+    text: the copy
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to the original
+- id: '402'
+  sentence: We must protect children from danger.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: must
+  - role: Vt
+    text: protect
+  - role: O
+    text: children
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: from danger
+- id: '403'
+  sentence: He swims as quickly as a fish.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: swims
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: as quickly as a fish
+- id: '404'
+  sentence: I don't eat out as often as I did before.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: don't
+  - role: Vi
+    text: eat out
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: as often as I did before
+- id: '405'
+  sentence: She explained the rule clearly.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: explained
+  - role: O
+    text: the rule
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: clearly
+- id: '406'
+  sentence: She went to the store.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the store
+- id: '407'
+  sentence: We walked from the station to the park.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vi
+    text: walked
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: from the station
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the park
+- id: '408'
+  sentence: He lives in the middle of the city.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: lives
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the middle of the city
+- id: '409'
+  sentence: I study hard for the exam.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vi
+    text: study
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: hard
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: for the exam
+- id: '410'
+  sentence: She came here to study English.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: came
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: here
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: to study English
+- id: '411'
+  sentence: In order to pass the test, he studied hard.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: In order to pass the test
+  - role: S
+    text: he
+  - role: Vi
+    text: studied
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: hard
+- id: '412'
+  sentence: Call me as soon as you arrive.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: (You)
+  - role: Vt
+    text: Call
+  - role: O
+    text: me
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: as soon as you arrive
+- id: '413'
+  sentence: You can stay as long as you want.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: aux
+    text: can
+  - role: Vi
+    text: stay
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: as long as you want
+- id: '414'
+  sentence: Generally speaking, boys are taller than girls.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Generally speaking
+  - role: S
+    text: boys
+  - role: V
+    text: are
+  - role: SC
+    text: taller
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: than girls
+- id: '415'
+  sentence: To my surprise, she agreed.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: To my surprise
+  - role: S
+    text: she
+  - role: Vi
+    text: agreed
+- id: '416'
+  sentence: She is as tall as her brother.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: is
+  - role: SC
+    text: as tall
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: as her brother
+- id: '417'
+  sentence: Clearly, he was wrong.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Clearly
+  - role: S
+    text: he
+  - role: V
+    text: was
+  - role: SC
+    text: wrong
