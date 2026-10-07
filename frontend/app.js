@@ -897,7 +897,6 @@ fetch("/api/site")
   .then((site) => {
     if (!site.test_edition) return;
     document.documentElement.dataset.edition = "test";
-    $("test-notice").hidden = false;
   })
   .catch(() => { /* 拿不到就當完整版 */ });
 

@@ -349,8 +349,9 @@ button.doubt:hover { background: var(--tip-bg); text-decoration: underline; }
 #result .sentence { border-radius: 20px; padding: 18px clamp(16px, 3vw, 28px) 20px; margin: 0 0 16px; box-shadow: var(--shadow); }
 .sample-tag { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-2); margin: 0 0 12px; }
 .sample-tag .cat { width: 26px; height: 26px; }
-#result .s-head { flex-wrap: nowrap; align-items: flex-start; gap: 10px; }
-.s-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; flex: 1; min-width: 0; padding-top: 4px; }
+/* 公式和朗讀／回報放得下就同一行；公式太長時按鈕換到下一行靠右，不會蓋住公式（2026-10-07） */
+#result .s-head { flex-wrap: wrap; align-items: flex-start; gap: 8px 10px; }
+.s-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; flex: 1 1 auto; padding-top: 4px; }
 #result .pattern { font-size: 14px; font-weight: 600; line-height: 1.5; background: var(--surface-2); color: var(--text); padding: 4px 12px; border-radius: 12px; }
 #result .tag { border-radius: 999px; padding: 2px 10px; }
 #result .pattern .pf { white-space: nowrap; }
@@ -433,7 +434,10 @@ button.doubt .ic { width: 16px; height: 16px; }
 .result-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin: 6px 0 0; padding: 0; border: 0; background: none; }
 .result-actions button { font-size: 15px; padding: 8px 18px; min-height: 44px; border-radius: 999px; }
 .label-short { display: none; }
-.test-notice { margin: 0 0 14px; }
+/* 測試版（Render）才顯示「測試版：偵探貓還在實習」，和分析提醒合成一則（2026-10-07） */
+.test-only { display: none; }
+html[data-edition="test"] .test-only { display: inline; }
+html[data-edition="test"] .full-only { display: none; }
 .foot { margin: 16px 0 0; font-size: 12px; color: var(--muted); text-align: center; }
 @media (max-width: 480px) {
   .result-actions button { flex: 1 1 0; padding: 8px 10px; }
@@ -655,7 +659,7 @@ a.pattern:hover { text-decoration: underline; }
   main { max-width: none; padding: 0; }
   .ask, .toolbar, .result-actions, .history, .foot, .s-tools, .card-toggle, .feedback, .explain, .toast, .top .hint, .top-links, .doubt, .doubt-note { display: none !important; }
   .top h1::after { content: "　英文句子骨架分析講義"; font-size: 14px; font-weight: 400; }
-  .to-top, .home-sec, .home-cta, .site-head, .hero, .test-notice, .examples-row, .home-foot, .sample-tag, .gp-chip, .gp-sec .sec-title { display: none !important; }
+  .to-top, .home-sec, .home-cta, .site-head, .hero, .examples-row, .home-foot, .sample-tag, .gp-chip, .gp-sec .sec-title { display: none !important; }
   /* 不要整張句子卡「不准分頁」：卡片比一頁剩下的空間高時，瀏覽器會把整張推到下一頁，第一頁就變空白 */
   #result .sentence { box-shadow: none; border: 0; break-inside: auto; }
   #result .row { break-inside: avoid; }
