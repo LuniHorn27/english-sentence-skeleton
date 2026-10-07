@@ -57,6 +57,9 @@ body {
 }
 /* 版面寬度隨螢幕變化：手機左右留 16px，電腦最寬 1120px */
 main { max-width: var(--page-max); margin: 0 auto; padding: 24px clamp(16px, 4vw, 40px) 96px; } /* 底部多留空間，右下角的貓爪不會蓋到最後一行字 */
+/* 全站：段落、清單的最後一行不只剩一兩個字；標題各行長度平均（2026-10-07 使用者要求） */
+p, li, dd, summary, .card-brief { text-wrap: pretty; }
+h1, h2, h3, .home-h2 { text-wrap: balance; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h1 { font-size: 22px; font-weight: 600; margin: 0 0 4px; }
 .hint { color: var(--text-2); font-size: 15px; margin: 0 0 16px; }
@@ -139,6 +142,7 @@ button[disabled]:active { transform: none; }
 .faq details p { font-size: 15px; color: var(--text-2); line-height: 1.8; margin: 0 2px 16px; }
 .home-cta { margin-top: clamp(48px, 7vw, 88px); text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: clamp(28px, 4vw, 44px) 20px; }
 .home-cta .home-lead { margin-bottom: 18px; }
+.home-cta .nobr { display: inline-block; } /* 只在逗號後面換行 */
 /* 卡片排法不讓最後一張落單：三步驟 3／1，五大句型 5／1 */
 @media (min-width: 760px) { .home-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 1000px) { .five { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
