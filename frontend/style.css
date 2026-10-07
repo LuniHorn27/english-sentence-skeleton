@@ -425,15 +425,25 @@ a { color: var(--accent-line); }
 .about-sec h3 { font-size: 16px; font-weight: 600; margin: 6px 0 4px; }
 .about-story { max-width: 680px; }
 .about-story p { font-size: 16px; line-height: 1.9; margin: 0 0 12px; }
-.pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; margin-top: 16px; }
+.pillars { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
 .pillar { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
 .pillar p, .how p, .privacy p { font-size: 14px; color: var(--text-2); line-height: 1.7; margin: 0; }
 .pillar-icon, .privacy-icon { font-size: 26px; line-height: 1; }
-.how { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; }
+.how { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
 .how li { padding: 16px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
 .how-num { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 999px; background: var(--accent-bg); color: var(--accent-text); font-weight: 700; font-size: 14px; }
 .about-note { margin: 0; }
-.privacy { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.privacy { display: grid; grid-template-columns: 1fr; gap: 12px; }
+/* 卡片排法不讓最後一張落單：4 張的是 4／2＋2／1，3 張的是 3／1（使用者要求 2026-10-07） */
+@media (min-width: 600px) {
+  .how, .privacy { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 900px) {
+  .pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1000px) {
+  .how, .privacy { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
 .privacy-item { display: flex; gap: 12px; align-items: flex-start; padding: 16px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
 .privacy-item h3 { margin-top: 0; }
 .about-fine { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
@@ -458,7 +468,8 @@ a.privacy-item.res:hover { border-color: var(--accent-line); }
 .step-label { display: inline-block; font-size: 12px; font-weight: 600; color: var(--accent-text); background: var(--accent-bg); padding: 1px 10px; border-radius: 999px; margin: 0 0 6px; }
 .note { color: var(--text-2); font-size: 15px; line-height: 1.7; }
 
-.parts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } /* S／V／O／C：4 張一排或上 2 下 2 */
+@media (min-width: 700px) { .parts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .part { display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); border-top: 4px solid var(--line-r); }
 .part-tag { font-size: 22px; font-weight: 700; color: var(--line-r); line-height: 1.1; }
 .part-name { font-weight: 600; }
@@ -529,16 +540,24 @@ a.pattern:hover { text-decoration: underline; }
 .fb-title { margin: 0; font-weight: 600; font-size: 14px; }
 .fb-note { margin: 0; font-size: 12px; color: var(--muted); }
 .fb-status { margin: 0; font-size: 13px; color: var(--text-2); min-height: 1em; }
-/* 頁面最下方：回饋入口＋請喝咖啡＋說明，合成一個安靜的頁尾 */
-.home-foot { margin: 72px 0 0; padding-top: 24px; border-top: 1px solid var(--border); }
-.support { text-align: center; }
-.support-line { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 12px; font-size: 14px; color: var(--text-2); margin: 0; }
-.support-line b { color: var(--text); }
-.support-open { font-size: 14px; padding: 6px 16px; min-height: 40px; border-radius: 999px; }
-.coffee-line { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
-.coffee-btn { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--text); text-decoration: none; background: var(--surface); }
-.coffee-btn .ic { width: 18px; height: 18px; }
-.coffee-btn:hover { border-color: var(--text); }
+/* 頁面最下方：回饋入口＋請喝咖啡。兩列同樣的結構：左邊文字、右邊一樣寬的按鈕 */
+.home-foot { margin: 72px 0 0; }
+.support { max-width: 720px; margin: 0 auto; padding: 4px 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; }
+.support-row { display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; padding: 16px 0; }
+.support-row + .support-row { border-top: 1px solid var(--border); }
+.support-copy { display: flex; flex-direction: column; gap: 2px; margin: 0; text-align: left; }
+.support-copy b { font-size: 15px; color: var(--text); }
+.support-copy span { font-size: 14px; color: var(--text-2); }
+.support-open, .coffee-btn { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 196px; min-height: 44px;
+  padding: 8px 18px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font-size: 15px; text-decoration: none; }
+.support-open:hover, .coffee-btn:hover { border-color: var(--text); background: var(--surface); }
+.support-open .ic, .coffee-btn .ic { width: 18px; height: 18px; }
+.coffee-line { font-size: 13px; color: var(--muted); margin: 12px 0 0; }  /* 關於此網站頁還在用 */
+@media (max-width: 560px) {
+  .support { padding: 4px 16px; }
+  .support-row { flex-direction: column; align-items: stretch; }
+  .support-open, .coffee-btn { width: 100%; }
+}
 
 /* 回饋對話框 */
 .fb-dialog { width: min(520px, calc(100% - 32px)); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
