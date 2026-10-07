@@ -433,7 +433,30 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[t.i] = Spec("aux", clause=index)
         inner.pattern = clause_pattern(roots, index, inner)
         return inner
-    if (v.lemma_ == "have" or going_to or used_to or supposed_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
+    # happen to ＋ 原形動詞（碰巧）：跟 have to 一樣，happen to 當助動詞，後面的動詞決定句型（2026-10-08）
+    happen_to = v.lemma_ == "happen"
+    # can't help but ＋ 原形動詞（忍不住）：can't help but 當助動詞（模型把 but 掛在不同地方，所以看字的順序）
+    help_but = None
+    if v.lemma_ == "help" and any(c.tag_ == "MD" for c in children) and any(c.dep_ == "neg" for c in children) \
+            and v.i + 2 < len(v.doc) and v.nbor().lower_ == "but" and v.doc[v.i + 2].tag_ == "VB":
+        help_but = (v.nbor(), v.doc[v.i + 2])
+    if help_but is not None:
+        but, main = help_but
+        roots[v.i] = Spec("aux", clause=index)
+        roots[but.i] = Spec("aux", clause=index)
+        inner = assign_clause(main, roots, index, sent, shared_subject=True)
+        for c in children:
+            if c.i in (main.i, but.i) or c.dep_ == "punct":
+                continue
+            if c.dep_ in ("nsubj", "nsubjpass", "csubj"):
+                roots[c.i] = Spec("S", clause=index)
+            elif c.dep_ in ("aux", "auxpass", "neg"):
+                roots[c.i] = Spec("aux", clause=index, kind="neg" if c.dep_ == "neg" else "")
+            elif c.dep_ in ("advmod", "npadvmod", "prep"):
+                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+        inner.pattern = clause_pattern(roots, index, inner)
+        return inner
+    if (v.lemma_ == "have" or going_to or used_to or supposed_to or happen_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
         roots[v.i] = Spec("aux", clause=index)
         inner = assign_clause(have_to, roots, index, sent, shared_subject=True)
         for c in children:
@@ -621,6 +644,13 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("M", function=adverb_function_prep_like(c), clause=index)
             else:
                 roots[c.i] = Spec("IO", clause=index)
+        elif d in ("dobj", "xcomp") and v.lemma_ == "go" and c.i == v.i + 1 and c.lower_.endswith("ing") \
+                and c.pos_ in ("VERB", "NOUN") and not any(g.dep_ in ("det", "poss") for g in c.children):
+            # go fishing／go shopping：去從事某活動，V-ing 是修飾語（2026-10-08，使用者同意的建議）
+            roots[c.i] = Spec("M", function="副詞・表狀況", clause=index)
+            for g in c.children:
+                if g.dep_ in ("prep", "advmod", "npadvmod"):
+                    roots[g.i] = Spec("M", function=adverb_function(g), clause=index)  # went swimming [in the lake]
         elif d == "dobj":
             roots[c.i] = Spec("DO" if (has_dative or info.passive) else "O", clause=index)
         elif d == "attr":
@@ -1683,7 +1713,9 @@ def analyze_doc(text: str, doc) -> SentenceResult:
         prev_text = joined[-1]["text"].lower() if joined else ""
         if joined and joined[-1]["role"] == "aux" and c["role"] == "aux" and stext[joined[-1]["end"]:c["start"]].strip() == "" \
                 and (c["text"].lower() in ("n't", "not")
-                     or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had", "used", "use")
+                     or (c["text"].lower() in ("help", "but") and (prev_text in ("can't", "cannot", "couldn't", "can not", "could not")
+                                                                  or (c["text"].lower() == "but" and prev_text.endswith("help"))))
+                     or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had", "used", "use", "happen", "happens", "happened")
                                                          or prev_text.endswith(("going", "supposed", "able"))))
                      or c["text"].lower() in ("going", "supposed", "able")
                      or (c["text"].lower() in ("better", "rather") and prev_text in ("had", "'d", "would"))):

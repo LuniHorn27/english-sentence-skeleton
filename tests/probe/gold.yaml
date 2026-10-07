@@ -7392,3 +7392,338 @@
     text: it
   - role: SC
     text: because you are tired
+- id: '485'
+  sentence: I happened to find the camera I'd lost.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: happened to
+  - role: Vt
+    text: find
+  - role: O
+    text: the camera
+    head:
+    - camera
+  - role: M
+    function: 形容詞・修飾
+    modifies: camera
+    text: I'd lost
+- id: '486'
+  sentence: I just happen to have a contract right here.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: just
+  - role: aux
+    text: happen to
+  - role: Vt
+    text: have
+  - role: O
+    text: a contract
+    head:
+    - contract
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: right here
+- id: '487'
+  sentence: She happened to be at home.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: happened to
+  - role: V
+    text: be
+  - role: SC
+    text: at home
+- id: '488'
+  sentence: Do you happen to know his name?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: aux
+    text: Do
+  - role: S
+    text: you
+  - role: aux
+    text: happen to
+  - role: Vt
+    text: know
+  - role: O
+    text: his name
+    head:
+    - name
+- id: '489'
+  sentence: We happened to meet at the station.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: happened to
+  - role: Vi
+    text: meet
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at the station
+- id: '490'
+  sentence: I can't help but smile every time I think of that.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: can't help but
+  - role: Vi
+    text: smile
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every time I think of that
+- id: '491'
+  sentence: She couldn't help but laugh.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: couldn't help but
+  - role: Vi
+    text: laugh
+- id: '492'
+  sentence: I cannot help but wonder why he left.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: cannot help but
+  - role: Vt
+    text: wonder
+  - role: O
+    text: why he left
+- id: '493'
+  sentence: Tom and Mary don't go fishing as much as they used to.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: Tom and Mary
+  - role: aux
+    text: don't
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: fishing
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: as much as they used to
+- id: '494'
+  sentence: Let's go shopping this weekend.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: aux
+    text: Let
+  - role: S
+    text: '''s'
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: shopping
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: this weekend
+- id: '495'
+  sentence: We went swimming in the lake.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: swimming
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the lake
+- id: '496'
+  sentence: They often go camping in the mountains.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: often
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: camping
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the mountains
+- id: '497'
+  sentence: I can't help laughing.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: can't
+  - role: Vt
+    text: help
+  - role: O
+    text: laughing
+- id: '498'
+  sentence: What happened to you?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: What
+  - role: Vi
+    text: happened
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to you
+- id: '499'
+  sentence: It happened yesterday.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: happened
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: yesterday
+- id: '500'
+  sentence: I go to school by bus.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to school
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: by bus
+- id: '501'
+  sentence: I go to the morning market every Sunday.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the morning market
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every Sunday
+- id: '502'
+  sentence: We are going home.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: are
+  - role: Vi
+    text: going
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: home
+- id: '503'
+  sentence: Let's go for a walk.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: aux
+    text: Let
+  - role: S
+    text: '''s'
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: for a walk
+- id: '504'
+  sentence: He went to the building.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the building
+- id: '505'
+  sentence: She goes running every morning.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: goes
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: running
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every morning
