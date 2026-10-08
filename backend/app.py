@@ -339,12 +339,13 @@ async def no_stale_files(request, call_next):
 
 
 # 測試版（免費主機、小型模型）：首頁顯示提示、翻譯失敗時說明只有電腦版 Chrome／Edge 能翻（設定在 render.yaml）
+# tts：伺服器能不能朗讀。不能時網頁一按就用瀏覽器語音（手機規定朗讀要在按下的當下開始，不能先等伺服器）
 TEST_EDITION = os.environ.get("TEST_EDITION") == "1"
 
 
 @app.get("/api/site")
 def site_info():
-    return {"test_edition": TEST_EDITION}
+    return {"test_edition": TEST_EDITION, "tts": tts.is_available()}
 
 
 @app.get("/")
