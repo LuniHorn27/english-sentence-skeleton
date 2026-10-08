@@ -492,6 +492,7 @@ a { color: var(--accent-line); }
 .peek-cat.glance .peek-lid { transform-origin: 68px 106px; animation: peek-blink 2s ease-in-out; }
 @keyframes peek-glance { 0%, 100% { transform: none; } 20%, 45% { transform: translate(-6px, -2px); } 60%, 80% { transform: translate(4px, 2px); } }
 @keyframes peek-blink { 0%, 84%, 100% { transform: none; } 90% { transform: scaleY(0.1); } }
+@media (min-width: 1024px) { .peek-cat { width: clamp(110px, 19vw, 240px); } } /* 電腦：貓放大到 240px；平板以下維持原大小，才不會擠到副標題 */
 @media (max-width: 560px) {
   .about-hero { padding-bottom: 104px; } /* 手機：貓放在按鈕下方的右下角 */
   .peek-cat { width: 104px; right: 8%; }
