@@ -52,7 +52,7 @@
     if (response.ok) return (await response.json()).translation;
     if (response.status === 429) {
       const detail = (await response.json().catch(() => ({}))).detail;
-      throw new Error(detail || "翻譯次數太多，本貓要喘口氣，一分鐘後再來。");
+      throw new Error(detail || "翻譯次數太多，偵探貓要喘口氣，一分鐘後再來。");
     }
     return browserTranslate(text);
   }

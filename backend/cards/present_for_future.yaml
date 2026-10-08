@@ -1,0 +1,45 @@
+id: present_for_future
+title: 以現在代替未來
+brief: 時間、條件副詞子句說的雖然是未來的事，動詞還是用現在式，不用 will。
+trigger: 表時間或表條件的副詞子句用現在式，主要子句講的是未來（will、can、祈使句、want to be…）
+blocks:
+- type: formula
+  text: 主要子句（未來） ＋ when／if… ＋ S ＋ <b>現在式</b>
+- type: heading
+  text: 哪些連接詞要這樣用
+- type: list
+  items:
+  - 表時間：when、before、after、until、as soon as、once、by the time
+  - 表條件：if、unless
+- type: heading
+  text: 例句
+- type: examples
+  examples:
+  - en: I will call you <b>when I get home</b>.
+    zh: 我到家時會打給你。（到家是未來的事，但用 get）
+    mark: none
+  - en: <b>If it rains tomorrow,</b> we will stay home.
+    zh: 如果明天下雨，我們就待在家。
+    mark: none
+  - en: What do you want to be <b>when you grow up</b>?
+    zh: 你長大後想做什麼？（長大是未來的事，但用 grow up）
+    mark: none
+- type: warn
+  text: 子句裡不要再加 will。
+  examples:
+  - en: I will call you when I will get home.
+    zh: ''
+    mark: 'no'
+  - en: I will call you when I get home.
+    zh: ''
+    mark: ok
+  - en: If it will rain tomorrow, we will stay home.
+    zh: ''
+    mark: 'no'
+  - en: If it rains tomorrow, we will stay home.
+    zh: ''
+    mark: ok
+- type: info
+  text: 這條規則只管副詞子句。when 帶的是名詞子句（當受詞）時，未來的事照樣用 will：I don't know <b>when he will come</b>.（我不知道他什麼時候會來）
+see_also:
+- subordinating_conj

@@ -1,7 +1,7 @@
 // 英文句子骨架分析：前端畫面
 // 資安：句子、說明等文字一律用 textContent 顯示；只有我們自己寫的文法重點卡允許 <b> 粗體。
 
-const MAX_CHARS = 2000;
+const MAX_CHARS = 500;
 const GROUP = { S: "S", RS: "S", RO: "O", Vt: "V", Vi: "V", V: "V", aux: "V", O: "O", IO: "O", DO: "O", SC: "C", OC: "C" };
 const LABEL = { V: "Vi", aux: "aux.", RS: "真主詞", RO: "真受詞", EF: "強調框架", conj: "conj.", unknown: "未分析" };
 const ROLE_NAME = {
@@ -16,6 +16,47 @@ const CALLOUT = {
   warn: ["⚠️", "常見錯誤", "c-warn"],
   info: ["ℹ", "補充", "c-info"],
 };
+
+// 線條圖示（直接畫在網頁裡，不另外載入圖示字型）
+const ICON = {
+  volume: '<path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10"/>',
+  report: '<path d="M4.5 5h15v10.5H10l-5.5 4z"/><path d="M12 7.8v3.6M12 13.6v.1"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  alert: '<path d="M12 4.5l8.5 15h-17z"/><path d="M12 10v4M12 16.8v.2"/>',
+  pencil: '<path d="M4.5 19.5l1-4.5L16 4.5l3.5 3.5L9 18.5z"/><path d="M14 6.5l3.5 3.5"/>',
+};
+function icon(name) {
+  const t = document.createElement("template");
+  t.innerHTML = `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICON[name]}</svg>`;
+  return t.content.firstChild;
+}
+
+// 偵探貓：同一隻貓，只換放大鏡裡的眼睛（品牌規範：不加嘴巴和腮紅）
+const CAT_FACE = '<rect width="64" height="64" rx="14" fill="#2f6fed"/><path d="M10 33 L11 9 L24 19 Q32 16.5 40 19 L53 9 L54 33 Q55 53 32 55 Q9 53 10 33Z" fill="#fff"/><ellipse cx="22" cy="33" rx="3" ry="3.6" fill="#1a1d23"/><path d="M30 40.5 h4 l-2 2.5z" fill="#e88aa0"/><line x1="48" y1="39" x2="58" y2="50" stroke="#1a1d23" stroke-width="4.5" stroke-linecap="round"/><circle cx="41" cy="31" r="10" fill="#fdf3e1" stroke="#1a1d23" stroke-width="3.5"/>';
+const CAT_EYE = {
+  idle: '<g class="cat-eye"><ellipse cx="41" cy="32" rx="5" ry="6" fill="#1a1d23"/><circle cx="43" cy="29.5" r="1.7" fill="#fff"/></g>',
+  oops: '<path d="M37.6 28.4a3.5 3.5 0 1 1 5.1 3.1c-1.2.6-1.7 1.3-1.7 2.7" fill="none" stroke="#1a1d23" stroke-width="2.6" stroke-linecap="round"/><circle cx="41" cy="38" r="1.5" fill="#1a1d23"/>',
+};
+function cat(mood = "idle") {
+  const t = document.createElement("template");
+  t.innerHTML = `<svg class="cat cat-${mood}" viewBox="0 0 64 64" aria-hidden="true">${CAT_FACE}${CAT_EYE[mood === "oops" ? "oops" : "idle"]}</svg>`;
+  return t.content.firstChild;
+}
+
+// 首頁還沒輸入時顯示的範例（直接寫在網頁裡，不用等伺服器）
+const SAMPLE = { sentences: [{
+  text: "The teacher showed us a picture.", status: "ok", message: null, kind: "simple",
+  clauses: [{ index: 0, pattern: 4, doubt: null }],
+  header: "句型五：S + Vt + IO + DO",
+  chunks: [
+    { id: 0, text: "The teacher", start: 0, end: 11, role: "S", heads: [{ start: 4, end: 11, text: "teacher" }], structure: "名詞片語", note: "主詞，核心字是 teacher。", clause: 0, inner: [] },
+    { id: 1, text: "showed", start: 12, end: 18, role: "Vt", heads: [], note: "動詞，後面接兩個受詞：給「誰」（IO）什麼東西（DO）。", clause: 0, inner: [] },
+    { id: 2, text: "us", start: 19, end: 21, role: "IO", heads: [], structure: "代名詞", note: "間接受詞：動作給「誰」？", clause: 0, inner: [] },
+    { id: 3, text: "a picture", start: 22, end: 31, role: "DO", heads: [{ start: 24, end: 31, text: "picture" }], structure: "名詞片語", note: "直接受詞：給「什麼」？核心字是 picture。", clause: 0, inner: [] },
+  ],
+  cards: [{ id: "dative_verbs", vars: {} }], phrases: [], typos: [],
+  translation: "老師給我們看了一張圖片。",
+}] };
 
 const $ = (id) => document.getElementById(id);
 const form = $("form");
@@ -133,9 +174,15 @@ function roleClass(chunk) {
   return `${style} r-${GROUP[chunk.role]}`;
 }
 
+// S、Vt、IO 這類兩個字以內的主要成分標籤畫成圓形（2026-10-06 改版）
+function makeLabel(chunk) {
+  const text = labelText(chunk) || "";
+  return el("span", GROUP[chunk.role] && text.length <= 2 ? "lb dot" : "lb", text);
+}
+
 function miniChunk(chunk) {
   const node = el("span", `ck ${roleClass(chunk)}`);
-  node.append(el("span", "lb", labelText(chunk)), el("span", "tx", chunk.text + (chunk.suffix || "")));
+  node.append(makeLabel(chunk), el("span", "tx", chunk.text + (chunk.suffix || "")));
   return node;
 }
 
@@ -145,7 +192,7 @@ function chunkNode(sIdx, chunk, trailing) {
   node.type = "button";
   if (view.selected === chunk.id) node.classList.add("selected");
   node.setAttribute("aria-label", `${chunk.text}：${chunk.role === "M" ? labelText(chunk) : ROLE_NAME[chunk.role]}`);
-  node.append(el("span", "lb", labelText(chunk)));
+  node.append(makeLabel(chunk));
 
   const expanded = chunk.inner?.length && view.expanded.has(chunk.id);
   if (expanded) {
@@ -214,7 +261,8 @@ function chunkRow(sIdx) {
 
 // ---------- 朗讀 ----------
 function speakButton(text, label, extra = "") {
-  const btn = el("button", `speak ${extra}`, `🔊 ${label}`);
+  const btn = el("button", `speak ${extra}`);
+  btn.append(icon("volume"), el("span", "speak-label", label));
   btn.type = "button";
   btn.setAttribute("aria-label", `${label}：${text}`);
   btn.addEventListener("click", (e) => {
@@ -345,7 +393,7 @@ function cardNode(sIdx, ref, card) {
   const open = view.openCards.has(ref.id);
   const node = el("div", open ? "card open" : "card"); // 展開的卡片在寬螢幕上佔滿整行
   const head = el("div", "card-head");
-  head.append(el("span", "card-tag", "文法重點"), el("span", "card-title", card.title));
+  head.append(el("span", "card-title", card.title));
   const brief = el("span", "card-brief");
   brief.innerHTML = safeHTML(fillVars(card.brief, ref.vars));
   const toggle = el("button", "card-toggle", open ? "收合" : "詳細說明");
@@ -386,29 +434,20 @@ function phraseCard(sentence) {
 }
 
 // ---------- 回報錯誤（2-5） ----------
-async function sendFeedback(payload) {
-  const response = await fetch("/api/feedback", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  if (!response.ok) {
-    const body = await response.json().catch(() => ({}));
-    throw new Error(typeof body.detail === "string" ? body.detail : "送不出去，網路好像打結了，等一下再試。");
-  }
-}
+// sendFeedback 在 feedback.js（四個頁面共用）
 
 function feedbackForm(sIdx) {
   const sentence = sentences[sIdx];
   const view = views[sIdx];
   const form = el("form", "feedback");
-  form.append(el("p", "fb-title", "本貓哪裡看走眼了？"));
+  form.append(el("p", "fb-title", "偵探貓哪裡看走眼了？"));
 
   const text = el("textarea");
   text.rows = 2;
   text.maxLength = 1000;
   text.placeholder = "例如：in the garden 應該是副詞・表地點（句子和分析結果會自動附上）";
   text.setAttribute("aria-label", "哪裡分析錯了");
+  autoGrow(text);
   const note = el("p", "fb-note", "請不要填寫姓名、電話等個人資料。");
   const status = el("p", "fb-status");
   const send = el("button", "primary", "回報錯誤");
@@ -418,7 +457,7 @@ function feedbackForm(sIdx) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!text.value.trim()) {
-      status.textContent = "先告訴本貓錯在哪啦。";
+      status.textContent = "先告訴偵探貓錯在哪啦。";
       return;
     }
     send.disabled = true;
@@ -444,46 +483,13 @@ for (const chip of document.querySelectorAll(".example-chip")) {
   });
 }
 
-const suggestForm = $("suggest-form");
-// 回饋對話框：首頁下方的「寫下你的想法」和結果下方的「給我回饋」都會打開它
-const feedbackDialog = $("feedback-dialog");
-for (const btn of document.querySelectorAll("[data-open-feedback]")) {
-  btn.addEventListener("click", () => {
-    $("suggest-status").textContent = "";
-    feedbackDialog.showModal();
-    $("suggest-text").focus();
-  });
-}
-feedbackDialog?.querySelector("[data-close-feedback]").addEventListener("click", () => feedbackDialog.close());
-feedbackDialog?.addEventListener("click", (e) => {
-  if (e.target === feedbackDialog) feedbackDialog.close(); // 點對話框外面也可以關掉
-});
-
-if (suggestForm) {
-  suggestForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const box = $("suggest-text");
-    const status = $("suggest-status");
-    if (!box.value.trim()) {
-      status.textContent = "空白的本貓看不懂啦，寫點什麼吧。";
-      return;
-    }
-    try {
-      await sendFeedback({ kind: "suggestion", message: box.value.trim() });
-      box.value = "";
-      status.textContent = "收到！本貓會認真看，說不定下一版就有了 🐾";
-      setTimeout(() => feedbackDialog?.close(), 1800);
-    } catch (err) {
-      status.textContent = err.message;
-    }
-  });
-}
+// 「給偵探貓一點意見」對話框在 feedback.js（四個頁面共用）
 
 // ---------- 拼字提醒：是不是打錯字？ ----------
 function typoBanner(sentence) {
   const box = el("div", "banner typo");
   const parts = sentence.typos.map((t) => (t.suggestion ? `「${t.word}」是不是「${t.suggestion}」？` : `「${t.word}」好像不是英文單字，請確認拼字。`));
-  box.append(el("span", null, `✏️ 本貓發現可疑字跡：${parts.join("")}打錯字會讓本貓辦錯案，改正後再分析一次比較準。`));
+  box.append(icon("pencil"), el("span", null, `偵探貓發現可疑字跡：${parts.join("")}打錯字會讓偵探貓辦錯案，改正後再分析一次比較準。`));
   const fixes = sentence.typos.filter((t) => t.suggestion);
   if (fixes.length) {
     const btn = el("button", "typo-fix", fixes.length === 1 ? `改成 ${fixes[0].suggestion} 再分析` : "全部改正再分析");
@@ -504,53 +510,114 @@ function typoBanner(sentence) {
 }
 
 // ---------- 一整句 ----------
+// 片語卡放最上面；文法重點只列標題、一個一行，點了在那一行下面展開說明
+function grammarSection(sIdx) {
+  const sentence = sentences[sIdx];
+  const view = views[sIdx];
+  const refs = sentence.cards || [];
+  if (!refs.length && !sentence.phrases?.length) return null;
+  const sec = el("div", "gp-sec");
+  if (sentence.phrases?.length) sec.append(phraseCard(sentence));
+  if (refs.length) {
+    const list = el("div", "gp-list");
+    sec.append(el("p", "sec-title", "文法重點"), list);
+    for (const ref of refs) {
+      const item = el("div", "gp-item");
+      list.append(item);
+      fetchCard(ref.id).then((card) => {
+        if (!card) {
+          item.remove();
+          return;
+        }
+        const open = view.openCards.has(ref.id);
+        const chip = el("button", open ? "gp-chip on" : "gp-chip", card.title);
+        chip.type = "button";
+        chip.setAttribute("aria-expanded", String(open));
+        chip.addEventListener("click", () => {
+          open ? view.openCards.delete(ref.id) : view.openCards.add(ref.id);
+          renderSentence(sIdx);
+        });
+        item.append(chip);
+        if (open) item.append(cardNode(sIdx, ref, card));
+      });
+    }
+  }
+  return sec;
+}
+
+// 圖示＋文字的小按鈕（朗讀、回報錯誤）：手機上換短字，才能和句型公式排在同一列
+function toolButton(name, long, short, onClick) {
+  const btn = el("button", "tool-btn");
+  btn.type = "button";
+  btn.append(icon(name), el("span", "label-long", long), el("span", "label-short", short));
+  btn.addEventListener("click", onClick);
+  return btn;
+}
+
 function renderSentence(sIdx) {
   const sentence = sentences[sIdx];
   const view = views[sIdx];
   const box = view.node;
   box.replaceChildren();
 
+  if (view.sample) {
+    const tag = el("div", "sample-tag");
+    tag.append(cat("idle"), el("span", null, "範例"));
+    box.append(tag);
+  }
+
+  // 第一列：左邊是編號、句型公式（可以換行），右邊固定是朗讀和回報
   const head = el("div", "s-head");
-  if (sentences.length > 1) head.append(el("span", "s-num", String(sIdx + 1)));
-  if (sentence.kind === "compound") head.append(el("span", "tag", "對等句"));
+  const meta = el("div", "s-meta");
+  head.append(meta);
+  if (sentences.length > 1) meta.append(el("span", "s-num", String(sIdx + 1)));
+  if (sentence.kind === "compound") meta.append(el("span", "tag", "對等句"));
   if (sentence.clauses.length) {
     // 句型標籤可以點，打開五大句型介紹的對應段落
-    const link = el("a", "pattern", sentence.header);
+    // 複句的公式（句型二：… & 句型三：…）只在 & 的地方換行，不從一段公式中間斷開
+    const link = el("a", "pattern");
+    sentence.header.split(/\s*&\s*/).forEach((part, i) => {
+      if (i) link.append(" & ");
+      link.append(el("span", "pf", part));
+    });
     link.href = `/patterns#p${sentence.clauses[0].pattern}`;  // 在同一頁打開（使用者要求）；按上一頁回來會自動重新分析
     link.title = "看這個句型的說明";
-    head.append(link);
+    meta.append(link);
   }
   // 動詞句型字典檢查不通過：提醒這句可能分析錯了（點開看原因）
   const doubts = sentence.clauses.map((c) => c.doubt).filter(Boolean);
   if (doubts.length) {
-    const flag = el("button", "doubt", "⚠️ 本貓對這句沒把握");
+    const flag = el("button", "doubt");
+    flag.append(icon("alert"), "偵探貓對這句沒把握");
     flag.type = "button";
     flag.setAttribute("aria-expanded", String(Boolean(view.doubtOpen)));
     flag.addEventListener("click", () => {
       view.doubtOpen = !view.doubtOpen;
       renderSentence(sIdx);
     });
-    head.append(flag);
+    meta.append(flag);
   }
   const tools = el("span", "s-tools");
   if (window.Speech?.available && sentence.status !== "failed") {
-    tools.append(speakButton(sentence.text, "朗讀"));
+    tools.append(toolButton("volume", "朗讀", "朗讀", (e) => {
+      e.stopPropagation();
+      window.Speech.speak(sentence.text);
+    }));
   }
-  // 前面加圖示，和「🔊 朗讀」對齊；手機上換短字（回報錯誤 → 回報），才能和句型標籤排在同一列
-  const report = el("button", "speak");
-  const [icon, long, short] = view.feedback === "sent" ? ["✅", "收到，本貓去罰站了", "收到"] : ["🚩", "回報錯誤", "回報"];
-  report.append(`${icon} `, el("span", "label-long", long), el("span", "label-short", short));
-  report.type = "button";
-  report.disabled = view.feedback === "sent";
-  report.addEventListener("click", () => {
-    view.feedback = view.feedback === "open" ? null : "open";
-    renderSentence(sIdx);
-  });
-  tools.append(report);
+  if (!view.sample) {
+    const sent = view.feedback === "sent";
+    const report = toolButton(sent ? "check" : "report", sent ? "收到，偵探貓去罰站了" : "回報錯誤", sent ? "收到" : "回報", () => {
+      view.feedback = view.feedback === "open" ? null : "open";
+      renderSentence(sIdx);
+    });
+    report.disabled = sent;
+    if (view.feedback === "open") report.classList.add("on");
+    tools.append(report);
+  }
   head.append(tools);
   box.append(head);
   if (doubts.length && view.doubtOpen) {
-    box.append(el("div", "banner doubt-note", `${doubts.join(" ")}如果你知道正確答案，按「回報錯誤」教教本貓。`));
+    box.append(el("div", "banner doubt-note", `${doubts.join(" ")}如果你知道正確答案，按「回報錯誤」教教偵探貓。`));
   }
 
   if (sentence.status === "failed" && sentences.length > 1) box.append(el("p", "failed-text", sentence.text));
@@ -564,6 +631,10 @@ function renderSentence(sIdx) {
     scheduleOverlapFix();
   }
 
+  const explain = explainBox(sentence, view);
+  if (explain) box.append(explain);
+  if (view.feedback === "open") box.append(feedbackForm(sIdx));
+
   const zh = el("p", "zh");
   zh.dataset.translation = String(sIdx);
   if (sentence.translation) {
@@ -574,27 +645,14 @@ function renderSentence(sIdx) {
   }
   box.append(zh);
 
-  const explain = explainBox(sentence, view);
-  if (explain) box.append(explain);
-
-  if (view.feedback === "open") box.append(feedbackForm(sIdx));
-
-  const cardsWrap = el("div", "cards");
-  box.append(cardsWrap);
-  if (sentence.phrases?.length) cardsWrap.append(phraseCard(sentence));
-  for (const ref of sentence.cards || []) {
-    const slot = el("div");
-    cardsWrap.append(slot);
-    fetchCard(ref.id).then((card) => {
-      if (card) slot.replaceWith(cardNode(sIdx, ref, card));
-      else slot.remove();
-    });
-  }
+  const grammar = grammarSection(sIdx);
+  if (grammar) box.append(grammar);
 }
 
-function render(data) {
+function render(data, { sample = false } = {}) {
   sentences = data.sentences;
   result.replaceChildren();
+  result.dataset.sample = sample ? "1" : "";
   // 3 句以上：最上方放「句子目錄」，點編號就跳到那一句
   if (sentences.length > 2) {
     const nav = el("nav", "s-nav");
@@ -610,24 +668,44 @@ function render(data) {
     result.append(nav);
   }
   views = sentences.map((_, i) => {
-    const node = el("article", "sentence");
+    const node = el("article", sample ? "sentence sample" : "sentence");
     node.id = `s${i + 1}`;
     result.append(node);
-    return { node, selected: null, expanded: new Set(), openCards: new Set(), feedback: null };
+    return { node, sample, selected: null, expanded: new Set(), openCards: new Set(), feedback: null };
   });
   sentences.forEach((_, i) => renderSentence(i));
-  toolbar.hidden = false;
-  $("result-actions").hidden = false;
+  toolbar.hidden = sample;
+  $("result-actions").hidden = sample;
   document.dispatchEvent(new CustomEvent("analysis-rendered", { detail: { sentences } }));
 }
 
+// 結果的開頭不在畫面裡時（手機上常見），捲到結果卡的頂端
+function bringIntoView(node) {
+  const top = node.getBoundingClientRect().top;
+  if (top >= 0 && top < window.innerHeight * 0.6) return;
+  const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  node.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+}
+
 // ---------- 輸入 ----------
+// 輸入框跟著內容自動長高（分析的輸入框、回報錯誤的輸入框），太長時才出現捲軸
+function autoGrow(box) {
+  const fit = () => {
+    box.style.height = "auto";
+    box.style.height = `${box.scrollHeight + 2}px`;
+  };
+  box.addEventListener("input", fit);
+  requestAnimationFrame(fit);
+  return fit;
+}
+const fitInput = autoGrow(input);
 function showError(message) {
-  errorBox.textContent = message;
+  errorBox.replaceChildren(cat("oops"), el("span", null, message));
   errorBox.hidden = false;
 }
 
 function updateCounter() {
+  if (typeof fitInput === "function") fitInput(); // 程式填入句子時（範例、最近分析）也要重新調整高度
   const n = input.value.length;
   counter.textContent = `${n} / ${MAX_CHARS}`;
   counter.classList.toggle("over", n > MAX_CHARS);
@@ -648,17 +726,20 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   errorBox.hidden = true;
   const text = input.value.trim();
-  if (!text) return showError("你什麼都沒貼，本貓的放大鏡對著空氣很尷尬。貼一句英文進來吧。");
-  if (text.length > MAX_CHARS) return showError(`這篇長到本貓的放大鏡起霧了，請控制在 ${MAX_CHARS} 個字元以內。`);
+  if (!text) return showError("你什麼都沒貼，偵探貓的放大鏡對著空氣很尷尬。貼一句英文進來吧。");
+  if (text.length > MAX_CHARS) return showError(`這篇長到偵探貓的放大鏡起霧了，請控制在 ${MAX_CHARS} 個字元以內。`);
   try { sessionStorage.setItem("last", text); } catch { /* 無痕模式等情況，不影響使用 */ }
 
   submit.disabled = true;
   submit.textContent = "分析中…";
-  const loading = el("p", "loading", "本貓辦案分析中…");
+  const loading = el("div", "loading");
+  const loadingText = el("p", null, "偵探貓辦案分析中…");
+  loading.append(cat("work"), loadingText);
+  result.dataset.sample = "";
   result.replaceChildren(loading);
   // 等超過 3 秒才補一句說明，平常很快就好的時候不用多看一行字
   const slowTimer = setTimeout(() => {
-    loading.textContent = "本貓辦案分析中…第一次辦案要先把工具準備好，會比較久，等本貓一下。";
+    loadingText.textContent = "偵探貓辦案分析中…第一次辦案要先把工具準備好，會比較久，等偵探貓一下。";
   }, 3000);
   $("result-actions").hidden = true;
   try {
@@ -670,14 +751,15 @@ form.addEventListener("submit", async (event) => {
     if (!response.ok) {
       const body = await response.json().catch(() => ({}));
       result.replaceChildren();
-      showError(typeof body.detail === "string" ? body.detail : "本貓卡關了，等一下再試一次。");
+      showError(typeof body.detail === "string" ? body.detail : "偵探貓卡關了，等一下再試一次。");
       return;
     }
     render(await response.json());
     addHistory(text);
+    bringIntoView(result);
   } catch {
     result.replaceChildren();
-    showError("本貓聯絡不上網站，檢查一下網路，再按一次「分析」。");
+    showError("偵探貓聯絡不上網站，檢查一下網路，再按一次「分析」。");
   } finally {
     clearTimeout(slowTimer);
     submit.disabled = false;
@@ -713,6 +795,7 @@ let modeBeforePrint = null;
 window.addEventListener("beforeprint", () => {
   modeBeforePrint = result.classList.contains("detail") ? "detail" : "skeleton";
   result.classList.add("detail");
+  fixLabelOverlap(); // 修飾語的說明印出來時也要錯開，不能疊在旁邊的標籤上
 });
 window.addEventListener("afterprint", () => {
   if (modeBeforePrint) setMode(modeBeforePrint);
@@ -771,18 +854,25 @@ fetch("/api/site")
   .then((site) => {
     if (!site.test_edition) return;
     document.documentElement.dataset.edition = "test";
-    $("test-notice").hidden = false;
   })
   .catch(() => { /* 拿不到就當完整版 */ });
 
+// 首頁最下方「回到輸入框」：捲回輸入框並把游標放進去
+$("back-to-input")?.addEventListener("click", () => {
+  const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  form.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "center" });
+  input.focus({ preventScroll: true });
+});
+
 updateCounter();
 renderHistory();
+if (!location.hash.startsWith("#q=")) render(SAMPLE, { sample: true });
 loadFromHash();
 
 // 從五大句型頁按「上一頁」回來時，分析結果可能已經被瀏覽器清掉 → 自動重新分析上一次的句子
 function restoreAfterBack() {
   const nav = performance.getEntriesByType("navigation")[0];
-  if (!nav || nav.type !== "back_forward" || location.hash.startsWith("#q=") || result.childElementCount) return;
+  if (!nav || nav.type !== "back_forward" || location.hash.startsWith("#q=") || (result.childElementCount && !result.dataset.sample)) return;
   let last = null;
   try { last = sessionStorage.getItem("last"); } catch { return; }
   if (!last) return;

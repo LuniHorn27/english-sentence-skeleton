@@ -27,7 +27,7 @@ from backend import dictionary, translate, tts
 from backend.analyzer.schema import AnalysisResult, Card, SentenceResult
 
 ROOT = Path(__file__).resolve().parent.parent
-MAX_CHARS = 2000
+MAX_CHARS = 500  # 約 5 句、一小段文字（2026-10-07 使用者決定，原本 2000）
 log = logging.getLogger("uvicorn.error")
 
 
@@ -115,9 +115,9 @@ def analyze(req: AnalyzeRequest, request: Request):
     check_rate(request, "analyze", 30, 60, "分析次數太多了，請等一分鐘後再試")
     text = req.text.strip()
     if not text:
-        raise HTTPException(400, "你什麼都沒貼，本貓的放大鏡對著空氣很尷尬。貼一句英文進來吧。")
+        raise HTTPException(400, "你什麼都沒貼，偵探貓的放大鏡對著空氣很尷尬。貼一句英文進來吧。")
     if len(text) > MAX_CHARS:
-        raise HTTPException(400, f"這篇長到本貓的放大鏡起霧了，請控制在 {MAX_CHARS} 個字元以內。")
+        raise HTTPException(400, f"這篇長到偵探貓的放大鏡起霧了，請控制在 {MAX_CHARS} 個字元以內。")
     try:
         sentences = analyze_text(text)
     except Exception:  # 分析引擎出錯時，不讓網頁當掉，回報「無法分析」
@@ -264,12 +264,12 @@ def speak(req: SpeakRequest, request: Request):
     # 用 POST 而不是把句子放在網址裡，句子才不會出現在伺服器的存取紀錄中
     check_rate(request, "tts", 60, 60, "朗讀次數太多了，請等一分鐘後再試")
     if not tts.is_available():
-        raise HTTPException(503, "本貓今天喉嚨啞了，朗讀暫時不能用。")
+        raise HTTPException(503, "偵探貓今天喉嚨啞了，朗讀暫時不能用。")
     try:
         audio = tts.synthesize(req.text, req.speed)
     except Exception:
         log.exception("朗讀失敗（輸入長度 %d 字元）", len(req.text))
-        raise HTTPException(503, "本貓今天喉嚨啞了，朗讀暫時不能用。")
+        raise HTTPException(503, "偵探貓今天喉嚨啞了，朗讀暫時不能用。")
     return Response(content=audio, media_type="audio/wav", headers={"Cache-Control": "private, max-age=86400"})
 
 
@@ -282,7 +282,7 @@ class TranslateRequest(BaseModel):
 @app.post("/api/translate")
 def translate_sentence(req: TranslateRequest, request: Request):
     # 翻譯最吃電腦資源（一句 1～5 秒、一次只能翻一句），限制次數才不會有人把伺服器佔滿
-    check_rate(request, "translate", 60, 60, "翻譯次數太多，本貓要喘口氣，一分鐘後再來。")
+    check_rate(request, "translate", 60, 60, "翻譯次數太多，偵探貓要喘口氣，一分鐘後再來。")
     if not translate.is_available():
         raise HTTPException(503, "負責翻譯的同事去吃飯了，等一下再試。")
     try:
@@ -311,7 +311,7 @@ def get_card(card_id: str):
     return Card(**yaml.safe_load(path.read_text(encoding="utf-8")))
 
 
-MAX_BODY = 200_000  # 送進來的資料最多 200 KB（分析上限 2000 字元，回饋附的分析結果也不會超過）
+MAX_BODY = 200_000  # 送進來的資料最多 200 KB（分析上限 500 字元，回饋附的分析結果也不會超過）
 SECURITY_HEADERS = {
     # 只准載入本站的程式和樣式；朗讀的聲音用 blob: 播放
     "Content-Security-Policy": ("default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; "

@@ -1,5 +1,5 @@
 id: quantifier_of
-title: 數量詞 ＋ of ＋ 名詞
+title: 數量詞＋of
 brief: 動詞單複數要看 of 後面的 {noun}。
 trigger: 主詞是 most／some／all／half／a lot／each／one／neither ＋ of ＋ 名詞
 blocks:
