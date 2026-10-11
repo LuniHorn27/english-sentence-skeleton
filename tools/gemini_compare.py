@@ -66,6 +66,7 @@ def call_gemini(batch):
         "generationConfig": {"responseMimeType": "application/json", "responseSchema": SCHEMA, "temperature": 0},
     }
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent"
+    quota_hits = 0
     for attempt in range(8):
         req = urllib.request.Request(url, data=json.dumps(body).encode(), method="POST",
                                      headers={"Content-Type": "application/json", "x-goog-api-key": KEY})
@@ -79,6 +80,12 @@ def call_gemini(batch):
             msg = e.read()[:300].decode(errors="replace")
             wait = 20 * (attempt + 1) if e.code in (429, 500, 503) else None
             print(f"  HTTP {e.code}：{msg[:160]}", flush=True)
+            if e.code == 429 and "quota" in msg.lower():
+                # 額度用完：等一分鐘再試一次（排除「每分鐘次數」限制），還是一樣就停，不要白等十幾分鐘（2026-10-12）
+                quota_hits += 1
+                if quota_hits >= 2:
+                    raise RuntimeError("今天的免費額度用完了（美西午夜、台灣下午 3 點左右恢復）")
+                wait = 60
             if wait is None:
                 raise
             time.sleep(wait)
