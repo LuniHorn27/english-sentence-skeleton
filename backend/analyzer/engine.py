@@ -166,7 +166,8 @@ def adverb_function(tok) -> str:
             return "副詞・表時間"
         if obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME")):
             return "副詞・表時間"
-        if (tok.head.lemma_.lower(), lemma) in L.VERB_PREP_OBJECT and not (lemma in ("into", "across", "through", "onto") and olemma in L.PLACE_NOUNS):
+        if (tok.head.lemma_.lower(), lemma) in L.VERB_PREP_OBJECT and not (lemma in ("into", "across", "through", "onto") and olemma in L.PLACE_NOUNS) \
+                and not (tok.head.lemma_.lower() in ("spend", "waste") and olemma in L.PLACE_NOUNS):  # spent his childhood on a farm 是地點
             return "副詞・表對象"  # look at the photo：介系詞後面是動作的對象（ran into the building 是地點）
         if olemma in L.CONDITION_NOUNS:
             return "副詞・表狀況"
@@ -335,6 +336,17 @@ def as_function(tok) -> str:
 
 
 def advcl_function(tok) -> Optional[str]:
+    first = min((t for t in tok.subtree if not t.is_punct), key=lambda t: t.i)
+    if first.lower_ in ("whatever", "whoever", "whichever", "whomever", "however") and not any(
+            c.dep_ == "mark" for c in tok.children):
+        return "副詞子句・表讓步"  # Whatever happens, …（＝ No matter what happens，2026-10-12）
+    if any(c.dep_ == "mark" and c.lower_ == "for" for c in tok.children) and any(
+            c.dep_ == "aux" and c.lower_ == "to" for c in tok.children):
+        head = tok.head
+        if any(g.dep_ in ("nsubj", "nsubjpass", "expl") and g.lower_ == "it" for g in head.children):
+            return None  # It is hard for me to learn English：交給真主詞規則（使用者決定 2026-09-29）
+        # waiting for Mom to come back（wait for 的對象）；saved money for his son to go to college（目的）
+        return "副詞・表對象" if (head.lemma_.lower(), "for") in L.VERB_PREP_OBJECT else "副詞・表目的"
     if " ".join(t.lower_ for t in sorted(tok.subtree, key=lambda t: t.i) if not t.is_punct) in L.TONE_PHRASES:
         return "副詞・表語氣"  # To be honest、To tell the truth、Generally speaking（不是表目的）
     opener, f = opener_tokens(tok)
@@ -384,6 +396,9 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     info.passive = bool(deps & {"nsubjpass", "auxpass", "csubjpass"})
     if info.passive and v.lemma_ in ("become", "be") and "agent" not in deps:
         info.passive = False  # It's become popular.、It's been a long time：'s 是 has，不是被動
+    if info.passive and v.lower_ == "got" and "agent" not in deps and any(
+            c.dep_ == "auxpass" and c.lower_ in ("'s", "’s") for c in children):
+        info.passive = False  # She's got a new car.：'s got ＝ has got ＝ has（2026-10-12）
     info.existential = "expl" in deps and v.lemma_ == "be"
 
     # Let's go to the park.（使用者決定 2026-09-29）：祈使句，Let 表示提議、標 aux.（不算進公式），
@@ -406,7 +421,9 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
             return inner
 
     # 省略句：I can't.、Yes, I will.、I did.（只有助動詞，後面的動詞省略了）；So do I.、Neither can she.
-    agree = sent[0].lower_ in ("so", "neither", "nor") and (v.lemma_ in ("do", "be", "have") or v.tag_ == "MD")
+    # So do I.、…, and neither are you.：看這個子句的第一個字（不只整句開頭，2026-10-12）
+    clause_first = min((t for t in v.subtree if not t.is_punct and t.dep_ != "cc"), key=lambda t: t.i)
+    agree = clause_first.lower_ in ("so", "neither", "nor") and (v.lemma_ in ("do", "be", "have") or v.tag_ == "MD")
     # 代替前面動詞的 do（She doesn't like coffee, but I do.）：模型常把 do 當一般動詞；
     # 後面只有 now、too 這類時間或語氣副詞時才算（He did well 的 well 是方式，不算）
     echo_do = v.lemma_ == "do" and v.pos_ == "VERB" and any(c.dep_ == "nsubj" for c in children) and all(
@@ -425,7 +442,7 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("M", function="副詞・表否定", clause=index)  # Neither can she.（她也不行）
             elif c.dep_ == "neg":
                 roots[c.i] = Spec("aux", clause=index, kind="neg")
-            elif c.dep_ == "advmod" and c.lower_ == "so" and c.i == sent.start:
+            elif c.dep_ == "advmod" and c.lower_ == "so" and c.i == clause_first.i:
                 roots[c.i] = Spec("M", function="副詞・表語氣", clause=index)  # So do I.（我也是）
             elif c.dep_ in ("advmod", "npadvmod", "intj"):
                 roots[c.i] = modifier_spec(c, index, info)
@@ -501,7 +518,10 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
         inner.pattern = clause_pattern(roots, index, inner)
         return inner
-    if (v.lemma_ == "have" or going_to or used_to or supposed_to or happen_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
+    # have got to ＋ 原形動詞（＝ have to）：You've got to blow out the candles.（2026-10-12）
+    got_to = v.lower_ == "got" and any(c.dep_ in ("aux", "auxpass") and c.lower_ in ("'ve", "’ve", "have", "has", "'s", "’s", "had", "'d")
+                                       for c in children)
+    if (v.lemma_ == "have" or going_to or used_to or supposed_to or happen_to or got_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
         roots[v.i] = Spec("aux", clause=index)
         inner = assign_clause(have_to, roots, index, sent, shared_subject=True)
         for c in children:
@@ -692,6 +712,10 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("M", function=adverb_function_prep_like(c), clause=index)
             else:
                 roots[c.i] = Spec("IO", clause=index)
+        elif d == "dobj" and c.lemma_.lower() in L.TIME_NOUNS and v.lemma_.lower() not in L.TIME_OBJECT_VERBS and any(
+                g.dep_ == "nummod" or g.lower_ in ("many", "few", "several", "all", "every") for g in c.children):
+            # How many hours did you sleep?、We stayed three weeks.：一段時間是修飾語，不是受詞（2026-10-12）
+            roots[c.i] = Spec("M", function="副詞・表時間", clause=index)
         elif d in ("dobj", "xcomp") and v.lemma_ == "go" and c.i == v.i + 1 and c.lower_.endswith("ing") \
                 and c.pos_ in ("VERB", "NOUN") and not any(g.dep_ in ("det", "poss") for g in c.children):
             # go fishing／go shopping：去從事某活動，V-ing 是修飾語（2026-10-08，使用者同意的建議）
@@ -1190,6 +1214,16 @@ def assign_complement(c, v, roots, index, info, has_obj):
     has_to = any(g.dep_ == "aux" and g.lower_ == "to" for g in c.children)
     has_helper = any(g.dep_ in ("aux", "auxpass") for g in c.children)
     subjunctive = v.lemma_.lower() in L.SUBJUNCTIVE_VERBS and c.tag_ == "VB" and c.dep_ == "ccomp"
+    pass_subj = [g for g in c.children if g.dep_ == "nsubjpass"]
+    if pass_subj and not has_mark and c.tag_ == "VBN" and v.lemma_.lower() in L.CAUSATIVE_PERCEPTION and any(
+            g.dep_ == "auxpass" and g.lemma_ == "get" for g in c.children):
+        # I saw [him] [get killed]（2026-10-12）：比照 saw him cross the street，地點等修飾語另外切
+        roots[pass_subj[0].i] = Spec("O", clause=index)
+        roots[c.i] = Spec("OC", clause=index)
+        for g in c.children:
+            if g.dep_ in ("prep", "advmod", "npadvmod") and g.i > c.i:
+                roots[g.i] = Spec("M", function=adverb_function(g), clause=index)
+        return
     if small_subj and not has_mark and not has_to and not has_helper and small_subj[0].tag_ != "PRP$" and not subjunctive \
             and c.tag_ in ("VB", "JJ", "JJR", "JJS", "NN", "NNS", "NNP", "VBN", "VBG", "RB"):  # makes you happier
         # 有助動詞的是完整子句（She said she didn't know…），不是小子句
@@ -1218,7 +1252,8 @@ def assign_complement(c, v, roots, index, info, has_obj):
             info.flags.add("verb_obj_to_v")
         if v.lemma_.lower() in L.CAUSATIVE_PERCEPTION:
             info.flags.add("causative_perception")
-    elif c.dep_ == "xcomp" and has_to and not has_obj and v.lemma_.lower() in L.SEEM_VERBS:
+    elif c.dep_ == "xcomp" and has_to and not has_obj and (v.lemma_.lower() in L.SEEM_VERBS or (
+            v.lemma_ == "turn" and any(g.dep_ == "prt" and g.lower_ == "out" for g in v.children))):
         # 賴世雄：He seems to know it.、He seems to be a nice man. → 不定詞是主詞補語
         roots[c.i] = Spec("SC", clause=index)
     elif v.lemma_ == "be" and not has_obj and not info.passive and c.i > v.i and (c.dep_ == "ccomp" or has_to) \
@@ -1926,6 +1961,8 @@ def analyze_doc(text: str, doc) -> SentenceResult:
                 and (c["text"].lower() in ("n't", "not")
                      or (c["text"].lower() in ("help", "but") and (prev_text in ("can't", "cannot", "couldn't", "can not", "could not")
                                                                   or (c["text"].lower() == "but" and prev_text.endswith("help"))))
+                     or (c["text"].lower() == "got" and prev_text in ("'ve", "’ve", "have", "has", "'s", "’s", "had", "'d"))
+                     or (c["text"].lower() == "to" and prev_text.endswith("got"))
                      or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had", "used", "use", "happen", "happens", "happened")
                                                          or prev_text.endswith(("going", "supposed", "able"))))
                      or c["text"].lower() in ("going", "supposed", "able")

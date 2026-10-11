@@ -8609,3 +8609,572 @@
     text: will
   - role: Vi
     text: arrive
+- id: '556'
+  sentence: You've got to blow out all the candles on your birthday cake.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: aux
+    text: '''ve got to'
+  - role: Vt
+    text: blow out
+  - role: O
+    text: all the candles
+    head:
+    - candles
+  - role: M
+    function: 形容詞・修飾
+    modifies: candles
+    text: on your birthday cake
+- id: '557'
+  sentence: I've got to go now.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: '''ve got to'
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: now
+- id: '558'
+  sentence: We have got to finish this today.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: have got to
+  - role: Vt
+    text: finish
+  - role: O
+    text: this
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: today
+- id: '559'
+  sentence: She's got a new car.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: '''s'
+  - role: Vt
+    text: got
+  - role: O
+    text: a new car
+    head:
+    - car
+- id: '560'
+  sentence: The rumour turned out to be false.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The rumour
+    head:
+    - rumour
+  - role: V
+    text: turned out
+  - role: SC
+    text: to be false
+- id: '561'
+  sentence: The plan turned out to be a success.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The plan
+    head:
+    - plan
+  - role: V
+    text: turned out
+  - role: SC
+    text: to be a success
+- id: '562'
+  sentence: He proved to be a good leader.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: V
+    text: proved
+  - role: SC
+    text: to be a good leader
+- id: '563'
+  sentence: It turned out that he was right.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: turned out
+  - role: RS
+    text: that he was right
+- id: '564'
+  sentence: How many hours did you sleep last night?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: How many hours
+  - role: aux
+    text: did
+  - role: S
+    text: you
+  - role: Vi
+    text: sleep
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: last night
+- id: '565'
+  sentence: How many days will you stay in Taipei?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: How many days
+  - role: aux
+    text: will
+  - role: S
+    text: you
+  - role: Vi
+    text: stay
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in Taipei
+- id: '566'
+  sentence: How many books did you read?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: How many books
+    head:
+    - books
+  - role: aux
+    text: did
+  - role: S
+    text: you
+  - role: Vt
+    text: read
+- id: '567'
+  sentence: He was waiting for Mom to come back.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: aux
+    text: was
+  - role: Vi
+    text: waiting
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: for Mom to come back
+- id: '568'
+  sentence: We are waiting for the bus to arrive.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: are
+  - role: Vi
+    text: waiting
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: for the bus to arrive
+- id: '569'
+  sentence: I waited for her.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: waited for
+  - role: O
+    text: her
+- id: '570'
+  sentence: Whatever you do, do it wisely, and don't forget about the end.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Whatever you do
+  - role: S
+    text: (You)
+  - role: Vt
+    text: do
+  - role: O
+    text: it
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: wisely
+  - role: conj
+    text: and
+  - role: aux
+    text: don't
+  - role: Vi
+    text: forget
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: about the end
+- id: '571'
+  sentence: Whatever happens, I will support you.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Whatever happens
+  - role: S
+    text: I
+  - role: aux
+    text: will
+  - role: Vt
+    text: support
+  - role: O
+    text: you
+- id: '572'
+  sentence: Whoever you are, you are welcome here.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Whoever you are
+  - role: S
+    text: you
+  - role: V
+    text: are
+  - role: SC
+    text: welcome
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: here
+- id: '573'
+  sentence: I'm not an expert in this field, and neither are you.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: V
+    text: '''m'
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: not
+  - role: SC
+    text: an expert
+    head:
+    - expert
+  - role: M
+    function: 形容詞・修飾
+    modifies: expert
+    text: in this field
+  - role: conj
+    text: and
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: neither
+  - role: aux
+    text: are
+  - role: S
+    text: you
+- id: '574'
+  sentence: She can't swim, and neither can I.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: can't
+  - role: Vi
+    text: swim
+  - role: conj
+    text: and
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: neither
+  - role: aux
+    text: can
+  - role: S
+    text: I
+- id: '575'
+  sentence: He likes coffee, and so do I.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: likes
+  - role: O
+    text: coffee
+  - role: conj
+    text: and
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: so
+  - role: aux
+    text: do
+  - role: S
+    text: I
+- id: '576'
+  sentence: I saw him get killed right in front of my eyes.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: saw
+  - role: O
+    text: him
+  - role: OC
+    text: get killed
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: right in front of my eyes
+- id: '577'
+  sentence: I saw him cross the street.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: saw
+  - role: O
+    text: him
+  - role: OC
+    text: cross the street
+- id: '578'
+  sentence: She heard her name called.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: heard
+  - role: O
+    text: her name
+    head:
+    - name
+  - role: OC
+    text: called
+- id: '579'
+  sentence: We watched the sun go down.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: watched
+  - role: O
+    text: the sun
+    head:
+    - sun
+  - role: OC
+    text: go down
+- id: '580'
+  sentence: It is hard for me to learn English.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: hard
+  - role: RS
+    text: for me to learn English
+- id: '581'
+  sentence: I spent three hours on my homework.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: spent
+  - role: O
+    text: three hours
+    head:
+    - hours
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: on my homework
+- id: '582'
+  sentence: It took two days.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vt
+    text: took
+  - role: O
+    text: two days
+    head:
+    - days
+- id: '583'
+  sentence: I love the summer.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: love
+  - role: O
+    text: the summer
+    head:
+    - summer
+- id: '584'
+  sentence: We stayed three weeks in Japan.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vi
+    text: stayed
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: three weeks
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in Japan
+- id: '585'
+  sentence: He saved money for his son to go to college.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: saved
+  - role: O
+    text: money
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: for his son to go to college
+- id: '586'
+  sentence: So do I.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: So
+  - role: aux
+    text: do
+  - role: S
+    text: I
+- id: '587'
+  sentence: However hard you try, you can't win.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: However hard you try
+  - role: S
+    text: you
+  - role: aux
+    text: can't
+  - role: Vi
+    text: win
+- id: '588'
+  sentence: I have got a cold.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: have
+  - role: Vt
+    text: got
+  - role: O
+    text: a cold
+    head:
+    - cold
+- id: '589'
+  sentence: Don't forget about the end.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: (You)
+  - role: aux
+    text: Don't
+  - role: Vi
+    text: forget
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: about the end
+- id: '590'
+  sentence: He spent his childhood on a farm.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: spent
+  - role: O
+    text: his childhood
+    head:
+    - childhood
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: on a farm
