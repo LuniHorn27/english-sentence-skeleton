@@ -34,9 +34,11 @@
         <a class="btn primary" href="/">開始拆解句子</a>
         <a class="btn" href="/patterns">先認識五大句型</a>
       </div>
-      <!-- 偵探貓從卡片底部探頭偷看標題；滑鼠移上來時放大鏡裡的眼睛變成「？」（動作在 about.js） -->
+      <!-- 偵探貓從卡片底部探頭偷看標題：先探出耳朵晃一晃再冒出來；滑鼠靠近貓時放大鏡裡的眼睛變成「？」（動作在 about.js）。耳朵分開畫才能單獨晃，蓋在頭上、底邊不描線，看起來和原本一體 -->
       <svg class="peek-cat" viewBox="0 0 200 150" aria-hidden="true">
-        <path d="M32 105 L35 29 L77 61 Q102 53 128 61 L170 29 L173 105 Q176 170 102 176 Q29 170 32 105Z" fill="#fff" stroke="#1a1d23" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M32 105 L33.4 70 Q40 58 77 61 Q102 53 128 61 Q164 58 171.6 70 L173 105 Q176 170 102 176 Q29 170 32 105Z" fill="#fff" stroke="#1a1d23" stroke-width="4" stroke-linejoin="round"/>
+        <path class="peek-ear peek-ear-l" d="M33.4 70 L35 29 L77 61" fill="#fff" stroke="#1a1d23" stroke-width="4" stroke-linejoin="round"/>
+        <path class="peek-ear peek-ear-r" d="M128 61 L170 29 L171.6 70" fill="#fff" stroke="#1a1d23" stroke-width="4" stroke-linejoin="round"/>
         <ellipse class="peek-lid" cx="68" cy="106" rx="9" ry="11" fill="#1a1d23"/>
         <path d="M96 128 h13 l-6.5 8z" fill="#e88aa0"/>
         <line x1="154" y1="124" x2="190" y2="160" stroke="#1a1d23" stroke-width="13" stroke-linecap="round"/>
