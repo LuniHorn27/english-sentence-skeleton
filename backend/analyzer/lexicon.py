@@ -135,7 +135,10 @@ TONE_OR_MANNER_ADVERBS = {"clearly", "honestly", "frankly", "seriously", "natura
 # 表語氣的固定片語：To be honest、To tell the truth、Generally speaking…（不是表目的、也不是分詞構句）
 TONE_PHRASES = {"to be honest", "to tell the truth", "to be frank", "to begin with", "to start with",
                 "to sum up", "to make matters worse", "to be sure", "needless to say",
-                "generally speaking", "frankly speaking", "strictly speaking", "honestly speaking", "roughly speaking"}
+                "generally speaking", "frankly speaking", "strictly speaking", "honestly speaking", "roughly speaking",
+                # 2026-10-12 抓錯助手第三批
+                "in the first place", "for a start", "from what i can tell", "from what i can see", "from what i hear",
+                "from what i know", "first of all", "after all", "in fact", "of course", "in other words", "by the way"}
 
 # to my surprise、much to my dismay：說話者的感受 → 表語氣
 FEELING_NOUNS = {"surprise", "dismay", "delight", "regret", "disappointment", "horror", "relief", "amazement",
@@ -227,6 +230,7 @@ VERB_PREP_OBJECT = {
     ("rely", "on"), ("insist", "on"), ("focus", "on"), ("concentrate", "on"), ("comment", "on"),
     ("believe", "in"), ("succeed", "in"), ("participate", "in"), ("specialize", "in"), ("result", "in"),
     ("forget", "about"), ("learn", "about"), ("complain", "about"), ("spend", "on"), ("waste", "on"),  # 2026-10-12
+    ("feed", "to"), ("give", "to"), ("send", "to"), ("show", "to"), ("lend", "to"), ("pass", "to"), ("hand", "to"),
 }
 
 # 看起來像被動、其實當形容詞用的過去分詞（is crowded → 句型二 S + Vi + SC）

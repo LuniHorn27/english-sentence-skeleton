@@ -108,6 +108,8 @@ def adverb_function(tok) -> str:
     """動詞底下的修飾語 → 副詞・表…"""
     lemma = tok.lemma_.lower()
     dep = tok.dep_
+    if dep == "dative" and tok.pos_ == "ADP":
+        dep = "prep"  # fed the milk [to his lamb]：模型標成與格的介系詞片語，照一般介系詞判斷（2026-10-12）
     if dep == "agent":
         return "副詞・表執行者"
     if dep == "advmod":
@@ -167,7 +169,8 @@ def adverb_function(tok) -> str:
         if obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME")):
             return "副詞・表時間"
         if (tok.head.lemma_.lower(), lemma) in L.VERB_PREP_OBJECT and not (lemma in ("into", "across", "through", "onto") and olemma in L.PLACE_NOUNS) \
-                and not (tok.head.lemma_.lower() in ("spend", "waste") and olemma in L.PLACE_NOUNS):  # spent his childhood on a farm 是地點
+                and not (tok.head.lemma_.lower() in ("spend", "waste") and olemma in L.PLACE_NOUNS) \
+                and not (lemma == "to" and obj is not None and (olemma in L.PLACE_NOUNS or obj.ent_type_ in ("GPE", "LOC", "FAC"))):  # sent it to Taipei  # spent his childhood on a farm 是地點
             return "副詞・表對象"  # look at the photo：介系詞後面是動作的對象（ran into the building 是地點）
         if olemma in L.CONDITION_NOUNS:
             return "副詞・表狀況"
@@ -1204,6 +1207,9 @@ def adverb_function_prep_like(tok):
         obj = next((c for c in tok.children if c.dep_ == "pobj"), None)
         if obj is not None and (obj.pos_ == "PRON" or obj.lemma_.lower() in L.PERSON_NOUNS or obj.ent_type_ == "PERSON"):
             return "副詞・表對象"  # A prize was given to him.、sent a letter to her mother
+        if obj is not None and (tok.head.lemma_.lower(), "to") in L.VERB_PREP_OBJECT \
+                and obj.lemma_.lower() not in L.PLACE_NOUNS and obj.ent_type_ not in ("GPE", "LOC", "FAC"):
+            return "副詞・表對象"  # fed the milk to his lamb（給的對象，不是地點；2026-10-12）
         return "副詞・表地點"
     return "副詞・表目的"
 
