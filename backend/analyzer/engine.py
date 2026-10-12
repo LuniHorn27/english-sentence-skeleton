@@ -578,8 +578,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("aux", clause=index)
             elif c.dep_ in ("advmod", "npadvmod") and c.i < v.i:
                 roots[c.i] = modifier_spec(c, index, info)
-            elif c.dep_ == "prep" and (v.lower_, c.lower_) in L.STATIVE_PAIRS:
-                roots[c.i] = Spec("M", function="副詞・表對象", clause=index)  # interested in art
+            elif c.dep_ == "prep" and (v.lower_, c.lower_) in L.STATIVE_PAIRS and v.lower_ not in ("located", "situated"):
+                roots[c.i] = Spec("M", function="副詞・表對象", clause=index)  # interested in art（located in 是地點，2026-10-13）
             elif c.dep_ in ("prep", "advmod", "npadvmod") and adverb_function(c) in ("副詞・表時間", "副詞・表頻率", "副詞・表地點"):
                 roots[c.i] = modifier_spec(c, index, info)
             elif c.dep_ == "prep" and c.i > v.i:

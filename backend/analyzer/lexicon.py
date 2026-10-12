@@ -45,6 +45,8 @@ OC_PREP_VERBS = {
     ("regard", "as"), ("view", "as"), ("see", "as"), ("treat", "as"), ("describe", "as"),
     ("consider", "as"), ("accept", "as"), ("recognize", "as"), ("define", "as"),
     ("elect", "as"), ("appoint", "as"), ("choose", "as"),
+    ("acknowledge", "as"), ("identify", "as"), ("classify", "as"), ("label", "as"), ("portray", "as"),
+    ("depict", "as"), ("rank", "as"), ("hail", "as"),  # 2026-10-13 抓錯助手
 }
 
 # 命名、選舉類動詞：後面兩個名詞是「受詞＋受詞補語」（name the baby Lily、elected Amy president）。
@@ -231,6 +233,7 @@ VERB_PREP_OBJECT = {
     ("believe", "in"), ("succeed", "in"), ("participate", "in"), ("specialize", "in"), ("result", "in"),
     ("forget", "about"), ("learn", "about"), ("complain", "about"), ("spend", "on"), ("waste", "on"),  # 2026-10-12
     ("feed", "to"), ("give", "to"), ("send", "to"), ("show", "to"), ("lend", "to"), ("pass", "to"), ("hand", "to"),
+    ("plan", "on"), ("count", "on"), ("decide", "on"), ("agree", "on"), ("work", "on"),  # 2026-10-13
 }
 
 # 看起來像被動、其實當形容詞用的過去分詞（is crowded → 句型二 S + Vi + SC）

@@ -9373,3 +9373,159 @@
     function: 副詞・表地點
     modifies: null
     text: to Taipei
+- id: '602'
+  sentence: Algiers's most famous amusement park is located in a neighborhood called Benaknoun.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Algiers's most famous amusement park
+    head:
+    - park
+  - role: V
+    text: is
+  - role: SC
+    text: located
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in a neighborhood
+  - role: M
+    function: 形容詞・修飾
+    modifies: neighborhood
+    text: called Benaknoun
+- id: '603'
+  sentence: The hotel is located near the station.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The hotel
+    head:
+    - hotel
+  - role: V
+    text: is
+  - role: SC
+    text: located
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: near the station
+- id: '604'
+  sentence: She is interested in art.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: is
+  - role: SC
+    text: interested
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: in art
+- id: '605'
+  sentence: Berber is acknowledged as an official language in the constitution.
+  pattern: 5
+  passive: true
+  chunks:
+  - role: S
+    text: Berber
+  - role: aux
+    text: is
+  - role: Vt
+    text: acknowledged
+  - role: OC
+    text: as an official language
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the constitution
+- id: '606'
+  sentence: He is regarded as a genius.
+  pattern: 5
+  passive: true
+  chunks:
+  - role: S
+    text: He
+  - role: aux
+    text: is
+  - role: Vt
+    text: regarded
+  - role: OC
+    text: as a genius
+- id: '607'
+  sentence: They identified him as the thief.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: Vt
+    text: identified
+  - role: O
+    text: him
+  - role: OC
+    text: as the thief
+- id: '608'
+  sentence: Tom and Mary don't plan on doing that until you tell them to.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: Tom and Mary
+  - role: aux
+    text: don't
+  - role: Vi
+    text: plan
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: on doing that
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: until you tell them to
+- id: '609'
+  sentence: You can count on me.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: aux
+    text: can
+  - role: Vt
+    text: count on
+  - role: O
+    text: me
+- id: '610'
+  sentence: I am working on my homework.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: am
+  - role: Vt
+    text: working on
+  - role: O
+    text: my homework
+    head:
+    - homework
+- id: '611'
+  sentence: We agreed on a plan.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vi
+    text: agreed
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: on a plan
