@@ -89,9 +89,9 @@ def call_gemini(batch):
             if wait is None:
                 raise
             time.sleep(wait)
-        except Exception as e:  # 回答格式壞掉、逾時：重試
+        except Exception as e:  # 回答格式壞掉、逾時、網路暫時斷線：等久一點再重試（2026-10-13：Mac 網路斷斷續續）
             print(f"  錯誤：{e}", flush=True)
-            time.sleep(10)
+            time.sleep(30 * (attempt + 1))
     raise RuntimeError("重試太多次")
 
 
