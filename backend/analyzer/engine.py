@@ -1560,8 +1560,13 @@ def comparative_correlative(sent, v, roots, info):
     for c in v.children:
         if not (comma.i < c.i < v.i) or not any(g.lower_ == "the" for g in c.children):
             continue
-        if c.tag_ in ("JJR", "JJ") and c.dep_ in ("amod", "acomp", "oprd", "advmod", "attr") and v.lemma_ in L.LINKING_VERBS:
+        # be 後面的 closer、further 模型常標成副詞比較級（RBR），其實是形容詞用法（we are closer to the next）
+        if (c.tag_ in ("JJR", "JJ") or (c.tag_ == "RBR" and v.lemma_ == "be")) \
+                and c.dep_ in ("amod", "acomp", "oprd", "advmod", "attr") and v.lemma_ in L.LINKING_VERBS:
             roots[c.i] = Spec("SC", clause=info.index)  # the better you get → you get better
+            for g in v.children:  # be 後面的地點片語原本被當成補語（沒有其他補語時），改回修飾比較級的介系詞片語
+                if g.dep_ == "prep" and g.i > v.i and g.i in roots and roots[g.i].role == "SC":
+                    roots[g.i] = Spec("M", function=adjective_pp_function(c, g), clause=info.index)
         elif c.dep_ == "dobj":
             roots[c.i] = Spec("O", clause=info.index)  # the more you forget → you forget more
     info.pattern = clause_pattern(roots, info.index, info)

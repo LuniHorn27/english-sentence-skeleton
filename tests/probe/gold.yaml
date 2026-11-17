@@ -8520,3 +8520,92 @@
     function: 副詞・表時間
     modifies: null
     text: now
+- id: '551'
+  sentence: The further we are from one disaster, the closer we are to the next.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The further we are from one disaster
+  - role: SC
+    text: the closer
+  - role: S
+    text: we
+  - role: V
+    text: are
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to the next
+- id: '552'
+  sentence: The closer you are to the fire, the warmer you feel.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The closer you are to the fire
+  - role: SC
+    text: the warmer
+    head:
+    - warmer
+  - role: S
+    text: you
+  - role: V
+    text: feel
+- id: '553'
+  sentence: The more you practice, the better you get.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The more you practice
+  - role: SC
+    text: the better
+    head:
+    - better
+  - role: S
+    text: you
+  - role: V
+    text: get
+- id: '554'
+  sentence: The older he grew, the wiser he became.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The older he grew
+  - role: SC
+    text: the wiser
+    head:
+    - wiser
+  - role: S
+    text: he
+  - role: V
+    text: became
+- id: '555'
+  sentence: The sooner we leave, the earlier we will arrive.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: The sooner we leave
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: the earlier
+  - role: S
+    text: we
+  - role: aux
+    text: will
+  - role: Vi
+    text: arrive
