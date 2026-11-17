@@ -32,7 +32,11 @@ DATIVE_VERBS = {
 }
 
 # seem ＋ 不定詞：不定詞是主詞補語（賴世雄 p.32）
-SEEM_VERBS = {"seem", "appear"}
+SEEM_VERBS = {"seem", "appear", "prove"}  # He proved to be a good leader.（turn out 另外判斷）
+
+# 會把一段時間當受詞的動詞（spent three hours、took two days）；其他動詞後面的 three hours 是表時間的修飾語
+TIME_OBJECT_VERBS = {"spend", "take", "waste", "kill", "save", "need", "have", "cost", "give", "pass", "enjoy",
+                     "find", "want", "make", "lose", "use", "count", "book", "plan", "require", "remember", "celebrate"}
 
 # 動詞 ＋ 受詞 ＋ into／as 片語：片語是受詞補語（賴世雄 p.54、p.58）
 #   take … for 也在書上，但 take the dog for a walk 的 for 是表目的，容易混淆，先不收
@@ -41,6 +45,8 @@ OC_PREP_VERBS = {
     ("regard", "as"), ("view", "as"), ("see", "as"), ("treat", "as"), ("describe", "as"),
     ("consider", "as"), ("accept", "as"), ("recognize", "as"), ("define", "as"),
     ("elect", "as"), ("appoint", "as"), ("choose", "as"),
+    ("acknowledge", "as"), ("identify", "as"), ("classify", "as"), ("label", "as"), ("portray", "as"),
+    ("depict", "as"), ("rank", "as"), ("hail", "as"),  # 2026-10-13 抓錯助手
 }
 
 # 命名、選舉類動詞：後面兩個名詞是「受詞＋受詞補語」（name the baby Lily、elected Amy president）。
@@ -131,7 +137,10 @@ TONE_OR_MANNER_ADVERBS = {"clearly", "honestly", "frankly", "seriously", "natura
 # 表語氣的固定片語：To be honest、To tell the truth、Generally speaking…（不是表目的、也不是分詞構句）
 TONE_PHRASES = {"to be honest", "to tell the truth", "to be frank", "to begin with", "to start with",
                 "to sum up", "to make matters worse", "to be sure", "needless to say",
-                "generally speaking", "frankly speaking", "strictly speaking", "honestly speaking", "roughly speaking"}
+                "generally speaking", "frankly speaking", "strictly speaking", "honestly speaking", "roughly speaking",
+                # 2026-10-12 抓錯助手第三批
+                "in the first place", "for a start", "from what i can tell", "from what i can see", "from what i hear",
+                "from what i know", "first of all", "after all", "in fact", "of course", "in other words", "by the way"}
 
 # to my surprise、much to my dismay：說話者的感受 → 表語氣
 FEELING_NOUNS = {"surprise", "dismay", "delight", "regret", "disappointment", "horror", "relief", "amazement",
@@ -222,6 +231,9 @@ VERB_PREP_OBJECT = {
     ("benefit", "from"), ("accuse", "of"), ("provide", "with"), ("supply", "with"), ("cope", "with"),
     ("rely", "on"), ("insist", "on"), ("focus", "on"), ("concentrate", "on"), ("comment", "on"),
     ("believe", "in"), ("succeed", "in"), ("participate", "in"), ("specialize", "in"), ("result", "in"),
+    ("forget", "about"), ("learn", "about"), ("complain", "about"), ("spend", "on"), ("waste", "on"),  # 2026-10-12
+    ("feed", "to"), ("give", "to"), ("send", "to"), ("show", "to"), ("lend", "to"), ("pass", "to"), ("hand", "to"),
+    ("plan", "on"), ("count", "on"), ("decide", "on"), ("agree", "on"), ("work", "on"),  # 2026-10-13
 }
 
 # 看起來像被動、其實當形容詞用的過去分詞（is crowded → 句型二 S + Vi + SC）
