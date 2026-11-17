@@ -1026,7 +1026,7 @@
   - role: Vi
     text: runs
   - role: M
-    function: 副詞・表方式
+    function: 副詞・表比較
     modifies: null
     text: as fast as his brother
 - id: '74'
@@ -1506,8 +1506,8 @@
   - role: S
     text: The fact
   - role: M
-    function: 同位語・說明fact
-    modifies: null
+    function: 同位語・說明
+    modifies: fact
     text: that he lied
   - role: Vt
     text: made
@@ -4712,8 +4712,8 @@
   - role: S
     text: the Endurance
   - role: M
-    function: 同位語・說明Endurance
-    modifies: null
+    function: 同位語・說明
+    modifies: Endurance
     text: the lost vessel of the famed polar explorer Ernest Shackleton
   - role: aux
     text: was
@@ -5357,8 +5357,8 @@
   - role: O
     text: Tom
   - role: M
-    function: 同位語・說明Tom
-    modifies: null
+    function: 同位語・說明
+    modifies: Tom
     text: my best friend
 - id: '356'
   sentence: What do you want to be when you grow up?
@@ -5494,7 +5494,7 @@
   - role: aux
     text: have
   - role: M
-    function: 副詞・表方式
+    function: 副詞・表語氣
     modifies: null
     text: probably
   - role: Vt
@@ -5851,3 +5851,2672 @@
     text: was
   - role: SC
     text: there
+- id: '385'
+  sentence: As far as I know the store is closed.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as I know
+  - role: S
+    text: the store
+    head:
+    - store
+  - role: V
+    text: is
+  - role: SC
+    text: closed
+- id: '386'
+  sentence: As far as I am concerned the question is not simple.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as I am concerned
+  - role: S
+    text: the question
+    head:
+    - question
+  - role: V
+    text: is
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: not
+  - role: SC
+    text: simple
+- id: '387'
+  sentence: As far as I can tell he is telling the truth.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as I can tell
+  - role: S
+    text: he
+  - role: aux
+    text: is
+  - role: Vt
+    text: telling
+  - role: O
+    text: the truth
+    head:
+    - truth
+- id: '388'
+  sentence: As far as we know nobody saw the accident.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as we know
+  - role: S
+    text: nobody
+  - role: Vt
+    text: saw
+  - role: O
+    text: the accident
+    head:
+    - accident
+- id: '389'
+  sentence: As far as she remembers the meeting was on Monday.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表語氣
+    modifies: null
+    text: As far as she remembers
+  - role: S
+    text: the meeting
+    head:
+    - meeting
+  - role: V
+    text: was
+  - role: SC
+    text: on Monday
+- id: '390'
+  sentence: When I got home my mother was cooking dinner.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: When I got home
+  - role: S
+    text: my mother
+    head:
+    - mother
+  - role: aux
+    text: was
+  - role: Vt
+    text: cooking
+  - role: O
+    text: dinner
+- id: '391'
+  sentence: If you need help please call me.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If you need help
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: please
+  - role: S
+    text: (You)
+  - role: Vt
+    text: call
+  - role: O
+    text: me
+- id: '392'
+  sentence: Because it was raining we stayed at home.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: Because it was raining
+  - role: S
+    text: we
+  - role: Vi
+    text: stayed
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at home
+- id: '393'
+  sentence: Although he was tired he kept working.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Although he was tired
+  - role: S
+    text: he
+  - role: Vt
+    text: kept
+  - role: O
+    text: working
+- id: '394'
+  sentence: As soon as I heard the news I called my sister.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: As soon as I heard the news
+  - role: S
+    text: I
+  - role: Vt
+    text: called
+  - role: O
+    text: my sister
+    head:
+    - sister
+- id: '395'
+  sentence: Before you leave turn off the lights.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: Before you leave
+  - role: S
+    text: (You)
+  - role: Vt
+    text: turn off
+  - role: O
+    text: the lights
+    head:
+    - lights
+- id: '396'
+  sentence: After the movie ended we went home.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: After the movie ended
+  - role: S
+    text: we
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: home
+- id: '397'
+  sentence: If I were you I would take the job.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If I were you
+  - role: S
+    text: I
+  - role: aux
+    text: would
+  - role: Vt
+    text: take
+  - role: O
+    text: the job
+    head:
+    - job
+- id: '398'
+  sentence: While I was reading the phone rang.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: While I was reading
+  - role: S
+    text: the phone
+    head:
+    - phone
+  - role: Vi
+    text: rang
+- id: '399'
+  sentence: Since you are here you can help me.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: Since you are here
+  - role: S
+    text: you
+  - role: aux
+    text: can
+  - role: Vt
+    text: help
+  - role: O
+    text: me
+- id: '400'
+  sentence: Once you understand the rule the exercise is easy.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: Once you understand the rule
+  - role: S
+    text: the exercise
+    head:
+    - exercise
+  - role: V
+    text: is
+  - role: SC
+    text: easy
+- id: '401'
+  sentence: When she saw the dog she screamed.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: When she saw the dog
+  - role: S
+    text: she
+  - role: Vi
+    text: screamed
+- id: '402'
+  sentence: If it rains tomorrow the game will be canceled.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If it rains tomorrow
+  - role: S
+    text: the game
+    head:
+    - game
+  - role: aux
+    text: will
+  - role: aux
+    text: be
+  - role: Vt
+    text: canceled
+- id: '403'
+  sentence: Until he finishes his homework he can't watch TV.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: Until he finishes his homework
+  - role: S
+    text: he
+  - role: aux
+    text: can't
+  - role: Vt
+    text: watch
+  - role: O
+    text: TV
+- id: '404'
+  sentence: Even though I know the answer I can't explain it.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Even though I know the answer
+  - role: S
+    text: I
+  - role: aux
+    text: can't
+  - role: Vt
+    text: explain
+  - role: O
+    text: it
+- id: '405'
+  sentence: I ran as far as I could.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vi
+    text: ran
+  - role: M
+    function: 副詞子句・表比較
+    modifies: null
+    text: as far as I could
+- id: '406'
+  sentence: If you need help, call me.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If you need help
+  - role: S
+    text: (You)
+  - role: Vt
+    text: call
+  - role: O
+    text: me
+- id: '407'
+  sentence: If you see Tom tell him to call me.
+  pattern: 5
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: If you see Tom
+  - role: S
+    text: (You)
+  - role: Vt
+    text: tell
+  - role: O
+    text: him
+  - role: OC
+    text: to call me
+- id: '408'
+  sentence: As I was leaving the phone rang.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: As I was leaving
+  - role: S
+    text: the phone
+    head:
+    - phone
+  - role: Vi
+    text: rang
+- id: '409'
+  sentence: Although it was late we kept talking.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞子句・表讓步
+    modifies: null
+    text: Although it was late
+  - role: S
+    text: we
+  - role: Vt
+    text: kept
+  - role: O
+    text: talking
+- id: '410'
+  sentence: Tom is probably at home now.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Tom
+  - role: V
+    text: is
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: probably
+  - role: SC
+    text: at home
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: now
+- id: '411'
+  sentence: I'm probably going to be busy for a few hours.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: '''m'
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: probably
+  - role: aux
+    text: going to
+  - role: V
+    text: be
+  - role: SC
+    text: busy
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: for a few hours
+- id: '412'
+  sentence: She will likely come tomorrow.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: will
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: likely
+  - role: Vi
+    text: come
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: tomorrow
+- id: '413'
+  sentence: He clearly didn't want to go.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: clearly
+  - role: aux
+    text: didn't
+  - role: Vt
+    text: want
+  - role: O
+    text: to go
+- id: '414'
+  sentence: She is busy, and therefore she cannot talk with you.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: is
+  - role: SC
+    text: busy
+  - role: conj
+    text: and
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: therefore
+  - role: S
+    text: she
+  - role: aux
+    text: cannot
+  - role: Vi
+    text: talk
+  - role: M
+    function: 副詞・表伴隨
+    modifies: null
+    text: with you
+- id: '415'
+  sentence: To be honest, I don't like this movie.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: To be honest
+  - role: S
+    text: I
+  - role: aux
+    text: don't
+  - role: Vt
+    text: like
+  - role: O
+    text: this movie
+    head:
+    - movie
+- id: '416'
+  sentence: To tell the truth, I forgot your name.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: To tell the truth
+  - role: S
+    text: I
+  - role: Vt
+    text: forgot
+  - role: O
+    text: your name
+    head:
+    - name
+- id: '417'
+  sentence: For God's sake, stop shouting.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: For God's sake
+  - role: S
+    text: (You)
+  - role: Vt
+    text: stop
+  - role: O
+    text: shouting
+- id: '418'
+  sentence: Much to my surprise, he passed the exam.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Much to my surprise
+  - role: S
+    text: he
+  - role: Vt
+    text: passed
+  - role: O
+    text: the exam
+    head:
+    - exam
+- id: '419'
+  sentence: Fortunately, nobody was hurt.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Fortunately
+  - role: S
+    text: nobody
+  - role: aux
+    text: was
+  - role: Vt
+    text: hurt
+- id: '420'
+  sentence: Obviously he was lying.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Obviously
+  - role: S
+    text: he
+  - role: aux
+    text: was
+  - role: Vi
+    text: lying
+- id: '421'
+  sentence: In my next life I want to be a bird.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: In my next life
+  - role: S
+    text: I
+  - role: Vt
+    text: want
+  - role: O
+    text: to be a bird
+- id: '422'
+  sentence: I have never seen snow in my life.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: have
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: never
+  - role: Vt
+    text: seen
+  - role: O
+    text: snow
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: in my life
+- id: '423'
+  sentence: He woke up in the middle of the night.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: woke up
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: in the middle of the night
+- id: '424'
+  sentence: We arrived at the end of the day.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vi
+    text: arrived
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: at the end of the day
+- id: '425'
+  sentence: She left at the beginning of the year.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: left
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: at the beginning of the year
+- id: '426'
+  sentence: At the age of ten he moved to Taipei.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: At the age of ten
+  - role: S
+    text: he
+  - role: Vi
+    text: moved
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to Taipei
+- id: '427'
+  sentence: Asbestos is linked to lung disease.
+  pattern: 2
+  passive: true
+  chunks:
+  - role: S
+    text: Asbestos
+  - role: aux
+    text: is
+  - role: Vt
+    text: linked
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to lung disease
+- id: '428'
+  sentence: The rain prevented us from going out.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The rain
+    head:
+    - rain
+  - role: Vt
+    text: prevented
+  - role: O
+    text: us
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: from going out
+- id: '429'
+  sentence: The fence keeps the dog from running away.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The fence
+    head:
+    - fence
+  - role: Vt
+    text: keeps
+  - role: O
+    text: the dog
+    head:
+    - dog
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: from running away
+- id: '430'
+  sentence: She compared the copy to the original.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: compared
+  - role: O
+    text: the copy
+    head:
+    - copy
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to the original
+- id: '431'
+  sentence: We must protect children from danger.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: must
+  - role: Vt
+    text: protect
+  - role: O
+    text: children
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: from danger
+- id: '432'
+  sentence: He swims as quickly as a fish.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: swims
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: as quickly as a fish
+- id: '433'
+  sentence: I don't eat out as often as I did before.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: don't
+  - role: Vi
+    text: eat out
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: as often as I did before
+- id: '434'
+  sentence: She explained the rule clearly.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: explained
+  - role: O
+    text: the rule
+    head:
+    - rule
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: clearly
+- id: '435'
+  sentence: She went to the store.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the store
+- id: '436'
+  sentence: We walked from the station to the park.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vi
+    text: walked
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: from the station
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the park
+- id: '437'
+  sentence: He lives in the middle of the city.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: lives
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the middle of the city
+- id: '438'
+  sentence: I study hard for the exam.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vi
+    text: study
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: hard
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: for the exam
+- id: '439'
+  sentence: She came here to study English.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: came
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: here
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: to study English
+- id: '440'
+  sentence: In order to pass the test, he studied hard.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: In order to pass the test
+  - role: S
+    text: he
+  - role: Vi
+    text: studied
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: hard
+- id: '441'
+  sentence: Call me as soon as you arrive.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: (You)
+  - role: Vt
+    text: Call
+  - role: O
+    text: me
+  - role: M
+    function: 副詞子句・表時間
+    modifies: null
+    text: as soon as you arrive
+- id: '442'
+  sentence: You can stay as long as you want.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: aux
+    text: can
+  - role: Vi
+    text: stay
+  - role: M
+    function: 副詞子句・表條件
+    modifies: null
+    text: as long as you want
+- id: '443'
+  sentence: Generally speaking, boys are taller than girls.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Generally speaking
+  - role: S
+    text: boys
+  - role: V
+    text: are
+  - role: SC
+    text: taller
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: than girls
+- id: '444'
+  sentence: To my surprise, she agreed.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: To my surprise
+  - role: S
+    text: she
+  - role: Vi
+    text: agreed
+- id: '445'
+  sentence: She is as tall as her brother.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: is
+  - role: SC
+    text: as tall
+    head:
+    - tall
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: as her brother
+- id: '446'
+  sentence: Clearly, he was wrong.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: Clearly
+  - role: S
+    text: he
+  - role: V
+    text: was
+  - role: SC
+    text: wrong
+- id: '447'
+  sentence: You're the only one that ever really liked Tom.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: You
+  - role: V
+    text: '''re'
+  - role: SC
+    text: the only one
+    head:
+    - one
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: that ever really liked Tom
+- id: '448'
+  sentence: Tom is going to be the last one to do that.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Tom
+  - role: aux
+    text: is going to
+  - role: V
+    text: be
+  - role: SC
+    text: the last one
+    head:
+    - one
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: to do that
+- id: '449'
+  sentence: One group will go, and the other one will stay.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: One group
+    head:
+    - group
+  - role: aux
+    text: will
+  - role: Vi
+    text: go
+  - role: conj
+    text: and
+  - role: S
+    text: the other one
+    head:
+    - one
+  - role: aux
+    text: will
+  - role: Vi
+    text: stay
+- id: '450'
+  sentence: I'm not the one who did that.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: V
+    text: '''m'
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: not
+  - role: SC
+    text: the one
+    head:
+    - one
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: who did that
+- id: '451'
+  sentence: I like the red ones.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: like
+  - role: O
+    text: the red ones
+    head:
+    - ones
+- id: '452'
+  sentence: She was the first one in our class to get married.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: was
+  - role: SC
+    text: the first one
+    head:
+    - one
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: in our class
+  - role: M
+    function: 形容詞・修飾
+    modifies: one
+    text: to get married
+- id: '453'
+  sentence: This one is better than that one.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: This one
+    head:
+    - one
+  - role: V
+    text: is
+  - role: SC
+    text: better
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: than that one
+- id: '454'
+  sentence: The enemy fired a volley of shots at us.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The enemy
+    head:
+    - enemy
+  - role: Vt
+    text: fired
+  - role: O
+    text: a volley of shots
+    head:
+    - shots
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: at us
+- id: '455'
+  sentence: Tom is buying us a round of drinks.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: Tom
+  - role: aux
+    text: is
+  - role: Vt
+    text: buying
+  - role: IO
+    text: us
+  - role: DO
+    text: a round of drinks
+    head:
+    - drinks
+- id: '456'
+  sentence: He ate a handful of nuts.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: ate
+  - role: O
+    text: a handful of nuts
+    head:
+    - nuts
+- id: '457'
+  sentence: He bought a pile of books.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: bought
+  - role: O
+    text: a pile of books
+    head:
+    - books
+- id: '458'
+  sentence: She drank a glass of water.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vt
+    text: drank
+  - role: O
+    text: a glass of water
+    head:
+    - water
+- id: '459'
+  sentence: One of my friends lives in Japan.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: One of my friends
+  - role: Vi
+    text: lives
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in Japan
+- id: '460'
+  sentence: I have one brother.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: have
+  - role: O
+    text: one brother
+    head:
+    - brother
+- id: '461'
+  sentence: Jonas let out a scream and ran out of the room.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Jonas
+  - role: Vt
+    text: let out
+  - role: O
+    text: a scream
+    head:
+    - scream
+  - role: conj
+    text: and
+  - role: Vi
+    text: ran
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: out of the room
+- id: '462'
+  sentence: The dog ran out of the house.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: The dog
+    head:
+    - dog
+  - role: Vi
+    text: ran
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: out of the house
+- id: '463'
+  sentence: The children ran out of the classroom.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: The children
+    head:
+    - children
+  - role: Vi
+    text: ran
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: out of the classroom
+- id: '464'
+  sentence: We ran out of milk.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vt
+    text: ran out of
+  - role: O
+    text: milk
+- id: '465'
+  sentence: They have run out of money.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: aux
+    text: have
+  - role: Vt
+    text: run out of
+  - role: O
+    text: money
+- id: '466'
+  sentence: He got out of the car.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: got
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: out of the car
+- id: '467'
+  sentence: We ran into the building.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vi
+    text: ran
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: into the building
+- id: '468'
+  sentence: I ran into an old friend yesterday.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: ran into
+  - role: O
+    text: an old friend
+    head:
+    - friend
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: yesterday
+- id: '469'
+  sentence: She looked into the box.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: looked
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: into the box
+- id: '470'
+  sentence: The police looked into the case.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: The police
+    head:
+    - police
+  - role: Vt
+    text: looked into
+  - role: O
+    text: the case
+    head:
+    - case
+- id: '471'
+  sentence: What do you think is the easiest way to do that?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: What
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: do you think
+  - role: V
+    text: is
+  - role: SC
+    text: the easiest way
+    head:
+    - way
+  - role: M
+    function: 形容詞・修飾
+    modifies: way
+    text: to do that
+- id: '472'
+  sentence: Who do you think will win the game?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: Who
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: do you think
+  - role: aux
+    text: will
+  - role: Vt
+    text: win
+  - role: O
+    text: the game
+    head:
+    - game
+- id: '473'
+  sentence: What do you believe is the best answer?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: What
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: do you believe
+  - role: V
+    text: is
+  - role: SC
+    text: the best answer
+    head:
+    - answer
+- id: '474'
+  sentence: Where do you think he went?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: Where
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: do you think
+  - role: S
+    text: he
+  - role: Vi
+    text: went
+- id: '475'
+  sentence: What do you think he bought?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: What
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: do you think
+  - role: S
+    text: he
+  - role: Vt
+    text: bought
+- id: '476'
+  sentence: Which book do you think is better?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Which book
+    head:
+    - book
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: do you think
+  - role: V
+    text: is
+  - role: SC
+    text: better
+- id: '477'
+  sentence: Why do you think she left?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: Why
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: do you think
+  - role: S
+    text: she
+  - role: Vi
+    text: left
+- id: '478'
+  sentence: What do you think of my new dress?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: What
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: think
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: of my new dress
+- id: '479'
+  sentence: Do you think he is right?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: aux
+    text: Do
+  - role: S
+    text: you
+  - role: Vt
+    text: think
+  - role: O
+    text: he is right
+- id: '480'
+  sentence: Why is it that the greatest crime and the greatest glory are to shed a man's blood?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: Why
+  - role: EF
+    text: is it that
+  - role: S
+    text: the greatest crime and the greatest glory
+    head:
+    - crime
+    - glory
+  - role: V
+    text: are
+  - role: SC
+    text: to shed a man's blood
+- id: '481'
+  sentence: Why is it that you never listen to me?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: Why
+  - role: EF
+    text: is it that
+  - role: S
+    text: you
+  - role: M
+    function: 副詞・表否定
+    modifies: null
+    text: never
+  - role: Vi
+    text: listen
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to me
+- id: '482'
+  sentence: How is it that he always wins?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: How
+  - role: EF
+    text: is it that
+  - role: S
+    text: he
+  - role: M
+    function: 副詞・表頻率
+    modifies: null
+    text: always
+  - role: Vi
+    text: wins
+- id: '483'
+  sentence: What is it that you want?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: What
+  - role: EF
+    text: is it that
+  - role: S
+    text: you
+  - role: Vt
+    text: want
+- id: '484'
+  sentence: Where is it that you want to go?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: Where
+  - role: EF
+    text: is it that
+  - role: S
+    text: you
+  - role: Vt
+    text: want
+  - role: O
+    text: to go
+- id: '485'
+  sentence: Why is it important that we recycle?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: Why
+  - role: V
+    text: is
+  - role: S
+    text: it
+  - role: SC
+    text: important
+  - role: RS
+    text: that we recycle
+- id: '486'
+  sentence: Why is it so hot today?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: Why
+  - role: V
+    text: is
+  - role: S
+    text: it
+  - role: SC
+    text: so hot
+    head:
+    - hot
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: today
+- id: '487'
+  sentence: I didn't use to like to do that, but I do now.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: didn't
+  - role: aux
+    text: use to
+  - role: Vt
+    text: like
+  - role: O
+    text: to do that
+  - role: conj
+    text: but
+  - role: S
+    text: I
+  - role: aux
+    text: do
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: now
+- id: '488'
+  sentence: She doesn't like coffee, but I do.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: doesn't
+  - role: Vt
+    text: like
+  - role: O
+    text: coffee
+  - role: conj
+    text: but
+  - role: S
+    text: I
+  - role: aux
+    text: do
+- id: '489'
+  sentence: He said he would come, and he did.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: said
+  - role: O
+    text: he would come
+  - role: conj
+    text: and
+  - role: S
+    text: he
+  - role: aux
+    text: did
+- id: '490'
+  sentence: I don't know the answer, but she does.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: don't
+  - role: Vt
+    text: know
+  - role: O
+    text: the answer
+    head:
+    - answer
+  - role: conj
+    text: but
+  - role: S
+    text: she
+  - role: aux
+    text: does
+- id: '491'
+  sentence: He did his best.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vt
+    text: did
+  - role: O
+    text: his best
+    head:
+    - best
+- id: '492'
+  sentence: I did it yesterday.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vt
+    text: did
+  - role: O
+    text: it
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: yesterday
+- id: '493'
+  sentence: It seems like we've been talking about this all day.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: seems
+  - role: SC
+    text: like we've been talking about this all day
+- id: '494'
+  sentence: It looks like Tom and Mary are mad.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: looks
+  - role: SC
+    text: like Tom and Mary are mad
+- id: '495'
+  sentence: Tom and Mary looked like they were discouraged.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Tom and Mary
+  - role: V
+    text: looked
+  - role: SC
+    text: like they were discouraged
+- id: '496'
+  sentence: Tom and Mary looked like they were healthy.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Tom and Mary
+  - role: V
+    text: looked
+  - role: SC
+    text: like they were healthy
+- id: '497'
+  sentence: It sounds like you had a great time.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: sounds
+  - role: SC
+    text: like you had a great time
+- id: '498'
+  sentence: She looks like she is tired.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: looks
+  - role: SC
+    text: like she is tired
+- id: '499'
+  sentence: It feels like it is going to rain.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: feels
+  - role: SC
+    text: like it is going to rain
+- id: '500'
+  sentence: He looks as if he has seen a ghost.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: looks
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: as if he has seen a ghost
+- id: '501'
+  sentence: It seems as though nobody cares.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: seems
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: as though nobody cares
+- id: '502'
+  sentence: The reason that Tom got sick was because he overate.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The reason
+    head:
+    - reason
+  - role: M
+    function: 形容詞・修飾
+    modifies: reason
+    text: that Tom got sick
+  - role: V
+    text: was
+  - role: SC
+    text: because he overate
+- id: '503'
+  sentence: The reason I'm late is because I missed the bus.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The reason
+    head:
+    - reason
+  - role: M
+    function: 形容詞・修飾
+    modifies: reason
+    text: I'm late
+  - role: V
+    text: is
+  - role: SC
+    text: because I missed the bus
+- id: '504'
+  sentence: It is because he is lazy.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: because he is lazy
+- id: '505'
+  sentence: She looks like her mother.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: V
+    text: looks
+  - role: SC
+    text: like her mother
+- id: '506'
+  sentence: It looks like rain.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: looks
+  - role: SC
+    text: like rain
+- id: '507'
+  sentence: He left because he was tired.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: left
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because he was tired
+- id: '508'
+  sentence: He talks as if he knew everything.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: talks
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: as if he knew everything
+- id: '509'
+  sentence: Nobody sings like she does.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: Nobody
+  - role: Vi
+    text: sings
+  - role: M
+    function: 副詞子句・表方式
+    modifies: null
+    text: like she does
+- id: '510'
+  sentence: The problem is that we have no money.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: The problem
+    head:
+    - problem
+  - role: V
+    text: is
+  - role: SC
+    text: that we have no money
+- id: '511'
+  sentence: It is because of the rain.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: V
+    text: is
+  - role: SC
+    text: because of the rain
+- id: '512'
+  sentence: I was late because I missed the bus.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: V
+    text: was
+  - role: SC
+    text: late
+  - role: M
+    function: 副詞子句・表原因
+    modifies: null
+    text: because I missed the bus
+- id: '513'
+  sentence: Is it because you are tired?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: V
+    text: Is
+  - role: S
+    text: it
+  - role: SC
+    text: because you are tired
+- id: '514'
+  sentence: I happened to find the camera I'd lost.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: happened to
+  - role: Vt
+    text: find
+  - role: O
+    text: the camera
+    head:
+    - camera
+  - role: M
+    function: 形容詞・修飾
+    modifies: camera
+    text: I'd lost
+- id: '515'
+  sentence: I just happen to have a contract right here.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: just
+  - role: aux
+    text: happen to
+  - role: Vt
+    text: have
+  - role: O
+    text: a contract
+    head:
+    - contract
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: right here
+- id: '516'
+  sentence: She happened to be at home.
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: happened to
+  - role: V
+    text: be
+  - role: SC
+    text: at home
+- id: '517'
+  sentence: Do you happen to know his name?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: aux
+    text: Do
+  - role: S
+    text: you
+  - role: aux
+    text: happen to
+  - role: Vt
+    text: know
+  - role: O
+    text: his name
+    head:
+    - name
+- id: '518'
+  sentence: We happened to meet at the station.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: happened to
+  - role: Vi
+    text: meet
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: at the station
+- id: '519'
+  sentence: I can't help but smile every time I think of that.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: can't help but
+  - role: Vi
+    text: smile
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every time I think of that
+- id: '520'
+  sentence: She couldn't help but laugh.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: aux
+    text: couldn't help but
+  - role: Vi
+    text: laugh
+- id: '521'
+  sentence: I cannot help but wonder why he left.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: cannot help but
+  - role: Vt
+    text: wonder
+  - role: O
+    text: why he left
+- id: '522'
+  sentence: Tom and Mary don't go fishing as much as they used to.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: Tom and Mary
+  - role: aux
+    text: don't
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: fishing
+  - role: M
+    function: 副詞・表比較
+    modifies: null
+    text: as much as they used to
+- id: '523'
+  sentence: Let's go shopping this weekend.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: aux
+    text: Let
+  - role: S
+    text: '''s'
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: shopping
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: this weekend
+- id: '524'
+  sentence: We went swimming in the lake.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: swimming
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the lake
+- id: '525'
+  sentence: They often go camping in the mountains.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: They
+  - role: M
+    function: 副詞・表頻率
+    modifies: null
+    text: often
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: camping
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: in the mountains
+- id: '526'
+  sentence: I can't help laughing.
+  pattern: 2
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: aux
+    text: can't
+  - role: Vt
+    text: help
+  - role: O
+    text: laughing
+- id: '527'
+  sentence: What happened to you?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: What
+  - role: Vi
+    text: happened
+  - role: M
+    function: 副詞・表對象
+    modifies: null
+    text: to you
+- id: '528'
+  sentence: It happened yesterday.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vi
+    text: happened
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: yesterday
+- id: '529'
+  sentence: I go to school by bus.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to school
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: by bus
+- id: '530'
+  sentence: I go to the morning market every Sunday.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: I
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the morning market
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every Sunday
+- id: '531'
+  sentence: We are going home.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: We
+  - role: aux
+    text: are
+  - role: Vi
+    text: going
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: home
+- id: '532'
+  sentence: Let's go for a walk.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: aux
+    text: Let
+  - role: S
+    text: '''s'
+  - role: Vi
+    text: go
+  - role: M
+    function: 副詞・表目的
+    modifies: null
+    text: for a walk
+- id: '533'
+  sentence: He went to the building.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: He
+  - role: Vi
+    text: went
+  - role: M
+    function: 副詞・表地點
+    modifies: null
+    text: to the building
+- id: '534'
+  sentence: She goes running every morning.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: S
+    text: She
+  - role: Vi
+    text: goes
+  - role: M
+    function: 副詞・表狀況
+    modifies: null
+    text: running
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: every morning
+- id: '535'
+  sentence: How long will it take you to finish doing that?
+  pattern: 4
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: How long
+  - role: aux
+    text: will
+  - role: S
+    text: it
+  - role: Vt
+    text: take
+  - role: IO
+    text: you
+  - role: RS
+    text: to finish doing that
+- id: '536'
+  sentence: How long does it take you to get to school?
+  pattern: 4
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: How long
+  - role: aux
+    text: does
+  - role: S
+    text: it
+  - role: Vt
+    text: take
+  - role: IO
+    text: you
+  - role: RS
+    text: to get to school
+- id: '537'
+  sentence: How much did it cost you to fix the car?
+  pattern: 4
+  passive: false
+  chunks:
+  - role: DO
+    text: How much
+    head:
+    - much
+  - role: aux
+    text: did
+  - role: S
+    text: it
+  - role: Vt
+    text: cost
+  - role: IO
+    text: you
+  - role: RS
+    text: to fix the car
+- id: '538'
+  sentence: It takes me an hour to get to school.
+  pattern: 4
+  passive: false
+  chunks:
+  - role: S
+    text: It
+  - role: Vt
+    text: takes
+  - role: IO
+    text: me
+  - role: DO
+    text: an hour
+    head:
+    - hour
+  - role: RS
+    text: to get to school
+- id: '539'
+  sentence: How long did it take?
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: How long
+  - role: aux
+    text: did
+  - role: S
+    text: it
+  - role: Vi
+    text: take
+- id: '540'
+  sentence: Which do you like better, Boston or Chicago?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: Which
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: like
+  - role: M
+    function: 副詞・表方式
+    modifies: null
+    text: better
+  - role: M
+    function: 同位語・說明
+    modifies: Which
+    text: Boston or Chicago
+- id: '541'
+  sentence: Which do you prefer, tea or coffee?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: Which
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: prefer
+  - role: M
+    function: 同位語・說明
+    modifies: Which
+    text: tea or coffee
+- id: '542'
+  sentence: Who is taller, Tom or Mary?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Who
+  - role: V
+    text: is
+  - role: SC
+    text: taller
+  - role: M
+    function: 同位語・說明
+    modifies: Who
+    text: Tom or Mary
+- id: '543'
+  sentence: Which is bigger, the sun or the moon?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Which
+  - role: V
+    text: is
+  - role: SC
+    text: bigger
+  - role: M
+    function: 同位語・說明
+    modifies: Which
+    text: the sun or the moon
+- id: '544'
+  sentence: What a pain, why does he have to vacuum in the middle of the night!
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: What a pain
+  - role: M
+    function: 副詞・表原因
+    modifies: null
+    text: why
+  - role: aux
+    text: does
+  - role: S
+    text: he
+  - role: aux
+    text: have to
+  - role: Vi
+    text: vacuum
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: in the middle of the night
+- id: '545'
+  sentence: What a surprise, you are here!
+  pattern: 3
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: What a surprise
+  - role: S
+    text: you
+  - role: V
+    text: are
+  - role: SC
+    text: here
+- id: '546'
+  sentence: What a beautiful day it is!
+  pattern: 3
+  passive: false
+  chunks:
+  - role: SC
+    text: What a beautiful day
+    head:
+    - day
+  - role: S
+    text: it
+  - role: V
+    text: is
+- id: '547'
+  sentence: What a nice car you have!
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: What a nice car
+    head:
+    - car
+  - role: S
+    text: you
+  - role: Vt
+    text: have
+- id: '548'
+  sentence: Which of these books is yours?
+  pattern: 3
+  passive: false
+  chunks:
+  - role: S
+    text: Which of these books
+  - role: V
+    text: is
+  - role: SC
+    text: yours
+- id: '549'
+  sentence: What do you want, money or fame?
+  pattern: 2
+  passive: false
+  chunks:
+  - role: O
+    text: What
+  - role: aux
+    text: do
+  - role: S
+    text: you
+  - role: Vt
+    text: want
+  - role: M
+    function: 同位語・說明
+    modifies: What
+    text: money or fame
+- id: '550'
+  sentence: What a shame, I have to leave now.
+  pattern: 1
+  passive: false
+  chunks:
+  - role: M
+    function: 副詞・表語氣
+    modifies: null
+    text: What a shame
+  - role: S
+    text: I
+  - role: aux
+    text: have to
+  - role: Vi
+    text: leave
+  - role: M
+    function: 副詞・表時間
+    modifies: null
+    text: now

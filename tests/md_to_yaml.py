@@ -29,6 +29,8 @@ def parse_chunk(raw):
         if "・修飾" in func:
             func, target = func.split("・修飾")
             func += "・修飾"
+        elif func.startswith("同位語・說明") and func != "同位語・說明":
+            func, target = "同位語・說明", func[len("同位語・說明"):]  # 同位語・說明Tom：說明的對象是 Tom
         return {"role": "M", "function": func, "modifies": target, "text": text}
     if role not in CORE_ROLES:
         raise ValueError(f"不認得的角色：{role}（{raw}）")

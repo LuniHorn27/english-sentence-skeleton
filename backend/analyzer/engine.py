@@ -110,6 +110,16 @@ def adverb_function(tok) -> str:
     dep = tok.dep_
     if dep == "agent":
         return "副詞・表執行者"
+    if dep == "advmod":
+        multi = multi_opener_clause(tok)  # As far as I know…、As soon as I got home…（子句掛在 far／soon 底下）
+        if multi is not None:
+            return f"副詞子句・{multi[1]}"
+    if " ".join(t.lower_ for t in sorted(tok.subtree, key=lambda t: t.i) if not t.is_punct) in L.TONE_PHRASES:
+        return "副詞・表語氣"  # To be honest、To tell the truth、Generally speaking
+    if dep in ("advmod", "prep") and feeling_phrase(tok):
+        return "副詞・表語氣"  # (Much) to my surprise
+    if dep == "advmod" and as_as_comparison(tok):
+        return "副詞・表比較"  # runs as fast as his brother、eat out as often as I did（規則 5.19 第五批②）
     if dep in ("prep",) and lemma == "than":
         return "副詞・表比較"  # taller than her sister
     head = tok.head.lemma_.lower()
@@ -144,12 +154,20 @@ def adverb_function(tok) -> str:
             return "副詞・表路程"  # all the way to school
         if lemma in ("in", "from") and olemma in ("opinion", "view", "perspective", "experience"):
             return "副詞・表語氣"  # In my opinion,…（依我看）
+        if lemma == "for" and olemma == "sake" and any(c.dep_ == "poss" and c.lemma_.lower() in ("god", "heaven", "goodness", "pete") for c in obj.children):
+            return "副詞・表語氣"  # For God's sake（拜託）
+        if lemma in ("in", "during", "throughout") and olemma in L.LIFE_NOUNS:
+            return "副詞・表時間"  # in my next life、in his childhood
+        if obj is not None and olemma in L.PART_NOUNS and any(
+                p.lower_ == "of" and any(g.dep_ == "pobj" and (g.lemma_.lower() in L.TIME_NOUNS or g.ent_type_ in ("DATE", "TIME"))
+                                         for g in p.children) for p in obj.children if p.dep_ == "prep"):
+            return "副詞・表時間"  # in the middle of the night、at the beginning of the year
         if lemma in L.TIME_PREPS:
             return "副詞・表時間"
         if obj is not None and (olemma in L.TIME_NOUNS or obj.ent_type_ in ("DATE", "TIME")):
             return "副詞・表時間"
-        if (tok.head.lemma_.lower(), lemma) in L.VERB_PREP_OBJECT:
-            return "副詞・表對象"  # look at the photo：介系詞後面是動作的對象
+        if (tok.head.lemma_.lower(), lemma) in L.VERB_PREP_OBJECT and not (lemma in ("into", "across", "through", "onto") and olemma in L.PLACE_NOUNS):
+            return "副詞・表對象"  # look at the photo：介系詞後面是動作的對象（ran into the building 是地點）
         if olemma in L.CONDITION_NOUNS:
             return "副詞・表狀況"
         if lemma == "for":
@@ -191,11 +209,33 @@ def adverb_function(tok) -> str:
         return "副詞・表語氣"
     if lemma in L.FREQ_ADVERBS:
         return "副詞・表頻率"  # always、often、twice
+    if lemma in L.TONE_OR_MANNER_ADVERBS and tok.i < tok.head.i and (
+            tok.i == tok.sent.start or tok.nbor().dep_ in ("aux", "auxpass", "neg") or tok.nbor().tag_ == "MD"):
+        return "副詞・表語氣"  # Clearly, …、He clearly didn't want…（顯然）；explain clearly 仍是表方式
     if lemma in L.TIME_ADVERBS:
         return "副詞・表時間"
     if lemma in L.PLACE_ADVERBS:
         return "副詞・表地點"
     return "副詞・表方式"
+
+
+def feeling_phrase(tok) -> bool:
+    """to my surprise、much to my dismay：說話者的感受"""
+    prep = tok if tok.dep_ == "prep" else next((c for c in tok.children if c.dep_ == "prep"), None)
+    if prep is None or prep.lower_ != "to" or (tok is not prep and tok.lower_ != "much"):
+        return False
+    return any(c.dep_ == "pobj" and c.lemma_.lower() in L.FEELING_NOUNS for c in prep.children)
+
+
+def as_as_comparison(tok) -> bool:
+    """as fast as his brother、as often as I did：副詞前面有 as、後面接 as 片語或 as 子句（as soon as 等連接詞除外）"""
+    if tok.lower_ in ("soon", "long", "far", "well"):
+        return False  # as soon as（表時間）、as long as（表條件）、as far as、as well as 當連接詞，另外處理
+    if not any(c.lower_ == "as" and c.i == tok.i - 1 for c in tok.children):
+        return False
+    return any((c.dep_ == "prep" and c.lower_ == "as") or
+               (c.dep_ == "advcl" and any(m.dep_ == "mark" and m.lower_ == "as" for m in c.children))
+               for c in tok.children if c.i > tok.i)
 
 
 def clause_opener(tok):
@@ -222,6 +262,8 @@ def opener_tokens(tok):
     for n in (3, 2):
         phrase = " ".join(t.lower_ for t in words[:n])
         if len(words) >= n and phrase in L.MULTI_SUBORDINATORS:
+            if phrase == "as far as" and tok.lemma_.lower() in L.AS_FAR_AS_OPINION_VERBS:
+                return words[:n], "表語氣"  # As far as I know…：就我所知
             return words[:n], L.MULTI_SUBORDINATORS[phrase]
     mark = clause_opener(tok)
     if mark is not None:
@@ -256,6 +298,8 @@ def multi_opener_clause(adv):
     for n in (3, 2):
         phrase = " ".join(t.lower_ for t in words[:n])
         if len(words) >= n and phrase in L.MULTI_SUBORDINATORS:
+            if phrase == "as far as" and clause.lemma_.lower() in L.AS_FAR_AS_OPINION_VERBS:
+                return clause, "表語氣"  # As far as I know…：就我所知
             return clause, L.MULTI_SUBORDINATORS[phrase]
     return None
 
@@ -291,6 +335,8 @@ def as_function(tok) -> str:
 
 
 def advcl_function(tok) -> Optional[str]:
+    if " ".join(t.lower_ for t in sorted(tok.subtree, key=lambda t: t.i) if not t.is_punct) in L.TONE_PHRASES:
+        return "副詞・表語氣"  # To be honest、To tell the truth、Generally speaking（不是表目的）
     opener, f = opener_tokens(tok)
     if len(opener) == 1 and opener[0].lower_ == "as":
         f = as_function(tok)
@@ -361,7 +407,13 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
 
     # 省略句：I can't.、Yes, I will.、I did.（只有助動詞，後面的動詞省略了）；So do I.、Neither can she.
     agree = sent[0].lower_ in ("so", "neither", "nor") and (v.lemma_ in ("do", "be", "have") or v.tag_ == "MD")
-    if (v.tag_ == "MD" or (v.lemma_ == "do" and v.pos_ == "AUX") or agree) and not any(
+    # 代替前面動詞的 do（She doesn't like coffee, but I do.）：模型常把 do 當一般動詞；
+    # 後面只有 now、too 這類時間或語氣副詞時才算（He did well 的 well 是方式，不算）
+    echo_do = v.lemma_ == "do" and v.pos_ == "VERB" and any(c.dep_ == "nsubj" for c in children) and all(
+        c.dep_ in ("nsubj", "aux", "neg", "punct", "cc", "conj")
+        or (c.dep_ == "advmod" and (c.lemma_.lower() in L.TIME_ADVERBS or c.lemma_.lower() in L.TONE_ADVERBS))
+        for c in children)
+    if (v.tag_ == "MD" or (v.lemma_ == "do" and v.pos_ == "AUX") or agree or echo_do) and not any(
             c.dep_ in ("xcomp", "ccomp", "acomp", "attr", "dobj", "oprd", "dative", "advcl", "prep") for c in children):
         info.elliptic = True
         info.pattern = 1
@@ -426,7 +478,30 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[t.i] = Spec("aux", clause=index)
         inner.pattern = clause_pattern(roots, index, inner)
         return inner
-    if (v.lemma_ == "have" or going_to or used_to or supposed_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
+    # happen to ＋ 原形動詞（碰巧）：跟 have to 一樣，happen to 當助動詞，後面的動詞決定句型（2026-10-08）
+    happen_to = v.lemma_ == "happen"
+    # can't help but ＋ 原形動詞（忍不住）：can't help but 當助動詞（模型把 but 掛在不同地方，所以看字的順序）
+    help_but = None
+    if v.lemma_ == "help" and any(c.tag_ == "MD" for c in children) and any(c.dep_ == "neg" for c in children) \
+            and v.i + 2 < len(v.doc) and v.nbor().lower_ == "but" and v.doc[v.i + 2].tag_ == "VB":
+        help_but = (v.nbor(), v.doc[v.i + 2])
+    if help_but is not None:
+        but, main = help_but
+        roots[v.i] = Spec("aux", clause=index)
+        roots[but.i] = Spec("aux", clause=index)
+        inner = assign_clause(main, roots, index, sent, shared_subject=True)
+        for c in children:
+            if c.i in (main.i, but.i) or c.dep_ == "punct":
+                continue
+            if c.dep_ in ("nsubj", "nsubjpass", "csubj"):
+                roots[c.i] = Spec("S", clause=index)
+            elif c.dep_ in ("aux", "auxpass", "neg"):
+                roots[c.i] = Spec("aux", clause=index, kind="neg" if c.dep_ == "neg" else "")
+            elif c.dep_ in ("advmod", "npadvmod", "prep"):
+                roots[c.i] = Spec("M", function=adverb_function(c), clause=index)
+        inner.pattern = clause_pattern(roots, index, inner)
+        return inner
+    if (v.lemma_ == "have" or going_to or used_to or supposed_to or happen_to) and have_to is not None and not any(c.dep_ in ("dobj", "dative") for c in children):
         roots[v.i] = Spec("aux", clause=index)
         inner = assign_clause(have_to, roots, index, sent, shared_subject=True)
         for c in children:
@@ -617,6 +692,13 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 roots[c.i] = Spec("M", function=adverb_function_prep_like(c), clause=index)
             else:
                 roots[c.i] = Spec("IO", clause=index)
+        elif d in ("dobj", "xcomp") and v.lemma_ == "go" and c.i == v.i + 1 and c.lower_.endswith("ing") \
+                and c.pos_ in ("VERB", "NOUN") and not any(g.dep_ in ("det", "poss") for g in c.children):
+            # go fishing／go shopping：去從事某活動，V-ing 是修飾語（2026-10-08，使用者同意的建議）
+            roots[c.i] = Spec("M", function="副詞・表狀況", clause=index)
+            for g in c.children:
+                if g.dep_ in ("prep", "advmod", "npadvmod"):
+                    roots[g.i] = Spec("M", function=adverb_function(g), clause=index)  # went swimming [in the lake]
         elif d == "dobj":
             roots[c.i] = Spec("DO" if (has_dative or info.passive) else "O", clause=index)
         elif d == "attr":
@@ -676,6 +758,10 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                 pobj = next((g for g in c.children if g.dep_ == "pobj"), None)
                 if pobj is not None and pobj.tag_ != "VBG" and pobj.pos_ in ("NOUN", "PROPN", "PRON", "NUM"):
                     roots[c.i] = Spec("SC", clause=index)
+            # 連綴動詞 ＋ like ＋ 子句（It looks like it's going to rain.）：口語的 like ＝ as if；
+            # 跟 like ＋ 名詞一致，子句是主詞補語 → 句型二（2026-10-08）。其他動詞後面的 like 子句是副詞子句・表方式
+            if c.dep_ == "advcl" and c.i > v.i and any(m.dep_ == "mark" and m.lower_ == "like" for m in c.children):
+                roots[c.i] = Spec("SC", clause=index, inner_verb=c)
 
     # 賴世雄：turned him into a good student、regard him as a genius → into／as 片語是受詞補語
     if has_obj or info.passive:
@@ -728,7 +814,8 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
     if cleft is not None:
         return cleft_analysis(v, subj, cleft, roots, index, sent)
     elif subj is not None and subj.lower_ == "it":
-        for r in [v] + [c for c in children if c.i in roots and roots[c.i].role == "SC"]:
+        # 主詞補語是整個子句時（It feels like it is going to rain），子句裡的 to V 不是真主詞
+        for r in [v] + [c for c in children if c.i in roots and roots[c.i].role == "SC" and c.pos_ not in ("VERB", "AUX")]:
             for g in r.children:
                 # It is hard for me to learn English：for me to learn English 整塊是真主詞（使用者決定 2026-09-29）
                 for_to = g.dep_ == "advcl" and any(x.dep_ == "mark" and x.lower_ == "for" for x in g.children)
@@ -818,9 +905,12 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                       and ((c.i > v.i and c.dep_ == "prep" and any(g.dep_ in ("pobj", "pcomp") for g in c.children)
                             and not (v.lower_ == "been" and c.lower_ == "to"))  # have been to Japan（去過）維持句型一
                            or (c.i > v.i and c.dep_ == "advmod" and c.lemma_.lower() in L.PLACE_ADVERBS)
-                           or (c.dep_ == "advmod" and c.lower_ == "where"))), None)  # Where is your book?
+                           or (c.dep_ == "advmod" and c.lower_ == "where")  # Where is your book?
+                           # The reason I'm late is because I missed the bus.（be 後面一定要接的 because 子句，2026-10-08）
+                           or (c.i > v.i and c.dep_ == "advcl" and roots[c.i].function == "副詞子句・表原因"
+                               and any(m.dep_ == "mark" and m.lower_ == "because" for m in c.children)))), None)
         if place is not None:
-            roots[place.i] = Spec("SC", clause=index)
+            roots[place.i] = Spec("SC", clause=index, inner_verb=roots[place.i].inner_verb)
 
     # There is 句型：掛在真正主詞底下的介系詞片語，當成表地點的副詞
     if info.existential:
@@ -830,8 +920,46 @@ def assign_clause(v, roots: dict, index: int, sent, shared_subject=False) -> Cla
                     if g.dep_ == "prep":
                         roots[g.i] = Spec("M", function=adverb_function(g), clause=index)
 
+    question_fixes(v, children, roots, index, sent)
     info.pattern = clause_pattern(roots, index, info)
     return info
+
+
+def question_fixes(v, children, roots, index, sent) -> bool:
+    """疑問句和感嘆語的幾種固定說法（2026-10-08，Gemini 抓錯助手找到，照第 110 項建議）。有改動時回傳 True"""
+    before = {k: (r.role, r.function) for k, r in roots.items()}
+    doc = v.doc
+    first = next(t for t in sent if not t.is_punct)
+    # ① How long will it take you to…?：規則 5.19「It takes ＋ 人 ＋ 時間 ＋ to V」，人是 IO；
+    #    How long 維持副詞・表時間（第六批⑤），How much（金錢）是 DO → 句型五
+    if v.lemma_ in ("take", "cost") and first.lower_ == "how" and any(
+            c.dep_ in ("nsubj", "expl") and c.lower_ == "it" for c in children):
+        amount = next((c for c in children if c.i < v.i and c.lower_ in ("long", "much") and first.head.i == c.i), None)
+        person = next((c for c in children if c.i > v.i and c.dep_ in ("dobj", "dative")
+                       and (c.pos_ in ("PRON", "PROPN") or c.lemma_.lower() in L.PERSON_NOUNS)), None)
+        if amount is not None and person is not None:
+            roots[person.i] = Spec("IO", clause=index)
+            roots[amount.i] = Spec("M", function="副詞・表時間", clause=index) if amount.lower_ == "long" else Spec("DO", clause=index)
+    # ② Which do you like better, Boston or Chicago?：句尾「, A or B」說明句首的疑問詞 → 同位語
+    if sent.text.rstrip().endswith("?") and first.lower_ in ("which", "who", "what") and first.tag_ in ("WDT", "WP"):
+        for c in children:
+            start = min(t.i for t in c.subtree)
+            if c.i > v.i and start > 0 and doc[start - 1].text == "," and any(
+                    g.dep_ == "cc" and g.lower_ == "or" for g in c.children) and any(g.dep_ == "conj" for g in c.children):
+                roots[c.i] = Spec("M", function="同位語・說明", modifies=first, clause=index, kind="appos")
+                if v.lemma_ == "be":  # Which is bigger, the sun or the moon?：be 後面的 bigger 是主詞補語
+                    for g in children:
+                        if g.i in roots and roots[g.i].role == "OC" and roots[g.i].clause == index:
+                            roots[g.i] = Spec("SC", clause=index)
+                    if first.i in roots and roots[first.i].role == "O":
+                        roots[first.i] = Spec("S", clause=index)
+    # ③ What a pain, why does he…!：句首「What a ＋ 名詞」後面接逗號，是感嘆語，不是句子的成分
+    for c in children:
+        if c.i < v.i and c.pos_ == "NOUN" and any(g.lower_ == "what" and g.dep_ == "det" for g in c.children):
+            end = max(t.i for t in c.subtree)
+            if end + 1 < len(doc) and doc[end + 1].text == ",":
+                roots[c.i] = Spec("M", function="副詞・表語氣", clause=index)
+    return {k: (r.role, r.function) for k, r in roots.items()} != before
 
 
 def interrupted_second_object(v, children):
@@ -888,6 +1016,8 @@ def cleft_clause(v, subj, children):
             continue
         focus = [x for x in children if v.i < x.i < opener.i and x.dep_ not in ("neg", "punct", "nsubj", "expl")
                  and not (x.dep_ == "advmod" and x.lower_ in ("only", "just", "really", "also"))]
+        if not focus and opener.lower_ == "that" and wh_focus(v) is not None:
+            return c  # Why is it that you never listen to me?：被強調的是句首的疑問詞
         if not focus or any(x.dep_ == "acomp" or x.pos_ == "ADJ" for x in focus):
             continue
         f = focus[0]
@@ -899,6 +1029,16 @@ def cleft_clause(v, subj, children):
     return None
 
 
+def wh_focus(v):
+    """疑問句的強調句 Why／What／Who is it that…?：回傳句首的疑問詞（掛在 be 動詞底下）；不是就回傳 None"""
+    if not v.sent.text.rstrip().endswith("?"):
+        return None
+    first = next(t for t in v.sent if not t.is_punct)
+    if first.tag_ in ("WRB", "WP", "WDT") and first.head.i == v.i and first.i < v.i:
+        return first
+    return None
+
+
 def cleft_analysis(v, subj, c, roots, index, sent):
     """強調句（使用者決定 2026-09-29）：照「還原句」標句型。
     It was John who broke the window → John broke the window → 句型三：S + Vt + O
@@ -906,6 +1046,8 @@ def cleft_analysis(v, subj, c, roots, index, sent):
     opener = min(c.subtree, key=lambda t: t.i)
     focus = next((x for x in v.children if v.i < x.i < opener.i and x.dep_ not in ("neg", "punct", "nsubj", "expl")
                   and not (x.dep_ == "advmod" and x.lower_ in ("only", "just", "really", "also"))), None)
+    if focus is None:
+        focus = wh_focus(v)  # Why is it that…?
     inner = assign_clause(c, roots, index, sent, shared_subject=True)
     inner.flags.add("cleft")
     gap = roots.get(opener.i).role if opener.i in roots else None  # who／that 在子句裡的角色，就是被強調部分的角色
@@ -1262,6 +1404,8 @@ def heads_for(root, spec, toks, flags, vars_):
         return [pobj] + [c for c in pobj.children if c.dep_ == "conj"]
     if root.pos_ in ("NOUN",):
         return [root] + [c for c in root.children if c.dep_ == "conj" and c.pos_ == "NOUN"]
+    if root.lower_ in ("one", "ones") and any(c.dep_ in ("det", "amod", "poss") for c in root.children):
+        return [root]  # the one、the last one、the red ones：one 代替前面的名詞（模型常把它當數字）
     if root.pos_ == "ADJ":
         return [root]
     return []
@@ -1451,6 +1595,26 @@ def tag_question_main(root, sent):
     return main
 
 
+THINK_VERBS = {"think", "believe", "suppose", "guess", "say", "reckon", "expect", "imagine", "feel"}
+
+
+def inserted_think(root, sent):
+    """What do you think is the best way?：疑問詞和真正的子句中間插了 do you think。
+    回傳 (真正子句的動詞, 疑問詞)；不是這種句子就回傳 None"""
+    if not sent.text.rstrip().endswith("?") or root.lemma_.lower() not in THINK_VERBS:
+        return None
+    first = next(t for t in sent if not t.is_punct)
+    if first.tag_ not in ("WP", "WDT", "WRB", "WP$"):
+        return None
+    wh = first if first.dep_ not in ("det", "poss") else first.head  # Which book do you think…：整個疑問片語
+    if not any(c.dep_ == "aux" and c.lemma_ == "do" and c.i < root.i for c in root.children):
+        return None
+    inner = next((c for c in root.children if c.dep_ == "ccomp" and c.i > root.i and c.pos_ in ("VERB", "AUX")), None)
+    if inner is None or wh.i > root.i:
+        return None
+    return inner, wh
+
+
 # ---------- 主程式 ----------
 def clean_spaces(text: str) -> str:
     """從網頁複製的句子常夾著不斷行空白、全形空白、零寬字元或連續空白，
@@ -1459,12 +1623,106 @@ def clean_spaces(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+# ---------- 句首副詞子句後面少了逗號 ----------
+# As far as I know the store is closed.、Because it was raining we stayed home.：
+# 小型模型常把後面的主要子句當成前面動詞的受詞（know 的 ccomp），或把連接詞當成主要動詞，
+# 結果找不到主要動詞、或悄悄標錯。加上逗號，模型就切得對 → 在子句交界補一個看不見的逗號重新分析，
+# 再把字元位置對回原句（畫面上不會出現這個逗號）。
+CLAUSE_START_TAGS = {"DT", "PRP", "PRP$", "NNP", "NNPS", "NN", "NNS", "EX", "CD", "VB", "UH", "JJ", "WP"}
+
+
+def leading_subordinator(doc) -> int:
+    """句首是副詞子句連接詞時，回傳連接詞的字數；不是就回傳 0"""
+    words = [t.lower_ for t in doc[:3]]
+    for n in (3, 2):
+        if len(words) >= n and " ".join(words[:n]) in L.MULTI_SUBORDINATORS:
+            return n
+    return 1 if words and words[0] in L.SUBORDINATORS and words[0] != "so" else 0  # So I went home 的 so 是對等連接詞
+
+
+def well_split(doc, k: int, rest: int) -> bool:
+    """第 0～k-1 個字是句首的副詞子句、第 rest 個字以後是主要子句時，模型的結構是不是切對了：
+    副詞子句整塊只靠一個字掛在主要子句底下、主要子句沒有字掛在副詞子句裡、整句只有一個主要動詞且在主要子句裡"""
+    roots = [t for t in doc if t.dep_ == "ROOT"]
+    if len(roots) != 1 or roots[0].i < rest or roots[0].pos_ not in ("VERB", "AUX"):
+        return False
+    root = roots[0]
+    if any(c.dep_ == "aux" and c.tag_ == "TO" for c in root.children):
+        return False  # to call me 是不定詞，不能當主要子句的動詞（If you see Tom tell him to call me）
+    prefix = [t for t in doc[:k] if not t.is_punct]
+    suffix = [t for t in doc[rest:] if not t.is_punct]
+    if not any(t.pos_ in ("VERB", "AUX") for t in prefix):
+        return False
+    exits = [t for t in prefix if t.head.i >= k]
+    if len(exits) != 1 or exits[0].head.i < rest:
+        return False
+    if any(t.head.i < k for t in suffix):
+        return False
+    subjects = [c for c in root.children if c.dep_ in ("nsubj", "nsubjpass", "expl", "csubj") and c.i >= rest]
+    if root.tag_ == "VB" and not any(c.dep_ in ("aux", "auxpass") for c in root.children):
+        # 原形動詞又沒有助動詞＝祈使句，主詞只可能是 you。
+        # If you need help please call me：模型把 help 當 call 的主詞，代表交界切錯了（help 是 need 的受詞）
+        return all(c.lower_ == "you" for c in subjects)
+    return bool(subjects)
+
+
+def missing_comma_split(text: str, doc):
+    """句首副詞子句後面少了逗號、模型切錯時，回傳補了逗號的 (文字, 分析結果, 逗號位置)；不需要補就回傳 None"""
+    n = leading_subordinator(doc)
+    if not n or text.rstrip().endswith("?"):
+        return None
+    toks = list(doc)
+    if any(t.text in (",", ";", ":", "—") for t in toks):
+        return None  # 已經有逗號：只處理完全沒有標點分隔的句子，避免把原本對的切壞
+    candidates = [k for k in range(n + 2, len(toks))
+                  if (toks[k].tag_ in CLAUSE_START_TAGS or toks[k].lower_ == "please") and not toks[k].is_punct
+                  and toks[k - 1].tag_ not in ("DT", "PRP$", "IN", "TO", "MD", "CC", "POS", "WDT")
+                  and any(t.pos_ in ("VERB", "AUX") for t in toks[n:k])]  # As a child I lived… 的 as 是介系詞，不用補
+    if any(well_split(doc, k, k) for k in candidates):
+        return None  # 模型本來就切對了（大型模型通常是這樣）
+    for k in reversed(candidates):  # 從後面試起：If you need help please call me 的交界在 please，不是 help
+        pos = toks[k - 1].idx + len(toks[k - 1].text)
+        new_text = text[:pos] + "," + text[pos:]
+        new_doc = get_nlp()(new_text)
+        if len(new_doc) == len(toks) + 1 and new_doc[k].text == "," and well_split(new_doc, k, k + 1):
+            return new_text, new_doc, pos
+    return None
+
+
+def drop_inserted_comma(result: SentenceResult, text: str, pos: int) -> SentenceResult:
+    """把補了逗號的分析結果的字元位置對回原句"""
+    def fix(x):
+        if isinstance(x, list):
+            return [fix(v) for v in x]
+        if not isinstance(x, dict):
+            return x
+        x = {k: fix(v) for k, v in x.items()}
+        for k in ("start", "end"):
+            if isinstance(x.get(k), int) and x[k] > pos:
+                x[k] -= 1
+        if isinstance(x.get("text"), str) and "start" in x and "end" in x and not x.get("implicit"):
+            x["text"] = text[x["start"]:x["end"]]
+        return x
+
+    data = fix(result.model_dump(exclude={"header"}))
+    data["text"] = text[: len(data["text"]) - 1]
+    return SentenceResult(**data)
+
+
 def analyze_sentence(text: str) -> SentenceResult:
     text = clean_spaces(text)
     if not re.search(r"[A-Za-z]{2,}", text) or re.search(r"[\u3400-\u9fff]", text):
         return SentenceResult(text=text, status="failed", clauses=[], chunks=[],
                               message="請輸入英文句子（不能包含中文字）。")
     doc = get_nlp()(text)
+    fixed = missing_comma_split(text, doc)
+    if fixed is not None:
+        new_text, new_doc, pos = fixed
+        return drop_inserted_comma(analyze_doc(new_text, new_doc), text, pos)
+    return analyze_doc(text, doc)
+
+
+def analyze_doc(text: str, doc) -> SentenceResult:
     sents = list(doc.sents)
     if not sents:
         return SentenceResult(text=text, status="failed", message="沒有辦法分析這段文字，請輸入一個英文句子。", clauses=[], chunks=[])
@@ -1489,6 +1747,12 @@ def analyze_sentence(text: str) -> SentenceResult:
     flags: set[str] = set()
     vars_: dict[str, dict] = {}
     kind = "simple"
+
+    # 插入的 do you think：What do you think is the best way? 照 What is the best way? 分析
+    inserted = inserted_think(root, sent)
+    if inserted is not None:
+        roots[root.i] = Spec("M", function="副詞・表語氣", clause=0)
+        root, inserted_wh = inserted
 
     # 附加問句：She didn't do it, did she? 分析程式把句尾的 did she 當成主要動詞
     tag_main = tag_question_main(root, sent)
@@ -1552,6 +1816,20 @@ def analyze_sentence(text: str) -> SentenceResult:
     if present_for_future(roots, sent.doc):
         infos[0].flags.add("present_for_future")
 
+    # have to、be able to 等分支會換成後面的動詞分析，句子真正的主要動詞底下的感嘆語等也要處理
+    if kind == "simple" and question_fixes(sent.root, list(sent.root.children), roots, 0, sent):
+        infos[0].pattern = clause_pattern(roots, 0, infos[0])
+    if inserted is not None and inserted_wh.i not in roots:
+        # 疑問詞在子句裡的角色：子句缺主詞 → 主詞（Who do you think will win?）；
+        # where／when／why／how → 副詞；其他 → 受詞（What do you think he bought?）
+        kids = list(root.children)
+        if not any(c.dep_ in ("nsubj", "nsubjpass", "expl", "csubj") for c in kids):
+            roots[inserted_wh.i] = Spec("S", clause=0)
+        elif inserted_wh.tag_ == "WRB" or inserted_wh.lower_ in ("where", "when", "why", "how"):
+            roots[inserted_wh.i] = Spec("M", function=adverb_function(inserted_wh), clause=0)
+        else:
+            roots[inserted_wh.i] = Spec("O", clause=0)
+        infos[0].pattern = clause_pattern(roots, 0, infos[0])
     if kind == "simple":
         comparative_correlative(sent, root, roots, infos[0])
     owner_of = make_owner_fn(roots)
@@ -1641,7 +1919,9 @@ def analyze_sentence(text: str) -> SentenceResult:
         prev_text = joined[-1]["text"].lower() if joined else ""
         if joined and joined[-1]["role"] == "aux" and c["role"] == "aux" and stext[joined[-1]["end"]:c["start"]].strip() == "" \
                 and (c["text"].lower() in ("n't", "not")
-                     or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had", "used", "use")
+                     or (c["text"].lower() in ("help", "but") and (prev_text in ("can't", "cannot", "couldn't", "can not", "could not")
+                                                                  or (c["text"].lower() == "but" and prev_text.endswith("help"))))
+                     or (c["text"].lower() == "to" and (prev_text in ("have", "has", "had", "used", "use", "happen", "happens", "happened")
                                                          or prev_text.endswith(("going", "supposed", "able"))))
                      or c["text"].lower() in ("going", "supposed", "able")
                      or (c["text"].lower() in ("better", "rather") and prev_text in ("had", "'d", "would"))):
