@@ -10,6 +10,7 @@ from pathlib import Path
 
 import yaml
 
+from . import lexicon as L
 from .schema import PhraseHit
 
 PHRASE_FILE = Path(__file__).with_name("phrases.yaml")
@@ -80,7 +81,24 @@ def _match_head(sent, entry):
                 break
             found.append(nxt)
         else:
-            yield found
+            if not (verb_phrase and literal_motion(found)):
+                yield found
+
+
+# 方向介系詞：run out of the room、look into the box、come across the street 是字面上的動作
+SPATIAL_PARTICLES = {"of", "into", "across", "through", "over", "onto"}
+
+
+def literal_motion(found) -> bool:
+    """動詞片語最後一個字是方向介系詞、後面接地點或容器（room、house、box…）→ 字面意思，不是片語
+    （ran out of the room 是「跑出房間」，不是 run out of「用完」）"""
+    last = found[-1]
+    if last.lower_ in ("out", "off") and last.i + 1 < len(last.doc) and last.nbor().lower_ in ("of", "from"):
+        last = last.nbor()  # ran out of the house：片語 run out 後面緊接 of ＋ 地點，也是字面的「跑出」
+    elif last.lower_ not in SPATIAL_PARTICLES:
+        return False
+    pobj = next((c for c in last.children if c.dep_ == "pobj"), None)
+    return pobj is not None and pobj.lemma_.lower() in L.PLACE_NOUNS
 
 
 def phrasal_object(verb):
@@ -104,6 +122,8 @@ def phrasal_object(verb):
             pobj = next((c for c in last.children if c.dep_ in ("pobj", "pcomp")), None)
             passive = any(c.dep_ in ("auxpass", "nsubjpass") for c in verb.children)
             # 被動句的介系詞後面沒有名詞（The baby was looked after.）：介系詞一樣併進動詞，沒有受詞
+            if literal_motion(found):
+                continue  # ran out of the room：字面的「跑出」，out of the room 是表地點的修飾語
             if last.dep_ == "prep" and (pobj is not None or passive) and (best is None or len(found) > len(best[0]) + 1):
                 best = (found[1:], pobj)
     return best
